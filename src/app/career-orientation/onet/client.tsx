@@ -5,10 +5,13 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Search, ThumbsUp, TrendingUp, BrainCircuit } from 'lucide-react';
+import { ArrowRight, Search, ThumbsUp, TrendingUp, BrainCircuit, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import { onetData, HollandOnetMapping } from '@/lib/onet-data';
 import type { HollandCode } from '@/lib/onet-data';
+import { JobCard } from '@/components/job-card';
+import { jobData } from '@/lib/mock-data';
+
 
 export default function OnetClientPage() {
   const router = useRouter();
@@ -74,6 +77,21 @@ export default function OnetClientPage() {
   const mapping = HollandOnetMapping[hollandCode];
   const suggestedCareers = onetData.filter(job => mapping.onet_codes.includes(job.code));
 
+  // Simple logic to find related jobs from mock data
+  const relatedKeywords: { [key in HollandCode]: string[] } = {
+      R: ['cơ khí', 'hàn', 'xây dựng', 'vận hành máy'],
+      I: ['kỹ sư', 'it', 'phần mềm', 'phân tích', 'bác sĩ', 'y tế'],
+      A: ['thiết kế', 'designer', 'marketing', 'content'],
+      S: ['giáo viên', 'tư vấn', 'chăm sóc', 'nhân sự', 'hỗ trợ'],
+      E: ['kinh doanh', 'bán hàng', 'quản lý', 'giám đốc'],
+      C: ['kế toán', 'hành chính', 'văn phòng', 'thủ quỹ'],
+  };
+
+  const relevantJobs = jobData.filter(job => 
+    relatedKeywords[hollandCode].some(keyword => job.title.toLowerCase().includes(keyword))
+  ).slice(0, 3); // Show top 3 relevant jobs
+
+
   return (
     <div className="bg-secondary py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
@@ -116,6 +134,29 @@ export default function OnetClientPage() {
                 </Card>
             ))}
         </div>
+
+        {relevantJobs.length > 0 && (
+            <div className="mt-20">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary flex items-center justify-center gap-4">
+                        <Briefcase /> Việc làm phù hợp gợi ý cho bạn
+                    </h2>
+                    <p className="text-muted-foreground mt-4 max-w-3xl mx-auto">
+                        Dưới đây là một số tin tuyển dụng thực tế có thể phù hợp với sở thích của bạn.
+                    </p>
+                </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {relevantJobs.map(job => <JobCard key={job.id} job={job} />)}
+                </div>
+                 <div className="text-center mt-12">
+                    <Button asChild>
+                        <Link href="/jobs">
+                           Xem tất cả việc làm <ArrowRight className="ml-2"/>
+                        </Link>
+                    </Button>
+                </div>
+            </div>
+        )}
       </div>
     </div>
   );

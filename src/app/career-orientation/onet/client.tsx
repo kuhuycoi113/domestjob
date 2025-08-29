@@ -22,6 +22,14 @@ export default function OnetClientPage() {
     }
     setIsLoading(false);
   }, []);
+  
+  const simulateHollandTest = () => {
+    // Scores: R=4, I=14, A=14, S=12, E=14, C=12
+    // Top scores are I, A, E. We'll pick 'I' as the primary result.
+    const topCode: HollandCode = 'I';
+    localStorage.setItem('hollandResultCode', topCode);
+    setHollandCode(topCode); // Update state to re-render
+  };
 
   if (isLoading) {
     return (
@@ -47,11 +55,14 @@ export default function OnetClientPage() {
                 Để có được những gợi ý nghề nghiệp chính xác nhất từ O*NET, bạn cần thực hiện bài trắc nghiệm sở thích Holland để chúng tôi hiểu rõ hơn về bạn.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col items-center gap-4">
               <Button size="lg" asChild>
                 <Link href="/career-orientation/holland">
                   Làm bài test Holland ngay <ArrowRight className="ml-2" />
                 </Link>
+              </Button>
+               <Button size="sm" variant="link" onClick={simulateHollandTest}>
+                  Đã có kết quả? Xem gợi ý nghề nghiệp ngay
               </Button>
             </CardContent>
           </Card>

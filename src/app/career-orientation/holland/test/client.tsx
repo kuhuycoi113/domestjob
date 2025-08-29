@@ -114,6 +114,12 @@ export default function HollandTestClient() {
       score: group.questions.reduce((total, q) => total + (answers[`${group.code}-${q.id}`] || 0), 0),
     }));
     scores.sort((a, b) => b.score - a.score);
+
+    // Save top result to localStorage
+    if (scores.length > 0) {
+      localStorage.setItem('hollandResultCode', scores[0].code);
+    }
+    
     return scores;
   };
 
@@ -154,7 +160,7 @@ export default function HollandTestClient() {
                       <Bar dataKey="score" fill="#8884d8" barSize={30}>
                         {results.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
+                        ))}\
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
@@ -164,6 +170,13 @@ export default function HollandTestClient() {
               <div>
                 <h4 className="font-bold text-lg mb-2 text-center">Gợi ý nghề nghiệp cho nhóm {topGroup.code}</h4>
                 <p className="text-center text-muted-foreground">Dựa trên kết quả, bạn có thể phù hợp với các công việc liên quan đến kỹ thuật, máy móc, và các hoạt động thực tế. Hãy tìm kiếm các việc làm trong ngành cơ khí, xây dựng, nông nghiệp tại Nhật Bản.</p>
+                 <div className="text-center mt-6">
+                    <Button asChild size="lg">
+                        <Link href="/career-orientation/onet">
+                            Xem gợi ý nghề nghiệp chi tiết <ArrowRight className="ml-2"/>
+                        </Link>
+                    </Button>
+                </div>
               </div>
             </CardContent>
           </Card>

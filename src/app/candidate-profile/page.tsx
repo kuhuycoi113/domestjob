@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, FileSignature } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -519,7 +519,9 @@ export default function CandidateProfilePage() {
   const mainEditDialogContent = (
     <div className="space-y-4">
         <div className="text-center">
-             <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto mb-4" />
+             <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit mb-4">
+                <FileSignature className="h-12 w-12 text-primary" />
+             </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             

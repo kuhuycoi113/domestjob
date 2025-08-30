@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -26,7 +27,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Accordion } from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
 
 type MediaItem = {
   src: string;
@@ -331,6 +333,39 @@ export default function CandidateProfilePage() {
       }
   };
 
+    const Level1EditDialogContent = () => {
+    if (!tempCandidate) return null;
+    return (
+      <div className="space-y-4">
+        <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+          {[
+              { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
+              { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
+              { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
+              { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
+              { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },
+              { number: 6, label: 'Chiều cao', content: <Input placeholder="Nhập chiều cao (cm)" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} /> },
+              { number: 7, label: 'Cân nặng', content: <Input placeholder="Nhập cân nặng (kg)" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} /> },
+              { number: 8, label: 'Hình xăm', content: <Input placeholder="Nhập hình xăm" value={tempCandidate.personalInfo.tattooStatus} onChange={e => handleNestedChange('personalInfo', 'tattooStatus', e.target.value)} /> },
+              { number: 9, label: 'Viêm gan B', content: <Input placeholder="Nhập tình trạng" value={tempCandidate.personalInfo.hepatitisBStatus} onChange={e => handleNestedChange('personalInfo', 'hepatitisBStatus', e.target.value)} /> },
+              { number: 10, label: 'Lương cơ bản mong muốn/tháng', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} /> },
+              { number: 11, label: 'Thực lĩnh mong muốn', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} /> },
+              { number: 12, label: 'Khả năng tài chính', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} /> },
+              { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.interviewLocation} onChange={e => handleNestedChange('aspirations', 'interviewLocation', e.target.value)} /> },
+              { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
+          ].map(item => (
+            <AccordionItem value={`item-${item.number}`} key={item.number}>
+                <AccordionTrigger>{item.label}</AccordionTrigger>
+                <AccordionContent>
+                    {item.content}
+                </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    );
+  };
+
   const experienceEditDialogContent = (
       <div className="space-y-6">
           {tempCandidate.experience.map((exp, index) => (
@@ -603,36 +638,6 @@ export default function CandidateProfilePage() {
         </CardContent>
     </Card>
   )
-
-  const Level1EditDialogContent = () => {
-    if (!tempCandidate) return null;
-    return (
-      <div className="space-y-4">
-        <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
-          {[
-              { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
-              { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
-              { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
-              { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
-              { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },
-              { number: 6, label: 'Chiều cao', content: <Input placeholder="Nhập chiều cao (cm)" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} /> },
-              { number: 7, label: 'Cân nặng', content: <Input placeholder="Nhập cân nặng (kg)" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} /> },
-              { number: 8, label: 'Hình xăm', content: <Input placeholder="Nhập hình xăm" value={tempCandidate.personalInfo.tattooStatus} onChange={e => handleNestedChange('personalInfo', 'tattooStatus', e.target.value)} /> },
-              { number: 9, label: 'Viêm gan B', content: <Input placeholder="Nhập tình trạng" value={tempCandidate.personalInfo.hepatitisBStatus} onChange={e => handleNestedChange('personalInfo', 'hepatitisBStatus', e.target.value)} /> },
-              { number: 10, label: 'Lương cơ bản mong muốn/tháng', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} /> },
-              { number: 11, label: 'Thực lĩnh mong muốn', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} /> },
-              { number: 12, label: 'Khả năng tài chính', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} /> },
-              { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.interviewLocation} onChange={e => handleNestedChange('aspirations', 'interviewLocation', e.target.value)} /> },
-              { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
-          ].map(item => (
-            <AccordionItem value={`item-${item.number}`} key={item.number}>
-                {item.content}
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-    );
-  };
 
 
   return (

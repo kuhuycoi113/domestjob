@@ -337,29 +337,28 @@ export default function CandidateProfilePage() {
     return (
       <div className="space-y-4">
           {[
-              { label: '1. Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
-              { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
-              { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
-              { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
-              { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
-              { label: '6. Chiều cao', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
-              { label: '7. Cân nặng', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
-              { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
-              { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Có viêm gan B'] },
-              { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
-              { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
-              { label: '12. Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
-              { label: '13. Tìm việc phỏng vấn, tuyển tại', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
-              { label: '14. Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations' },
-              { label: '15. Mô tả/ghi chú', value: tempCandidate.notes, field: 'notes', type: 'simple', isTextarea: true },
-          ].map(item => (
+            { label: 'Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
+            { label: 'Giới tính', value: tempCandidate.personalInfo.gender, field: 'gender', type: 'personalInfo', options: ['Nam', 'Nữ', 'Khác'] },
+            { label: 'Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo', inputType: 'date' },
+            { label: 'Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
+            { label: 'Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
+            { label: 'Chiều cao (cm)', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
+            { label: 'Cân nặng (kg)', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
+            { label: 'Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
+            { label: 'Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Có viêm gan B'] },
+            { label: 'Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
+            { label: 'Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
+            { label: 'Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
+            { label: 'Nơi phỏng vấn, tuyển dụng', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
+            { label: 'Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations', isTextarea: true },
+        ].map(item => (
               <div key={item.label} className="grid grid-cols-3 items-center gap-4">
                   <Label className="col-span-1 text-right">{item.label}</Label>
                   <div className="col-span-2">
                     {item.isTextarea ? (
                          <Textarea 
                             value={item.value || ''} 
-                            onChange={e => handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value)} 
+                            onChange={e => handleNestedChange(item.type as 'aspirations', item.field, e.target.value)} 
                         />
                     ) : item.options ? (
                         <Select 
@@ -367,7 +366,7 @@ export default function CandidateProfilePage() {
                             onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
                         >
                             <SelectTrigger>
-                                <SelectValue placeholder={`Chọn ${item.label.split('. ')[1].toLowerCase()}`} />
+                                <SelectValue placeholder={`Chọn ${item.label.toLowerCase()}`} />
                             </SelectTrigger>
                             <SelectContent>
                                 {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
@@ -375,6 +374,7 @@ export default function CandidateProfilePage() {
                         </Select>
                     ) : (
                         <Input 
+                            type={item.inputType || 'text'}
                             value={item.value || ''} 
                             onChange={e => {
                                 if (item.type === 'simple') {
@@ -411,7 +411,7 @@ export default function CandidateProfilePage() {
                   <Label>Mô tả</Label>
                   <Textarea value={exp.description} onChange={e => handleChange('experience', index, 'description', e.target.value)} />
               </div>
-          ))}
+          ))}\
           <Button variant="outline" className="w-full" onClick={() => handleAddItem('experience')}>
               <PlusCircle className="mr-2"/> Thêm kinh nghiệm
           </Button>
@@ -810,12 +810,12 @@ export default function CandidateProfilePage() {
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    <p className="flex items-start gap-3"><Cake className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Năm sinh:</strong> {candidate.personalInfo.birthYear}</span></p>
-                    <p className="flex items-start gap-3"><Dna className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Giới tính:</strong> {candidate.personalInfo.gender}</span></p>
-                    <p className="flex items-start gap-3"><Phone className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>SĐT:</strong> {candidate.personalInfo.phone}</span></p>
-                    <p className="flex items-start gap-3"><Languages className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Ngoại ngữ:</strong> {candidate.personalInfo.language}</span></p>
-                    <p className="flex items-start gap-3"><Building className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</span></p>
+                  <CardContent className="space-y-3 text-sm">
+                    <p className="flex items-start gap-3"><strong>Ngày sinh:</strong> {candidate.personalInfo.dateOfBirth}</p>
+                    <p className="flex items-start gap-3"><strong>Giới tính:</strong> {candidate.personalInfo.gender}</p>
+                    <p className="flex items-start gap-3"><strong>Chiều cao:</strong> {candidate.personalInfo.height}</p>
+                    <p className="flex items-start gap-3"><strong>Cân nặng:</strong> {candidate.personalInfo.weight}</p>
+                    <p className="flex items-start gap-3"><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</p>
                   </CardContent>
                 </Card>
 

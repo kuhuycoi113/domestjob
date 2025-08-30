@@ -411,7 +411,7 @@ export default function CandidateProfilePage() {
                   <Label>Mô tả</Label>
                   <Textarea value={exp.description} onChange={e => handleChange('experience', index, 'description', e.target.value)} />
               </div>
-          ))}\
+          ))}
           <Button variant="outline" className="w-full" onClick={() => handleAddItem('experience')}>
               <PlusCircle className="mr-2"/> Thêm kinh nghiệm
           </Button>
@@ -519,8 +519,7 @@ export default function CandidateProfilePage() {
   const mainEditDialogContent = (
     <div className="space-y-4">
         <div className="text-center">
-             <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
-             <h3 className="text-2xl font-headline mt-2">TẠO PROFILE TÌM VIỆC</h3>
+             <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto mb-4" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
@@ -693,7 +692,7 @@ export default function CandidateProfilePage() {
                   </p>
                 </div>
                  <EditDialog
-                    title="Hoàn thiện hồ sơ"
+                    title="Sửa hồ sơ tìm việc"
                     onSave={() => { /* No-op, saves happen in sub-dialogs */ }}
                     content={mainEditDialogContent}
                     description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."

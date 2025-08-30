@@ -332,66 +332,6 @@ export default function CandidateProfilePage() {
       }
   };
 
-  const Level1EditDialogContent = () => {
-    if (!tempCandidate) return null;
-    return (
-      <div className="space-y-4">
-          {[
-            { label: 'Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
-            { label: 'Giới tính', value: tempCandidate.personalInfo.gender, field: 'gender', type: 'personalInfo', options: ['Nam', 'Nữ', 'Khác'] },
-            { label: 'Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo', inputType: 'date' },
-            { label: 'Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
-            { label: 'Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
-            { label: 'Chiều cao (cm)', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
-            { label: 'Cân nặng (kg)', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
-            { label: 'Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
-            { label: 'Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Có viêm gan B'] },
-            { label: 'Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
-            { label: 'Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
-            { label: 'Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
-            { label: 'Nơi phỏng vấn, tuyển dụng', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
-            { label: 'Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations', isTextarea: true },
-        ].map(item => (
-              <div key={item.label} className="grid grid-cols-3 items-center gap-4">
-                  <Label className="col-span-1 text-right">{item.label}</Label>
-                  <div className="col-span-2">
-                    {item.isTextarea ? (
-                         <Textarea 
-                            value={item.value || ''} 
-                            onChange={e => handleNestedChange(item.type as 'aspirations', item.field, e.target.value)} 
-                        />
-                    ) : item.options ? (
-                        <Select 
-                            value={item.value || ''} 
-                            onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder={`Chọn ${item.label.toLowerCase()}`} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
-                            </SelectContent>
-                        </Select>
-                    ) : (
-                        <Input 
-                            type={item.inputType || 'text'}
-                            value={item.value || ''} 
-                            onChange={e => {
-                                if (item.type === 'simple') {
-                                    handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value);
-                                } else {
-                                    handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, e.target.value);
-                                }
-                            }}
-                        />
-                    )}
-                  </div>
-              </div>
-          ))}
-      </div>
-    );
-  };
-  
   const experienceEditDialogContent = (
       <div className="space-y-6">
           {tempCandidate.experience.map((exp, index) => (
@@ -525,26 +465,13 @@ export default function CandidateProfilePage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
-                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
-                        <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
-                        <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
-                    </Card>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-xl">
-                    <DialogHeader>
-                        <DialogTitle className="font-headline text-2xl">Thông tin tài khoản ứng viên Mức 1</DialogTitle>
-                    </DialogHeader>
-                    <div className="max-h-[70vh] overflow-y-auto pr-4">
-                      <Level1EditDialogContent />
-                    </div>
-                    <DialogFooter>
-                        <Button onClick={handleSave} className="bg-primary text-white w-full">Đăng thông tin</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <Link href="/candidate-profile/edit-level-1" className="block">
+                <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+                    <h4 className="font-bold text-accent-orange">Mức 1</h4>
+                    <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
+                    <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
+                </Card>
+            </Link>
 
             <Dialog>
                 <DialogTrigger asChild>
@@ -801,15 +728,8 @@ export default function CandidateProfilePage() {
               {/* Right Column */}
               <div className="lg:col-span-1 space-y-6">
                  <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
+                  <CardHeader>
                     <CardTitle className="font-headline text-xl flex items-center"><UserCog className="mr-3 text-primary"/> Thông tin cá nhân</CardTitle>
-                    <EditDialog
-                        title="Chỉnh sửa Thông tin cá nhân"
-                        onSave={handleSave}
-                        content={<Level1EditDialogContent />}
-                    >
-                      <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
-                    </EditDialog>
                   </CardHeader>
                   <CardContent className="space-y-3 text-sm">
                     <p className="flex items-start gap-3"><strong>Ngày sinh:</strong> {candidate.personalInfo.dateOfBirth}</p>

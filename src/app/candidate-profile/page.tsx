@@ -167,7 +167,7 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
                 <DialogHeader>
                     <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
                 </DialogHeader>
-                <div className="py-32 space-y-4">
+                <div className="py-40 space-y-4">
                      <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
                      <div className="px-4">
                         {currentField?.content}

@@ -164,11 +164,10 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild onClick={() => setCurrentStep(1)}>{trigger}</DialogTrigger>
             <DialogContent className="sm:max-w-md">
-                <DialogHeader className="flex-row items-center justify-between">
+                <DialogHeader>
                     <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
-                    <DialogClose asChild><Button variant="ghost" size="icon"><X className="h-4 w-4"/></Button></DialogClose>
                 </DialogHeader>
-                <div className="py-4 space-y-4">
+                <div className="py-20 space-y-4">
                      <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
                      <div className="px-4">
                         {currentField?.content}
@@ -437,16 +436,16 @@ export default function CandidateProfilePage() {
         <Accordion type="single" collapsible className="w-full">
             {fields.map((field) => (
                 <AccordionItem value={`item-${field.number}`} key={field.number}>
-                    <StepByStepEditDialog
-                        tempCandidate={tempCandidate}
-                        setTempCandidate={setTempCandidate}
-                        onSave={handleSave}
-                        trigger={
-                            <AccordionTrigger className="w-full text-left">
-                                {`${field.number}. ${field.label}`}
-                            </AccordionTrigger>
-                        }
-                    />
+                     <AccordionTrigger className="w-full text-left no-underline hover:no-underline">
+                        <StepByStepEditDialog
+                            tempCandidate={tempCandidate}
+                            setTempCandidate={setTempCandidate}
+                            onSave={handleSave}
+                            trigger={
+                                <div>{`${field.number}. ${field.label}`}</div>
+                            }
+                        />
+                    </AccordionTrigger>
                 </AccordionItem>
             ))}
         </Accordion>

@@ -527,8 +527,8 @@ export default function CandidateProfilePage() {
             
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-orange-300">
-                        <h4 className="font-bold text-orange-500">Mức 1</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
                         <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
                     </Card>
@@ -548,8 +548,8 @@ export default function CandidateProfilePage() {
 
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-green-300">
-                        <h4 className="font-bold text-green-500">Mức 2</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-green">
+                        <h4 className="font-bold text-accent-green">Mức 2</h4>
                         <Briefcase className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin đầy đủ)</p>
                     </Card>
@@ -568,8 +568,8 @@ export default function CandidateProfilePage() {
             
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-blue-300">
-                        <h4 className="font-bold text-blue-500">Mức 3</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent">
+                        <h4 className="font-bold text-accent">Mức 3</h4>
                         <Contact className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <div className="flex justify-center items-center gap-2 mt-1">
                             <Facebook className="h-5 w-5 text-blue-600" />

@@ -28,6 +28,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Accordion } from '@/components/ui/accordion';
 
 type MediaItem = {
   src: string;
@@ -83,12 +84,12 @@ const emptyCandidate: EnrichedCandidateProfile = {
 const commonSkills = ['Vận hành máy CNC', 'AutoCAD', 'Kiểm tra chất lượng', 'Làm việc nhóm', 'Giải quyết vấn đề', 'Tiếng Anh giao tiếp'];
 const commonInterests = ['Cơ khí', 'Điện tử', 'IT', 'Logistics', 'Dệt may', 'Chế biến thực phẩm'];
 
-const EditDialog = ({ children, title, onSave, content, description }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string }) => (
+const EditDialog = ({ children, title, onSave, content, description, contentClassName }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string, contentClassName?: string }) => (
     <Dialog>
         <DialogTrigger asChild>
             {children}
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className={cn("sm:max-w-[600px]", contentClassName)}>
             <DialogHeader>
                 <DialogTitle className="font-headline text-2xl">{title}</DialogTitle>
                 {description && <DialogDescription>{description}</DialogDescription>}
@@ -455,7 +456,6 @@ export default function CandidateProfilePage() {
           </Button>
        </div>
   );
-
   const mainEditDialogContent = (
     <div className="space-y-4">
         <div className="text-center">
@@ -465,13 +465,26 @@ export default function CandidateProfilePage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
-            <Link href="/candidate-profile/edit-level-1" className="block">
-                <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
-                    <h4 className="font-bold text-accent-orange">Mức 1</h4>
-                    <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
-                    <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
-                </Card>
-            </Link>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
+                        <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
+                        <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
+                    </Card>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-xl">
+                    <DialogHeader>
+                        <DialogTitle className="font-headline text-2xl">ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
+                    </DialogHeader>
+                    <div className="max-h-[70vh] overflow-y-auto pr-4">
+                      <Level1EditDialogContent />
+                    </div>
+                    <DialogFooter>
+                        <Button onClick={handleSave} className="bg-accent-orange text-white w-full">ĐĂNG THÔNG TIN</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             <Dialog>
                 <DialogTrigger asChild>
@@ -592,6 +605,36 @@ export default function CandidateProfilePage() {
         </CardContent>
     </Card>
   )
+
+  const Level1EditDialogContent = () => {
+    if (!tempCandidate) return null;
+    return (
+      <div className="space-y-4">
+        <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+          {[
+              { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
+              { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
+              { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
+              { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
+              { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },
+              { number: 6, label: 'Chiều cao', content: <Input placeholder="Nhập chiều cao (cm)" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} /> },
+              { number: 7, label: 'Cân nặng', content: <Input placeholder="Nhập cân nặng (kg)" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} /> },
+              { number: 8, label: 'Hình xăm', content: <Input placeholder="Nhập hình xăm" value={tempCandidate.personalInfo.tattooStatus} onChange={e => handleNestedChange('personalInfo', 'tattooStatus', e.target.value)} /> },
+              { number: 9, label: 'Viêm gan B', content: <Input placeholder="Nhập tình trạng" value={tempCandidate.personalInfo.hepatitisBStatus} onChange={e => handleNestedChange('personalInfo', 'hepatitisBStatus', e.target.value)} /> },
+              { number: 10, label: 'Lương cơ bản mong muốn/tháng', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} /> },
+              { number: 11, label: 'Thực lĩnh mong muốn', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} /> },
+              { number: 12, label: 'Khả năng tài chính', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} /> },
+              { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.interviewLocation} onChange={e => handleNestedChange('aspirations', 'interviewLocation', e.target.value)} /> },
+              { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
+          ].map(item => (
+            <AccordionItem value={`item-${item.number}`} key={item.number}>
+                {item.content}
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    );
+  };
 
 
   return (

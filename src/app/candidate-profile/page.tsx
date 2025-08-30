@@ -949,5 +949,3 @@ export default function CandidateProfilePage() {
     </div>
   );
 }
-
-

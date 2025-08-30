@@ -167,12 +167,30 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
                 <DialogHeader>
                     <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
                 </DialogHeader>
-                <div className="py-48 space-y-4">
+                <div className="py-4 space-y-4">
                      <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
                      <div className="px-4">
                         {currentField?.content}
                      </div>
                 </div>
+
+                 <div className="px-4 pb-4">
+                    <div className="text-xs text-muted-foreground leading-relaxed">
+                        {fields.map(field => (
+                            <button 
+                                key={field.number} 
+                                onClick={() => setCurrentStep(field.number)}
+                                className={cn(
+                                    "inline-flex items-center hover:text-primary",
+                                    currentStep === field.number && "text-primary font-bold"
+                                )}
+                            >
+                                {field.label} {field.number < totalSteps && <ChevronRight className="h-3 w-3 mx-1" />}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                  <DialogFooter className="grid grid-cols-2 gap-2">
                     {currentStep > 1 && (
                         <Button variant="outline" onClick={() => setCurrentStep(s => s - 1)}>Quay lại</Button>
@@ -949,3 +967,4 @@ export default function CandidateProfilePage() {
     </div>
   );
 }
+

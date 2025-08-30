@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, FileSignature } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, FileSignature, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -16,6 +15,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -109,6 +109,93 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
         <path d="M131 0C58.649 0 0 58.649 0 131C0 203.351 58.649 262 131 262C203.351 262 262 203.351 262 131C262 58.649 203.351 0 131 0ZM197.838 170.368L173.962 194.244C171.139 197.067 167.247 197.68 163.639 196.223L126.541 182.903C125.129 182.413 123.824 181.711 122.625 180.892L74.832 144.37C71.748 142.029 70.832 137.989 72.585 134.577L84.975 111.758C86.728 108.347 90.722 106.889 94.276 108.347L131.374 121.612C132.786 122.102 134.091 122.748 135.29 123.623L183.083 160.145C186.167 162.486 187.083 166.526 185.33 169.937L197.838 170.368Z" fill="#0068FF"/>
     </svg>
 )
+
+const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave }: { trigger: React.ReactNode, tempCandidate: EnrichedCandidateProfile, setTempCandidate: React.Dispatch<React.SetStateAction<EnrichedCandidateProfile | null>>, onSave: () => void }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [currentStep, setCurrentStep] = useState(1);
+    const totalSteps = 14;
+
+    const handleNestedChange = (
+      section: 'personalInfo' | 'aspirations', 
+      field: string, 
+      value: any
+    ) => {
+        setTempCandidate(prev => {
+            if (!prev) return null;
+            return {
+                ...prev,
+                [section]: {
+                    ...prev[section],
+                    [field]: value
+                }
+            };
+        });
+    };
+
+    const handleSimpleChange = (field: keyof EnrichedCandidateProfile, value: any) => {
+        setTempCandidate(prev => {
+            if (!prev) return null;
+            return { ...prev, [field]: value };
+        });
+    };
+
+    const fields = [
+        { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
+        { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
+        { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth || ''} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
+        { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
+        { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },
+        { number: 6, label: 'Chiều cao', content: <Input placeholder="Nhập chiều cao (cm)" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} /> },
+        { number: 7, label: 'Cân nặng', content: <Input placeholder="Nhập cân nặng (kg)" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} /> },
+        { number: 8, label: 'Hình xăm', content: <Input placeholder="Nhập hình xăm" value={tempCandidate.personalInfo.tattooStatus} onChange={e => handleNestedChange('personalInfo', 'tattooStatus', e.target.value)} /> },
+        { number: 9, label: 'Viêm gan B', content: <Input placeholder="Nhập tình trạng" value={tempCandidate.personalInfo.hepatitisBStatus} onChange={e => handleNestedChange('personalInfo', 'hepatitisBStatus', e.target.value)} /> },
+        { number: 10, label: 'Lương cơ bản mong muốn/tháng', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} /> },
+        { number: 11, label: 'Thực lĩnh mong muốn', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} /> },
+        { number: 12, label: 'Khả năng tài chính', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} /> },
+        { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.interviewLocation} onChange={e => handleNestedChange('aspirations', 'interviewLocation', e.target.value)} /> },
+        { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
+    ];
+    
+    const currentField = fields.find(f => f.number === currentStep);
+
+    return (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild onClick={() => setCurrentStep(1)}>{trigger}</DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader className="flex-row items-center justify-between">
+                    <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
+                    <DialogClose asChild><Button variant="ghost" size="icon"><X className="h-4 w-4"/></Button></DialogClose>
+                </DialogHeader>
+                <div className="py-4 space-y-4">
+                     <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
+                     <div className="px-4">
+                        {currentField?.content}
+                     </div>
+                </div>
+                 <DialogFooter className="grid grid-cols-2 gap-2">
+                    {currentStep > 1 && (
+                        <Button variant="outline" onClick={() => setCurrentStep(s => s - 1)}>Quay lại</Button>
+                    )}
+                    {currentStep <= totalSteps && (
+                       <Button 
+                        onClick={() => {
+                            if (currentStep < totalSteps) {
+                                setCurrentStep(s => s + 1)
+                            } else {
+                                onSave();
+                                setIsOpen(false);
+                            }
+                        }}
+                        className={cn("col-start-2", currentStep === 1 && "col-span-2")}
+                       >
+                           {currentStep < totalSteps ? 'Tiếp tục' : 'Đăng thông tin'}
+                       </Button>
+                    )}
+                 </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+};
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
@@ -333,39 +420,37 @@ export default function CandidateProfilePage() {
       }
   };
 
-    const Level1EditDialogContent = () => {
-    if (!tempCandidate) return null;
+  const Level1EditDialogContent = () => {
+    const fields = [
+        { number: 1, label: 'Họ và tên' }, { number: 2, label: 'Giới tính' },
+        { number: 3, label: 'Ngày sinh' }, { number: 4, label: 'Ngành nghề mong muốn' },
+        { number: 5, label: 'Địa điểm mong muốn' }, { number: 6, label: 'Chiều cao' },
+        { number: 7, label: 'Cân nặng' }, { number: 8, label: 'Hình xăm' },
+        { number: 9, label: 'Viêm gan B' }, { number: 10, label: 'Lương cơ bản mong muốn/tháng' },
+        { number: 11, label: 'Thực lĩnh mong muốn' }, { number: 12, label: 'Khả năng tài chính' },
+        { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại' }, { number: 14, label: 'Nguyện vọng đặc biệt' }
+    ];
+
     return (
-      <div className="space-y-4">
-        <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
-          {[
-              { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
-              { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
-              { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
-              { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
-              { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },
-              { number: 6, label: 'Chiều cao', content: <Input placeholder="Nhập chiều cao (cm)" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} /> },
-              { number: 7, label: 'Cân nặng', content: <Input placeholder="Nhập cân nặng (kg)" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} /> },
-              { number: 8, label: 'Hình xăm', content: <Input placeholder="Nhập hình xăm" value={tempCandidate.personalInfo.tattooStatus} onChange={e => handleNestedChange('personalInfo', 'tattooStatus', e.target.value)} /> },
-              { number: 9, label: 'Viêm gan B', content: <Input placeholder="Nhập tình trạng" value={tempCandidate.personalInfo.hepatitisBStatus} onChange={e => handleNestedChange('personalInfo', 'hepatitisBStatus', e.target.value)} /> },
-              { number: 10, label: 'Lương cơ bản mong muốn/tháng', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} /> },
-              { number: 11, label: 'Thực lĩnh mong muốn', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} /> },
-              { number: 12, label: 'Khả năng tài chính', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} /> },
-              { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.interviewLocation} onChange={e => handleNestedChange('aspirations', 'interviewLocation', e.target.value)} /> },
-              { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
-          ].map(item => (
-            <AccordionItem value={`item-${item.number}`} key={item.number}>
-                <AccordionTrigger>{`${item.number}. ${item.label}`}</AccordionTrigger>
-                <AccordionContent>
-                    {item.content}
-                </AccordionContent>
-            </AccordionItem>
-          ))}
+        <Accordion type="single" collapsible className="w-full">
+            {fields.map((field) => (
+                <AccordionItem value={`item-${field.number}`} key={field.number}>
+                    <StepByStepEditDialog
+                        tempCandidate={tempCandidate}
+                        setTempCandidate={setTempCandidate}
+                        onSave={handleSave}
+                        trigger={
+                            <AccordionTrigger className="w-full text-left">
+                                {`${field.number}. ${field.label}`}
+                            </AccordionTrigger>
+                        }
+                    />
+                </AccordionItem>
+            ))}
         </Accordion>
-      </div>
     );
   };
-
+  
   const experienceEditDialogContent = (
       <div className="space-y-6">
           {tempCandidate.experience.map((exp, index) => (
@@ -489,6 +574,7 @@ export default function CandidateProfilePage() {
           </Button>
        </div>
   );
+
   const mainEditDialogContent = (
     <div className="space-y-4">
         <div className="text-center">
@@ -671,6 +757,7 @@ export default function CandidateProfilePage() {
                     onSave={() => { /* No-op, saves happen in sub-dialogs */ }}
                     content={mainEditDialogContent}
                     description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."
+                    contentClassName="sm:max-w-4xl"
                  >
                     <Button className="md:ml-auto mt-4 md:mt-0" variant="outline"><Edit /> Sửa hồ sơ</Button>
                  </EditDialog>

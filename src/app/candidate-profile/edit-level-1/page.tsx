@@ -355,7 +355,7 @@ export default function CandidateProfilePage() {
               { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
           ].map(item => (
             <AccordionItem value={`item-${item.number}`} key={item.number}>
-                <AccordionTrigger>{item.label}</AccordionTrigger>
+                <AccordionTrigger>{`${item.number}. ${item.label}`}</AccordionTrigger>
                 <AccordionContent>
                     {item.content}
                 </AccordionContent>

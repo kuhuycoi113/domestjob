@@ -167,7 +167,7 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
                 <DialogHeader>
                     <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
                 </DialogHeader>
-                <div className="py-20 space-y-4">
+                <div className="py-32 space-y-4">
                      <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
                      <div className="px-4">
                         {currentField?.content}
@@ -436,16 +436,16 @@ export default function CandidateProfilePage() {
         <Accordion type="single" collapsible className="w-full">
             {fields.map((field) => (
                 <AccordionItem value={`item-${field.number}`} key={field.number}>
-                     <AccordionTrigger className="w-full text-left no-underline hover:no-underline">
-                        <StepByStepEditDialog
-                            tempCandidate={tempCandidate}
-                            setTempCandidate={setTempCandidate}
-                            onSave={handleSave}
-                            trigger={
-                                <div>{`${field.number}. ${field.label}`}</div>
-                            }
-                        />
-                    </AccordionTrigger>
+                    <StepByStepEditDialog
+                        tempCandidate={tempCandidate}
+                        setTempCandidate={setTempCandidate}
+                        onSave={handleSave}
+                        trigger={
+                             <AccordionTrigger className="w-full text-left no-underline hover:no-underline">
+                                {`${field.number}. ${field.label}`}
+                            </AccordionTrigger>
+                        }
+                    />
                 </AccordionItem>
             ))}
         </Accordion>

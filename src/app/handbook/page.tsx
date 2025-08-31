@@ -1,8 +1,10 @@
 
 
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, Camera, Send } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, Camera, Send, Film, Image as ImageIcon, Smartphone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';
@@ -10,11 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Cẩm nang HelloJob - Thông tin việc làm & cuộc sống tại Nhật',
-  description: 'Tất cả thông tin bạn cần về Kỹ năng đặc định (Tokutei Ginou), kinh nghiệm phỏng vấn, thủ tục visa, và cuộc sống tại Nhật Bản được cập nhật liên tục.',
-};
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 
 const ArticleCard = ({ article, className }: { article: HandbookArticle, className?: string }) => (
@@ -110,6 +108,13 @@ export default function HandbookPage() {
   const videos = articles.filter(a => a.type === 'video');
   const posts = articles.filter(a => a.type === 'post');
   const imageStories = articles.filter(a => a.type === 'image-story');
+
+  const shareOptions = [
+    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500' },
+    { title: 'Đăng bài viết dạng ảnh', description: 'Tạo một bài viết với hình ảnh minh hoạ trực quan.', icon: ImageIcon, color: 'text-yellow-500' },
+    { title: 'Đăng video ngắn', description: 'Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.', icon: Smartphone, color: 'text-green-500' },
+    { title: 'Đăng video dài', description: 'Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.', icon: Film, color: 'text-red-500' }
+  ];
 
 
   return (
@@ -224,10 +229,31 @@ export default function HandbookPage() {
                 <p className="text-muted-foreground mb-6">
                     Bạn có kinh nghiệm, câu chuyện hay kiến thức bổ ích muốn chia sẻ với cộng đồng người lao động Việt Nam tại Nhật? Hãy gửi bài viết của bạn cho chúng tôi!
                 </p>
-                <Button size="lg" className="bg-primary text-white">
-                    <Send className="mr-2"/>
-                    Chia sẻ nội dung của bạn
-                </Button>
+                 <Dialog>
+                    <DialogTrigger asChild>
+                        <Button size="lg" className="bg-primary text-white">
+                            <Send className="mr-2"/>
+                            Chia sẻ nội dung của bạn
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-2xl">
+                        <DialogHeader>
+                            <DialogTitle className="font-headline text-2xl">Chọn loại nội dung bạn muốn chia sẻ</DialogTitle>
+                            <DialogDescription>
+                                Đóng góp kiến thức và kinh nghiệm của bạn cho cộng đồng HelloJob.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
+                            {shareOptions.map(option => (
+                                <Card key={option.title} className="p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary hover:shadow-lg transition-all">
+                                    <option.icon className={cn("h-10 w-10 mb-4", option.color)} />
+                                    <h3 className="font-bold font-headline mb-1">{option.title}</h3>
+                                    <p className="text-sm text-muted-foreground">{option.description}</p>
+                                </Card>
+                            ))}
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </Card>
         </section>
 

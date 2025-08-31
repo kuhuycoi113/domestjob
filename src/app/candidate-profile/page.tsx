@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -114,7 +114,7 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const level1Fields = [
     { number: 1, label: 'Họ và tên', field: 'name', type: 'simple', inputType: 'text', placeholder: "Nhập họ và tên" },
-    { number: 2, label: 'Giới tính', field: 'gender', type: 'personalInfo', inputType: 'select', options: ['Nam', 'Nữ', 'Khác'], placeholder: "Chọn giới tính" },
+    { number: 2, label: 'Giới tính', field: 'gender', type: 'personalInfo', inputType: 'buttons', options: ['Nam', 'Nữ', 'Cả nam cả nữ'] },
     { number: 3, label: 'Ngày sinh', field: 'dateOfBirth', type: 'personalInfo', inputType: 'date', placeholder: "" },
     { number: 4, label: 'Ngành nghề mong muốn', field: 'desiredIndustry', type: 'simple', inputType: 'text', placeholder: "Chọn ngành nghề" },
     { number: 5, label: 'Địa điểm mong muốn', field: 'desiredLocation', type: 'aspirations', inputType: 'text', placeholder: "Chọn địa điểm" },
@@ -188,6 +188,22 @@ const StepByStepEditDialog = ({ initialStep = 1, trigger, tempCandidate, setTemp
                             {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
                         </SelectContent>
                     </Select>
+                );
+            case 'buttons':
+                return (
+                    <div className="flex justify-center gap-4">
+                        {options?.map(opt => (
+                            <Button
+                                key={opt}
+                                variant={value === opt ? 'default' : 'outline'}
+                                onClick={() => handleChange(opt)}
+                                type="button"
+                                className="rounded-full px-6 py-2 text-base"
+                            >
+                                {opt}
+                            </Button>
+                        ))}
+                    </div>
                 );
             case 'textarea':
                 return <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />;

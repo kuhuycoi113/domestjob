@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, FileSignature, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, FileSignature, ChevronLeft, ChevronRight, Target } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -120,7 +120,7 @@ const level1Fields = [
     { number: 5, label: 'Địa điểm mong muốn', field: 'desiredLocation', type: 'aspirations', inputType: 'text', placeholder: "Chọn địa điểm" },
     { number: 6, label: 'Chiều cao', field: 'height', type: 'personalInfo', inputType: 'text', placeholder: "Nhập chiều cao (cm)" },
     { number: 7, label: 'Cân nặng', field: 'weight', type: 'personalInfo', inputType: 'text', placeholder: "Nhập cân nặng (kg)" },
-    { number: 8, label: 'Hình xăm', field: 'tattooStatus', type: 'personalInfo', inputType: 'text', placeholder: "Nhập hình xăm" },
+    { number: 8, label: 'Hình xăm', field: 'tattooStatus', type: 'personalInfo', inputType: 'buttons', options: ['Không hình xăm', 'Có xăm nhỏ (kín)', 'Có xăm to (lộ)'] },
     { number: 9, label: 'Viêm gan B', field: 'hepatitisBStatus', type: 'personalInfo', inputType: 'text', placeholder: "Nhập tình trạng" },
     { number: 10, label: 'Lương cơ bản mong muốn/tháng', field: 'desiredSalary', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
     { number: 11, label: 'Thực lĩnh mong muốn', field: 'desiredNetSalary', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
@@ -146,12 +146,11 @@ const StepByStepEditDialog = ({ initialStep = 1, trigger, tempCandidate, setTemp
         setTempCandidate(prev => {
             if (!prev) return null;
             const newCandidate = { ...prev };
-            if (section === 'aspirations' && newCandidate.aspirations) {
+            // @ts-ignore
+            const currentSection = newCandidate[section];
+            if (currentSection) {
                  // @ts-ignore
-                newCandidate.aspirations[field] = value;
-            } else if (section === 'personalInfo' && newCandidate.personalInfo) {
-                 // @ts-ignore
-                newCandidate.personalInfo[field] = value;
+                currentSection[field] = value;
             }
             return newCandidate;
         });
@@ -161,6 +160,22 @@ const StepByStepEditDialog = ({ initialStep = 1, trigger, tempCandidate, setTemp
         setTempCandidate(prev => {
             if (!prev) return null;
             return { ...prev, [field]: value };
+        });
+    };
+    
+    const handleButtonChange = (section: 'personalInfo' | 'aspirations', field: string, value: any) => {
+         setTempCandidate(prev => {
+            if (!prev) return null;
+            const newCandidate = { ...prev };
+             // @ts-ignore
+            const currentSection = newCandidate[section];
+            if (currentSection) {
+                 // @ts-ignore
+                const currentValue = currentSection[field];
+                 // @ts-ignore
+                currentSection[field] = currentValue === value ? '' : value;
+            }
+            return newCandidate;
         });
     };
     
@@ -191,14 +206,14 @@ const StepByStepEditDialog = ({ initialStep = 1, trigger, tempCandidate, setTemp
                 );
             case 'buttons':
                 return (
-                    <div className="flex justify-center gap-4">
+                    <div className="flex justify-center gap-2 md:gap-4">
                         {options?.map(opt => (
                             <Button
                                 key={opt}
                                 variant={value === opt ? 'default' : 'outline'}
-                                onClick={() => handleChange(opt)}
+                                onClick={() => handleButtonChange(type as 'personalInfo' | 'aspirations', fieldName, opt)}
                                 type="button"
-                                className="rounded-full px-6 py-2 text-base"
+                                className="rounded-full px-4 py-2 text-sm md:text-base"
                             >
                                 {opt}
                             </Button>
@@ -632,44 +647,18 @@ export default function CandidateProfilePage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+            <StepByStepEditDialog
+                trigger={
+                   <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
                         <h4 className="font-bold text-accent-orange">Mức 1</h4>
                         <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
                     </Card>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-xl">
-                    <DialogHeader>
-                        <DialogTitle className="font-headline text-2xl">ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
-                    </DialogHeader>
-                    <div className="max-h-[70vh] overflow-y-auto pr-4">
-                      <Accordion type="single" collapsible className="w-full">
-                            {level1Fields.map((field) => (
-                                <AccordionItem value={`item-${field.number}`} key={field.number}>
-                                    <StepByStepEditDialog
-                                        initialStep={field.number}
-                                        tempCandidate={tempCandidate}
-                                        setTempCandidate={setTempCandidate}
-                                        onSave={handleSave}
-                                        trigger={
-                                            <AccordionTrigger className="w-full text-left no-underline hover:no-underline">
-                                                {`${field.number}. ${field.label}`}
-                                            </AccordionTrigger>
-                                        }
-                                    />
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </div>
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button onClick={handleSave} className="bg-accent-orange text-white w-full">LƯU & ĐĂNG THÔNG TIN</Button>
-                        </DialogClose>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+                }
+                tempCandidate={tempCandidate}
+                setTempCandidate={setTempCandidate}
+                onSave={handleSave}
+            />
 
             <Dialog>
                 <DialogTrigger asChild>
@@ -791,6 +780,15 @@ export default function CandidateProfilePage() {
     </Card>
   )
 
+    const InfoRow = ({ label, value }: { label: string, value: string | number | undefined }) => {
+        if (!value) return null;
+        return (
+            <div className="flex justify-between items-center py-3 px-4 even:bg-secondary">
+                <span className="text-muted-foreground">{label}</span>
+                <span className="font-semibold text-right">{value}</span>
+            </div>
+        );
+    };
 
   return (
     <div className="bg-secondary">
@@ -927,17 +925,38 @@ export default function CandidateProfilePage() {
               {/* Right Column */}
               <div className="lg:col-span-1 space-y-6">
                  <Card>
-                  <CardHeader>
-                    <CardTitle className="font-headline text-xl flex items-center"><UserCog className="mr-3 text-primary"/> Thông tin cá nhân</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <p className="flex items-start gap-3"><strong>Ngày sinh:</strong> {candidate.personalInfo.dateOfBirth}</p>
-                    <p className="flex items-start gap-3"><strong>Giới tính:</strong> {candidate.personalInfo.gender}</p>
-                    <p className="flex items-start gap-3"><strong>Chiều cao:</strong> {candidate.personalInfo.height}</p>
-                    <p className="flex items-start gap-3"><strong>Cân nặng:</strong> {candidate.personalInfo.weight}</p>
-                    <p className="flex items-start gap-3"><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</p>
-                  </CardContent>
+                    <CardHeader>
+                        <CardTitle className="font-headline text-xl flex items-center"><UserCog className="mr-3 text-primary"/> Thông tin cá nhân</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0 text-sm">
+                        <div className="border-t">
+                            <InfoRow label="Họ và tên" value={candidate.name} />
+                            <InfoRow label="Số điện thoại" value={candidate.personalInfo.phone} />
+                            <InfoRow label="Ngày sinh" value={candidate.personalInfo.dateOfBirth} />
+                            <InfoRow label="Quê quán" value={candidate.location} />
+                            <InfoRow label="Giới tính" value={candidate.personalInfo.gender} />
+                            <InfoRow label="Chiều cao" value={candidate.personalInfo.height} />
+                            <InfoRow label="Cân nặng" value={candidate.personalInfo.weight} />
+                            <InfoRow label="Hình xăm" value={candidate.personalInfo.tattooStatus} />
+                            <InfoRow label="Viêm gan B" value={candidate.personalInfo.hepatitisBStatus} />
+                        </div>
+                    </CardContent>
                 </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="font-headline text-xl flex items-center"><Target className="mr-3 text-primary"/> Mong muốn và nguyện vọng</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0 text-sm">
+                        <div className="border-t">
+                            <InfoRow label="Nước mong muốn" value={candidate.aspirations?.desiredLocation} />
+                            <InfoRow label="Loại hình" value={candidate.desiredIndustry} />
+                            <InfoRow label="Mức phí" value={candidate.aspirations?.financialAbility} />
+                            <InfoRow label="Back mong muốn" value={candidate.aspirations?.desiredSalary} />
+                        </div>
+                    </CardContent>
+                </Card>
+
 
                  <Card>
                   <CardHeader className="flex flex-row items-center justify-between">

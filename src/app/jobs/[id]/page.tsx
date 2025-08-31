@@ -152,8 +152,8 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                                     {job.salary.actual && <p className="font-semibold text-muted-foreground">Thực lĩnh: ~{job.salary.actual}</p>}
                                </div>
                                <div className="border-t pt-4 space-y-2 text-sm">
-                                   <p>Thu nhập năm: <strong>{job.salary.annualIncome}</strong></p>
-                                   <p>Thưởng: <strong>{job.salary.annualBonus}</strong></p>
+                                   <p>Thu nhập năm: <strong>{job.salary.annualIncome || 'N/A'}</strong></p>
+                                   <p>Thưởng: <strong>{job.salary.annualBonus || 'N/A'}</strong></p>
                                </div>
                             </CardContent>
                         </Card>

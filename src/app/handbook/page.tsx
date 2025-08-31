@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, Camera } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';
@@ -83,6 +83,25 @@ const VideoCard = ({ article }: { article: HandbookArticle }) => (
   </Link>
 );
 
+const ImageStoryCard = ({ article }: { article: HandbookArticle }) => (
+  <Link href={`/handbook/${article.slug}`} className="group block">
+      <Card className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 aspect-video">
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            data-ai-hint={article.dataAiHint}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 p-4 text-white">
+             <Badge className="mb-2 w-fit bg-accent-orange text-white">{article.category}</Badge>
+             <h4 className="font-headline text-lg font-bold leading-tight line-clamp-2">{article.title}</h4>
+          </div>
+      </Card>
+  </Link>
+);
+
 
 export default function HandbookPage() {
 
@@ -90,6 +109,7 @@ export default function HandbookPage() {
   const mainArticles = articles.filter(a => a.type === 'article' && a.slug !== featuredArticle.slug);
   const videos = articles.filter(a => a.type === 'video');
   const posts = articles.filter(a => a.type === 'post');
+  const imageStories = articles.filter(a => a.type === 'image-story');
 
 
   return (
@@ -153,6 +173,18 @@ export default function HandbookPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                        {mainArticles.map((article) => (
                            <ArticleCard key={article.slug} article={article}/>
+                       ))}
+                    </div>
+                </section>
+
+                 {/* Image Stories Section */}
+                <section>
+                    <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-foreground">
+                        <Camera className="mr-3 text-primary"/> Bài viết bằng ảnh
+                    </h2>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                       {imageStories.map((story) => (
+                           <ImageStoryCard key={story.slug} article={story} />
                        ))}
                     </div>
                 </section>

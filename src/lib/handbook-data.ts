@@ -2,7 +2,7 @@
 
 export type HandbookArticle = {
   slug: string;
-  type: 'article' | 'video' | 'post'; // Phân loại nội dung
+  type: 'article' | 'video' | 'post' | 'image-story'; // Phân loại nội dung
   title: string;
   category: string;
   author: string;
@@ -38,7 +38,7 @@ export const articles: HandbookArticle[] = [
           <p>Chương trình này được chia thành 2 loại chính:</p>
           <ul>
             <li><strong>Kỹ năng đặc định loại 1 (Tokutei Ginou 1):</strong> Dành cho lao động có trình độ kỹ năng và kiến thức chuyên môn nhất định, có thể làm việc ngay mà không cần qua đào tạo nhiều. Thời gian lưu trú tối đa là 5 năm và không được bảo lãnh gia đình.</li>
-            <li><strong>Kỹ năng đặc định loại 2 (Tokutei Ginou 2):</strong> Dành cho lao động có kỹ năng tay nghề cao, chuyên nghiệp. Sau khi hoàn thành chương trình loại 1, lao động có thể thi chuyển lên loại 2 để được ở lại Nhật Bản lâu dài, có cơ hội xin vĩnh trú và bảo lãnh người thân sang sinh sống.</li>
+            <li><strong>Kỹ năng đặc định loại 2 (Tokutei Ginou 2):</strong> Dành cho lao động có kỹ năng tay nghề cao, chuyên nghiệp. Sau khi hoàn thành chương trình loại 1, lao động có thể thi chuyển lên được loại 2 để được ở lại Nhật Bản lâu dài, có cơ hội xin vĩnh trú và bảo lãnh người thân sang sinh sống.</li>
           </ul>
         `
       },
@@ -220,5 +220,27 @@ export const articles: HandbookArticle[] = [
         body: '<p>Theo nguyên tắc, bạn cần phải sinh sống liên tục tại Nhật Bản ít nhất 10 năm. Tuy nhiên, có một số trường hợp được xét duyệt ưu tiên với thời gian ngắn hơn, ví dụ như người có đóng góp lớn cho Nhật Bản hoặc vợ/chồng của người Nhật.',
       },
     ],
+  },
+  {
+    slug: 'mot-ngay-o-xuong-com-hop',
+    type: 'image-story',
+    title: 'Một ngày làm việc tại xưởng cơm hộp ở Nhật diễn ra như thế nào?',
+    category: 'Cuộc sống ở Nhật',
+    author: 'HelloJob Team',
+    readTime: '3 phút',
+    image: 'https://placehold.co/800x600.png',
+    dataAiHint: 'bento box factory',
+    excerpt: 'Cùng theo chân một thực tập sinh khám phá quy trình làm việc trong một ngày tại xưởng sản xuất cơm hộp hiện đại của Nhật Bản.',
+  },
+  {
+    slug: '7-eleven-o-nhat',
+    type: 'image-story',
+    title: 'Khám phá những điều thú vị chỉ có ở 7-Eleven Nhật Bản',
+    category: 'Cuộc sống ở Nhật',
+    author: 'Mai Linh',
+    readTime: '4 phút',
+    image: 'https://placehold.co/800x600.png',
+    dataAiHint: '7-eleven japan store',
+    excerpt: '7-Eleven ở Nhật không chỉ là cửa hàng tiện lợi, đó là cả một thế giới ẩm thực và dịch vụ độc đáo. Hãy xem bên trong có gì nhé!',
   },
 ];

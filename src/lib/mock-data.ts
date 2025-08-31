@@ -34,8 +34,8 @@ export interface Job {
     postedTime: string;
 
     // Level 1 Fields
-    visaType: string;
-    visaDetail: string;
+    visaType: 'Thực tập sinh kỹ năng' | 'Kỹ năng đặc định' | 'Kỹ sư, tri thức';
+    visaDetail: 'Thực tập sinh 3 năm' | 'Thực tập sinh 1 năm' | 'Thực tập sinh 3 Go' | 'Đặc định đầu Việt' | 'Đặc định đầu Nhật' | 'Đặc định đi mới' | 'Kỹ sư, tri thức đầu Việt' | 'Kỹ sư, tri thức đầu Nhật';
     industry: string;
     workLocation: string;
     interviewLocation?: string;

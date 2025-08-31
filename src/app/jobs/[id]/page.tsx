@@ -75,7 +75,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
 
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Yêu cầu cơ bản (Mức 1)</CardTitle>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Thông tin cơ bản mức 1</CardTitle>
                             </CardHeader>
                             <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <RequirementItem icon={Milestone} label="Loại Visa" value={job.visaType}/>
@@ -95,7 +95,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                         
                          <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><UserCheck className="text-primary h-6 w-6"/>Yêu cầu chi tiết (Mức 2)</CardTitle>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><UserCheck className="text-primary h-6 w-6"/>Thông tin chi tiết mức 1</CardTitle>
                             </CardHeader>
                             <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <RequirementItem icon={GraduationCap} label="Yêu cầu học vấn" value={job.educationRequirement}/>

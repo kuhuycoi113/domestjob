@@ -6,7 +6,7 @@ import { jobData, type Job } from '@/lib/mock-data';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, CalendarDays, DollarSign, Heart, MapPin, Sparkles, UserCheck, FileText, Share2, Users, ClipboardCheck, Wallet, UserRound, ArrowLeft, Video, Image as ImageIcon, Milestone, Languages, User as UserIcon, Cake, ChevronsRight, Info, Star } from 'lucide-react';
+import { Briefcase, Building, CalendarDays, DollarSign, Heart, MapPin, Sparkles, UserCheck, FileText, Share2, Users, ClipboardCheck, Wallet, UserRound, ArrowLeft, Video, Image as ImageIcon, Milestone, Languages, User as UserIcon, Cake, ChevronsRight, Info, Star, GraduationCap, Weight, Ruler } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -30,24 +30,19 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
     if (!job) {
         notFound();
     }
-
-    const InfoPill = ({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: string | number }) => (
-        <div className="flex flex-col items-center justify-center p-3 bg-secondary rounded-lg text-center">
-            <Icon className="h-6 w-6 text-primary mb-2" />
-            <p className="text-xs text-muted-foreground font-semibold">{label}</p>
-            <p className="text-sm font-bold">{value}</p>
-        </div>
-    );
     
-    const RequirementItem = ({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: string | number }) => (
-        <div className="flex items-start gap-4">
-            <Icon className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
-            <div>
-                <p className="font-semibold text-foreground">{label}</p>
-                <p className="text-muted-foreground">{value}</p>
+    const RequirementItem = ({ icon: Icon, label, value, className }: { icon: React.ElementType, label: string, value?: string | number, className?: string }) => {
+        if (!value) return null;
+        return (
+            <div className={cn("flex items-start gap-3", className)}>
+                <Icon className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                    <p className="font-semibold text-foreground">{label}</p>
+                    <p className="text-muted-foreground">{value}</p>
+                </div>
             </div>
-        </div>
-    );
+        )
+    };
 
     return (
         <div className="bg-secondary">
@@ -88,6 +83,23 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                                 <RequirementItem icon={ClipboardCheck} label="Số vòng" value={`${job.interviewRounds} vòng`}/>
                                 <RequirementItem icon={DollarSign} label="Phí xuất cảnh" value={job.netFee}/>
                                 <RequirementItem icon={Star} label="Điều kiện đặc biệt" value={job.specialConditions}/>
+                            </CardContent>
+                        </Card>
+                        
+                         <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><UserCheck className="text-primary h-6 w-6"/>Yêu cầu chi tiết (Mức 2)</CardTitle>
+                            </CardHeader>
+                            <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                                <RequirementItem icon={GraduationCap} label="Yêu cầu học vấn" value={job.educationRequirement}/>
+                                <RequirementItem icon={Briefcase} label="Kinh nghiệm" value={job.experienceRequirement}/>
+                                <RequirementItem icon={CalendarDays} label="Số năm kinh nghiệm" value={job.yearsOfExperience}/>
+                                <RequirementItem icon={Ruler} label="Chiều cao" value={job.heightRequirement}/>
+                                <RequirementItem icon={Weight} label="Cân nặng" value={job.weightRequirement}/>
+                                <RequirementItem icon={Dna} label="Viêm gan B" value={job.hepatitisBRequirement}/>
+                                <RequirementItem icon={User} label="Hình xăm" value={job.tattooRequirement}/>
+                                <RequirementItem icon={ImageIcon} label="Yêu cầu thị lực" value={job.visionRequirement}/>
+                                <RequirementItem icon={ClipboardCheck} label="Hình thức phỏng vấn" value={job.interviewFormat}/>
                             </CardContent>
                         </Card>
 

@@ -10,6 +10,9 @@ export interface Job {
     salary: {
       actual?: string;
       basic: string;
+      hourly?: string;
+      annualIncome?: string;
+      annualBonus?: string;
     };
     title: string;
     recruiter: {
@@ -43,6 +46,23 @@ export interface Job {
     specialConditions: string;
     notes?: string;
 
+    // Level 2 Fields
+    educationRequirement: string;
+    experienceRequirement: string;
+    yearsOfExperience?: string;
+    companyTimeRequirement?: string;
+    remainingGinouTime?: string;
+    otherSkillRequirement?: string;
+    workShift?: string;
+    visionRequirement?: string;
+    interviewFormat?: string;
+    heightRequirement?: string;
+    weightRequirement?: string;
+    dominantHand?: string;
+    tattooRequirement?: string;
+    hepatitisBRequirement?: string;
+
+
     details: {
         description: string;
         requirements: string;
@@ -58,7 +78,7 @@ export const jobData: Job[] = [
         isRecording: true,
         image: { src: 'https://placehold.co/600x400.png', type: 'minhhoa' },
         likes: '8k2',
-        salary: { actual: '25,5tr', basic: '30tr' },
+        salary: { actual: '25,5tr', basic: '30tr', annualIncome: '350 vạn yên', annualBonus: '2 lần/năm' },
         title: 'Thực tập sinh 3 năm, Chế biến thực phẩm, Nagasaki',
         recruiter: { name: 'Nguyễn Thị Ngân', avatar: 'https://placehold.co/32x32.png', company: 'Hoàng Long H...' },
         status: 'Đang tuyển',
@@ -79,6 +99,15 @@ export const jobData: Job[] = [
         ageRequirement: '18 - 35 tuổi',
         languageRequirement: 'Không yêu cầu',
         specialConditions: 'Chăm chỉ, chịu khó',
+        educationRequirement: 'Tốt nghiệp THPT trở lên',
+        experienceRequirement: 'Không yêu cầu kinh nghiệm',
+        heightRequirement: '1m50 trở lên',
+        weightRequirement: '45kg trở lên',
+        tattooRequirement: 'Không hình xăm',
+        hepatitisBRequirement: 'Không viêm gan B',
+        visionRequirement: 'Thị lực tốt, không mù màu',
+        interviewFormat: 'Online qua Zoom',
+        workShift: 'Làm theo ca, xoay ca',
         details: {
             description: '<p>Công việc chính là chế biến, đóng gói các sản phẩm cơm hộp, sushi, salad cho chuỗi siêu thị và cửa hàng tiện lợi. Môi trường làm việc sạch sẽ, hiện đại, đảm bảo vệ sinh an toàn thực phẩm.</p><ul><li>Vận hành máy trộn, máy cắt rau củ, máy đóng gói tự động.</li><li>Kiểm tra chất lượng nguyên liệu và thành phẩm.</li><li>Tuân thủ nghiêm ngặt các quy định về vệ sinh cá nhân và khu vực làm việc.</li></ul><p><strong>Ghi chú:</strong> Công việc có thể yêu cầu đứng trong thời gian dài.</p>',
             requirements: '<p>Yêu cầu ứng viên chăm chỉ, cẩn thận và có trách nhiệm. Cụ thể:</p><ul><li>Độ tuổi: 18 - 35 tuổi.</li><li>Giới tính: Nữ.</li><li>Sức khỏe tốt, không mắc các bệnh truyền nhiễm.</li><li>Không yêu cầu kinh nghiệm, sẽ được đào tạo bài bản.</li><li>Ưu tiên ứng viên có kinh nghiệm làm trong ngành thực phẩm.</li></ul>',
@@ -122,6 +151,9 @@ export const jobData: Job[] = [
         ageRequirement: '22 - 32 tuổi',
         languageRequirement: 'Tiếng Nhật N2',
         specialConditions: 'Có kinh nghiệm làm việc với khách hàng Nhật',
+        educationRequirement: 'Tốt nghiệp Đại học chuyên ngành CNTT hoặc tương đương',
+        experienceRequirement: 'Có kinh nghiệm BrSE',
+        yearsOfExperience: 'Ít nhất 2 năm',
         details: { description: 'Chi tiết công việc đang được cập nhật.', requirements: 'Chi tiết yêu cầu đang được cập nhật.', benefits: 'Chi tiết quyền lợi đang được cập nhật.', images: [], videoUrl: '' }
     },
     {
@@ -150,6 +182,8 @@ export const jobData: Job[] = [
         ageRequirement: '20 - 30 tuổi',
         languageRequirement: 'Không yêu cầu',
         specialConditions: 'Khéo tay, cẩn thận',
+        educationRequirement: 'Tốt nghiệp THCS trở lên',
+        experienceRequirement: 'Không yêu cầu',
         details: { description: 'Chi tiết công việc đang được cập nhật.', requirements: 'Chi tiết yêu cầu đang được cập nhật.', benefits: 'Chi tiết quyền lợi đang được cập nhật.', images: [], videoUrl: '' }
     },
     {
@@ -181,6 +215,9 @@ export const jobData: Job[] = [
         ageRequirement: '21 - 35 tuổi',
         languageRequirement: 'Tiếng Nhật N4',
         specialConditions: 'Có kinh nghiệm vận hành máy phay',
+        educationRequirement: 'Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ khí',
+        experienceRequirement: 'Có kinh nghiệm',
+        yearsOfExperience: '1 năm vận hành máy phay CNC',
         details: { description: 'Chi tiết công việc đang được cập nhật.', requirements: 'Chi tiết yêu cầu đang được cập nhật.', benefits: 'Chi tiết quyền lợi đang được cập nhật.', images: [], videoUrl: '' }
     },
     {
@@ -209,6 +246,9 @@ export const jobData: Job[] = [
       ageRequirement: '19 - 28 tuổi',
       languageRequirement: 'Không yêu cầu',
       specialConditions: 'Có chứng chỉ hàn 3G trở lên',
+      educationRequirement: 'Tốt nghiệp THPT',
+      experienceRequirement: 'Có kinh nghiệm hàn',
+      yearsOfExperience: '6 tháng',
       details: { description: 'Chi tiết công việc đang được cập nhật.', requirements: 'Chi tiết yêu cầu đang được cập nhật.', benefits: 'Chi tiết quyền lợi đang được cập nhật.', images: [], videoUrl: '' }
     }
 ];

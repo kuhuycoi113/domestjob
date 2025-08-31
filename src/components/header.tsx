@@ -142,6 +142,9 @@ export function Header() {
         </nav>
         <div className="hidden md:flex items-center gap-2">
             <LanguageSwitcher />
+             <Button asChild variant="outline">
+                <Link href="/jobs">Trang quản lý</Link>
+            </Button>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -151,7 +154,7 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-[360px]" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal p-0">
+                <DropdownMenuItem asChild>
                   <Link href="/candidate-profile" className="block hover:bg-accent rounded-md p-2 cursor-pointer">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-12 w-12">
@@ -166,7 +169,7 @@ export function Header() {
                       </div>
                     </div>
                   </Link>
-                </DropdownMenuLabel>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <div className="grid grid-cols-4 gap-2 p-2">

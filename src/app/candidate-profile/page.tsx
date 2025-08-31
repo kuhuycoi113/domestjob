@@ -136,20 +136,18 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
 
     if (!tempCandidate) return null;
 
-    const handleNestedChange = (
-      section: 'personalInfo' | 'aspirations', 
-      field: string, 
-      value: any
-    ) => {
+    const handleNestedChange = (section: 'personalInfo' | 'aspirations', field: string, value: any) => {
         setTempCandidate(prev => {
             if (!prev) return null;
-            return {
-                ...prev,
-                [section]: {
-                    ...prev[section],
-                    [field]: value
-                }
-            };
+            const newCandidate = { ...prev };
+            if (section === 'aspirations' && newCandidate.aspirations) {
+                // @ts-ignore
+                newCandidate.aspirations[field] = value;
+            } else if (section === 'personalInfo' && newCandidate.personalInfo) {
+                 // @ts-ignore
+                newCandidate.personalInfo[field] = value;
+            }
+            return newCandidate;
         });
     };
 
@@ -162,40 +160,6 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
 
     const currentField = level1Fields.find(f => f.number === currentStep);
 
-    const renderInput = () => {
-        if (!currentField) return null;
-
-        const { type, field, inputType, placeholder, options } = currentField;
-
-        const value = type === 'simple' ? tempCandidate[field as keyof EnrichedCandidateProfile] : tempCandidate[type as 'personalInfo' | 'aspirations']?.[field as any];
-
-        const handleChange = (newValue: any) => {
-            if (type === 'simple') {
-                handleSimpleChange(field as keyof EnrichedCandidateProfile, newValue);
-            } else {
-                handleNestedChange(type as 'personalInfo' | 'aspirations', field, newValue);
-            }
-        }
-
-        switch (inputType) {
-            case 'select':
-                return (
-                    <Select value={value || ''} onValueChange={handleChange}>
-                        <SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger>
-                        <SelectContent>
-                            {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
-                        </SelectContent>
-                    </Select>
-                );
-            case 'textarea':
-                return <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
-            case 'date':
-                return <Input type="date" value={value || ''} onChange={e => handleChange(e.target.value)} />
-            default:
-                return <Input placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
-        }
-    }
-
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild onClick={() => setCurrentStep(1)}>{trigger}</DialogTrigger>
@@ -206,8 +170,43 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
                 <div className="flex flex-col justify-between min-h-[500px]">
                     <div className="space-y-4 pt-4">
                         <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
-                        <div className="px-4">
-                            {renderInput()}
+                         <div className="px-4 relative">
+                            {level1Fields.map((field) => {
+                                const { type, field: fieldName, inputType, placeholder, options } = field;
+                                const isCurrent = currentStep === field.number;
+                                
+                                const value = type === 'simple' ? tempCandidate[fieldName as keyof EnrichedCandidateProfile] : tempCandidate[type as 'personalInfo' | 'aspirations']?.[fieldName as any];
+
+                                const handleChange = (newValue: any) => {
+                                    if (type === 'simple') {
+                                        handleSimpleChange(fieldName as keyof EnrichedCandidateProfile, newValue);
+                                    } else {
+                                        handleNestedChange(type as 'personalInfo' | 'aspirations', fieldName, newValue);
+                                    }
+                                }
+
+                                return (
+                                    <div key={field.number} className={cn(!isCurrent && "hidden")}>
+                                        {inputType === 'select' && (
+                                            <Select value={value || ''} onValueChange={handleChange}>
+                                                <SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger>
+                                                <SelectContent>
+                                                    {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                                                </SelectContent>
+                                            </Select>
+                                        )}
+                                        {inputType === 'textarea' && (
+                                            <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
+                                        )}
+                                        {inputType === 'date' && (
+                                            <Input type="date" value={value || ''} onChange={e => handleChange(e.target.value)} />
+                                        )}
+                                        {inputType === 'text' && (
+                                             <Input placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
+                                        )}
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                     <div className="px-4 pb-4">

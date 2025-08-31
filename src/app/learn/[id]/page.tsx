@@ -2,44 +2,28 @@
 'use client';
 
 import { useState } from 'react';
+import { notFound } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Clock, FileText, Layers, Star, Users, PlayCircle, BookCheck } from 'lucide-react';
-
-// Mock data, in a real app this would be fetched based on params.id
-const courseDetails = {
-  id: 'tieng-nhat-giao-tiep',
-  title: 'Tiếng Nhật giao tiếp cho người đi làm (Minna no Nihongo)',
-  category: 'Ngoại ngữ',
-  description: 'Khóa học được thiết kế đặc biệt cho người lao động, bám sát giáo trình Minna no Nihongo uy tín, tập trung vào các mẫu câu giao tiếp và từ vựng chuyên ngành thường dùng trong môi trường nhà máy Nhật Bản.',
-  instructor: {
-    name: 'Dung Mochi',
-    avatar: 'https://placehold.co/100x100.png',
-    dataAiHint: 'Japanese teacher',
-    title: 'Giáo viên tiếng Nhật',
-  },
-  stats: {
-    students: 1258,
-    rating: 4.8,
-    lessons: 25,
-    level: 'N5',
-  },
-  curriculum: [
-    { title: 'Bài 1: Giới thiệu bản thân', duration: '15:20', videoId: 'e-kFz1d4kE8' },
-    { title: 'Bài 2: Cái này, cái đó, cái kia', duration: '18:45', videoId: 'zUo2N2pG0qI' },
-    { title: 'Bài 3: Địa điểm, nơi chốn', duration: '20:10', videoId: '5p2sVqGgE_I' },
-    { title: 'Bài 4: Động từ và thời gian', duration: '22:55', videoId: 'zFzOqkUG4Ow' },
-    { title: 'Bài 5: Di chuyển', duration: '19:30', videoId: 'V92_uXn2o5o' },
-  ]
-};
+import { courses, type Course } from '@/lib/learn-data';
 
 const categoryColors: { [key: string]: string } = {
   'Ngoại ngữ': 'bg-accent-orange text-white',
+  'Văn hóa & Xã hội': 'bg-accent-green text-white',
+  'Kỹ năng làm việc': 'bg-accent-blue text-white',
+  'Phát triển sự nghiệp': 'bg-accent text-white',
 };
 
 export default function LearnDetailPage({ params }: { params: { id: string } }) {
-  const [activeVideo, setActiveVideo] = useState(courseDetails.curriculum[0].videoId);
+  const course = courses.find((c) => c.id === params.id);
+  
+  if (!course) {
+    notFound();
+  }
+
+  const [activeVideo, setActiveVideo] = useState(course.curriculum[0]?.videoId || '');
 
   return (
     <div className="bg-secondary">
@@ -51,19 +35,25 @@ export default function LearnDetailPage({ params }: { params: { id: string } }) 
             <Card className="overflow-hidden shadow-xl">
                <CardContent className="p-0">
                 <div className="aspect-video bg-black">
-                   <iframe 
-                      className="w-full h-full" 
-                      src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1`} 
-                      title="YouTube video player" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      allowFullScreen
-                    ></iframe>
+                   {activeVideo ? (
+                     <iframe 
+                        className="w-full h-full" 
+                        src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1`} 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowFullScreen
+                      ></iframe>
+                   ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-muted">
+                        <p className="text-muted-foreground">Nội dung đang được cập nhật.</p>
+                    </div>
+                   )}
                 </div>
                 <div className="p-6">
-                    <p className={`inline-block px-3 py-1 text-sm font-semibold rounded-full mb-4 ${categoryColors[courseDetails.category]}`}>{courseDetails.category}</p>
-                    <CardTitle className="font-headline text-3xl mb-4">{courseDetails.title}</CardTitle>
-                    <CardDescription className="text-base text-muted-foreground">{courseDetails.description}</CardDescription>
+                    <p className={`inline-block px-3 py-1 text-sm font-semibold rounded-full mb-4 ${categoryColors[course.category] || 'bg-gray-500 text-white'}`}>{course.category}</p>
+                    <CardTitle className="font-headline text-3xl mb-4">{course.title}</CardTitle>
+                    <CardDescription className="text-base text-muted-foreground">{course.description}</CardDescription>
                 </div>
               </CardContent>
             </Card>
@@ -74,12 +64,12 @@ export default function LearnDetailPage({ params }: { params: { id: string } }) 
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
                     <Avatar className="h-16 w-16">
-                        <AvatarImage src={courseDetails.instructor.avatar} alt={courseDetails.instructor.name} data-ai-hint={courseDetails.instructor.dataAiHint} />
-                        <AvatarFallback>{courseDetails.instructor.name.charAt(0)}</AvatarFallback>
+                        <AvatarImage src={course.instructor.avatar} alt={course.instructor.name} data-ai-hint={course.instructor.dataAiHint} />
+                        <AvatarFallback>{course.instructor.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div>
-                        <p className="font-bold">{courseDetails.instructor.name}</p>
-                        <p className="text-sm text-muted-foreground">{courseDetails.instructor.title}</p>
+                        <p className="font-bold">{course.instructor.name}</p>
+                        <p className="text-sm text-muted-foreground">{course.instructor.title}</p>
                     </div>
                 </CardContent>
             </Card>
@@ -92,7 +82,7 @@ export default function LearnDetailPage({ params }: { params: { id: string } }) 
                 <CardTitle className="font-headline text-xl">Nội dung khóa học</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 max-h-[600px] overflow-y-auto">
-                 {courseDetails.curriculum.map((lesson, index) => (
+                 {course.curriculum.length > 0 ? course.curriculum.map((lesson, index) => (
                     <button 
                         key={index} 
                         onClick={() => setActiveVideo(lesson.videoId)}
@@ -104,7 +94,9 @@ export default function LearnDetailPage({ params }: { params: { id: string } }) 
                             <p className="text-xs text-muted-foreground">{lesson.duration}</p>
                         </div>
                     </button>
-                 ))}
+                 )) : (
+                     <p className="text-sm text-muted-foreground">Nội dung bài học đang được cập nhật.</p>
+                 )}
               </CardContent>
             </Card>
 
@@ -115,19 +107,19 @@ export default function LearnDetailPage({ params }: { params: { id: string } }) 
                 <CardContent className="space-y-4">
                     <div className="flex items-center gap-3 text-sm">
                         <Layers className="w-5 h-5 text-muted-foreground"/>
-                        <span><strong>Cấp độ:</strong> {courseDetails.stats.level}</span>
+                        <span><strong>Cấp độ:</strong> {course.stats.level}</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm">
                         <BookCheck className="w-5 h-5 text-muted-foreground"/>
-                        <span><strong>Số bài học:</strong> {courseDetails.stats.lessons}</span>
+                        <span><strong>Số bài học:</strong> {course.stats.lessons}</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm">
                         <Users className="w-5 h-5 text-muted-foreground"/>
-                        <span><strong>Học viên:</strong> {courseDetails.stats.students.toLocaleString()}</span>
+                        <span><strong>Học viên:</strong> {course.stats.students.toLocaleString()}</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm">
                         <Star className="w-5 h-5 text-yellow-500 fill-yellow-500"/>
-                        <span><strong>Đánh giá:</strong> {courseDetails.stats.rating} / 5</span>
+                        <span><strong>Đánh giá:</strong> {course.stats.rating} / 5</span>
                     </div>
                 </CardContent>
             </Card>

@@ -5,47 +5,12 @@ import Image from 'next/image';
 import { ArrowRight, BookOpen, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { courses } from '@/lib/learn-data';
 
 export const metadata: Metadata = {
   title: 'E-Learning: Chinh phục tiếng Nhật và Kỹ năng làm việc',
   description: 'Nâng cao kỹ năng, mở rộng cơ hội với các khóa học E-learning được thiết kế riêng cho người lao động Việt Nam muốn làm việc tại Nhật Bản.',
 };
-
-
-const courses = [
-  {
-    id: 'tieng-nhat-giao-tiep',
-    title: 'Tiếng Nhật giao tiếp cho người đi làm',
-    category: 'Ngoại ngữ',
-    description: 'Khóa học tiếng Nhật bám sát giáo trình Minna no Nihongo, tập trung vào các mẫu câu giao tiếp và từ vựng chuyên ngành.',
-    image: 'https://placehold.co/600x400.png',
-    dataAiHint: 'Japanese language class',
-  },
-  {
-    id: 'van-hoa-nhat-ban',
-    title: 'Hiểu về Văn hóa Nhật Bản',
-    category: 'Văn hóa & Xã hội',
-    description: 'Khám phá những nét đặc trưng trong văn hóa, từ giao tiếp hàng ngày đến các lễ hội truyền thống, giúp bạn hòa nhập nhanh chóng.',
-    image: 'https://placehold.co/600x400.png',
-    dataAiHint: 'Japanese culture collage',
-  },
-  {
-    id: 'ung-xu-cong-ty-nhat',
-    title: 'Cách ứng xử trong công ty Nhật',
-    category: 'Kỹ năng làm việc',
-    description: 'Nắm vững các quy tắc ứng xử nơi công sở Nhật Bản, từ cách chào hỏi, trao đổi danh thiếp đến văn hóa báo cáo "Hou-Ren-Sou".',
-    image: 'https://placehold.co/600x400.png',
-    dataAiHint: 'Japanese office meeting',
-  },
-   {
-    id: 'ky-nang-thang-tien',
-    title: 'Kỹ năng để Thăng tiến tại Nhật Bản',
-    category: 'Phát triển sự nghiệp',
-    description: 'Tìm hiểu về tư duy kaizen, kỹ năng quản lý và những yếu tố then chốt giúp bạn không chỉ hoàn thành công việc mà còn thăng tiến.',
-    image: 'https://placehold.co/600x400.png',
-    dataAiHint: 'career growth ladder',
-  },
-];
 
 export default function LearnPage() {
   return (

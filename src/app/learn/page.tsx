@@ -36,7 +36,7 @@ export default function LearnPage() {
                             alt={course.title}
                             fill
                             className="object-cover"
-                            data-ai-hint={course.dataAiHint}
+                            data-ai-hint={course['data-ai-hint']}
                           />
                        </Link>
                     </CardHeader>

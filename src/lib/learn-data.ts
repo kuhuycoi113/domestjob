@@ -56,12 +56,12 @@ export const courses: Course[] = [
     ]
   },
   {
-    id: 'ung-xu-cong-ty-nhat',
-    title: 'Cách ứng xử trong công ty Nhật',
-    category: 'Kỹ năng làm việc',
+    id: 'van-hoa-ung-xu-cong-ty-nhat',
+    title: 'Văn hoá ứng xử trong công ty Nhật',
+    category: 'Văn hóa & Xã hội',
     description: 'Nắm vững các quy tắc ứng xử nơi công sở Nhật Bản, từ cách chào hỏi, trao đổi danh thiếp đến văn hóa báo cáo "Hou-Ren-Sou".',
     image: 'https://placehold.co/600x400.png',
-    'data-ai-hint': 'Japanese office meeting',
+    'data-ai-hint': 'Japanese office workers bowing',
     instructor: {
         name: 'Tanaka Kenji',
         avatar: 'https://placehold.co/100x100.png',

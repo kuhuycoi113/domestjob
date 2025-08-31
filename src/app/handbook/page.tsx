@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, PlusCircle, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';
@@ -10,6 +10,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export const metadata: Metadata = {
   title: 'Cẩm nang HelloJob - Thông tin việc làm & cuộc sống tại Nhật',
@@ -100,17 +106,32 @@ export default function HandbookPage() {
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-accent">
             Cẩm nang HelloJob
           </h1>
-          <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto whitespace-nowrap">
+          <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
             Tất cả thông tin bạn cần biết về thị trường lao động, kỹ năng và cuộc sống tại Nhật Bản.
           </p>
         </div>
 
-        {/* Search */}
-        <div className="max-w-xl mx-auto mb-16">
-          <div className="relative">
+        {/* Search & Actions */}
+        <div className="max-w-xl mx-auto mb-16 flex items-center gap-4">
+          <div className="relative flex-grow">
              <Input placeholder="Tìm kiếm bài viết (VD: Tokutei, chi phí...)" className="pl-12 h-12 text-lg rounded-full shadow-lg"/>
              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground" />
           </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button size="lg" className="rounded-full">
+                    <PlusCircle className="mr-2"/>
+                    Chia sẻ nội dung
+                    <ChevronDown className="ml-2"/>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild><Link href="/handbook/create/post" className="cursor-pointer"><FileText className="mr-2"/>Bài viết</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/handbook/create/video" className="cursor-pointer"><Video className="mr-2"/>Video dài</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/handbook/create/video-short" className="cursor-pointer"><Video className="mr-2"/>Video ngắn</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/handbook/create/image" className="cursor-pointer"><ImageIcon className="mr-2"/>Ảnh</Link></DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Layout */}

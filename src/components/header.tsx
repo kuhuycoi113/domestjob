@@ -142,9 +142,6 @@ export function Header() {
         </nav>
         <div className="hidden md:flex items-center gap-2">
             <LanguageSwitcher />
-             <Button asChild variant="outline">
-                <Link href="/candidate-profile">Hồ sơ của tôi</Link>
-            </Button>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -154,19 +151,21 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-[360px]" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
-                      <AvatarFallback>A</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        Ứng viên Thực tập sinh
-                      </p>
+                <DropdownMenuLabel className="font-normal p-0">
+                  <Link href="/candidate-profile" className="block hover:bg-accent rounded-md p-2 cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
+                        <AvatarFallback>A</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          Ứng viên Thực tập sinh
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>

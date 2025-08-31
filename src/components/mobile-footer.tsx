@@ -90,21 +90,20 @@ export function MobileFooter() {
             </SheetHeader>
             <div className="flex flex-col h-full overflow-y-auto">
               <div className="p-4">
-                 <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
-                      <AvatarFallback>A</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        Ứng viên Thực tập sinh
-                      </p>
+                 <Link href="/candidate-profile" className="block" onClick={() => setIsOpen(false)}>
+                    <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary hover:bg-accent/20">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
+                        <AvatarFallback>A</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          Ứng viên Thực tập sinh
+                        </p>
+                      </div>
                     </div>
-                 </div>
-                 <Button asChild variant="outline" className="mt-4 w-full" onClick={() => setIsOpen(false)}>
-                    <Link href="/candidate-profile">Hồ sơ của tôi</Link>
-                 </Button>
+                 </Link>
               </div>
               
               <DropdownMenuSeparator />

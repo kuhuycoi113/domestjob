@@ -50,7 +50,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
             <div className="container mx-auto px-4 md:px-6 py-12">
                 <div className="mb-6">
                     <Button asChild variant="outline" size="sm">
-                        <Link href="/jobs"><ArrowLeft className="mr-2 h-4 w-4" />Quay lại danh sách</Link>
+                        <Link href="/"><ArrowLeft className="mr-2 h-4 w-4" />Quay lại trang chủ</Link>
                     </Button>
                 </div>
                 <div className="grid lg:grid-cols-3 gap-8 items-start">
@@ -75,7 +75,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
 
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Thông tin cơ bản mức 1</CardTitle>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Thông tin cơ bản</CardTitle>
                             </CardHeader>
                             <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <RequirementItem icon={Milestone} label="Loại Visa" value={job.visaType}/>
@@ -85,17 +85,17 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                                 <RequirementItem icon={User} label="Giới tính" value={job.gender}/>
                                 <RequirementItem icon={Users} label="Số lượng" value={`${job.quantity} người`}/>
                                 <RequirementItem icon={Cake} label="Yêu cầu tuổi" value={job.ageRequirement}/>
-                                <RequirementItem icon={Languages} label="Ngoại ngữ" value={job.languageRequirement}/>
+                                <RequirementItem icon={Languages} label="Yêu cầu ngoại ngữ" value={job.languageRequirement}/>
                                 <RequirementItem icon={CalendarDays} label="Ngày phỏng vấn" value={job.interviewDate}/>
                                 <RequirementItem icon={ClipboardCheck} label="Số vòng" value={`${job.interviewRounds} vòng`}/>
-                                <RequirementItem icon={DollarSign} label="Phí xuất cảnh" value={job.netFee}/>
+                                <RequirementItem icon={Wallet} label="Mức phí" value={job.netFee}/>
                                 <RequirementItem icon={Star} label="Điều kiện đặc biệt" value={job.specialConditions}/>
                             </CardContent>
                         </Card>
                         
                          <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><UserCheck className="text-primary h-6 w-6"/>Thông tin chi tiết mức 1</CardTitle>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><UserCheck className="text-primary h-6 w-6"/>Yêu cầu chi tiết</CardTitle>
                             </CardHeader>
                             <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <RequirementItem icon={GraduationCap} label="Yêu cầu học vấn" value={job.educationRequirement}/>

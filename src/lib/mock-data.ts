@@ -23,7 +23,7 @@ export interface Job {
     status: 'Đang tuyển' | 'Tạm dừng';
     interviewDate: string;
     interviewRounds: number;
-    netFee: string;
+    netFee?: string;
     target: string;
     backFee?: string;
     tags: string[];
@@ -38,17 +38,17 @@ export interface Job {
     visaDetail: string;
     industry: string;
     workLocation: string;
-    interviewLocation: string;
+    interviewLocation?: string;
     gender: 'Nam' | 'Nữ' | 'Cả nam và nữ';
     quantity: number;
     ageRequirement: string;
-    languageRequirement: string;
+    languageRequirement?: string;
     specialConditions: string;
     notes?: string;
 
     // Level 2 Fields
-    educationRequirement: string;
-    experienceRequirement: string;
+    educationRequirement?: string;
+    experienceRequirement?: string;
     yearsOfExperience?: string;
     companyTimeRequirement?: string;
     remainingGinouTime?: string;
@@ -97,7 +97,7 @@ export const jobData: Job[] = [
         gender: 'Nữ',
         quantity: 3,
         ageRequirement: '18 - 35 tuổi',
-        languageRequirement: 'Không yêu cầu',
+        languageRequirement: undefined, // Không yêu cầu
         specialConditions: 'Chăm chỉ, chịu khó',
         educationRequirement: 'Tốt nghiệp THPT trở lên',
         experienceRequirement: 'Không yêu cầu kinh nghiệm',
@@ -132,7 +132,7 @@ export const jobData: Job[] = [
         status: 'Tạm dừng',
         interviewDate: '19/02/2024',
         interviewRounds: 3,
-        netFee: 'Liên hệ',
+        netFee: undefined, // Không có
         target: '',
         backFee: '12tr',
         tags: ['IT', 'Kỹ sư', 'N2'],
@@ -145,7 +145,7 @@ export const jobData: Job[] = [
         visaDetail: 'Kỹ sư đầu Nhật',
         industry: 'Công nghệ thông tin',
         workLocation: 'Tokyo, Nhật Bản',
-        interviewLocation: 'Online',
+        interviewLocation: undefined, // Không có
         gender: 'Cả nam và nữ',
         quantity: 2,
         ageRequirement: '22 - 32 tuổi',
@@ -180,7 +180,7 @@ export const jobData: Job[] = [
         gender: 'Nữ',
         quantity: 10,
         ageRequirement: '20 - 30 tuổi',
-        languageRequirement: 'Không yêu cầu',
+        languageRequirement: undefined, // Không yêu cầu
         specialConditions: 'Khéo tay, cẩn thận',
         educationRequirement: 'Tốt nghiệp THCS trở lên',
         experienceRequirement: 'Không yêu cầu',
@@ -244,7 +244,7 @@ export const jobData: Job[] = [
       gender: 'Nam',
       quantity: 5,
       ageRequirement: '19 - 28 tuổi',
-      languageRequirement: 'Không yêu cầu',
+      languageRequirement: undefined,
       specialConditions: 'Có chứng chỉ hàn 3G trở lên',
       educationRequirement: 'Tốt nghiệp THPT',
       experienceRequirement: 'Có kinh nghiệm hàn',

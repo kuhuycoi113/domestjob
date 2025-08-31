@@ -161,9 +161,9 @@ export function Header() {
                       <AvatarFallback>A</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col space-y-1">
-                      <p className="text-base font-medium leading-none">HelloJob</p>
+                      <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        Cán bộ tuyển dụng
+                        Ứng viên Thực tập sinh
                       </p>
                     </div>
                   </div>

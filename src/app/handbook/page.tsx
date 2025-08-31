@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, PlusCircle, ChevronDown } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, PlusCircle, ChevronDown, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';

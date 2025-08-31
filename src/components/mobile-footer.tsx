@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, Gem, UserPlus } from 'lucide-react';
+import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, Gem, UserPlus, Briefcase } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -17,7 +17,6 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
-import { VnFlagIcon, JpFlagIcon, EnFlagIcon } from './custom-icons';
 
 
 const quickAccessLinks = [
@@ -53,7 +52,7 @@ export function MobileFooter() {
   const footerLinks = [
     { href: '/', icon: Home, label: 'Trang chủ' },
     { href: '/ai-profile', icon: Sparkles, label: 'Tạo hồ sơ AI' },
-    { href: '/candidate-profile', icon: User, label: 'Hồ sơ' },
+    { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
   ];
   
 

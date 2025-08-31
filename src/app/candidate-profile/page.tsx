@@ -129,10 +129,16 @@ const level1Fields = [
     { number: 14, label: 'Nguyện vọng đặc biệt', field: 'specialAspirations', type: 'aspirations', inputType: 'textarea', placeholder: "Chọn điều kiện" },
 ];
 
-const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave }: { trigger: React.ReactNode, tempCandidate: EnrichedCandidateProfile, setTempCandidate: React.Dispatch<React.SetStateAction<EnrichedCandidateProfile | null>>, onSave: () => void }) => {
+const StepByStepEditDialog = ({ initialStep = 1, trigger, tempCandidate, setTempCandidate, onSave }: { initialStep?: number, trigger: React.ReactNode, tempCandidate: EnrichedCandidateProfile, setTempCandidate: React.Dispatch<React.SetStateAction<EnrichedCandidateProfile | null>>, onSave: () => void }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(initialStep);
     const totalSteps = level1Fields.length;
+
+    useEffect(() => {
+        if(isOpen) {
+            setCurrentStep(initialStep);
+        }
+    }, [isOpen, initialStep])
 
     if (!tempCandidate) return null;
 
@@ -141,7 +147,7 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
             if (!prev) return null;
             const newCandidate = { ...prev };
             if (section === 'aspirations' && newCandidate.aspirations) {
-                // @ts-ignore
+                 // @ts-ignore
                 newCandidate.aspirations[field] = value;
             } else if (section === 'personalInfo' && newCandidate.personalInfo) {
                  // @ts-ignore
@@ -157,57 +163,59 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
             return { ...prev, [field]: value };
         });
     };
+    
+    const renderField = (field: typeof level1Fields[0]) => {
+        const { type, field: fieldName, inputType, placeholder, options } = field;
+        const value = type === 'simple' 
+            ? tempCandidate[fieldName as keyof EnrichedCandidateProfile] 
+            // @ts-ignore
+            : tempCandidate[type as 'personalInfo' | 'aspirations']?.[fieldName];
 
-    const currentField = level1Fields.find(f => f.number === currentStep);
+        const handleChange = (newValue: any) => {
+            if (type === 'simple') {
+                handleSimpleChange(fieldName as keyof EnrichedCandidateProfile, newValue);
+            } else {
+                handleNestedChange(type as 'personalInfo' | 'aspirations', fieldName, newValue);
+            }
+        }
+
+        switch (inputType) {
+            case 'select':
+                return (
+                    <Select value={value || ''} onValueChange={handleChange}>
+                        <SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger>
+                        <SelectContent>
+                            {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                    </Select>
+                );
+            case 'textarea':
+                return <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />;
+            case 'date':
+                return <Input type="date" value={value || ''} onChange={e => handleChange(e.target.value)} />;
+            default:
+                return <Input placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />;
+        }
+    };
+
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild onClick={() => setCurrentStep(1)}>{trigger}</DialogTrigger>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className="sm:max-w-md">
                  <DialogHeader>
                     <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col justify-between min-h-[500px]">
                     <div className="space-y-4 pt-4">
-                        <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
-                         <div className="px-4 relative">
-                            {level1Fields.map((field) => {
-                                const { type, field: fieldName, inputType, placeholder, options } = field;
-                                const isCurrent = currentStep === field.number;
-                                
-                                const value = type === 'simple' ? tempCandidate[fieldName as keyof EnrichedCandidateProfile] : tempCandidate[type as 'personalInfo' | 'aspirations']?.[fieldName as any];
-
-                                const handleChange = (newValue: any) => {
-                                    if (type === 'simple') {
-                                        handleSimpleChange(fieldName as keyof EnrichedCandidateProfile, newValue);
-                                    } else {
-                                        handleNestedChange(type as 'personalInfo' | 'aspirations', fieldName, newValue);
-                                    }
-                                }
-
-                                return (
-                                    <div key={field.number} className={cn(!isCurrent && "hidden")}>
-                                        {inputType === 'select' && (
-                                            <Select value={value || ''} onValueChange={handleChange}>
-                                                <SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger>
-                                                <SelectContent>
-                                                    {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
-                                                </SelectContent>
-                                            </Select>
-                                        )}
-                                        {inputType === 'textarea' && (
-                                            <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
-                                        )}
-                                        {inputType === 'date' && (
-                                            <Input type="date" value={value || ''} onChange={e => handleChange(e.target.value)} />
-                                        )}
-                                        {inputType === 'text' && (
-                                             <Input placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
-                                        )}
-                                    </div>
-                                )
-                            })}
-                        </div>
+                         {level1Fields.map((field) => (
+                             <div key={field.number} className={cn(currentStep !== field.number && 'hidden')}>
+                                <h3 className="text-xl font-bold font-headline text-center mb-4">{field.label}</h3>
+                                <div className="px-4 relative">
+                                  {renderField(field)}
+                                </div>
+                             </div>
+                         ))}
                     </div>
                     <div className="px-4 pb-4">
                         <div className="text-xs text-muted-foreground leading-relaxed flex flex-wrap gap-x-2">
@@ -251,7 +259,6 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
         </Dialog>
     );
 };
-
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
@@ -475,27 +482,6 @@ export default function CandidateProfilePage() {
           }
       }
   };
-
-  const Level1EditDialogContent = () => {
-    return (
-        <Accordion type="single" collapsible className="w-full">
-            {level1Fields.map((field) => (
-                <AccordionItem value={`item-${field.number}`} key={field.number}>
-                    <StepByStepEditDialog
-                        tempCandidate={tempCandidate}
-                        setTempCandidate={setTempCandidate}
-                        onSave={handleSave}
-                        trigger={
-                             <AccordionTrigger className="w-full text-left no-underline hover:no-underline">
-                                {`${field.number}. ${field.label}`}
-                            </AccordionTrigger>
-                        }
-                    />
-                </AccordionItem>
-            ))}
-        </Accordion>
-    );
-  };
   
   const experienceEditDialogContent = (
       <div className="space-y-6">
@@ -643,10 +629,28 @@ export default function CandidateProfilePage() {
                         <DialogTitle className="font-headline text-2xl">ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
                     </DialogHeader>
                     <div className="max-h-[70vh] overflow-y-auto pr-4">
-                      <Level1EditDialogContent />
+                      <Accordion type="single" collapsible className="w-full">
+                            {level1Fields.map((field) => (
+                                <AccordionItem value={`item-${field.number}`} key={field.number}>
+                                    <StepByStepEditDialog
+                                        initialStep={field.number}
+                                        tempCandidate={tempCandidate}
+                                        setTempCandidate={setTempCandidate}
+                                        onSave={handleSave}
+                                        trigger={
+                                            <AccordionTrigger className="w-full text-left no-underline hover:no-underline">
+                                                {`${field.number}. ${field.label}`}
+                                            </AccordionTrigger>
+                                        }
+                                    />
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
                     </div>
                     <DialogFooter>
-                        <Button onClick={handleSave} className="bg-accent-orange text-white w-full">ĐĂNG THÔNG TIN</Button>
+                        <DialogClose asChild>
+                            <Button onClick={handleSave} className="bg-accent-orange text-white w-full">LƯU & ĐĂNG THÔNG TIN</Button>
+                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

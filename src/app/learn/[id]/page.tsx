@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { notFound } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -16,8 +16,9 @@ const categoryColors: { [key: string]: string } = {
   'Phát triển sự nghiệp': 'bg-accent text-white',
 };
 
-export default function LearnDetailPage({ params }: { params: { id: string } }) {
-  const course = courses.find((c) => c.id === params.id);
+export default function LearnDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const course = courses.find((c) => c.id === resolvedParams.id);
   
   if (!course) {
     notFound();

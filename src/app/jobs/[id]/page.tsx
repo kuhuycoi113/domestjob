@@ -6,7 +6,7 @@ import { jobData, type Job } from '@/lib/mock-data';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, CalendarDays, DollarSign, Heart, MapPin, Sparkles, UserCheck, FileText, Share2, Users, ClipboardCheck, Wallet, UserRound, ArrowLeft, Video, Image as ImageIcon, Milestone, Languages, User as UserIcon, Cake, ChevronsRight, Info, Star, GraduationCap, Weight, Ruler, Dna } from 'lucide-react';
+import { Briefcase, Building, CalendarDays, DollarSign, Heart, MapPin, Sparkles, UserCheck, FileText, Share2, Users, ClipboardCheck, Wallet, UserRound, ArrowLeft, Video, Image as ImageIcon, Milestone, Languages, Cake, ChevronsRight, Info, Star, GraduationCap, Weight, Ruler, Dna, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -75,7 +75,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                                 <RequirementItem icon={ChevronsRight} label="Chi tiết Visa" value={job.visaDetail}/>
                                 <RequirementItem icon={Briefcase} label="Ngành nghề" value={job.industry}/>
                                 <RequirementItem icon={MapPin} label="Nơi phỏng vấn" value={job.interviewLocation}/>
-                                <RequirementItem icon={UserIcon} label="Giới tính" value={job.gender}/>
+                                <RequirementItem icon={User} label="Giới tính" value={job.gender}/>
                                 <RequirementItem icon={Users} label="Số lượng" value={`${job.quantity} người`}/>
                                 <RequirementItem icon={Cake} label="Yêu cầu tuổi" value={job.ageRequirement}/>
                                 <RequirementItem icon={Languages} label="Ngoại ngữ" value={job.languageRequirement}/>
@@ -176,4 +176,5 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
             </div>
         </div>
     );
-}
+
+    

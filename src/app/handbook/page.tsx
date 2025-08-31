@@ -89,6 +89,38 @@ const VideoCard = ({ article }: { article: HandbookArticle }) => (
   </Link>
 );
 
+const ShareContentCta = () => (
+    <section className="w-full mt-20">
+      <div className="container mx-auto px-4 md:px-6">
+        <Card className="bg-gradient-to-r from-blue-500 to-primary text-primary-foreground shadow-2xl p-8 md:p-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="text-center md:text-left">
+                    <h2 className="text-3xl font-headline font-bold">Chia sẻ kinh nghiệm của bạn</h2>
+                    <p className="mt-2 text-primary-foreground/80">Bạn có câu chuyện, mẹo hay hoặc kinh nghiệm quý báu muốn chia sẻ với cộng đồng người Việt tại Nhật? Hãy đóng góp bài viết, video cho HelloJob!</p>
+                </div>
+                 <div className="flex justify-center md:justify-end">
+                     <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 text-lg px-8">
+                                <PlusCircle className="mr-2"/>
+                                Chia sẻ ngay
+                                <ChevronDown className="ml-2"/>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild><Link href="/handbook/create/post" className="cursor-pointer"><FileText className="mr-2"/>Bài viết</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/video" className="cursor-pointer"><Video className="mr-2"/>Video dài</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/video-short" className="cursor-pointer"><Video className="mr-2"/>Video ngắn</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/image" className="cursor-pointer"><ImageIcon className="mr-2"/>Ảnh</Link></DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                 </div>
+            </div>
+        </Card>
+      </div>
+    </section>
+);
+
 
 export default function HandbookPage() {
 
@@ -111,27 +143,12 @@ export default function HandbookPage() {
           </p>
         </div>
 
-        {/* Search & Actions */}
-        <div className="max-w-xl mx-auto mb-16 flex items-center gap-4">
-          <div className="relative flex-grow">
+        {/* Search */}
+        <div className="max-w-xl mx-auto mb-16">
+          <div className="relative">
              <Input placeholder="Tìm kiếm bài viết (VD: Tokutei, chi phí...)" className="pl-12 h-12 text-lg rounded-full shadow-lg"/>
              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground" />
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button size="lg" className="rounded-full">
-                    <PlusCircle className="mr-2"/>
-                    Chia sẻ nội dung
-                    <ChevronDown className="ml-2"/>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild><Link href="/handbook/create/post" className="cursor-pointer"><FileText className="mr-2"/>Bài viết</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="/handbook/create/video" className="cursor-pointer"><Video className="mr-2"/>Video dài</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="/handbook/create/video-short" className="cursor-pointer"><Video className="mr-2"/>Video ngắn</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="/handbook/create/image" className="cursor-pointer"><ImageIcon className="mr-2"/>Ảnh</Link></DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
 
         {/* Layout */}
@@ -207,6 +224,7 @@ export default function HandbookPage() {
             </aside>
         </div>
       </div>
+      <ShareContentCta />
     </div>
   );
 }

@@ -92,8 +92,14 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
 
   const MainContent = () => {
     if (article.type === 'video' && article.videoUrl) {
+      // Check if it's a short video based on slug or another property
+      const isShortVideo = article.slug.includes('meo-phong-van-video') || article.slug.includes('cach-chuyen-tien-nhat-viet');
+      
       return (
-         <div className="aspect-video w-full rounded-lg overflow-hidden shadow-lg bg-black">
+         <div className={cn(
+           "w-full rounded-lg overflow-hidden shadow-lg bg-black",
+           isShortVideo ? "aspect-[9/16] max-w-sm mx-auto" : "aspect-video"
+         )}>
             <iframe 
                 className="w-full h-full" 
                 src={`${article.videoUrl}?autoplay=1&rel=0`}

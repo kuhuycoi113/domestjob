@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -10,7 +11,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { MessageSquareWarning, Send, Bug, Lightbulb, MessageSquarePlus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import type { Metadata } from 'next';
 
 export default function FeedbackPage() {
   const { toast } = useToast();

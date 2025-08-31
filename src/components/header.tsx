@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown } from 'lucide-react';
+import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown, Gem, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
@@ -52,7 +52,9 @@ const quickAccessLinks = [
     { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
     { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
-    { href: '#', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
+    { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
 
 const LanguageSwitcher = () => {
@@ -139,7 +141,8 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden md:flex items-center gap-2">
-            <Button asChild variant="outline">
+            <LanguageSwitcher />
+             <Button asChild variant="outline">
                 <Link href="/candidate-profile">Hồ sơ của tôi</Link>
             </Button>
             
@@ -183,7 +186,7 @@ export function Header() {
 
         </div>
         <div className="md:hidden">
-            {/* Placeholder for mobile menu trigger or other icons */}
+            <LanguageSwitcher />
         </div>
       </div>
     </header>

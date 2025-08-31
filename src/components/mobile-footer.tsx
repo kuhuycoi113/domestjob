@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown } from 'lucide-react';
+import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, Gem, UserPlus } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -30,7 +30,9 @@ const quickAccessLinks = [
     { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
     { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
     { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
-    { href: '#', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
+    { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
 
 const Logo = () => (

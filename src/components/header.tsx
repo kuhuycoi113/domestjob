@@ -56,33 +56,6 @@ const quickAccessLinks = [
     { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
 ];
 
-const LanguageSwitcher = () => {
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2">
-                    <VnFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span className="font-bold hidden sm:inline">VN</span>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                    <VnFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span>VN</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                    <JpFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span>JP</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                    <EnFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span>EN</span>
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    );
-};
-
 
 export function Header() {
   const pathname = usePathname();
@@ -140,7 +113,6 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden md:flex items-center gap-2">
-            <LanguageSwitcher />
              <Button asChild variant="outline">
                 <Link href="/candidate-profile">Hồ sơ của tôi</Link>
             </Button>
@@ -185,7 +157,7 @@ export function Header() {
 
         </div>
         <div className="md:hidden">
-            <LanguageSwitcher />
+            {/* Placeholder for mobile menu trigger or other icons */}
         </div>
       </div>
     </header>

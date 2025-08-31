@@ -103,9 +103,20 @@ export const courses: Course[] = [
     stats: {
         students: 720,
         rating: 4.8,
-        lessons: 12,
+        lessons: 10,
         level: 'Nâng cao',
     },
-    curriculum: []
+    curriculum: [
+      { title: 'Bài 1: Tư duy thăng tiến trong môi trường Nhật', duration: '15:00', videoId: 'placeholder11' },
+      { title: 'Bài 2: Kỹ năng giao tiếp chuyên nghiệp', duration: '18:30', videoId: 'placeholder12' },
+      { title: 'Bài 3: Ho-Ren-So nâng cao: Báo cáo & Quản lý', duration: '16:45', videoId: 'placeholder13' },
+      { title: 'Bài 4: Kỹ năng làm việc nhóm & Lãnh đạo', duration: '17:20', videoId: 'placeholder14' },
+      { title: 'Bài 5: Kỹ năng giải quyết vấn đề & Kaizen', duration: '20:10', videoId: 'placeholder15' },
+      { title: 'Bài 6: Quản lý thời gian & Kỷ luật cá nhân', duration: '14:00', videoId: 'placeholder16' },
+      { title: 'Bài 7: Xây dựng hình ảnh & uy tín cá nhân', duration: '12:50', videoId: 'placeholder17' },
+      { title: 'Bài 8: Kỹ năng hội nhập & mở rộng quan hệ', duration: '13:15', videoId: 'placeholder18' },
+      { title: 'Bài 9: Khả năng học tập & phát triển dài hạn', duration: '19:00', videoId: 'placeholder19' },
+      { title: 'Bài 10: Những sai lầm cần tránh khi muốn thăng tiến', duration: '11:30', videoId: 'placeholder20' },
+    ]
   },
 ];

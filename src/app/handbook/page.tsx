@@ -110,7 +110,7 @@ export default function HandbookPage() {
   const imageStories = articles.filter(a => a.type === 'image-story');
 
   const shareOptions = [
-    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500', href: '#' },
+    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500', href: '/handbook/create/post' },
     { title: 'Đăng bài viết dạng ảnh', description: 'Tạo một bài viết với hình ảnh minh hoạ trực quan.', icon: ImageIcon, color: 'text-yellow-500', href: '/handbook/create/image' },
     { title: 'Đăng video ngắn', description: 'Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.', icon: Smartphone, color: 'text-green-500', href: '#' },
     { title: 'Đăng video dài', description: 'Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.', icon: Film, color: 'text-red-500', href: '#' }

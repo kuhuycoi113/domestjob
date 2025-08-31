@@ -124,7 +124,7 @@ export const courses: Course[] = [
     stats: {
         students: 810,
         rating: 4.9,
-        lessons: 15,
+        lessons: 8,
         level: 'Mọi cấp độ',
     },
     curriculum: [

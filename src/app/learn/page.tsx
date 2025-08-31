@@ -26,7 +26,7 @@ export default function LearnPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map(course => (
                  <Card key={course.id} className="flex flex-col overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
                     <CardHeader className="p-0">
@@ -36,7 +36,7 @@ export default function LearnPage() {
                             alt={course.title}
                             fill
                             className="object-cover"
-                            data-ai-hint={course.dataAiHint}
+                            dataAiHint={course.dataAiHint}
                           />
                        </Link>
                     </CardHeader>

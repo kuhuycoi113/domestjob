@@ -55,36 +55,6 @@ export const courses: Course[] = [
       { title: 'Bài 5: Di chuyển', duration: '19:30', videoId: 'V92_uXn2o5o' },
     ]
   },
-  {
-    id: 'van-hoa-nhat-ban',
-    title: 'Hiểu về Văn hóa Nhật Bản',
-    category: 'Văn hóa & Xã hội',
-    description: 'Khám phá những nét đặc trưng trong văn hóa, từ giao tiếp hàng ngày đến các lễ hội truyền thống, giúp bạn hòa nhập nhanh chóng và tự tin trong môi trường làm việc và sinh sống tại Nhật Bản.',
-    image: 'https://placehold.co/600x400.png',
-    dataAiHint: 'Japanese culture collage',
-    instructor: {
-      name: 'Akira Watanabe',
-      avatar: 'https://placehold.co/100x100.png',
-      dataAiHint: 'culture expert',
-      title: 'Chuyên gia Văn hóa Nhật Bản',
-    },
-    stats: {
-      students: 830,
-      rating: 4.9,
-      lessons: 8,
-      level: 'Cơ bản',
-    },
-    curriculum: [
-        { title: 'Bài 1: Tổng quan về văn hoá Nhật Bản', duration: '12:30', videoId: 'VIDEO_ID_1' },
-        { title: 'Bài 2: Văn hoá giao tiếp trong công việc', duration: '15:00', videoId: 'VIDEO_ID_2' },
-        { title: 'Bài 3: Quy tắc trong môi trường làm việc', duration: '14:15', videoId: 'VIDEO_ID_3' },
-        { title: 'Bài 4: Văn hoá sinh hoạt hằng ngày', duration: '11:40', videoId: 'VIDEO_ID_4' },
-        { title: 'Bài 5: Văn hoá ăn uống', duration: '10:55', videoId: 'VIDEO_ID_5' },
-        { title: 'Bài 6: Sự khác biệt & cú sốc văn hoá', duration: '13:00', videoId: 'VIDEO_ID_6' },
-        { title: 'Bài 7: Thực hành & tình huống minh hoạ', duration: '18:20', videoId: 'VIDEO_ID_7' },
-        { title: 'Bài 8: Hỗ trợ hội nhập lâu dài', duration: '09:50', videoId: 'VIDEO_ID_8' },
-    ]
-  },
    {
     id: 'ung-xu-cong-ty-nhat',
     title: 'Cách ứng xử trong công ty Nhật',

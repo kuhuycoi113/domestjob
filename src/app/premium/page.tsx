@@ -6,18 +6,18 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Nâng cấp tài khoản HelloJob Premium',
-  description: 'Mở khóa toàn bộ tiềm năng của HelloJob với tài khoản Premium. Truy cập không giới hạn các khóa học, xem hồ sơ ứng viên và nhận nhiều quyền lợi độc quyền khác.',
+  description: 'Mở khóa toàn bộ tiềm năng của HelloJob với tài khoản Premium. Truy cập không giới hạn các khóa học, hồ sơ của bạn sẽ được ưu tiên và nhận nhiều quyền lợi độc quyền khác.',
 };
 
 const premiumFeatures = [
     { text: 'Mở khoá TOÀN BỘ khoá học E-learning', free: false, premium: true },
-    { text: 'Xem và liên hệ không giới hạn các ứng viên phù hợp', free: false, premium: true },
-    { text: 'Huy hiệu "Nhà tuyển dụng Premium" nổi bật trên hồ sơ', free: false, premium: true },
-    { text: 'Ưu tiên hỗ trợ từ đội ngũ HelloJob', free: false, premium: true },
-    { text: 'Truy cập các báo cáo & phân tích thị trường lao động độc quyền', free: false, premium: true },
-    { text: 'Đăng tin tuyển dụng', free: true, premium: true },
-    { text: 'Tìm kiếm ứng viên cơ bản', free: true, premium: true },
-    { text: 'Xem 5 ứng viên phù hợp đầu tiên cho mỗi tin đăng', free: true, premium: true },
+    { text: 'Hồ sơ được làm nổi bật và ưu tiên giới thiệu cho nhà tuyển dụng', free: false, premium: true },
+    { text: 'Huy hiệu "Ứng viên Tiềm năng" trên hồ sơ', free: false, premium: true },
+    { text: 'Ưu tiên hỗ trợ từ đội ngũ tư vấn viên HelloJob', free: false, premium: true },
+    { text: 'Xem các phân tích & xu hướng ngành nghề độc quyền', free: false, premium: true },
+    { text: 'Đăng và quản lý hồ sơ tìm việc', free: true, premium: true },
+    { text: 'Sử dụng các công cụ trắc nghiệm hướng nghiệp', free: true, premium: true },
+    { text: 'Học 50% số bài học đầu tiên của mỗi khoá', free: true, premium: true },
 ];
 
 export default function PremiumPage() {

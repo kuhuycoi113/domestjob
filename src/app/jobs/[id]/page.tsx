@@ -57,19 +57,25 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-6">
                         <Card className="overflow-hidden">
-                            <CardContent className="p-6">
+                            <CardHeader>
                                 <h1 className="text-2xl md:text-3xl font-bold font-headline mb-3">{job.title}</h1>
                                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-muted-foreground">
                                     <p className="flex items-center gap-2"><Building className="h-4 w-4"/> {job.recruiter.company}</p>
                                     <p className="flex items-center gap-2"><MapPin className="h-4 w-4"/> {job.workLocation}</p>
                                     <p className="flex items-center gap-2"><CalendarDays className="h-4 w-4"/> Đăng {job.postedTime}</p>
                                 </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex flex-col sm:flex-row gap-4">
+                                     <Button size="lg" className="w-full sm:w-auto bg-accent-orange text-white">Ứng tuyển ngay</Button>
+                                     <Button size="lg" variant="outline" className="w-full sm:w-auto"><Heart className="mr-2"/> Lưu tin</Button>
+                                </div>
                             </CardContent>
                         </Card>
 
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Thông tin cơ bản (Mức 1)</CardTitle>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Yêu cầu cơ bản (Mức 1)</CardTitle>
                             </CardHeader>
                             <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <RequirementItem icon={Milestone} label="Loại Visa" value={job.visaType}/>
@@ -107,9 +113,6 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                         <JobDetailSection title="Mô tả công việc & Ghi chú" icon={FileText}>
                             <div dangerouslySetInnerHTML={{ __html: job.details.description }} />
                         </JobDetailSection>
-                         <JobDetailSection title="Yêu cầu ứng viên" icon={UserCheck}>
-                             <div dangerouslySetInnerHTML={{ __html: job.details.requirements }} />
-                        </JobDetailSection>
 
                          <JobDetailSection title="Quyền lợi & Chế độ" icon={Sparkles}>
                              <div dangerouslySetInnerHTML={{ __html: job.details.benefits }} />
@@ -139,16 +142,19 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                     {/* Sidebar */}
                     <aside className="lg:col-span-1 space-y-6 lg:sticky lg:top-24">
                         <Card className="shadow-lg">
-                            <CardContent className="p-6 space-y-4">
-                               <div className="space-y-2 text-center">
+                            <CardHeader>
+                               <CardTitle className="text-lg">Mức lương</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                               <div className="space-y-2">
                                     <p className="text-sm text-muted-foreground">Lương cơ bản</p>
-                                    <p className="text-3xl font-bold text-accent-green">{job.salary.basic}</p>
-                                    {job.salary.actual && <p className="text-lg font-semibold text-muted-foreground">Thực lĩnh: ~{job.salary.actual}</p>}
+                                    <p className="text-2xl font-bold text-accent-green">{job.salary.basic}</p>
+                                    {job.salary.actual && <p className="font-semibold text-muted-foreground">Thực lĩnh: ~{job.salary.actual}</p>}
                                </div>
-                                <div className="flex flex-col gap-3">
-                                    <Button size="lg" className="w-full bg-accent-orange text-white">Ứng tuyển ngay</Button>
-                                    <Button size="lg" variant="outline" className="w-full"><Heart className="mr-2"/> Lưu tin</Button>
-                                </div>
+                               <div className="border-t pt-4 space-y-2 text-sm">
+                                   <p>Thu nhập năm: <strong>{job.salary.annualIncome}</strong></p>
+                                   <p>Thưởng: <strong>{job.salary.annualBonus}</strong></p>
+                               </div>
                             </CardContent>
                         </Card>
                         <Card className="shadow-lg">

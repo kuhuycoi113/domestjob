@@ -80,7 +80,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
     notFound();
   }
   
-  const otherArticles = articles.filter(a => a.slug !== resolvedParams.slug && a.type === 'article').slice(0, 3);
+  const otherArticles = articles.filter(a => a.slug !== resolvedParams.slug).slice(0, 3);
   const hotJobs = jobData.slice(0, 3); // Demo with first 3 jobs
 
   const MainContent = () => {
@@ -125,6 +125,11 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
               <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative aspect-video w-full">
                   <Image src={other.image} alt={other.title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={other.dataAiHint} />
+                   {other.type === 'video' && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <Video className="h-8 w-8 text-white/80" />
+                    </div>
+                  )}
                 </div>
                 <div className="p-4">
                     <p className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2">{other.title}</p>
@@ -210,7 +215,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
               <MainContent />
             </article>
 
-            {/* Comments Section */}
+             {/* Comments Section */}
             <section className="mt-16 pt-8 border-t">
                  <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
                     <MessageSquare className="mr-3 text-primary" />

@@ -15,6 +15,7 @@ import { Label } from '@/components/ui/label';
 import { CreditCard, Lock, ShieldCheck, UserPlus, Gem } from 'lucide-react';
 import { PayPayIcon, LinePayIcon } from './custom-icons';
 import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 interface PaymentDialogProps {
   isOpen: boolean;
@@ -111,8 +112,16 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
             <span className="text-muted-foreground text-xs font-semibold">HOẶC</span>
             <hr className="flex-grow border-border"/>
           </div>
-          <Button variant="secondary" className="w-full bg-green-100 hover:bg-green-200 text-green-700 border-green-200 border" size="lg"><Gem className="mr-2"/> Đăng ký tài khoản Premium</Button>
-          <Button variant="secondary" className="w-full bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200" size="lg"><UserPlus className="mr-2"/> Giới thiệu ứng viên khác</Button>
+          <Button asChild variant="secondary" className="w-full bg-green-100 hover:bg-green-200 text-green-700 border-green-200 border" size="lg">
+            <Link href="/premium">
+                <Gem className="mr-2"/> Đăng ký tài khoản Premium
+            </Link>
+          </Button>
+           <Button asChild variant="outline" className="w-full bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200" size="lg">
+             <Link href="/referral">
+                <UserPlus className="mr-2"/> Giới thiệu ứng viên khác
+            </Link>
+          </Button>
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mt-2">
              <ShieldCheck className="h-4 w-4 text-green-500" />
              <span>Thanh toán được bảo mật</span>

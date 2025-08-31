@@ -1,3 +1,4 @@
+
 import { MetadataRoute } from 'next';
 import { articles } from '@/lib/handbook-data';
 
@@ -22,7 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/post-job',
     '/dashboard',
     '/feedback',
-    '/premium'
+    '/premium',
+    '/referral'
   ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),

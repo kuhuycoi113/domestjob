@@ -108,34 +108,4 @@ export const courses: Course[] = [
     },
     curriculum: []
   },
-  {
-    id: 'van-hoa-nhat-ban',
-    title: 'Hiểu về Văn hoá Nhật Bản',
-    category: 'Văn hóa & Xã hội',
-    description: 'Khám phá những nét đặc trưng trong văn hóa Nhật Bản, từ các lễ hội truyền thống, ẩm thực đa dạng đến các quy tắc ứng xử trong cuộc sống hàng ngày để bạn tự tin hòa nhập.',
-    image: 'https://placehold.co/600x400.png',
-    'data-ai-hint': 'Japanese cultural symbols',
-    instructor: {
-        name: 'Suzuki Yui',
-        avatar: 'https://placehold.co/100x100.png',
-        'data-ai-hint': 'Japanese cultural expert',
-        title: 'Chuyên gia Văn hóa Nhật Bản',
-    },
-    stats: {
-        students: 810,
-        rating: 4.9,
-        lessons: 8,
-        level: 'Mọi cấp độ',
-    },
-    curriculum: [
-      { title: 'Bài 1: Tổng quan về văn hoá Nhật Bản', duration: '14:50', videoId: 'placeholder_vh_01' },
-      { title: 'Bài 2: Văn hoá giao tiếp trong công việc', duration: '16:20', videoId: 'placeholder_vh_02' },
-      { title: 'Bài 3: Quy tắc trong môi trường làm việc', duration: '13:40', videoId: 'placeholder_vh_03' },
-      { title: 'Bài 4: Văn hoá sinh hoạt hằng ngày', duration: '15:00', videoId: 'placeholder_vh_04' },
-      { title: 'Bài 5: Văn hoá ăn uống', duration: '12:15', videoId: 'placeholder_vh_05' },
-      { title: 'Bài 6: Những cú sốc văn hoá thường gặp', duration: '11:30', videoId: 'placeholder_vh_06' },
-      { title: 'Bài 7: Thực hành & tình huống minh hoạ', duration: '17:55', videoId: 'placeholder_vh_07' },
-      { title: 'Bài 8: Hỗ trợ hội nhập lâu dài', duration: '10:00', videoId: 'placeholder_vh_08' }
-    ]
-  },
 ];

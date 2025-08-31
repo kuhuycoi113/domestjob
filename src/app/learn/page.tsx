@@ -12,20 +12,40 @@ export const metadata: Metadata = {
 };
 
 
-const course = {
-  id: 'tieng-nhat-giao-tiep',
-  title: 'Tiếng Nhật giao tiếp cho người đi làm',
-  category: 'Ngoại ngữ',
-  description: 'Khóa học tiếng Nhật bám sát giáo trình Minna no Nihongo, tập trung vào các mẫu câu giao tiếp và từ vựng chuyên ngành thường dùng trong môi trường nhà máy Nhật Bản. Bắt đầu hành trình chinh phục tiếng Nhật của bạn ngay hôm nay!',
-  image: 'https://placehold.co/1200x600.png',
-  dataAiHint: 'Japanese language class',
-  features: [
-    'Hệ thống bài giảng video chi tiết',
-    'Tập trung vào giao tiếp thực tế',
-    'Từ vựng chuyên ngành sản xuất',
-    'Học mọi lúc, mọi nơi',
-  ]
-};
+const courses = [
+  {
+    id: 'tieng-nhat-giao-tiep',
+    title: 'Tiếng Nhật giao tiếp cho người đi làm',
+    category: 'Ngoại ngữ',
+    description: 'Khóa học tiếng Nhật bám sát giáo trình Minna no Nihongo, tập trung vào các mẫu câu giao tiếp và từ vựng chuyên ngành.',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'Japanese language class',
+  },
+  {
+    id: 'van-hoa-nhat-ban',
+    title: 'Hiểu về Văn hóa Nhật Bản',
+    category: 'Văn hóa & Xã hội',
+    description: 'Khám phá những nét đặc trưng trong văn hóa, từ giao tiếp hàng ngày đến các lễ hội truyền thống, giúp bạn hòa nhập nhanh chóng.',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'Japanese culture collage',
+  },
+  {
+    id: 'ung-xu-cong-ty-nhat',
+    title: 'Cách ứng xử trong công ty Nhật',
+    category: 'Kỹ năng làm việc',
+    description: 'Nắm vững các quy tắc ứng xử nơi công sở Nhật Bản, từ cách chào hỏi, trao đổi danh thiếp đến văn hóa báo cáo "Hou-Ren-Sou".',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'Japanese office meeting',
+  },
+   {
+    id: 'ky-nang-thang-tien',
+    title: 'Kỹ năng để Thăng tiến tại Nhật Bản',
+    category: 'Phát triển sự nghiệp',
+    description: 'Tìm hiểu về tư duy kaizen, kỹ năng quản lý và những yếu tố then chốt giúp bạn không chỉ hoàn thành công việc mà còn thăng tiến.',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'career growth ladder',
+  },
+];
 
 export default function LearnPage() {
   return (
@@ -34,44 +54,44 @@ export default function LearnPage() {
         <div className="text-center mb-16">
           <BookOpen className="h-16 w-16 mx-auto text-primary mb-4" />
           <h1 className="text-4xl md:text-5xl font-headline font-bold">
-            E-Learning: Chinh phục tiếng Nhật
+            E-Learning: Chinh phục tiếng Nhật & Kỹ năng
           </h1>
           <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
             Nâng cao kỹ năng, mở rộng cơ hội. Học mọi lúc, mọi nơi với các khóa học được thiết kế riêng cho người lao động.
           </p>
         </div>
 
-        <Card className="max-w-5xl mx-auto shadow-xl overflow-hidden">
-            <div className="grid md:grid-cols-2">
-                 <div className="relative min-h-[300px]">
-                    <Image
-                      src={course.image}
-                      alt={course.title}
-                      fill
-                      className="object-cover"
-                      data-ai-hint={course.dataAiHint}
-                    />
-                 </div>
-                 <div className="p-8 flex flex-col justify-center">
-                    <p className="text-sm font-bold mb-2 text-primary">{course.category}</p>
-                    <CardTitle className="font-headline text-3xl mb-4">{course.title}</CardTitle>
-                    <p className="text-muted-foreground text-base mb-6">{course.description}</p>
-                    <ul className="space-y-3 mb-8">
-                        {course.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-3">
-                                <CheckCircle className="h-5 w-5 text-green-500" />
-                                <span className="text-foreground">{feature}</span>
-                            </li>
-                        ))}
-                    </ul>
-                    <Button asChild className="w-full md:w-auto bg-accent-orange hover:bg-accent-orange/90 text-white text-lg self-start">
-                        <Link href={`/learn/${course.id}`}>
-                            Bắt đầu học ngay <ArrowRight className="ml-2" />
-                        </Link>
-                    </Button>
-                 </div>
-            </div>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {courses.map(course => (
+                 <Card key={course.id} className="flex flex-col overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <CardHeader className="p-0">
+                       <Link href={`/learn/${course.id}`} className="block relative aspect-video">
+                          <Image
+                            src={course.image}
+                            alt={course.title}
+                            fill
+                            className="object-cover"
+                            data-ai-hint={course.dataAiHint}
+                          />
+                       </Link>
+                    </CardHeader>
+                    <CardContent className="p-6 flex flex-col flex-grow">
+                      <p className="text-sm font-bold mb-2 text-primary">{course.category}</p>
+                      <Link href={`/learn/${course.id}`} className="flex-grow">
+                          <CardTitle className="font-headline text-xl mb-2 group-hover:text-primary transition-colors">{course.title}</CardTitle>
+                      </Link>
+                      <p className="text-sm text-muted-foreground mt-2 line-clamp-3">{course.description}</p>
+                    </CardContent>
+                    <div className="p-6 pt-0 mt-auto">
+                       <Button asChild className="w-full">
+                           <Link href={`/learn/${course.id}`}>
+                                Bắt đầu học <ArrowRight className="ml-2" />
+                           </Link>
+                       </Button>
+                    </div>
+                  </Card>
+            ))}
+        </div>
       </div>
     </div>
   );

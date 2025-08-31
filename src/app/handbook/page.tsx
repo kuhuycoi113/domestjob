@@ -110,10 +110,10 @@ export default function HandbookPage() {
   const imageStories = articles.filter(a => a.type === 'image-story');
 
   const shareOptions = [
-    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500' },
-    { title: 'Đăng bài viết dạng ảnh', description: 'Tạo một bài viết với hình ảnh minh hoạ trực quan.', icon: ImageIcon, color: 'text-yellow-500' },
-    { title: 'Đăng video ngắn', description: 'Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.', icon: Smartphone, color: 'text-green-500' },
-    { title: 'Đăng video dài', description: 'Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.', icon: Film, color: 'text-red-500' }
+    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500', href: '#' },
+    { title: 'Đăng bài viết dạng ảnh', description: 'Tạo một bài viết với hình ảnh minh hoạ trực quan.', icon: ImageIcon, color: 'text-yellow-500', href: '/handbook/create/image' },
+    { title: 'Đăng video ngắn', description: 'Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.', icon: Smartphone, color: 'text-green-500', href: '#' },
+    { title: 'Đăng video dài', description: 'Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.', icon: Film, color: 'text-red-500', href: '#' }
   ];
 
 
@@ -245,11 +245,13 @@ export default function HandbookPage() {
                         </DialogHeader>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
                             {shareOptions.map(option => (
-                                <Card key={option.title} className="p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary hover:shadow-lg transition-all">
-                                    <option.icon className={cn("h-10 w-10 mb-4", option.color)} />
-                                    <h3 className="font-bold font-headline mb-1">{option.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{option.description}</p>
-                                </Card>
+                                <Link href={option.href} key={option.title} className="block">
+                                    <Card className="p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary hover:shadow-lg transition-all h-full">
+                                        <option.icon className={cn("h-10 w-10 mb-4", option.color)} />
+                                        <h3 className="font-bold font-headline mb-1">{option.title}</h3>
+                                        <p className="text-sm text-muted-foreground">{option.description}</p>
+                                    </Card>
+                                </Link>
                             ))}
                         </div>
                     </DialogContent>

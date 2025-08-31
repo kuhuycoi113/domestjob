@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, MessageSquare, ThumbsUp, Reply } from 'lucide-react';
+import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, MessageSquare, ThumbsUp, Reply, Send, Smartphone, Film, ImageIcon, Camera } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { useEffect, useState, use } from 'react';
@@ -15,6 +15,7 @@ import { JobCard } from '@/components/job-card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 
 const mockComments = [
@@ -42,6 +43,12 @@ const mockComments = [
     }
 ];
 
+const shareOptions = [
+    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500', href: '/handbook/create/post' },
+    { title: 'Đăng bài viết dạng ảnh', description: 'Tạo một bài viết với hình ảnh minh hoạ trực quan.', icon: ImageIcon, color: 'text-yellow-500', href: '/handbook/create/image' },
+    { title: 'Đăng video ngắn', description: 'Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.', icon: Smartphone, color: 'text-green-500', href: '/handbook/create/video-short' },
+    { title: 'Đăng video dài', description: 'Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.', icon: Film, color: 'text-red-500', href: '/handbook/create/video' }
+];
 
 export default function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const [activeId, setActiveId] = useState('');
@@ -215,7 +222,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
               <MainContent />
             </article>
 
-             {/* Comments Section */}
+            {/* Comments Section */}
             <section className="mt-16 pt-8 border-t">
                  <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
                     <MessageSquare className="mr-3 text-primary" />
@@ -288,6 +295,44 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                 <RelatedArticlesList />
             </section>
 
+             {/* CTA Section */}
+            <section className="mt-20">
+                <Card className="max-w-3xl mx-auto p-8 shadow-xl bg-primary/10 border-primary/20">
+                    <h2 className="text-3xl font-headline font-bold text-primary mb-4 text-center">Trở thành Tác giả</h2>
+                    <p className="text-muted-foreground mb-6 text-center">
+                        Bạn có kinh nghiệm, câu chuyện hay kiến thức bổ ích muốn chia sẻ với cộng đồng?
+                    </p>
+                    <div className="text-center">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button size="lg" className="bg-primary text-white">
+                                    <Send className="mr-2"/>
+                                    Chia sẻ nội dung của bạn
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-2xl">
+                                <DialogHeader>
+                                    <DialogTitle className="font-headline text-2xl">Chọn loại nội dung bạn muốn chia sẻ</DialogTitle>
+                                    <DialogDescription>
+                                        Đóng góp kiến thức và kinh nghiệm của bạn cho cộng đồng HelloJob.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
+                                    {shareOptions.map(option => (
+                                        <Link href={option.href} key={option.title} className="block">
+                                            <Card className="p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary hover:shadow-lg transition-all h-full">
+                                                <option.icon className={cn("h-10 w-10 mb-4", option.color)} />
+                                                <h3 className="font-bold font-headline mb-1">{option.title}</h3>
+                                                <p className="text-sm text-muted-foreground">{option.description}</p>
+                                            </Card>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                </Card>
+            </section>
           </main>
           
           {/* Related Articles for Desktop */}

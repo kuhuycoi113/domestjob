@@ -112,7 +112,7 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
             <hr className="flex-grow border-border"/>
           </div>
           <Button variant="secondary" className="w-full bg-green-100 hover:bg-green-200 text-green-700 border-green-200 border" size="lg"><Gem className="mr-2"/> Đăng ký tài khoản Premium</Button>
-          <Button variant="outline" className="w-full" size="lg"><UserPlus className="mr-2"/> Giới thiệu ứng viên khác</Button>
+          <Button variant="secondary" className="w-full bg-orange-100 hover:bg-orange-200 text-orange-700 border-orange-200 border" size="lg"><UserPlus className="mr-2"/> Giới thiệu ứng viên khác</Button>
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mt-2">
              <ShieldCheck className="h-4 w-4 text-green-500" />
              <span>Thanh toán được bảo mật</span>

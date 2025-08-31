@@ -90,7 +90,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
   const otherArticles = articles.filter(a => a.slug !== resolvedParams.slug).slice(0, 3);
   const hotJobs = jobData.slice(0, 3); // Demo with first 3 jobs
   const otherShortVideos = articles.filter(a => a.type === 'video' && a.slug !== resolvedParams.slug);
-  const isShortVideo = article.type === 'video' && (article.slug.includes('meo-phong-van-video') || article.slug.includes('cach-chuyen-tien-nhat-viet'));
+  const isShortVideo = article.type === 'video';
 
   const MainContent = () => {
     if (article.type === 'video' && article.videoUrl) {
@@ -155,18 +155,20 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
 
   const RelatedVideosSidebar = ({ videos }: { videos: HandbookArticle[] }) => (
     <div className="space-y-4">
-        {videos.map(video => (
+        {videos.slice(0,3).map(video => (
             <Link href={`/handbook/${video.slug}`} key={video.slug} className="group block">
-                <Card className="flex gap-4 p-3 hover:bg-muted/50 transition-colors">
-                    <div className="relative w-2/5 aspect-video rounded-md overflow-hidden">
-                        <Image src={video.image} alt={video.title} fill className="object-cover" />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                            <PlayCircle className="h-6 w-6 text-white/70" />
+                <Card className="hover:bg-muted/50 transition-colors overflow-hidden">
+                    <div className="flex flex-col">
+                        <div className="relative w-full aspect-[9/16]">
+                            <Image src={video.image} alt={video.title} fill className="object-cover" />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                                <PlayCircle className="h-8 w-8 text-white/70" />
+                            </div>
                         </div>
-                    </div>
-                    <div className="w-3/5">
-                        <p className="font-semibold text-sm line-clamp-2 leading-tight group-hover:text-primary">{video.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{video.author}</p>
+                        <div className="p-3">
+                            <p className="font-semibold text-sm line-clamp-2 leading-tight group-hover:text-primary">{video.title}</p>
+                            <p className="text-xs text-muted-foreground mt-1">{video.author}</p>
+                        </div>
                     </div>
                 </Card>
             </Link>

@@ -6,7 +6,7 @@ import { jobData, type Job } from '@/lib/mock-data';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, CalendarDays, DollarSign, Heart, MapPin, Sparkles, UserCheck, FileText, Share2, Users, ClipboardCheck, Wallet, UserRound, ArrowLeft, Video, Image as ImageIcon } from 'lucide-react';
+import { Briefcase, Building, CalendarDays, DollarSign, Heart, MapPin, Sparkles, UserCheck, FileText, Share2, Users, ClipboardCheck, Wallet, UserRound, ArrowLeft, Video, Image as ImageIcon, Milestone, Languages, User as UserIcon, Cake, ChevronsRight, Info } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -38,6 +38,16 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
             <p className="text-sm font-bold">{value}</p>
         </div>
     );
+    
+    const RequirementItem = ({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: string | number }) => (
+        <div className="flex items-start gap-4">
+            <Icon className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
+            <div>
+                <p className="font-semibold text-foreground">{label}</p>
+                <p className="text-muted-foreground">{value}</p>
+            </div>
+        </div>
+    );
 
     return (
         <div className="bg-secondary">
@@ -52,24 +62,36 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                     <div className="lg:col-span-2 space-y-6">
                         <Card className="overflow-hidden">
                             <CardContent className="p-6">
-                                <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">{job.tags[0]}</Badge>
                                 <h1 className="text-2xl md:text-3xl font-bold font-headline mb-3">{job.title}</h1>
                                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-muted-foreground">
                                     <p className="flex items-center gap-2"><Building className="h-4 w-4"/> {job.recruiter.company}</p>
-                                    <p className="flex items-center gap-2"><MapPin className="h-4 w-4"/> Nagasaki, Nhật Bản</p>
+                                    <p className="flex items-center gap-2"><MapPin className="h-4 w-4"/> {job.workLocation}</p>
                                     <p className="flex items-center gap-2"><CalendarDays className="h-4 w-4"/> Đăng {job.postedTime}</p>
                                 </div>
                             </CardContent>
                         </Card>
 
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                             <InfoPill icon={Users} label="Số lượng tuyển" value={`${job.applicants?.count || 'N/A'} người`} />
-                             <InfoPill icon={CalendarDays} label="Ngày thi tuyển" value={job.interviewDate} />
-                             <InfoPill icon={ClipboardCheck} label="Số vòng thi" value={`${job.interviewRounds} vòng`} />
-                             <InfoPill icon={Wallet} label="Phí xuất cảnh" value={job.netFee} />
-                        </div>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-3 font-headline text-xl"><Info className="text-primary h-6 w-6"/>Thông tin cơ bản (Mức 1)</CardTitle>
+                            </CardHeader>
+                            <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                                <RequirementItem icon={Milestone} label="Loại Visa" value={job.visaType}/>
+                                <RequirementItem icon={ChevronsRight} label="Chi tiết Visa" value={job.visaDetail}/>
+                                <RequirementItem icon={Briefcase} label="Ngành nghề" value={job.industry}/>
+                                <RequirementItem icon={MapPin} label="Nơi phỏng vấn" value={job.interviewLocation}/>
+                                <RequirementItem icon={UserIcon} label="Giới tính" value={job.gender}/>
+                                <RequirementItem icon={Users} label="Số lượng" value={`${job.quantity} người`}/>
+                                <RequirementItem icon={Cake} label="Yêu cầu tuổi" value={job.ageRequirement}/>
+                                <RequirementItem icon={Languages} label="Ngoại ngữ" value={job.languageRequirement}/>
+                                <RequirementItem icon={CalendarDays} label="Ngày phỏng vấn" value={job.interviewDate}/>
+                                <RequirementItem icon={ClipboardCheck} label="Số vòng" value={`${job.interviewRounds} vòng`}/>
+                                <RequirementItem icon={DollarSign} label="Phí xuất cảnh" value={job.netFee}/>
+                                <RequirementItem icon={Star} label="Điều kiện đặc biệt" value={job.specialConditions}/>
+                            </CardContent>
+                        </Card>
 
-                        <JobDetailSection title="Mô tả công việc" icon={FileText}>
+                        <JobDetailSection title="Mô tả công việc & Ghi chú" icon={FileText}>
                             <div dangerouslySetInnerHTML={{ __html: job.details.description }} />
                         </JobDetailSection>
                          <JobDetailSection title="Yêu cầu ứng viên" icon={UserCheck}>

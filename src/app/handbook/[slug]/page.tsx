@@ -118,6 +118,24 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
     );
   }
 
+  const RelatedArticlesList = () => (
+     <div className="space-y-6">
+        {otherArticles.map(other => (
+          <Link href={`/handbook/${other.slug}`} key={other.slug} className="group block">
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="relative aspect-video w-full">
+                  <Image src={other.image} alt={other.title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={other.dataAiHint} />
+                </div>
+                <div className="p-4">
+                    <p className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2">{other.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{other.category}</p>
+                </div>
+              </Card>
+          </Link>
+        ))}
+      </div>
+  );
+
   return (
     <div className="bg-secondary">
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
@@ -255,27 +273,23 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     ))}
                 </div>
             </section>
+
+            {/* Related Articles for Mobile/Tablet */}
+            <section className="mt-16 pt-8 border-t xl:hidden">
+                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
+                    <FileText className="mr-3 text-primary" />
+                    Bài viết liên quan
+                </h2>
+                <RelatedArticlesList />
+            </section>
+
           </main>
           
-          {/* Related Articles */}
+          {/* Related Articles for Desktop */}
           <aside className="hidden xl:block xl:col-span-3">
              <div className="sticky top-24">
               <h3 className="text-lg font-bold mb-4 text-accent flex items-center"><FileText className="mr-2"/>Bài viết liên quan</h3>
-              <div className="space-y-6">
-                {otherArticles.map(other => (
-                  <Link href={`/handbook/${other.slug}`} key={other.slug} className="group block">
-                      <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                        <div className="relative aspect-video w-full">
-                          <Image src={other.image} alt={other.title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={other.dataAiHint} />
-                        </div>
-                        <div className="p-4">
-                           <p className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2">{other.title}</p>
-                           <p className="text-xs text-muted-foreground mt-1">{other.category}</p>
-                        </div>
-                      </Card>
-                  </Link>
-                ))}\
-              </div>
+              <RelatedArticlesList />
             </div>
           </aside>
 

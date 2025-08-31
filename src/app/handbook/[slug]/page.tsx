@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, MessageSquare, ThumbsUp, Reply, Send, Smartphone, Film, ImageIcon, Camera } from 'lucide-react';
+import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, MessageSquare, ThumbsUp, Reply, Send, Smartphone, Film, ImageIcon, Camera, PlayCircle } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { useEffect, useState, use } from 'react';
@@ -89,12 +89,11 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
   
   const otherArticles = articles.filter(a => a.slug !== resolvedParams.slug).slice(0, 3);
   const hotJobs = jobData.slice(0, 3); // Demo with first 3 jobs
+  const otherShortVideos = articles.filter(a => a.type === 'video' && a.slug !== resolvedParams.slug);
+  const isShortVideo = article.type === 'video' && (article.slug.includes('meo-phong-van-video') || article.slug.includes('cach-chuyen-tien-nhat-viet'));
 
   const MainContent = () => {
     if (article.type === 'video' && article.videoUrl) {
-      // Check if it's a short video based on slug or another property
-      const isShortVideo = article.slug.includes('meo-phong-van-video') || article.slug.includes('cach-chuyen-tien-nhat-viet');
-      
       return (
          <div className={cn(
            "w-full rounded-lg overflow-hidden shadow-lg bg-black",
@@ -131,9 +130,9 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
     );
   }
 
-  const RelatedArticlesList = () => (
+  const RelatedArticlesList = ({ articlesToList }: { articlesToList: HandbookArticle[]}) => (
      <div className="space-y-6">
-        {otherArticles.map(other => (
+        {articlesToList.map(other => (
           <Link href={`/handbook/${other.slug}`} key={other.slug} className="group block">
               <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative aspect-video w-full">
@@ -154,11 +153,45 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
       </div>
   );
 
+  const RelatedVideosSidebar = ({ videos }: { videos: HandbookArticle[] }) => (
+    <div className="space-y-4">
+        {videos.map(video => (
+            <Link href={`/handbook/${video.slug}`} key={video.slug} className="group block">
+                <Card className="flex gap-4 p-3 hover:bg-muted/50 transition-colors">
+                    <div className="relative w-2/5 aspect-video rounded-md overflow-hidden">
+                        <Image src={video.image} alt={video.title} fill className="object-cover" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                            <PlayCircle className="h-6 w-6 text-white/70" />
+                        </div>
+                    </div>
+                    <div className="w-3/5">
+                        <p className="font-semibold text-sm line-clamp-2 leading-tight group-hover:text-primary">{video.title}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{video.author}</p>
+                    </div>
+                </Card>
+            </Link>
+        ))}
+    </div>
+  );
+
   return (
     <div className="bg-secondary">
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
           
+          {/* Sidebar Left: Related Videos (only on short video page) */}
+          {isShortVideo && (
+             <aside className="hidden lg:block lg:col-span-3">
+                <div className="sticky top-24">
+                   <h3 className="text-lg font-bold mb-4 flex items-center text-accent">
+                    <Video className="mr-2" />
+                    Video khác
+                  </h3>
+                   <RelatedVideosSidebar videos={otherShortVideos} />
+                </div>
+             </aside>
+          )}
+
           {/* Article Outline (Only for articles) */}
           {article.type === 'article' && article.content && (
             <aside className="hidden lg:block lg:col-span-3">
@@ -207,7 +240,8 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
           {/* Main Article Content */}
           <main className={cn(
             "lg:col-span-9 xl:col-span-6",
-            article.type !== 'article' && "lg:col-start-4 xl:col-start-4" // Center content if not an article
+            (article.type !== 'article' && !isShortVideo) && "lg:col-start-4 xl:col-start-4", // Center content if not an article or short video
+            isShortVideo && "lg:col-span-6 xl:col-span-6" // Adjust span for short video layout
             )}>
             <article>
               <header className="mb-8">
@@ -291,17 +325,8 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     ))}
                 </div>
             </section>
-
-            {/* Related Articles for Mobile/Tablet */}
-            <section className="mt-16 pt-8 border-t xl:hidden">
-                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
-                    <FileText className="mr-3 text-primary" />
-                    Bài viết liên quan
-                </h2>
-                <RelatedArticlesList />
-            </section>
-
-             {/* CTA Section */}
+            
+            {/* CTA Section */}
             <section className="mt-20">
                 <Card className="max-w-3xl mx-auto p-8 shadow-xl bg-primary/10 border-primary/20">
                     <h2 className="text-3xl font-headline font-bold text-primary mb-4 text-center">Trở thành Tác giả</h2>
@@ -339,13 +364,22 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     </div>
                 </Card>
             </section>
+
+            {/* Related Articles for Mobile/Tablet */}
+            <section className="mt-16 pt-8 border-t xl:hidden">
+                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
+                    <FileText className="mr-3 text-primary" />
+                    Bài viết liên quan
+                </h2>
+                <RelatedArticlesList articlesToList={otherArticles} />
+            </section>
           </main>
           
           {/* Related Articles for Desktop */}
           <aside className="hidden xl:block xl:col-span-3">
              <div className="sticky top-24">
               <h3 className="text-lg font-bold mb-4 text-accent flex items-center"><FileText className="mr-2"/>Bài viết liên quan</h3>
-              <RelatedArticlesList />
+              <RelatedArticlesList articlesToList={otherArticles} />
             </div>
           </aside>
 

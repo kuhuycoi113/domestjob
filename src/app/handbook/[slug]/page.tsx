@@ -1,10 +1,9 @@
 
-
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText } from 'lucide-react';
+import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, MessageSquare, ThumbsUp, Reply } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { useEffect, useState, use } from 'react';
@@ -14,6 +13,34 @@ import Link from 'next/link';
 import { jobData } from '@/lib/mock-data';
 import { JobCard } from '@/components/job-card';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Textarea } from '@/components/ui/textarea';
+
+
+const mockComments = [
+    {
+        id: 1,
+        author: {
+            name: 'Hoàng Long H.',
+            avatar: 'https://placehold.co/100x100.png',
+            role: 'Nhà tuyển dụng'
+        },
+        text: 'Cảm ơn bài viết rất chi tiết. Công ty chúng tôi đang tuyển 5 vị trí Kỹ năng đặc định ngành thực phẩm tại Aichi, các bạn quan tâm có thể xem trên trang của công ty nhé!',
+        time: '2 giờ trước',
+        likes: 12,
+    },
+    {
+        id: 2,
+        author: {
+            name: 'Lê Thu Trang',
+            avatar: 'https://placehold.co/100x100.png',
+            role: 'Ứng viên'
+        },
+        text: 'Cho mình hỏi là kỳ thi kỹ năng có khó không ạ? Mình đang chuẩn bị thi và hơi lo lắng.',
+        time: '1 giờ trước',
+        likes: 5,
+    }
+];
 
 
 export default function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -177,6 +204,57 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     ))}
                 </div>
             </section>
+            
+            {/* Comments Section */}
+            <section className="mt-16 pt-8 border-t">
+                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
+                    <MessageSquare className="mr-3 text-primary" />
+                    Bình luận ({mockComments.length})
+                </h2>
+                <div className="space-y-6">
+                    {/* Write comment */}
+                    <div className="flex items-start gap-4">
+                        <Avatar>
+                            <AvatarImage src="https://placehold.co/100x100.png" alt="Your avatar" data-ai-hint="user avatar" />
+                            <AvatarFallback>BẠN</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-grow">
+                             <Textarea placeholder="Viết bình luận của bạn..." className="mb-2" rows={3}/>
+                             <div className="flex justify-end">
+                                 <Button>Gửi bình luận</Button>
+                             </div>
+                        </div>
+                    </div>
+                    {/* List comments */}
+                     <div className="space-y-6">
+                        {mockComments.map(comment => (
+                             <div key={comment.id} className="flex items-start gap-4">
+                                <Avatar>
+                                    <AvatarImage src={comment.author.avatar} alt={comment.author.name} />
+                                    <AvatarFallback>{comment.author.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div className="flex-grow">
+                                    <div className="bg-background p-4 rounded-lg">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <p className="font-bold">{comment.author.name}</p>
+                                            <p className="text-xs text-muted-foreground">{comment.time}</p>
+                                        </div>
+                                        <p className="text-foreground">{comment.text}</p>
+                                    </div>
+                                    <div className="flex items-center gap-4 mt-2 px-2 text-sm">
+                                         <Button variant="ghost" size="sm" className="flex items-center gap-1 text-muted-foreground">
+                                            <ThumbsUp className="h-4 w-4"/> {comment.likes} Thích
+                                        </Button>
+                                         <Button variant="ghost" size="sm" className="flex items-center gap-1 text-muted-foreground">
+                                            <Reply className="h-4 w-4"/> Trả lời
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
           </main>
           
           {/* Related Articles */}
@@ -196,7 +274,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                         </div>
                       </Card>
                   </Link>
-                ))}\
+                ))}
               </div>
             </div>
           </aside>

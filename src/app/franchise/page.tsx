@@ -49,11 +49,40 @@ export default function FranchisePage() {
             Hợp tác cùng HelloJob để tìm kiếm nguồn nhân lực Kỹ năng Đặc định (Tokutei Ginou) chất lượng cao từ Việt Nam một cách hiệu quả và minh bạch.
           </p>
            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
-                  <Link href="/partner/dashboard">Trở thành Đối tác</Link>
-                </Button>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                          Trở thành Đối tác
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle className="font-headline text-2xl">Đăng ký hợp tác</DialogTitle>
+                            <DialogDescription>
+                                Vui lòng để lại thông tin của bạn. Chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="name" className="text-right">Tên công ty</Label>
+                                <Input id="name" placeholder="HelloJob Japan" className="col-span-3" />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="phone" className="text-right">Số điện thoại</Label>
+                                <Input id="phone" placeholder="0987654321" className="col-span-3" />
+                            </div>
+                             <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="email" className="text-right">Email</Label>
+                                <Input id="email" type="email" placeholder="contact@hellojob.jp" className="col-span-3" />
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <Button type="submit" className="bg-primary text-white">Gửi thông tin</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
                 <Button asChild size="lg" className="bg-accent-orange text-white hover:bg-accent-orange/90">
-                    <Link href="/partner/post-job"><Briefcase/> Đăng việc làm</Link>
+                    <Link href="/post-job"><Briefcase/> Đăng việc làm</Link>
                 </Button>
             </div>
         </div>

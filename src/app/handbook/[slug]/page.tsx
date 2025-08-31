@@ -1,9 +1,10 @@
 
+
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, MessageSquare, ThumbsUp, Reply, Send, Smartphone, Film, ImageIcon, Camera, PlayCircle } from 'lucide-react';
+import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { useEffect, useState, use } from 'react';
@@ -13,42 +14,7 @@ import Link from 'next/link';
 import { jobData } from '@/lib/mock-data';
 import { JobCard } from '@/components/job-card';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Textarea } from '@/components/ui/textarea';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
-
-const mockComments = [
-    {
-        id: 1,
-        author: {
-            name: 'Hoàng Long H.',
-            avatar: 'https://placehold.co/100x100.png',
-            role: 'Nhà tuyển dụng'
-        },
-        text: 'Cảm ơn bài viết rất chi tiết. Công ty chúng tôi đang tuyển 5 vị trí Kỹ năng đặc định ngành thực phẩm tại Aichi, các bạn quan tâm có thể xem trên trang của công ty nhé!',
-        time: '2 giờ trước',
-        likes: 12,
-    },
-    {
-        id: 2,
-        author: {
-            name: 'Lê Thu Trang',
-            avatar: 'https://placehold.co/100x100.png',
-            role: 'Ứng viên'
-        },
-        text: 'Cho mình hỏi là kỳ thi kỹ năng có khó không ạ? Mình đang chuẩn bị thi và hơi lo lắng.',
-        time: '1 giờ trước',
-        likes: 5,
-    }
-];
-
-const shareOptions = [
-    { title: 'Đăng nội dung dạng chữ', description: 'Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.', icon: FileText, color: 'text-blue-500', href: '/handbook/create/post' },
-    { title: 'Đăng bài viết dạng ảnh', description: 'Tạo một bài viết với hình ảnh minh hoạ trực quan.', icon: ImageIcon, color: 'text-yellow-500', href: '/handbook/create/image' },
-    { title: 'Đăng video ngắn', description: 'Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.', icon: Smartphone, color: 'text-green-500', href: '/handbook/create/video-short' },
-    { title: 'Đăng video dài', description: 'Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.', icon: Film, color: 'text-red-500', href: '/handbook/create/video' }
-];
 
 export default function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const [activeId, setActiveId] = useState('');
@@ -87,18 +53,13 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
     notFound();
   }
   
-  const otherArticles = articles.filter(a => a.slug !== resolvedParams.slug).slice(0, 3);
+  const otherArticles = articles.filter(a => a.slug !== resolvedParams.slug && a.type === 'article').slice(0, 3);
   const hotJobs = jobData.slice(0, 3); // Demo with first 3 jobs
-  const otherShortVideos = articles.filter(a => a.type === 'video' && a.slug !== resolvedParams.slug);
-  const isShortVideo = article.type === 'video';
 
   const MainContent = () => {
     if (article.type === 'video' && article.videoUrl) {
       return (
-         <div className={cn(
-           "w-full rounded-lg overflow-hidden shadow-lg bg-black",
-           isShortVideo ? "aspect-[9/16] max-w-sm mx-auto" : "aspect-video"
-         )}>
+         <div className="aspect-video w-full rounded-lg overflow-hidden shadow-lg bg-black">
             <iframe 
                 className="w-full h-full" 
                 src={`${article.videoUrl}?autoplay=1&rel=0`}
@@ -130,70 +91,11 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
     );
   }
 
-  const RelatedArticlesList = ({ articlesToList }: { articlesToList: HandbookArticle[]}) => (
-     <div className="space-y-6">
-        {articlesToList.map(other => (
-          <Link href={`/handbook/${other.slug}`} key={other.slug} className="group block">
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative aspect-video w-full">
-                  <Image src={other.image} alt={other.title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={other.dataAiHint} />
-                   {other.type === 'video' && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <Video className="h-8 w-8 text-white/80" />
-                    </div>
-                  )}
-                </div>
-                <div className="p-4">
-                    <p className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2">{other.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{other.category}</p>
-                </div>
-              </Card>
-          </Link>
-        ))}
-      </div>
-  );
-
-  const RelatedVideosSidebar = ({ videos }: { videos: HandbookArticle[] }) => (
-    <div className="space-y-4">
-        {videos.slice(0,3).map(video => (
-            <Link href={`/handbook/${video.slug}`} key={video.slug} className="group block">
-                <Card className="hover:bg-muted/50 transition-colors overflow-hidden">
-                    <div className="flex flex-col">
-                        <div className="relative w-full aspect-[9/16]">
-                            <Image src={video.image} alt={video.title} fill className="object-cover" />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                                <PlayCircle className="h-8 w-8 text-white/70" />
-                            </div>
-                        </div>
-                        <div className="p-3">
-                            <p className="font-semibold text-sm line-clamp-2 leading-tight group-hover:text-primary">{video.title}</p>
-                            <p className="text-xs text-muted-foreground mt-1">{video.author}</p>
-                        </div>
-                    </div>
-                </Card>
-            </Link>
-        ))}
-    </div>
-  );
-
   return (
     <div className="bg-secondary">
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
           
-          {/* Sidebar Left: Related Videos (only on short video page) */}
-          {isShortVideo && (
-             <aside className="hidden lg:block lg:col-span-3">
-                <div className="sticky top-24">
-                   <h3 className="text-lg font-bold mb-4 flex items-center text-accent">
-                    <Video className="mr-2" />
-                    Video khác
-                  </h3>
-                   <RelatedVideosSidebar videos={otherShortVideos} />
-                </div>
-             </aside>
-          )}
-
           {/* Article Outline (Only for articles) */}
           {article.type === 'article' && article.content && (
             <aside className="hidden lg:block lg:col-span-3">
@@ -225,7 +127,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     </CardHeader>
                     <CardContent className="space-y-4">
                       {hotJobs.slice(0,2).map(job => (
-                        <Link href={`/jobs/${job.id}`} key={job.id} className="group block">
+                        <Link href="#" key={job.id} className="group block">
                            <p className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-2">{job.title}</p>
                            <p className="text-xs text-muted-foreground">{job.recruiter.company}</p>
                         </Link>
@@ -242,8 +144,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
           {/* Main Article Content */}
           <main className={cn(
             "lg:col-span-9 xl:col-span-6",
-            (article.type !== 'article' && !isShortVideo) && "lg:col-start-4 xl:col-start-4", // Center content if not an article or short video
-            isShortVideo && "lg:col-span-6 xl:col-span-6" // Adjust span for short video layout
+            article.type !== 'article' && "lg:col-start-4 xl:col-start-4" // Center content if not an article
             )}>
             <article>
               <header className="mb-8">
@@ -264,57 +165,6 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
               <MainContent />
             </article>
 
-            {/* Comments Section */}
-            <section className="mt-16 pt-8 border-t">
-                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
-                    <MessageSquare className="mr-3 text-primary" />
-                    Bình luận ({mockComments.length})
-                </h2>
-                <div className="space-y-6">
-                    {/* Write comment */}
-                    <div className="flex items-start gap-4">
-                        <Avatar>
-                            <AvatarImage src="https://placehold.co/100x100.png" alt="Your avatar" data-ai-hint="user avatar" />
-                            <AvatarFallback>BẠN</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-grow">
-                             <Textarea placeholder="Viết bình luận của bạn..." className="mb-2" rows={3}/>
-                             <div className="flex justify-end">
-                                 <Button>Gửi bình luận</Button>
-                             </div>
-                        </div>
-                    </div>
-                    {/* List comments */}
-                     <div className="space-y-6">
-                        {mockComments.map(comment => (
-                             <div key={comment.id} className="flex items-start gap-4">
-                                <Avatar>
-                                    <AvatarImage src={comment.author.avatar} alt={comment.author.name} />
-                                    <AvatarFallback>{comment.author.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div className="flex-grow">
-                                    <div className="bg-background p-4 rounded-lg">
-                                        <div className="flex items-center justify-between mb-1">
-                                            <p className="font-bold">{comment.author.name}</p>
-                                            <p className="text-xs text-muted-foreground">{comment.time}</p>
-                                        </div>
-                                        <p className="text-foreground">{comment.text}</p>
-                                    </div>
-                                    <div className="flex items-center gap-4 mt-2 px-2 text-sm">
-                                         <Button variant="ghost" size="sm" className="flex items-center gap-1 text-muted-foreground">
-                                            <ThumbsUp className="h-4 w-4"/> {comment.likes} Thích
-                                        </Button>
-                                         <Button variant="ghost" size="sm" className="flex items-center gap-1 text-muted-foreground">
-                                            <Reply className="h-4 w-4"/> Trả lời
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* Hot Jobs Section */}
             <section className="mt-16 pt-8 border-t">
                  <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
@@ -327,61 +177,27 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     ))}
                 </div>
             </section>
-            
-            {/* CTA Section */}
-            <section className="mt-20">
-                <Card className="max-w-3xl mx-auto p-8 shadow-xl bg-primary/10 border-primary/20">
-                    <h2 className="text-3xl font-headline font-bold text-primary mb-4 text-center">Trở thành Tác giả</h2>
-                    <p className="text-muted-foreground mb-6 text-center">
-                        Bạn có kinh nghiệm, câu chuyện hay kiến thức bổ ích muốn chia sẻ với cộng đồng?
-                    </p>
-                    <div className="text-center">
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button size="lg" className="bg-primary text-white">
-                                    <Send className="mr-2"/>
-                                    Chia sẻ nội dung của bạn
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-2xl">
-                                <DialogHeader>
-                                    <DialogTitle className="font-headline text-2xl">Chọn loại nội dung bạn muốn chia sẻ</DialogTitle>
-                                    <DialogDescription>
-                                        Đóng góp kiến thức và kinh nghiệm của bạn cho cộng đồng HelloJob.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
-                                    {shareOptions.map(option => (
-                                        <Link href={option.href} key={option.title} className="block">
-                                            <Card className="p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary hover:shadow-lg transition-all h-full">
-                                                <option.icon className={cn("h-10 w-10 mb-4", option.color)} />
-                                                <h3 className="font-bold font-headline mb-1">{option.title}</h3>
-                                                <p className="text-sm text-muted-foreground">{option.description}</p>
-                                            </Card>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </DialogContent>
-                        </Dialog>
-                    </div>
-                </Card>
-            </section>
-
-            {/* Related Articles for Mobile/Tablet */}
-            <section className="mt-16 pt-8 border-t xl:hidden">
-                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
-                    <FileText className="mr-3 text-primary" />
-                    Bài viết liên quan
-                </h2>
-                <RelatedArticlesList articlesToList={otherArticles} />
-            </section>
           </main>
           
-          {/* Related Articles for Desktop */}
+          {/* Related Articles */}
           <aside className="hidden xl:block xl:col-span-3">
              <div className="sticky top-24">
               <h3 className="text-lg font-bold mb-4 text-accent flex items-center"><FileText className="mr-2"/>Bài viết liên quan</h3>
-              <RelatedArticlesList articlesToList={otherArticles} />
+              <div className="space-y-6">
+                {otherArticles.map(other => (
+                  <Link href={`/handbook/${other.slug}`} key={other.slug} className="group block">
+                      <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                        <div className="relative aspect-video w-full">
+                          <Image src={other.image} alt={other.title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={other.dataAiHint} />
+                        </div>
+                        <div className="p-4">
+                           <p className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2">{other.title}</p>
+                           <p className="text-xs text-muted-foreground mt-1">{other.category}</p>
+                        </div>
+                      </Card>
+                  </Link>
+                ))}
+              </div>
             </div>
           </aside>
 

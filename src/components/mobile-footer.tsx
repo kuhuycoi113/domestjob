@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, BrainCircuit } from 'lucide-react';
+import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -22,7 +22,6 @@ import { VnFlagIcon, JpFlagIcon, EnFlagIcon } from './custom-icons';
 
 const quickAccessLinks = [
     { href: '/roadmap', label: 'Lộ trình', icon: Compass },
-    { href: '/career-orientation', label: 'Hướng nghiệp', icon: BrainCircuit },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
     { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
@@ -31,7 +30,7 @@ const quickAccessLinks = [
     { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
     { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
     { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
-    { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '#', label: 'Góp ý', icon: MessageSquareWarning },
 ];
 
 const Logo = () => (
@@ -60,7 +59,7 @@ export function MobileFooter() {
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
       <div className="flex justify-around items-center h-16">
         {footerLinks.map(({ href, icon: Icon, label }) => {
-           const isActive = (pathname === href);
+           const isActive = (pathname === href) || (pathname.startsWith(href) && href !== '/');
            return (
             <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/4 pt-1">
               <Icon className={cn("h-6 w-6 mb-1", isActive ? 'text-primary' : '')} />

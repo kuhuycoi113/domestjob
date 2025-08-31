@@ -145,7 +145,7 @@ export default function AboutPage() {
                 <h3 className="font-bold text-lg">{member.name}</h3>
                 <p className="text-primary font-semibold">{member.role}</p>
               </div>
-            ))}
+            )))}
           </div>
         </div>
       </section>

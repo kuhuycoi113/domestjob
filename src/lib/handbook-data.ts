@@ -2,7 +2,7 @@
 
 export type HandbookArticle = {
   slug: string;
-  type: 'article' | 'video' | 'post' | 'image-story'; // Phân loại nội dung
+  type: 'article' | 'video' | 'post'; // Phân loại nội dung
   title: string;
   category: string;
   author: string;
@@ -38,7 +38,7 @@ export const articles: HandbookArticle[] = [
           <p>Chương trình này được chia thành 2 loại chính:</p>
           <ul>
             <li><strong>Kỹ năng đặc định loại 1 (Tokutei Ginou 1):</strong> Dành cho lao động có trình độ kỹ năng và kiến thức chuyên môn nhất định, có thể làm việc ngay mà không cần qua đào tạo nhiều. Thời gian lưu trú tối đa là 5 năm và không được bảo lãnh gia đình.</li>
-            <li><strong>Kỹ năng đặc định loại 2 (Tokutei Ginou 2):</strong> Dành cho lao động có kỹ năng tay nghề cao, chuyên nghiệp. Sau khi hoàn thành chương trình loại 1, lao động có thể thi chuyển lên được loại 2 để được ở lại Nhật Bản lâu dài, có cơ hội xin vĩnh trú và bảo lãnh người thân sang sinh sống.</li>
+            <li><strong>Kỹ năng đặc định loại 2 (Tokutei Ginou 2):</strong> Dành cho lao động có kỹ năng tay nghề cao, chuyên nghiệp. Sau khi hoàn thành chương trình loại 1, lao động có thể thi chuyển lên loại 2 để được ở lại Nhật Bản lâu dài, có cơ hội xin vĩnh trú và bảo lãnh người thân sang sinh sống.</li>
           </ul>
         `
       },
@@ -142,29 +142,6 @@ export const articles: HandbookArticle[] = [
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
   },
   {
-    slug: 'luu-y-khi-tim-viec-tokutei',
-    type: 'post',
-    title: '5 Lưu ý vàng khi tự tìm việc Tokutei Ginou tại Nhật',
-    category: 'Kinh nghiệm phỏng vấn',
-    author: 'HelloJob Team',
-    readTime: '4 phút',
-    image: 'https://placehold.co/1200x600.png',
-    dataAiHint: 'person searching job online',
-    excerpt: 'Tránh những sai lầm phổ biến và tăng cơ hội thành công của bạn với những lời khuyên hữu ích này khi tự mình tìm kiếm cơ hội việc làm Kỹ năng đặc định.',
-  },
-    {
-    slug: 'thu-thach-mot-ngay-lam-viec',
-    type: 'video',
-    title: 'Thử thách 1 ngày làm việc tại xưởng cơm hộp Nhật Bản',
-    category: 'Cuộc sống ở Nhật',
-    author: 'Mai Linh',
-    readTime: '1 phút',
-    image: 'https://placehold.co/400x600.png',
-    dataAiHint: 'factory worker japan',
-    excerpt: 'Cùng xem một ngày làm việc thực tế tại xưởng sản xuất cơm hộp sẽ như thế nào nhé!',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  },
-  {
     slug: 'van-hoa-lam-viec-nhat-ban',
     type: 'post',
     title: 'Văn hóa làm việc tại công ty Nhật: Hou-Ren-Sou và những điều cần biết',
@@ -185,6 +162,17 @@ export const articles: HandbookArticle[] = [
     image: 'https://placehold.co/1200x600.png',
     dataAiHint: 'person writing resume',
     excerpt: 'Jikoshoukai là phần không thể thiếu trong bất kỳ buổi phỏng vấn nào tại Nhật. Cùng học cách xây dựng một bài giới thiệu bản thân ngắn gọn, súc tích và ghi điểm với nhà tuyển dụng.',
+  },
+  {
+    slug: 'luu-y-khi-tim-viec-tokutei',
+    type: 'post',
+    title: '5 Lưu ý vàng khi tự tìm việc Tokutei Ginou tại Nhật',
+    category: 'Kinh nghiệm phỏng vấn',
+    author: 'HelloJob Team',
+    readTime: '4 phút',
+    image: 'https://placehold.co/1200x600.png',
+    dataAiHint: 'person searching job online',
+    excerpt: 'Tránh những sai lầm phổ biến và tăng cơ hội thành công của bạn với những lời khuyên hữu ích này khi tự mình tìm kiếm cơ hội việc làm Kỹ năng đặc định.',
   },
   {
     slug: 'cac-app-ho-tro-cuoc-song-nhat',
@@ -232,27 +220,5 @@ export const articles: HandbookArticle[] = [
         body: '<p>Theo nguyên tắc, bạn cần phải sinh sống liên tục tại Nhật Bản ít nhất 10 năm. Tuy nhiên, có một số trường hợp được xét duyệt ưu tiên với thời gian ngắn hơn, ví dụ như người có đóng góp lớn cho Nhật Bản hoặc vợ/chồng của người Nhật.',
       },
     ],
-  },
-  {
-    slug: 'mot-ngay-o-xuong-com-hop',
-    type: 'image-story',
-    title: 'Một ngày làm việc tại xưởng cơm hộp ở Nhật diễn ra như thế nào?',
-    category: 'Cuộc sống ở Nhật',
-    author: 'HelloJob Team',
-    readTime: '3 phút',
-    image: 'https://placehold.co/800x600.png',
-    dataAiHint: 'bento box factory',
-    excerpt: 'Cùng theo chân một thực tập sinh khám phá quy trình làm việc trong một ngày tại xưởng sản xuất cơm hộp hiện đại của Nhật Bản.',
-  },
-  {
-    slug: '7-eleven-o-nhat',
-    type: 'image-story',
-    title: 'Khám phá những điều thú vị chỉ có ở 7-Eleven Nhật Bản',
-    category: 'Cuộc sống ở Nhật',
-    author: 'Mai Linh',
-    readTime: '4 phút',
-    image: 'https://placehold.co/800x600.png',
-    dataAiHint: '7-eleven japan store',
-    excerpt: '7-Eleven ở Nhật không chỉ là cửa hàng tiện lợi, đó là cả một thế giới ẩm thực và dịch vụ độc đáo. Hãy xem bên trong có gì nhé!',
   },
 ];

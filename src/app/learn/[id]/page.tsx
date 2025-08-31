@@ -1,13 +1,14 @@
 
 'use client';
 
-import { useState, use } from 'react';
-import { notFound } from 'next/navigation';
+import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Clock, FileText, Layers, Star, Users, PlayCircle, BookCheck } from 'lucide-react';
-import { courses, type Course } from '@/lib/learn-data';
+import { courses } from '@/lib/learn-data';
+import { use } from 'react';
+import { notFound } from 'next/navigation';
 
 const categoryColors: { [key: string]: string } = {
   'Ngoại ngữ': 'bg-accent-orange text-white',

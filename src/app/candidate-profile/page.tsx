@@ -2,12 +2,12 @@
 
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, FileSignature, ChevronLeft, ChevronRight, Target } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -17,7 +17,6 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    DialogClose
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,14 +28,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
 
 type MediaItem = {
   src: string;
   thumbnail?: string; 
   alt: string;
-  dataAiHint: string;
+  "data-ai-hint": string;
 };
 
 type EnrichedCandidateProfile = CandidateProfile & { 
@@ -86,12 +83,12 @@ const emptyCandidate: EnrichedCandidateProfile = {
 const commonSkills = ['Vận hành máy CNC', 'AutoCAD', 'Kiểm tra chất lượng', 'Làm việc nhóm', 'Giải quyết vấn đề', 'Tiếng Anh giao tiếp'];
 const commonInterests = ['Cơ khí', 'Điện tử', 'IT', 'Logistics', 'Dệt may', 'Chế biến thực phẩm'];
 
-const EditDialog = ({ children, title, onSave, content, description, contentClassName }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string, contentClassName?: string }) => (
+const EditDialog = ({ children, title, onSave, content, description }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string }) => (
     <Dialog>
         <DialogTrigger asChild>
             {children}
         </DialogTrigger>
-        <DialogContent className={cn("sm:max-w-[600px]", contentClassName)}>
+        <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
                 <DialogTitle className="font-headline text-2xl">{title}</DialogTitle>
                 {description && <DialogDescription>{description}</DialogDescription>}
@@ -112,185 +109,6 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 )
 
-const level1Fields = [
-    { number: 1, label: 'Họ và tên', field: 'name', type: 'simple', inputType: 'text', placeholder: "Nhập họ và tên" },
-    { number: 2, label: 'Giới tính', field: 'gender', type: 'personalInfo', inputType: 'buttons', options: ['Nam', 'Nữ', 'Cả nam cả nữ'] },
-    { number: 3, label: 'Ngày sinh', field: 'dateOfBirth', type: 'personalInfo', inputType: 'date', placeholder: "" },
-    { number: 4, label: 'Ngành nghề mong muốn', field: 'desiredIndustry', type: 'simple', inputType: 'text', placeholder: "Chọn ngành nghề" },
-    { number: 5, label: 'Địa điểm mong muốn', field: 'desiredLocation', type: 'aspirations', inputType: 'text', placeholder: "Chọn địa điểm" },
-    { number: 6, label: 'Chiều cao', field: 'height', type: 'personalInfo', inputType: 'text', placeholder: "Nhập chiều cao (cm)" },
-    { number: 7, label: 'Cân nặng', field: 'weight', type: 'personalInfo', inputType: 'text', placeholder: "Nhập cân nặng (kg)" },
-    { number: 8, label: 'Hình xăm', field: 'tattooStatus', type: 'personalInfo', inputType: 'buttons', options: ['Không hình xăm', 'Có xăm nhỏ (kín)', 'Có xăm to (lộ)'] },
-    { number: 9, label: 'Viêm gan B', field: 'hepatitisBStatus', type: 'personalInfo', inputType: 'text', placeholder: "Nhập tình trạng" },
-    { number: 10, label: 'Lương cơ bản mong muốn/tháng', field: 'desiredSalary', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
-    { number: 11, label: 'Thực lĩnh mong muốn', field: 'desiredNetSalary', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
-    { number: 12, label: 'Khả năng tài chính', field: 'financialAbility', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
-    { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', field: 'interviewLocation', type: 'aspirations', inputType: 'text', placeholder: "Chọn địa điểm" },
-    { number: 14, label: 'Nguyện vọng đặc biệt', field: 'specialAspirations', type: 'aspirations', inputType: 'textarea', placeholder: "Chọn điều kiện" },
-];
-
-const StepByStepEditDialog = ({ initialStep = 1, trigger, tempCandidate, setTempCandidate, onSave }: { initialStep?: number, trigger: React.ReactNode, tempCandidate: EnrichedCandidateProfile, setTempCandidate: React.Dispatch<React.SetStateAction<EnrichedCandidateProfile | null>>, onSave: () => void }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [currentStep, setCurrentStep] = useState(initialStep);
-    const totalSteps = level1Fields.length;
-
-    useEffect(() => {
-        if(isOpen) {
-            setCurrentStep(initialStep);
-        }
-    }, [isOpen, initialStep])
-
-    if (!tempCandidate) return null;
-
-    const handleNestedChange = (section: 'personalInfo' | 'aspirations', field: string, value: any) => {
-        setTempCandidate(prev => {
-            if (!prev) return null;
-            const newCandidate = { ...prev };
-            // @ts-ignore
-            const currentSection = newCandidate[section];
-            if (currentSection) {
-                 // @ts-ignore
-                currentSection[field] = value;
-            }
-            return newCandidate;
-        });
-    };
-
-    const handleSimpleChange = (field: keyof EnrichedCandidateProfile, value: any) => {
-        setTempCandidate(prev => {
-            if (!prev) return null;
-            return { ...prev, [field]: value };
-        });
-    };
-    
-    const handleButtonChange = (section: 'personalInfo' | 'aspirations', field: string, value: any) => {
-         setTempCandidate(prev => {
-            if (!prev) return null;
-            const newCandidate = { ...prev };
-             // @ts-ignore
-            const currentSection = newCandidate[section];
-            if (currentSection) {
-                 // @ts-ignore
-                const currentValue = currentSection[field];
-                 // @ts-ignore
-                currentSection[field] = currentValue === value ? '' : value;
-            }
-            return newCandidate;
-        });
-    };
-    
-    const renderField = (field: typeof level1Fields[0]) => {
-        const { type, field: fieldName, inputType, placeholder, options } = field;
-        const value = type === 'simple' 
-            ? tempCandidate[fieldName as keyof EnrichedCandidateProfile] 
-            // @ts-ignore
-            : tempCandidate[type as 'personalInfo' | 'aspirations']?.[fieldName];
-
-        const handleChange = (newValue: any) => {
-            if (type === 'simple') {
-                handleSimpleChange(fieldName as keyof EnrichedCandidateProfile, newValue);
-            } else {
-                handleNestedChange(type as 'personalInfo' | 'aspirations', fieldName, newValue);
-            }
-        }
-
-        switch (inputType) {
-            case 'select':
-                return (
-                    <Select value={value || ''} onValueChange={handleChange}>
-                        <SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger>
-                        <SelectContent>
-                            {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
-                        </SelectContent>
-                    </Select>
-                );
-            case 'buttons':
-                return (
-                    <div className="flex justify-center gap-2 md:gap-4">
-                        {options?.map(opt => (
-                            <Button
-                                key={opt}
-                                variant={value === opt ? 'default' : 'outline'}
-                                onClick={() => handleButtonChange(type as 'personalInfo' | 'aspirations', fieldName, opt)}
-                                type="button"
-                                className="rounded-full px-4 py-2 text-sm md:text-base"
-                            >
-                                {opt}
-                            </Button>
-                        ))}
-                    </div>
-                );
-            case 'textarea':
-                return <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />;
-            case 'date':
-                return <Input type="date" value={value || ''} onChange={e => handleChange(e.target.value)} />;
-            default:
-                return <Input placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />;
-        }
-    };
-
-
-    return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>{trigger}</DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-                 <DialogHeader>
-                    <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-col justify-between min-h-[500px]">
-                    <div className="space-y-4 pt-4">
-                         {level1Fields.map((field) => (
-                             <div key={field.number} className={cn(currentStep !== field.number && 'hidden')}>
-                                <h3 className="text-xl font-bold font-headline text-center mb-4">{field.label}</h3>
-                                <div className="px-4 relative">
-                                  {renderField(field)}
-                                </div>
-                             </div>
-                         ))}
-                    </div>
-                    <div className="px-4 pb-4">
-                        <div className="text-xs text-muted-foreground leading-relaxed flex flex-wrap gap-x-2">
-                            {level1Fields.map(field => (
-                                <button 
-                                    key={field.number} 
-                                    onClick={() => setCurrentStep(field.number)}
-                                    className={cn(
-                                        "inline-flex items-center hover:text-primary",
-                                        currentStep === field.number && "text-primary font-bold"
-                                    )}
-                                >
-                                    {field.label} {field.number < totalSteps && <ChevronRight className="h-3 w-3 ml-1" />}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                 <DialogFooter className="grid grid-cols-2 gap-2 pt-4 border-t">
-                    {currentStep > 1 && (
-                        <Button variant="outline" onClick={() => setCurrentStep(s => s - 1)}>Quay lại</Button>
-                    )}
-                    {currentStep <= totalSteps && (
-                       <Button 
-                        onClick={() => {
-                            if (currentStep < totalSteps) {
-                                setCurrentStep(s => s + 1)
-                            } else {
-                                onSave();
-                                setIsOpen(false);
-                            }
-                        }}
-                        className={cn("col-start-2", currentStep === 1 && "col-span-2")}
-                       >
-                           {currentStep < totalSteps ? 'Tiếp tục' : 'Đăng thông tin'}
-                       </Button>
-                    )}
-                 </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    );
-};
-
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
   const [tempCandidate, setTempCandidate] = useState<EnrichedCandidateProfile | null>(null);
@@ -302,21 +120,21 @@ export default function CandidateProfilePage() {
     let profileToLoad: EnrichedCandidateProfile;
 
     const defaultImages: MediaItem[] = [
-      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trước', dataAiHint: 'front view portrait' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trái', dataAiHint: 'left side portrait' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh phải', dataAiHint: 'right side portrait' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trước', dataAiHint: 'full body front' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trái', dataAiHint: 'full body left' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân phải', dataAiHint: 'full body right' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trước', "data-ai-hint": 'front view portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trái', "data-ai-hint": 'left side portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh phải', "data-ai-hint": 'right side portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trước', "data-ai-hint": 'full body front' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trái', "data-ai-hint": 'full body left' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân phải', "data-ai-hint": 'full body right' },
     ];
     
     const defaultVideos: MediaItem[] = [
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Giới thiệu bản thân', dataAiHint: 'self introduction video' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 1', dataAiHint: 'skill demonstration' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 2', dataAiHint: 'welding skill' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Trả lời phỏng vấn', dataAiHint: 'interview answers' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Dự án đã làm', dataAiHint: 'project showcase' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Video khác', dataAiHint: 'personal video' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Giới thiệu bản thân', "data-ai-hint": 'self introduction video' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 1', "data-ai-hint": 'skill demonstration' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 2', "data-ai-hint": 'welding skill' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Trả lời phỏng vấn', "data-ai-hint": 'interview answers' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Dự án đã làm', "data-ai-hint": 'project showcase' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Video khác', "data-ai-hint": 'personal video' },
     ];
 
     if (storedProfile) {
@@ -513,6 +331,66 @@ export default function CandidateProfilePage() {
           }
       }
   };
+
+  const Level1EditDialogContent = () => {
+    if (!tempCandidate) return null;
+    return (
+        <div className="space-y-4">
+            {[
+                { label: '1. Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
+                { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
+                { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
+                { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
+                { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
+                { label: '6. Chiều cao', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
+                { label: '7. Cân nặng', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
+                { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
+                { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Có viêm gan B'] },
+                { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
+                { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
+                { label: '12. Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
+                { label: '13. Tìm việc phỏng vấn, tuyển tại', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
+                { label: '14. Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations' },
+                { label: '15. Mô tả/ghi chú', value: tempCandidate.notes, field: 'notes', type: 'simple', isTextarea: true },
+            ].map(item => (
+                <div key={item.label} className="grid grid-cols-3 items-center gap-4">
+                    <Label className="col-span-1 text-right">{item.label}</Label>
+                    <div className="col-span-2">
+                      {item.isTextarea ? (
+                           <Textarea 
+                              value={item.value || ''} 
+                              onChange={e => handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value)} 
+                          />
+                      ) : item.options ? (
+                          <Select 
+                              value={item.value || ''} 
+                              onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
+                          >
+                              <SelectTrigger>
+                                  <SelectValue placeholder={`Chọn ${item.label.split('. ')[1].toLowerCase()}`} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                  {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                              </SelectContent>
+                          </Select>
+                      ) : (
+                          <Input 
+                              value={item.value || ''} 
+                              onChange={e => {
+                                  if (item.type === 'simple') {
+                                      handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value);
+                                  } else {
+                                      handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, e.target.value);
+                                  }
+                              }}
+                          />
+                      )}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+  };
   
   const experienceEditDialogContent = (
       <div className="space-y-6">
@@ -641,29 +519,36 @@ export default function CandidateProfilePage() {
   const mainEditDialogContent = (
     <div className="space-y-4">
         <div className="text-center">
-             <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit mb-4">
-                <FileSignature className="h-12 w-12 text-primary" />
-             </div>
+             <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
+             <h3 className="text-2xl font-headline mt-2">TẠO PROFILE TÌM VIỆC</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
-            <StepByStepEditDialog
-                trigger={
-                   <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
-                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-orange-300">
+                        <h4 className="font-bold text-orange-500">Mức 1</h4>
                         <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
                     </Card>
-                }
-                tempCandidate={tempCandidate}
-                setTempCandidate={setTempCandidate}
-                onSave={handleSave}
-            />
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-xl">
+                    <DialogHeader>
+                        <DialogTitle className="font-headline text-2xl">Thông tin tài khoản ứng viên Mức 1</DialogTitle>
+                    </DialogHeader>
+                    <div className="max-h-[70vh] overflow-y-auto pr-4">
+                      <Level1EditDialogContent />
+                    </div>
+                    <DialogFooter>
+                        <Button onClick={handleSave} className="bg-primary text-white w-full">Đăng thông tin</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-green">
-                        <h4 className="font-bold text-accent-green">Mức 2</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-green-300">
+                        <h4 className="font-bold text-green-500">Mức 2</h4>
                         <Briefcase className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin đầy đủ)</p>
                     </Card>
@@ -682,8 +567,8 @@ export default function CandidateProfilePage() {
             
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent">
-                        <h4 className="font-bold text-accent">Mức 3</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-blue-300">
+                        <h4 className="font-bold text-blue-500">Mức 3</h4>
                         <Contact className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <div className="flex justify-center items-center gap-2 mt-1">
                             <Facebook className="h-5 w-5 text-blue-600" />
@@ -719,7 +604,7 @@ export default function CandidateProfilePage() {
                 {items.slice(0, 6).map((item, index) => (
                     <CarouselItem key={index} className="pl-2 md:pl-4 basis-[30%] md:basis-1/3 lg:basis-1/4">
                        <div className="relative group overflow-hidden rounded-lg aspect-[9/16] cursor-pointer">
-                            <Image src={item.thumbnail || item.src} alt={item.alt} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={item.dataAiHint} />
+                            <Image src={item.thumbnail || item.src} alt={item.alt} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={item['data-ai-hint']} />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <PlayCircle className="h-12 w-12 text-white/80 drop-shadow-lg" />
@@ -762,7 +647,7 @@ export default function CandidateProfilePage() {
                         <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5">
                            <div className="space-y-2">
                                 <div className="relative group aspect-[3/4] rounded-lg overflow-hidden border">
-                                     <Image src={item.src} alt={item.alt} fill className="object-cover" data-ai-hint={item.dataAiHint} />
+                                     <Image src={item.src} alt={item.alt} fill className="object-cover" data-ai-hint={item['data-ai-hint']} />
                                      <Label htmlFor={`image-upload-${index}`} className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                         <Camera className="h-8 w-8 text-white"/>
                                      </Label>
@@ -780,15 +665,6 @@ export default function CandidateProfilePage() {
     </Card>
   )
 
-    const InfoRow = ({ label, value }: { label: string, value: string | number | undefined }) => {
-        if (!value) return null;
-        return (
-            <div className="flex justify-between items-center py-3 px-4 even:bg-secondary">
-                <span className="text-muted-foreground">{label}</span>
-                <span className="font-semibold text-right">{value}</span>
-            </div>
-        );
-    };
 
   return (
     <div className="bg-secondary">
@@ -817,11 +693,10 @@ export default function CandidateProfilePage() {
                   </p>
                 </div>
                  <EditDialog
-                    title="Sửa hồ sơ tìm việc"
+                    title="Hoàn thiện hồ sơ"
                     onSave={() => { /* No-op, saves happen in sub-dialogs */ }}
                     content={mainEditDialogContent}
                     description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."
-                    contentClassName="sm:max-w-4xl"
                  >
                     <Button className="md:ml-auto mt-4 md:mt-0" variant="outline"><Edit /> Sửa hồ sơ</Button>
                  </EditDialog>
@@ -925,38 +800,24 @@ export default function CandidateProfilePage() {
               {/* Right Column */}
               <div className="lg:col-span-1 space-y-6">
                  <Card>
-                    <CardHeader>
-                        <CardTitle className="font-headline text-xl flex items-center"><UserCog className="mr-3 text-primary"/> Thông tin cá nhân</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0 text-sm">
-                        <div className="border-t">
-                            <InfoRow label="Họ và tên" value={candidate.name} />
-                            <InfoRow label="Số điện thoại" value={candidate.personalInfo.phone} />
-                            <InfoRow label="Ngày sinh" value={candidate.personalInfo.dateOfBirth} />
-                            <InfoRow label="Quê quán" value={candidate.location} />
-                            <InfoRow label="Giới tính" value={candidate.personalInfo.gender} />
-                            <InfoRow label="Chiều cao" value={candidate.personalInfo.height} />
-                            <InfoRow label="Cân nặng" value={candidate.personalInfo.weight} />
-                            <InfoRow label="Hình xăm" value={candidate.personalInfo.tattooStatus} />
-                            <InfoRow label="Viêm gan B" value={candidate.personalInfo.hepatitisBStatus} />
-                        </div>
-                    </CardContent>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <CardTitle className="font-headline text-xl flex items-center"><UserCog className="mr-3 text-primary"/> Thông tin cá nhân</CardTitle>
+                    <EditDialog
+                        title="Chỉnh sửa Thông tin cá nhân"
+                        onSave={handleSave}
+                        content={<Level1EditDialogContent />}
+                    >
+                      <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
+                    </EditDialog>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <p className="flex items-start gap-3"><Cake className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Năm sinh:</strong> {candidate.personalInfo.birthYear}</span></p>
+                    <p className="flex items-start gap-3"><Dna className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Giới tính:</strong> {candidate.personalInfo.gender}</span></p>
+                    <p className="flex items-start gap-3"><Phone className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>SĐT:</strong> {candidate.personalInfo.phone}</span></p>
+                    <p className="flex items-start gap-3"><Languages className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Ngoại ngữ:</strong> {candidate.personalInfo.language}</span></p>
+                    <p className="flex items-start gap-3"><Building className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</span></p>
+                  </CardContent>
                 </Card>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="font-headline text-xl flex items-center"><Target className="mr-3 text-primary"/> Mong muốn và nguyện vọng</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0 text-sm">
-                        <div className="border-t">
-                            <InfoRow label="Nước mong muốn" value={candidate.aspirations?.desiredLocation} />
-                            <InfoRow label="Loại hình" value={candidate.desiredIndustry} />
-                            <InfoRow label="Mức phí" value={candidate.aspirations?.financialAbility} />
-                            <InfoRow label="Back mong muốn" value={candidate.aspirations?.desiredSalary} />
-                        </div>
-                    </CardContent>
-                </Card>
-
 
                  <Card>
                   <CardHeader className="flex flex-row items-center justify-between">
@@ -1033,4 +894,3 @@ export default function CandidateProfilePage() {
     </div>
   );
 }
-

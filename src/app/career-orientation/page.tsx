@@ -17,7 +17,7 @@ const tests = [
     icon: ClipboardCheck,
     title: 'Khám phá nghề nghiệp O*NET',
     description: 'Dựa trên sở thích của bạn, bài test sẽ gợi ý danh sách các ngành nghề cụ thể đang có nhu cầu cao trên thị trường, giúp bạn có lựa chọn thực tế và thông minh.',
-    link: '/career-orientation/onet',
+    link: '/career-orientation/holland',
     color: 'accent-blue'
   },
   {

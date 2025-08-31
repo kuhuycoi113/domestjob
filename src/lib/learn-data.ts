@@ -55,28 +55,7 @@ export const courses: Course[] = [
       { title: 'Bài 5: Di chuyển', duration: '19:30', videoId: 'V92_uXn2o5o' },
     ]
   },
-   {
-    id: 'van-hoa-nhat-ban',
-    title: 'Hiểu về văn hoá Nhật Bản',
-    category: 'Văn hóa & Xã hội',
-    description: 'Trang bị kiến thức nền tảng về văn hóa Nhật Bản, từ các quy tắc ứng xử nơi công cộng đến những giá trị tinh thần cốt lõi giúp bạn tự tin hòa nhập.',
-    image: 'https://placehold.co/600x400.png',
-    dataAiHint: 'Japanese culture temple',
-    instructor: {
-        name: 'Akira Watanabe',
-        avatar: 'https://placehold.co/100x100.png',
-        dataAiHint: 'cultural expert',
-        title: 'Chuyên gia Văn hóa Nhật Bản',
-    },
-    stats: {
-        students: 1530,
-        rating: 4.9,
-        lessons: 8,
-        level: 'Mọi cấp độ',
-    },
-    curriculum: []
-  },
-   {
+  {
     id: 'ung-xu-cong-ty-nhat',
     title: 'Cách ứng xử trong công ty Nhật',
     category: 'Kỹ năng làm việc',
@@ -97,7 +76,7 @@ export const courses: Course[] = [
     },
     curriculum: []
   },
-   {
+  {
     id: 'ky-nang-thang-tien',
     title: 'Kỹ năng để Thăng tiến tại Nhật Bản',
     category: 'Phát triển sự nghiệp',

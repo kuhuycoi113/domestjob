@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Briefcase, Users, ArrowRight, BookOpen, Search, MapPin as MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check } from 'lucide-react';
+import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
@@ -286,7 +286,7 @@ export default function HomeClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 items-center">
               <div className="relative h-64 md:h-full order-last md:order-first">
                 <Image 
-                  src="/img/visa-tokutei-gino-2.jpg"
+                  src="https://placehold.co/600x600.png"
                   alt="Lao động lành nghề tại Nhật"
                   fill
                   className="object-cover"

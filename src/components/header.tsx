@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown, BrainCircuit } from 'lucide-react';
+import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
@@ -45,7 +45,6 @@ const employerLinks = [
 const quickAccessLinks = [
     { href: '/ai-profile', label: 'Tạo hồ sơ AI', icon: Sparkles },
     { href: '/roadmap', label: 'Lộ trình', icon: Compass },
-    { href: '/career-orientation', label: 'Hướng nghiệp', icon: BrainCircuit },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
     { href: '/post-job', label: 'Đăng tuyển dụng', icon: PlusCircle },
     { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
@@ -53,8 +52,35 @@ const quickAccessLinks = [
     { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
     { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
-    { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '#', label: 'Góp ý', icon: MessageSquareWarning },
 ];
+
+const LanguageSwitcher = () => {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center gap-2">
+                    <VnFlagIcon className="h-5 w-5 rounded-sm" />
+                    <span className="font-bold hidden sm:inline">VN</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                    <VnFlagIcon className="h-5 w-5 rounded-sm" />
+                    <span>VN</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                    <JpFlagIcon className="h-5 w-5 rounded-sm" />
+                    <span>JP</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                    <EnFlagIcon className="h-5 w-5 rounded-sm" />
+                    <span>EN</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
+};
 
 
 export function Header() {
@@ -113,7 +139,7 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden md:flex items-center gap-2">
-             <Button asChild variant="outline">
+            <Button asChild variant="outline">
                 <Link href="/candidate-profile">Hồ sơ của tôi</Link>
             </Button>
             

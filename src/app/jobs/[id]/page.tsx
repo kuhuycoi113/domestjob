@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import Image from 'next/image';
 import { use } from 'react';
+import { cn } from '@/lib/utils';
 
 const JobDetailSection = ({ title, children, icon: Icon }: { title: string, children: React.ReactNode, icon: React.ElementType }) => (
     <Card>
@@ -176,5 +177,4 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
             </div>
         </div>
     );
-
-    
+}

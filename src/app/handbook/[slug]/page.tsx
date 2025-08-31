@@ -192,19 +192,6 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
               <MainContent />
             </article>
 
-            {/* Hot Jobs Section */}
-            <section className="mt-16 pt-8 border-t">
-                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
-                    <Briefcase className="mr-3 text-primary" />
-                    Việc làm nổi bật liên quan
-                </h2>
-                <div className="space-y-4">
-                    {hotJobs.map(job => (
-                        <JobCard key={job.id} job={job} />
-                    ))}
-                </div>
-            </section>
-            
             {/* Comments Section */}
             <section className="mt-16 pt-8 border-t">
                  <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
@@ -255,6 +242,19 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     </div>
                 </div>
             </section>
+
+            {/* Hot Jobs Section */}
+            <section className="mt-16 pt-8 border-t">
+                 <h2 className="text-3xl font-headline font-bold mb-6 flex items-center text-accent">
+                    <Briefcase className="mr-3 text-primary" />
+                    Việc làm nổi bật liên quan
+                </h2>
+                <div className="space-y-4">
+                    {hotJobs.map(job => (
+                        <JobCard key={job.id} job={job} />
+                    ))}
+                </div>
+            </section>
           </main>
           
           {/* Related Articles */}
@@ -274,7 +274,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                         </div>
                       </Card>
                   </Link>
-                ))}
+                ))}\
               </div>
             </div>
           </aside>

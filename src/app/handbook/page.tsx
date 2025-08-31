@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, Camera } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, Camera, Send } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';
@@ -217,6 +217,20 @@ export default function HandbookPage() {
                 </section>
             </aside>
         </div>
+        
+        <section className="mt-20 text-center">
+            <Card className="max-w-3xl mx-auto p-8 shadow-xl bg-primary/10 border-primary/20">
+                <h2 className="text-3xl font-headline font-bold text-primary mb-4">Trở thành Tác giả</h2>
+                <p className="text-muted-foreground mb-6">
+                    Bạn có kinh nghiệm, câu chuyện hay kiến thức bổ ích muốn chia sẻ với cộng đồng người lao động Việt Nam tại Nhật? Hãy gửi bài viết của bạn cho chúng tôi!
+                </p>
+                <Button size="lg" className="bg-primary text-white">
+                    <Send className="mr-2"/>
+                    Chia sẻ nội dung của bạn
+                </Button>
+            </Card>
+        </section>
+
       </div>
     </div>
   );

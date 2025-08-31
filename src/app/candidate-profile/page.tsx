@@ -112,10 +112,29 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 )
 
+const level1Fields = [
+    { number: 1, label: 'Họ và tên', field: 'name', type: 'simple', inputType: 'text', placeholder: "Nhập họ và tên" },
+    { number: 2, label: 'Giới tính', field: 'gender', type: 'personalInfo', inputType: 'select', options: ['Nam', 'Nữ', 'Khác'], placeholder: "Chọn giới tính" },
+    { number: 3, label: 'Ngày sinh', field: 'dateOfBirth', type: 'personalInfo', inputType: 'date', placeholder: "" },
+    { number: 4, label: 'Ngành nghề mong muốn', field: 'desiredIndustry', type: 'simple', inputType: 'text', placeholder: "Chọn ngành nghề" },
+    { number: 5, label: 'Địa điểm mong muốn', field: 'desiredLocation', type: 'aspirations', inputType: 'text', placeholder: "Chọn địa điểm" },
+    { number: 6, label: 'Chiều cao', field: 'height', type: 'personalInfo', inputType: 'text', placeholder: "Nhập chiều cao (cm)" },
+    { number: 7, label: 'Cân nặng', field: 'weight', type: 'personalInfo', inputType: 'text', placeholder: "Nhập cân nặng (kg)" },
+    { number: 8, label: 'Hình xăm', field: 'tattooStatus', type: 'personalInfo', inputType: 'text', placeholder: "Nhập hình xăm" },
+    { number: 9, label: 'Viêm gan B', field: 'hepatitisBStatus', type: 'personalInfo', inputType: 'text', placeholder: "Nhập tình trạng" },
+    { number: 10, label: 'Lương cơ bản mong muốn/tháng', field: 'desiredSalary', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
+    { number: 11, label: 'Thực lĩnh mong muốn', field: 'desiredNetSalary', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
+    { number: 12, label: 'Khả năng tài chính', field: 'financialAbility', type: 'aspirations', inputType: 'text', placeholder: "Nhập số tiền" },
+    { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', field: 'interviewLocation', type: 'aspirations', inputType: 'text', placeholder: "Chọn địa điểm" },
+    { number: 14, label: 'Nguyện vọng đặc biệt', field: 'specialAspirations', type: 'aspirations', inputType: 'textarea', placeholder: "Chọn điều kiện" },
+];
+
 const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave }: { trigger: React.ReactNode, tempCandidate: EnrichedCandidateProfile, setTempCandidate: React.Dispatch<React.SetStateAction<EnrichedCandidateProfile | null>>, onSave: () => void }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
-    const totalSteps = 14;
+    const totalSteps = level1Fields.length;
+
+    if (!tempCandidate) return null;
 
     const handleNestedChange = (
       section: 'personalInfo' | 'aspirations', 
@@ -141,42 +160,59 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
         });
     };
 
-    const fields = [
-        { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
-        { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
-        { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth || ''} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
-        { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
-        { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },
-        { number: 6, label: 'Chiều cao', content: <Input placeholder="Nhập chiều cao (cm)" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} /> },
-        { number: 7, label: 'Cân nặng', content: <Input placeholder="Nhập cân nặng (kg)" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} /> },
-        { number: 8, label: 'Hình xăm', content: <Input placeholder="Nhập hình xăm" value={tempCandidate.personalInfo.tattooStatus} onChange={e => handleNestedChange('personalInfo', 'tattooStatus', e.target.value)} /> },
-        { number: 9, label: 'Viêm gan B', content: <Input placeholder="Nhập tình trạng" value={tempCandidate.personalInfo.hepatitisBStatus} onChange={e => handleNestedChange('personalInfo', 'hepatitisBStatus', e.target.value)} /> },
-        { number: 10, label: 'Lương cơ bản mong muốn/tháng', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} /> },
-        { number: 11, label: 'Thực lĩnh mong muốn', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} /> },
-        { number: 12, label: 'Khả năng tài chính', content: <Input placeholder="Nhập số tiền" value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} /> },
-        { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.interviewLocation} onChange={e => handleNestedChange('aspirations', 'interviewLocation', e.target.value)} /> },
-        { number: 14, label: 'Nguyện vọng đặc biệt', content: <Textarea placeholder="Chọn điều kiện" value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} /> },
-    ];
-    
-    const currentField = fields.find(f => f.number === currentStep);
+    const currentField = level1Fields.find(f => f.number === currentStep);
+
+    const renderInput = () => {
+        if (!currentField) return null;
+
+        const { type, field, inputType, placeholder, options } = currentField;
+
+        const value = type === 'simple' ? tempCandidate[field as keyof EnrichedCandidateProfile] : tempCandidate[type as 'personalInfo' | 'aspirations']?.[field as any];
+
+        const handleChange = (newValue: any) => {
+            if (type === 'simple') {
+                handleSimpleChange(field as keyof EnrichedCandidateProfile, newValue);
+            } else {
+                handleNestedChange(type as 'personalInfo' | 'aspirations', field, newValue);
+            }
+        }
+
+        switch (inputType) {
+            case 'select':
+                return (
+                    <Select value={value || ''} onValueChange={handleChange}>
+                        <SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger>
+                        <SelectContent>
+                            {options?.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                    </Select>
+                );
+            case 'textarea':
+                return <Textarea placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
+            case 'date':
+                return <Input type="date" value={value || ''} onChange={e => handleChange(e.target.value)} />
+            default:
+                return <Input placeholder={placeholder} value={value || ''} onChange={e => handleChange(e.target.value)} />
+        }
+    }
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild onClick={() => setCurrentStep(1)}>{trigger}</DialogTrigger>
             <DialogContent className="sm:max-w-md">
-                <DialogHeader>
+                 <DialogHeader>
                     <DialogTitle className="text-base font-semibold">{currentStep}/{totalSteps} - ĐĂNG THÔNG TIN TÌM VIỆC MỨC 1</DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col justify-between min-h-[500px]">
-                    <div className="space-y-4">
+                    <div className="space-y-4 pt-4">
                         <h3 className="text-xl font-bold font-headline text-center">{currentField?.label}</h3>
                         <div className="px-4">
-                            {currentField?.content}
+                            {renderInput()}
                         </div>
                     </div>
                     <div className="px-4 pb-4">
                         <div className="text-xs text-muted-foreground leading-relaxed flex flex-wrap gap-x-2">
-                            {fields.map(field => (
+                            {level1Fields.map(field => (
                                 <button 
                                     key={field.number} 
                                     onClick={() => setCurrentStep(field.number)}
@@ -216,6 +252,7 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
         </Dialog>
     );
 };
+
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
@@ -441,19 +478,9 @@ export default function CandidateProfilePage() {
   };
 
   const Level1EditDialogContent = () => {
-    const fields = [
-        { number: 1, label: 'Họ và tên' }, { number: 2, label: 'Giới tính' },
-        { number: 3, label: 'Ngày sinh' }, { number: 4, label: 'Ngành nghề mong muốn' },
-        { number: 5, label: 'Địa điểm mong muốn' }, { number: 6, label: 'Chiều cao' },
-        { number: 7, label: 'Cân nặng' }, { number: 8, label: 'Hình xăm' },
-        { number: 9, label: 'Viêm gan B' }, { number: 10, label: 'Lương cơ bản mong muốn/tháng' },
-        { number: 11, label: 'Thực lĩnh mong muốn' }, { number: 12, label: 'Khả năng tài chính' },
-        { number: 13, label: 'Tìm việc, phỏng vấn, tuyển tại' }, { number: 14, label: 'Nguyện vọng đặc biệt' }
-    ];
-
     return (
         <Accordion type="single" collapsible className="w-full">
-            {fields.map((field) => (
+            {level1Fields.map((field) => (
                 <AccordionItem value={`item-${field.number}`} key={field.number}>
                     <StepByStepEditDialog
                         tempCandidate={tempCandidate}
@@ -968,3 +995,4 @@ export default function CandidateProfilePage() {
     </div>
   );
 }
+

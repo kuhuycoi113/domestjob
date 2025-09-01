@@ -83,7 +83,7 @@ const japanLocations = {
     'Chugoku': ['Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi'],
     'Shikoku': ['Tokushima', 'Kagawa', 'Ehime', 'Kochi'],
     'Kyushu': ['Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima'],
-    'Okinawa': []
+    'Okinawa': ['Okinawa']
 };
 
 

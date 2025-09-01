@@ -292,7 +292,7 @@ export default function AiProfileClientPage() {
                             <div className="text-center">
                                 <p className="font-semibold text-muted-foreground mb-4">Hoặc bắt đầu với một vài gợi ý:</p>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                     <Card className="text-center p-4 cursor-pointer hover:shadow-md transition-shadow relative">
+                                     <Card className="text-center p-4 cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 relative">
                                         <label htmlFor="ai-upload" className="flex flex-col items-center justify-center space-y-2 cursor-pointer">
                                             <Upload className="h-8 w-8 text-primary"/>
                                             <h4 className="font-bold text-sm">Tải lên một hồ sơ thông tin</h4>
@@ -308,14 +308,14 @@ export default function AiProfileClientPage() {
                                             disabled={isLoading || !modelsLoaded}
                                         />
                                     </Card>
-                                     <Card className="text-center p-4 cursor-pointer hover:shadow-md transition-shadow" onClick={handleMicClick}>
+                                     <Card className="text-center p-4 cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1" onClick={handleMicClick}>
                                         {recordingStatus === 'idle' && <Mic className="h-8 w-8 text-primary mx-auto" />}
                                         {recordingStatus === 'recording' && <StopCircle className="h-8 w-8 text-red-500 mx-auto animate-pulse" />}
                                         {(recordingStatus === 'processing' || recordingStatus === 'error') && <Loader2 className="h-8 w-8 text-primary mx-auto animate-spin" />}
                                         <h4 className="font-bold text-sm mt-2">Mô tả bằng giọng nói</h4>
                                         <p className="text-xs text-muted-foreground">Nói các chi tiết như loại visa, ngành nghề, nguyện vọng</p>
                                     </Card>
-                                    <Card className="text-center p-4 cursor-pointer hover:shadow-md transition-shadow" onClick={() => router.push('/register')}>
+                                    <Card className="text-center p-4 cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1" onClick={() => router.push('/register')}>
                                         <Pencil className="h-8 w-8 text-primary mx-auto"/>
                                         <h4 className="font-bold text-sm mt-2">Nhập liệu thủ công dễ dàng</h4>
                                         <p className="text-xs text-muted-foreground">Tự điền vào biểu mẫu chi tiết.</p>

@@ -43,7 +43,6 @@ export default function JobsDashboardPage() {
         <div className="mb-8">
              <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold font-headline">Nguyện vọng tìm việc của bạn</h2>
-                <Button variant="outline"><PlusCircle className="mr-2 h-4 w-4"/> Thêm nguyện vọng</Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {aspirations.map(asp => (

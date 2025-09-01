@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid } from 'lucide-react';
+import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid, PlusCircle, Edit } from 'lucide-react';
 import { JobCard } from '@/components/job-card';
 import { jobData } from '@/lib/mock-data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +16,11 @@ const stats = [
     { title: 'Việc đã ứng tuyển', value: 5, icon: Briefcase },
     { title: 'Việc đã lưu', value: 12, icon: Bookmark },
     { title: 'Lượt xem hồ sơ', value: 28, icon: Eye }
+];
+
+const aspirations = [
+    { id: 1, title: 'Kỹ sư cơ khí, Osaka', salary: '220,000 JPY', type: 'Kỹ sư' },
+    { id: 2, title: 'Chế biến thực phẩm, Tokyo', salary: '180,000 JPY', type: 'Tokutei' },
 ];
 
 // Mock data for different tabs
@@ -32,6 +37,36 @@ export default function JobsDashboardPage() {
         <div className="text-center md:text-left mb-8">
             <h1 className="text-3xl font-bold font-headline">Trang quản lý việc làm</h1>
             <p className="text-muted-foreground mt-1">Quản lý toàn bộ hành trình tìm việc của bạn tại một nơi duy nhất.</p>
+        </div>
+
+        {/* Aspirations Section */}
+        <div className="mb-8">
+             <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold font-headline">Nguyện vọng tìm việc của bạn</h2>
+                <Button variant="outline"><PlusCircle className="mr-2 h-4 w-4"/> Thêm nguyện vọng</Button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {aspirations.map(asp => (
+                    <Card key={asp.id} className="shadow-lg">
+                        <CardContent className="p-4 flex flex-col justify-between h-full">
+                            <div>
+                                <Badge className="mb-2">{asp.type}</Badge>
+                                <p className="font-bold">{asp.title}</p>
+                                <p className="text-sm text-green-600 font-semibold">{asp.salary}</p>
+                            </div>
+                            <Button variant="ghost" size="sm" className="mt-2 w-fit p-0 h-auto text-muted-foreground hover:text-primary">
+                                <Edit className="h-3 w-3 mr-1"/> Sửa
+                            </Button>
+                        </CardContent>
+                    </Card>
+                ))}
+                 <Card className="shadow-lg border-dashed flex items-center justify-center hover:border-primary hover:text-primary transition-colors cursor-pointer">
+                    <CardContent className="p-4 text-center">
+                       <PlusCircle className="mx-auto h-8 w-8 text-muted-foreground mb-2"/>
+                       <p className="font-semibold">Thêm nguyện vọng mới</p>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
 
         {/* Stats Cards */}

@@ -15,7 +15,7 @@ import { JobListRow } from '@/components/job-list-row';
 const stats = [
     { title: 'Việc đã ứng tuyển', value: 5, icon: Briefcase },
     { title: 'Việc đã lưu', value: 12, icon: Bookmark },
-    { title: 'Lượt xem hồ sơ', value: 28, icon: Eye }
+    { title: 'Lượt xem hồ sơ của bạn', value: 28, icon: Eye }
 ];
 
 const aspirations = [

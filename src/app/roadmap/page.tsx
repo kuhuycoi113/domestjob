@@ -31,8 +31,17 @@ const roadmapSteps = [
     dataAiHint: 'corporate culture test',
   },
   {
+    icon: School,
+    title: 'Bước 3: Học E-Learning & Nâng cao năng lực',
+    description: 'Tham gia các khóa học E-learning về tiếng Nhật, văn hoá ứng xử và kỹ năng làm việc tại Nhật Bản. Việc chuẩn bị kỹ lưỡng về ngôn ngữ và kỹ năng mềm là chìa khóa để bạn hòa nhập nhanh chóng và thành công.',
+    salary: 'Đầu tư cho tương lai',
+    color: 'orange',
+    image: 'https://placehold.co/500x300.png',
+    dataAiHint: 'e-learning online course',
+  },
+  {
     icon: Plane,
-    title: 'Bước 3: Thực tập sinh tại Nhật (3-5 năm)',
+    title: 'Bước 4: Thực tập sinh tại Nhật (3-5 năm)',
     description: 'Bắt đầu hành trình tại Nhật với vai trò Thực tập sinh kỹ năng. Đây là giai đoạn để bạn làm quen với môi trường, văn hóa làm việc chuyên nghiệp và tích lũy kinh nghiệm nền tảng đầu tiên.',
     salary: '~30 triệu VNĐ/tháng',
     color: 'light-blue',
@@ -41,7 +50,7 @@ const roadmapSteps = [
   },
   {
     icon: Star,
-    title: 'Bước 4: Kỹ năng đặc định 1 (Tối đa 5 năm)',
+    title: 'Bước 5: Kỹ năng đặc định 1 (Tối đa 5 năm)',
     description: 'Sau khi hoàn thành chương trình thực tập sinh, bạn sẽ được nâng cấp lên visa Kỹ năng đặc định (Tokutei Ginou 1). Tay nghề cao hơn, được phép chuyển việc trong ngành và nhận mức thu nhập cải thiện rõ rệt.',
     salary: '40-50 triệu VNĐ/tháng',
     color: 'dark-blue',
@@ -50,7 +59,7 @@ const roadmapSteps = [
   },
   {
     icon: ShieldCheck,
-    title: 'Bước 5: Kỹ năng đặc định 2 (Lâu dài)',
+    title: 'Bước 6: Kỹ năng đặc định 2 (Lâu dài)',
     description: 'Đây là cấp độ cao nhất của lao động kỹ năng. Với visa Tokutei Ginou 2, bạn có cơ hội bảo lãnh gia đình sang sinh sống và làm việc, đồng thời mở ra con đường xin visa vĩnh trú tại Nhật.',
     salary: 'Tiếp tục tăng',
     color: 'green',
@@ -59,7 +68,7 @@ const roadmapSteps = [
   },
   {
     icon: TrendingUp,
-    title: 'Bước 6: Chuyên gia lành nghề',
+    title: 'Bước 7: Chuyên gia lành nghề',
     description: 'Với sự đồng hành và đào tạo chuyên sâu từ HelloJob, bạn sẽ trở thành chuyên gia trong lĩnh vực của mình, đảm nhận những vị trí quan trọng và đạt được mức thu nhập đỉnh cao.',
     salary: '60-70 triệu VNĐ/tháng',
     color: 'dark-blue',
@@ -68,7 +77,7 @@ const roadmapSteps = [
   },
   {
     icon: Briefcase,
-    title: 'Bước 7: Sự nghiệp rộng mở',
+    title: 'Bước 8: Sự nghiệp rộng mở',
     description: 'Lựa chọn trở về Việt Nam với vị thế một chuyên gia được săn đón, hoặc tiếp tục con đường định cư và phát triển sự nghiệp lâu dài tại Nhật Bản. HelloJob luôn là đối tác tin cậy của bạn.',
     salary: 'Thu nhập chuyên gia',
     color: 'light-blue',
@@ -144,11 +153,11 @@ export default function RoadmapPage() {
                 </div>
 
                 {/* Image: Left side (for even index on desktop) */}
-                <div className={`hidden md:flex w-1/2 h-full items-center ${index % 2 !== 0 ? 'md:pr-16 md:order-1' : 'md:pl-16'}`}>\
+                <div className={`hidden md:flex w-1/2 h-full items-center ${index % 2 !== 0 ? 'md:pr-16 md:order-1' : 'md:pl-16'}`}>
                    <Image src={step.image} alt={step.title} width={500} height={300} className="rounded-lg shadow-xl object-cover w-full h-64" data-ai-hint={step.dataAiHint} />
                 </div>
               </div>
-            )})}\
+            )})}
           </div>
         </div>
       </div>

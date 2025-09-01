@@ -15,11 +15,11 @@ const defaultIndustries: Industry[] = [
 
 export const industriesByJobType: { [key: string]: Industry[] } = {
     'Thực tập sinh': [
+        { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt cá', 'nuôi trồng thủy sản'] },
         { name: 'Xây dựng', slug: 'xay-dung-tts', keywords: ['xây dựng', 'giàn giáo', 'cốp pha', 'hoàn thiện nội thất', 'xây trát', 'sơn'] },
         { name: 'Cơ khí', slug: 'co-khi-tts', keywords: ['cơ khí', 'kim loại', 'hàn', 'tiện', 'phay', 'dập', 'gia công', 'đúc', 'rèn'] },
         { name: 'Nông nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi'] },
         { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ['thực phẩm', 'chế biến', 'đóng gói', 'cơm hộp', 'làm bánh'] },
-        { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt', 'nuôi trồng thủy sản'] },
         { name: 'May mặc', slug: 'may-mac-tts', keywords: ['may mặc', 'dệt', 'may công nghiệp', 'thời trang'] },
         { name: 'Lắp ráp điện tử', slug: 'lap-rap-dien-tu-tts', keywords: ['lắp ráp', 'điện tử', 'linh kiện', 'kiểm tra'] },
         { name: 'In ấn', slug: 'in-an-tts', keywords: ['in ấn', 'đóng sách'] },

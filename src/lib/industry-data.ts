@@ -15,16 +15,13 @@ const defaultIndustries: Industry[] = [
 
 export const industriesByJobType: { [key: string]: Industry[] } = {
     'Thực tập sinh': [
-        { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt cá', 'nuôi trồng thủy sản'] },
-        { name: 'Xây dựng', slug: 'xay-dung-tts', keywords: ['xây dựng', 'giàn giáo', 'cốp pha', 'hoàn thiện nội thất', 'xây trát', 'sơn'] },
-        { name: 'Cơ khí', slug: 'co-khi-tts', keywords: ['cơ khí', 'kim loại', 'hàn', 'tiện', 'phay', 'dập', 'gia công', 'đúc', 'rèn'] },
-        { name: 'Nông nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi'] },
-        { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ['thực phẩm', 'chế biến', 'đóng gói', 'cơm hộp', 'làm bánh'] },
-        { name: 'May mặc', slug: 'may-mac-tts', keywords: ['may mặc', 'dệt', 'may công nghiệp', 'thời trang'] },
-        { name: 'Lắp ráp điện tử', slug: 'lap-rap-dien-tu-tts', keywords: ['lắp ráp', 'điện tử', 'linh kiện', 'kiểm tra'] },
-        { name: 'In ấn', slug: 'in-an-tts', keywords: ['in ấn', 'đóng sách'] },
-        { name: 'Vệ sinh tòa nhà', slug: 've-sinh-toa-nha-tts', keywords: ['vệ sinh', 'tòa nhà', 'làm sạch', 'building cleaning'] },
-        { name: 'Điều dưỡng', slug: 'dieu-duong-tts', keywords: ['điều dưỡng', 'chăm sóc người già', 'hộ lý'] },
+      { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt cá', 'nuôi trồng thủy sản'] },
+      { name: 'Nông Nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi'] },
+      { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ['thực phẩm', 'chế biến', 'đóng gói', 'cơm hộp', 'làm bánh'] },
+      { name: 'Sản xuất, dịch vụ tổng hợp', slug: 'san-xuat-dich-vu-tong-hop-tts', keywords: ['sản xuất', 'dịch vụ', 'tổng hợp', 'đúc', 'in ấn'] },
+      { name: 'Cơ khí, kim loại', slug: 'co-khi-kim-loai-tts', keywords: ['cơ khí', 'kim loại', 'hàn', 'tiện', 'phay', 'dập', 'gia công', 'đúc', 'rèn'] },
+      { name: 'Xây dựng', slug: 'xay-dung-tts', keywords: ['xây dựng', 'giàn giáo', 'cốp pha', 'hoàn thiện nội thất', 'xây trát', 'sơn'] },
+      { name: 'May mặc', slug: 'may-mac-tts', keywords: ['may mặc', 'dệt', 'may công nghiệp', 'thời trang'] },
     ],
     'Kỹ năng đặc định': [
       { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tokutei', keywords: ['ngư nghiệp', 'nuôi trồng', 'chế biến thủy sản'] },

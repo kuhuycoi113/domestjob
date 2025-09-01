@@ -4,12 +4,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, Bookmark, Star, Eye } from 'lucide-react';
+import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid } from 'lucide-react';
 import { JobCard } from '@/components/job-card';
 import { jobData } from '@/lib/mock-data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { JobListRow } from '@/components/job-list-row';
 
 const stats = [
     { title: 'Việc đã ứng tuyển', value: 5, icon: Briefcase },
@@ -18,11 +19,13 @@ const stats = [
 ];
 
 // Mock data for different tabs
-const appliedJobs = jobData.slice(0, 3).map(job => ({ ...job, applicationStatus: 'NTD đã xem' }));
+const appliedJobs = jobData.slice(0, 3).map(job => ({ ...job, applicationStatus: 'NTD đã xem', appliedDate: '2024-07-20' }));
 const savedJobs = jobData.slice(2, 5);
 const suggestedJobs = jobData.slice(0, 4);
 
 export default function JobsDashboardPage() {
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+    
   return (
     <div className="bg-secondary min-h-screen">
       <div className="container mx-auto px-2 md:px-4 py-8">
@@ -48,61 +51,65 @@ export default function JobsDashboardPage() {
 
         {/* Main Content with Tabs */}
          <Tabs defaultValue="suggested" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 md:w-fit md:mx-auto">
-            <TabsTrigger value="suggested"><Star className="mr-2 h-4 w-4"/> Gợi ý cho bạn</TabsTrigger>
-            <TabsTrigger value="applied"><Briefcase className="mr-2 h-4 w-4"/> Đã ứng tuyển</TabsTrigger>
-            <TabsTrigger value="saved"><Bookmark className="mr-2 h-4 w-4"/> Đã lưu</TabsTrigger>
-          </TabsList>
+          <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
+              <TabsList className="grid w-full grid-cols-3 md:w-fit">
+                <TabsTrigger value="suggested"><Star className="mr-2 h-4 w-4"/> Gợi ý cho bạn</TabsTrigger>
+                <TabsTrigger value="applied"><Briefcase className="mr-2 h-4 w-4"/> Đã ứng tuyển</TabsTrigger>
+                <TabsTrigger value="saved"><Bookmark className="mr-2 h-4 w-4"/> Đã lưu</TabsTrigger>
+              </TabsList>
+              <div className="flex items-center gap-2">
+                  <Button variant={viewMode === 'grid' ? 'default' : 'outline'} size="icon" onClick={() => setViewMode('grid')}>
+                      <LayoutGrid className="h-5 w-5"/>
+                  </Button>
+                  <Button variant={viewMode === 'list' ? 'default' : 'outline'} size="icon" onClick={() => setViewMode('list')}>
+                      <List className="h-5 w-5"/>
+                  </Button>
+              </div>
+          </div>
           
           <TabsContent value="suggested" className="mt-6">
-             <Card className="shadow-xl">
-                 <CardHeader>
-                     <CardTitle>Việc làm phù hợp nhất</CardTitle>
-                 </CardHeader>
-                 <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {suggestedJobs.map((job) => (
-                        <JobCard key={job.id} job={job} />
-                    ))}
-                </CardContent>
-             </Card>
+            {viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {suggestedJobs.map((job) => ( <JobCard key={job.id} job={job} /> ))}
+                </div>
+            ) : (
+                 <Card className="shadow-xl"><CardContent className="p-0">
+                    <div className="space-y-px">
+                        {suggestedJobs.map((job) => ( <JobListRow key={job.id} job={job} />))}
+                    </div>
+                </CardContent></Card>
+            )}
           </TabsContent>
 
           <TabsContent value="applied" className="mt-6">
-             <Card className="shadow-xl">
-                <CardHeader>
-                     <CardTitle>Việc làm đã ứng tuyển</CardTitle>
-                 </CardHeader>
-                <CardContent className="space-y-4">
-                    {appliedJobs.map((job) => (
-                         <Card key={job.id} className="flex flex-col md:flex-row items-center p-4 gap-4">
-                            <div className="flex-grow">
-                                <Link href={`/jobs/${job.id}`}>
-                                    <p className="font-bold hover:text-primary">{job.title}</p>
-                                </Link>
-                                <p className="text-sm text-muted-foreground">{job.recruiter.company}</p>
-                            </div>
-                            <Badge className="bg-yellow-100 text-yellow-800">{job.applicationStatus}</Badge>
-                         </Card>
-                    ))}
-                </CardContent>
-             </Card>
+             {viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {appliedJobs.map((job) => ( <JobCard key={job.id} job={job} /> ))}
+                </div>
+            ) : (
+                <Card className="shadow-xl"><CardContent className="p-0">
+                     <div className="space-y-px">
+                        {appliedJobs.map((job) => ( <JobListRow key={job.id} job={job} />))}
+                    </div>
+                </CardContent></Card>
+            )}
           </TabsContent>
 
           <TabsContent value="saved" className="mt-6">
-             <Card className="shadow-xl">
-                <CardHeader>
-                     <CardTitle>Việc làm đã lưu</CardTitle>
-                </CardHeader>
-                 <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {savedJobs.map((job) => (
-                        <JobCard key={job.id} job={job} />
-                    ))}
-                </CardContent>
-             </Card>
+            {viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {savedJobs.map((job) => ( <JobCard key={job.id} job={job} /> ))}
+                </div>
+            ) : (
+                 <Card className="shadow-xl"><CardContent className="p-0">
+                     <div className="space-y-px">
+                        {savedJobs.map((job) => ( <JobListRow key={job.id} job={job} />))}
+                    </div>
+                 </CardContent></Card>
+            )}
           </TabsContent>
         </Tabs>
       </div>
     </div>
   );
 }
-

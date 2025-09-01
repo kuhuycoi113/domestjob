@@ -78,12 +78,12 @@ const japanLocations = {
     'Hokkaido': ['Hokkaido'],
     'Tohoku': ['Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima'],
     'Kanto': ['Ibaraki', 'Tochigi', 'Gunma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa'],
-    'Chubu': ['Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi'],
-    'Kansai': ['Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama'],
-    'Chugoku': ['Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi'],
-    'Shikoku': ['Tokushima', 'Kagawa', 'Ehime', 'Kochi'],
-    'Kyushu': ['Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima'],
-    'Okinawa': ['Okinawa']
+    'Chubu': [],
+    'Kansai': [],
+    'Chugoku': [],
+    'Shikoku': [],
+    'Kyushu': [],
+    'Okinawa': []
 };
 
 
@@ -497,12 +497,14 @@ export default function HomeClient() {
                             </SelectTrigger>
                             <SelectContent>
                                 {Object.entries(japanLocations).map(([region, prefectures]) => (
-                                    <SelectGroup key={region}>
-                                        <SelectLabel>{region}</SelectLabel>
-                                        {prefectures.map(pref => (
-                                            <SelectItem key={pref} value={pref}>{pref}</SelectItem>
-                                        ))}
-                                    </SelectGroup>
+                                    prefectures.length > 0 && (
+                                        <SelectGroup key={region}>
+                                            <SelectLabel>{region}</SelectLabel>
+                                            {prefectures.map(pref => (
+                                                <SelectItem key={pref} value={pref}>{pref}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    )
                                 ))}
                             </SelectContent>
                         </Select>

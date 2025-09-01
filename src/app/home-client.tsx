@@ -75,10 +75,15 @@ const japanJobTypes = [
 ];
 
 const japanLocations = {
-    regions: ['Hokkaido', 'Tohoku', 'Kanto', 'Chubu', 'Kansai', 'Chugoku', 'Shikoku', 'Kyushu'],
-    prefectures: [
-        'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 'Fukui', 'Fukuoka', 'Fukushima', 'Gifu', 'Gunma', 'Hiroshima', 'Hokkaido', 'Hyogo', 'Ibaraki', 'Ishikawa', 'Iwate', 'Kagawa', 'Kagoshima', 'Kanagawa', 'Kochi', 'Kumamoto', 'Kyoto', 'Mie', 'Miyagi', 'Miyazaki', 'Nagano', 'Nagasaki', 'Nara', 'Niigata', 'Oita', 'Okayama', 'Okinawa', 'Osaka', 'Saga', 'Saitama', 'Shiga', 'Shimane', 'Shizuoka', 'Tochigi', 'Tokushima', 'Tokyo', 'Tottori', 'Toyama', 'Wakayama', 'Yamagata', 'Yamaguchi', 'Yamanashi'
-    ]
+    'Hokkaido': ['Hokkaido'],
+    'Tohoku': ['Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima'],
+    'Kanto': ['Ibaraki', 'Tochigi', 'Gunma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa'],
+    'Chubu': ['Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi'],
+    'Kansai': ['Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama'],
+    'Chugoku': ['Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi'],
+    'Shikoku': ['Tokushima', 'Kagawa', 'Ehime', 'Kochi'],
+    'Kyushu': ['Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima'],
+    'Okinawa': ['Okinawa']
 };
 
 
@@ -491,18 +496,14 @@ export default function HomeClient() {
                             <SelectValue placeholder="Toàn quốc Nhật Bản" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Vùng</SelectLabel>
-                                    {japanLocations.regions.map(region => (
-                                        <SelectItem key={region} value={region}>{region}</SelectItem>
-                                    ))}
-                                </SelectGroup>
-                                <SelectGroup>
-                                    <SelectLabel>Tỉnh/Thành phố</SelectLabel>
-                                    {japanLocations.prefectures.map(loc => (
-                                        <SelectItem key={loc} value={loc}>{loc}</SelectItem>
-                                    ))}
-                                </SelectGroup>
+                                {Object.entries(japanLocations).map(([region, prefectures]) => (
+                                    <SelectGroup key={region}>
+                                        <SelectLabel>{region}</SelectLabel>
+                                        {prefectures.map(pref => (
+                                            <SelectItem key={pref} value={pref}>{pref}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>

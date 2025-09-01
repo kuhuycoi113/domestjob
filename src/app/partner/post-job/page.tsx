@@ -9,54 +9,97 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Briefcase, Send, Upload } from "lucide-react";
+import { Briefcase, Send, Upload, FileText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
+// Represents all possible fields
 type JobData = {
     title: string;
+    visaDetail: string; // The key field to determine which other fields are shown
     industry: string;
-    type: string;
-    location: string;
+    workLocation: string;
+    interviewLocation: string;
+    gender: string;
+    quantity: string;
+    ageRequirement: string;
+    languageRequirement: string;
+    netFee: string;
     description: string;
     requirements: string;
     benefits: string;
 };
 
+// Maps visa detail to the fields that are NOT applicable
+const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
+    'Thực tập sinh 3 năm': ['languageRequirement'],
+    'Thực tập sinh 1 năm': ['languageRequirement'],
+    'Thực tập sinh 3 Go': ['languageRequirement'],
+    'Đặc định đầu Việt': [],
+    'Đặc định đầu Nhật': ['netFee', 'interviewLocation'],
+    'Đặc định đi mới': [],
+    'Kỹ sư, tri thức đầu Việt': ['netFee'],
+    'Kỹ sư, tri thức đầu Nhật': ['netFee', 'interviewLocation']
+};
+
+
 export default function PartnerPostJobPage() {
   const [activeTab, setActiveTab] = useState('manual');
   const { toast } = useToast();
   const router = useRouter();
-  const [jobData, setJobData] = useState<JobData>({
+  const [jobData, setJobData] = useState<Partial<JobData>>({
     title: '',
+    visaDetail: '',
     industry: '',
-    type: '',
-    location: '',
+    workLocation: '',
+    interviewLocation: '',
+    gender: '',
+    quantity: '',
+    ageRequirement: '',
+    languageRequirement: '',
+    netFee: '',
     description: '',
     requirements: '',
     benefits: '',
   });
+  
+  const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData)));
 
   const handleInputChange = (field: keyof JobData, value: string) => {
-    setJobData((prev) => ({ ...prev, [field]: value }));
+    const newData = { ...jobData, [field]: value };
+    setJobData(newData);
+
+    if (field === 'visaDetail') {
+      const hidden = hiddenFieldsByVisa[value] || [];
+      const allFields: (keyof JobData)[] = Object.keys(jobData) as (keyof JobData)[];
+      const newVisibleFields = new Set(allFields.filter(f => !hidden.includes(f)));
+      setVisibleFields(newVisibleFields);
+    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       // Simulate AI processing and pre-filling the form
-      const mockData: JobData = {
+      const mockData: Partial<JobData> = {
         title: "Kỹ sư Vận hành Dây chuyền Tự động",
-        industry: "dientu",
-        type: "full-time",
-        location: "Khu công nghệ cao Hòa Lạc, Hà Nội",
+        visaDetail: "Kỹ sư, tri thức đầu Việt",
+        industry: "Điện tử",
+        workLocation: "Khu công nghệ cao Hòa Lạc, Hà Nội",
+        gender: "Không yêu cầu",
+        quantity: "5",
+        ageRequirement: "22-35",
+        languageRequirement: "Tiếng Nhật N4",
         description: "- Chịu trách nhiệm vận hành, giám sát và bảo trì các dây chuyền sản xuất tự động.\n- Đảm bảo các máy móc hoạt động ổn định, đạt năng suất và chất lượng theo yêu cầu.\n- Phối hợp với các bộ phận khác để xử lý sự cố và cải tiến quy trình.",
         requirements: "- Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ điện tử, Tự động hóa hoặc các ngành liên quan.\n- Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.\n- Có khả năng đọc hiểu bản vẽ kỹ thuật.",
         benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\n- Môi trường làm việc chuyên nghiệp, năng động.\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật."
       };
       setJobData(mockData);
       
-      // Switch to the manual tab to show the pre-filled data
+      const hidden = hiddenFieldsByVisa[mockData.visaDetail!] || [];
+      const allFields: (keyof JobData)[] = Object.keys(jobData) as (keyof JobData)[];
+      setVisibleFields(new Set(allFields.filter(f => !hidden.includes(f))));
+      
       setActiveTab('manual');
       toast({
           title: "Phân tích thành công!",
@@ -67,7 +110,6 @@ export default function PartnerPostJobPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      // Add validation here if needed
       console.log("Submitting job data:", jobData);
       toast({
           title: "Đăng tin thành công!",
@@ -78,6 +120,8 @@ export default function PartnerPostJobPage() {
           router.push('/partner/dashboard');
       }, 1500);
   }
+  
+  const visaTypes = Object.keys(hiddenFieldsByVisa);
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
@@ -118,38 +162,74 @@ export default function PartnerPostJobPage() {
                     <div className="space-y-4 p-6 border rounded-lg">
                       <h3 className="text-xl font-bold font-headline">Thông tin việc làm</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
+                        <div className="space-y-2 md:col-span-2">
                           <Label htmlFor="job-title">Chức danh</Label>
                           <Input id="job-title" placeholder="VD: Kỹ sư vận hành máy CNC" value={jobData.title} onChange={(e) => handleInputChange('title', e.target.value)} required/>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="job-industry">Ngành</Label>
-                          <Select value={jobData.industry} onValueChange={(value) => handleInputChange('industry', value)} required>
-                            <SelectTrigger id="job-industry"><SelectValue placeholder="Chọn ngành nghề" /></SelectTrigger>
+
+                         <div className="space-y-2">
+                          <Label htmlFor="visa-detail">Chi tiết loại hình visa</Label>
+                          <Select value={jobData.visaDetail} onValueChange={(value) => handleInputChange('visaDetail', value)} required>
+                            <SelectTrigger id="visa-detail"><SelectValue placeholder="Chọn loại hình visa chi tiết" /></SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="it">Công nghệ thông tin</SelectItem>
-                              <SelectItem value="cokhi">Cơ khí</SelectItem>
-                              <SelectItem value="detmay">Dệt may</SelectItem>
-                              <SelectItem value="dientu">Điện tử</SelectItem>
-                              <SelectItem value="logistics">Logistics</SelectItem>
+                              {visaTypes.map(vt => <SelectItem key={vt} value={vt}>{vt}</SelectItem>)}
                             </SelectContent>
                           </Select>
                         </div>
+                        
                         <div className="space-y-2">
-                          <Label htmlFor="job-type">Loại hình công việc</Label>
-                          <Select value={jobData.type} onValueChange={(value) => handleInputChange('type', value)} required>
-                            <SelectTrigger id="job-type"><SelectValue placeholder="Chọn loại hình" /></SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="full-time">Toàn thời gian</SelectItem>
-                              <SelectItem value="part-time">Bán thời gian</SelectItem>
-                              <SelectItem value="internship">Thực tập</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <Label htmlFor="job-industry">Ngành nghề</Label>
+                          <Input id="job-industry" placeholder="VD: Cơ khí" value={jobData.industry} onChange={(e) => handleInputChange('industry', e.target.value)} required/>
                         </div>
+
                         <div className="space-y-2">
                           <Label htmlFor="job-location">Địa điểm làm việc</Label>
-                          <Input id="job-location" placeholder="VD: Khu công nghệ cao, Q.9, TP.HCM" value={jobData.location} onChange={(e) => handleInputChange('location', e.target.value)} required/>
+                          <Input id="job-location" placeholder="VD: Aichi, Nhật Bản" value={jobData.workLocation} onChange={(e) => handleInputChange('workLocation', e.target.value)} required/>
                         </div>
+                        
+                        {visibleFields.has('interviewLocation') && (
+                            <div className="space-y-2">
+                                <Label htmlFor="interview-location">Phỏng vấn, tuyển tại</Label>
+                                <Input id="interview-location" placeholder="VD: Hà Nội" value={jobData.interviewLocation} onChange={(e) => handleInputChange('interviewLocation', e.target.value)} />
+                            </div>
+                        )}
+                        
+                        <div className="space-y-2">
+                           <Label htmlFor="gender">Giới tính</Label>
+                           <Select value={jobData.gender} onValueChange={(value) => handleInputChange('gender', value)}>
+                             <SelectTrigger id="gender"><SelectValue placeholder="Chọn yêu cầu giới tính" /></SelectTrigger>
+                             <SelectContent>
+                               <SelectItem value="Nam">Nam</SelectItem>
+                               <SelectItem value="Nữ">Nữ</SelectItem>
+                               <SelectItem value="Không yêu cầu">Không yêu cầu</SelectItem>
+                             </SelectContent>
+                           </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="quantity">Số lượng tuyển</Label>
+                          <Input id="quantity" type="number" placeholder="VD: 5" value={jobData.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} required/>
+                        </div>
+                        
+                        <div className="space-y-2">
+                           <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
+                           <Input id="age-requirement" placeholder="VD: 18 - 30" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                        </div>
+                        
+                        {visibleFields.has('languageRequirement') && (
+                            <div className="space-y-2">
+                                <Label htmlFor="language-requirement">Yêu cầu trình độ ngoại ngữ</Label>
+                                <Input id="language-requirement" placeholder="VD: Tiếng Nhật N4" value={jobData.languageRequirement} onChange={(e) => handleInputChange('languageRequirement', e.target.value)} />
+                            </div>
+                        )}
+                        
+                        {visibleFields.has('netFee') && (
+                           <div className="space-y-2">
+                               <Label htmlFor="net-fee">Mức phí (nếu có)</Label>
+                               <Input id="net-fee" placeholder="VD: 100tr" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
+                           </div>
+                        )}
+
                       </div>
                     </div>
 
@@ -167,21 +247,6 @@ export default function PartnerPostJobPage() {
                         <div className="space-y-2">
                           <Label htmlFor="job-benefits">Quyền lợi</Label>
                           <Textarea id="job-benefits" placeholder="Phúc lợi, lương thưởng, cơ hội phát triển..." rows={3} value={jobData.benefits} onChange={(e) => handleInputChange('benefits', e.target.value)} required/>
-                        </div>
-                    </div>
-
-                    {/* Contact Information */}
-                    <div className="space-y-4 p-6 border rounded-lg">
-                      <h3 className="text-xl font-bold font-headline">Thông tin liên hệ</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                              <Label htmlFor="contact-name">Người liên hệ</Label>
-                              <Input id="contact-name" placeholder="Nguyễn Văn B" required/>
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="contact-email">Email liên hệ</Label>
-                              <Input id="contact-email" type="email" placeholder="hr@congty.com" required/>
-                            </div>
                         </div>
                     </div>
                     

@@ -50,7 +50,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
             <div className="container mx-auto px-4 md:px-6 py-12">
                 <div className="mb-6">
                     <Button asChild variant="outline" size="sm">
-                        <Link href="/"><ArrowLeft className="mr-2 h-4 w-4" />Quay lại trang chủ</Link>
+                        <Link href="/jobs"><ArrowLeft className="mr-2 h-4 w-4" />Quay lại trang Việc làm</Link>
                     </Button>
                 </div>
                 <div className="grid lg:grid-cols-3 gap-8 items-start">

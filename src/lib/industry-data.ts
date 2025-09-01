@@ -15,8 +15,8 @@ const defaultIndustries: Industry[] = [
 
 export const industriesByJobType: { [key: string]: Industry[] } = {
     'Thực tập sinh': [
-      { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'câu cá ngừ', 'câu mực', 'câu tôm', 'câu cua', 'đánh cá dây câu dài', 'đánh cá lưới kéo', 'đánh cá lưới rê', 'đánh cá lưới sào', 'đánh cá lưới thả', 'đặt lưới đánh cá', 'nuôi sò điệp'] },
-      { name: 'Nông Nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi'] },
+      { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt cá', 'nuôi trồng thủy sản', 'câu cá ngừ', 'câu mực', 'câu tôm', 'câu cua', 'đánh cá dây câu dài', 'đánh cá lưới kéo', 'đánh cá lưới rê', 'đánh cá lưới sào', 'đánh cá lưới thả', 'đặt lưới đánh cá', 'nuôi sò điệp'] },
+      { name: 'Nông nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi', 'chăn nuôi bò', 'chăn nuôi bò sữa', 'chăn nuôi gà', 'chăn nuôi lợn', 'nhặt trứng gà', 'nông nghiệp chăn nuôi', 'nông nghiệp trồng trọt', 'thu hoạch bắp cải', 'thu hoạch cà chua', 'thu hoạch dâu tây', 'thu hoạch hoa', 'thu hoạch hoa quả', 'thu hoạch rau củ', 'trồng cây ăn quả', 'trồng nấm', 'trồng nấm công nghệ cao', 'trồng rau củ', 'trồng trọt nhà kính'] },
       { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ['thực phẩm', 'chế biến', 'đóng gói', 'cơm hộp', 'làm bánh'] },
       { name: 'Sản xuất, dịch vụ tổng hợp', slug: 'san-xuat-dich-vu-tong-hop-tts', keywords: ['sản xuất', 'dịch vụ', 'tổng hợp', 'đúc', 'in ấn'] },
       { name: 'Cơ khí, kim loại', slug: 'co-khi-kim-loai-tts', keywords: ['cơ khí', 'kim loại', 'hàn', 'tiện', 'phay', 'dập', 'gia công', 'đúc', 'rèn'] },

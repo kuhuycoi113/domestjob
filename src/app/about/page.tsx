@@ -53,8 +53,8 @@ const values = [
         icon: Handshake,
         title: "Đối tác tin cậy",
         description: "Xây dựng mối quan hệ hợp tác minh bạch, hiệu quả và cùng có lợi với các đối tác tuyển dụng và nhượng quyền."
-    },
-];
+    }
+]
 
 export default function AboutPage() {
   return (

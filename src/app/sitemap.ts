@@ -1,4 +1,3 @@
-
 import { MetadataRoute } from 'next';
 import { articles } from '@/lib/handbook-data';
 

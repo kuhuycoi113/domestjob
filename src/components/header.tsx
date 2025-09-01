@@ -24,7 +24,6 @@ import {
   DropdownMenuGroup
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { VnFlagIcon, JpFlagIcon, EnFlagIcon } from './custom-icons';
 
 const mainNavLinks = [
   { href: '/', label: 'Trang chủ'},
@@ -35,12 +34,6 @@ const mainNavLinks = [
   { href: '/handbook', label: 'Cẩm nang'},
   { href: '/consultant-profile', label: 'Tư vấn viên' },
   { href: '/about', label: 'Giới thiệu' },
-];
-
-const employerLinks = [
-  { href: '/post-job', label: 'Đăng việc làm' },
-  { href: '/dashboard', label: 'Dữ liệu' },
-  { href: '/franchise', label: 'Đối tác tại Nhật' },
 ];
 
 const quickAccessLinks = [
@@ -78,7 +71,7 @@ export function Header() {
       href={href}
       className={cn(
         'transition-colors hover:text-primary py-2 block font-medium flex items-center gap-2',
-        pathname.startsWith(href) && href !== '/' || pathname === href ? 'text-primary font-bold' : 'text-foreground/80',
+        (pathname === href || (pathname.startsWith(href) && href !== '/')) ? 'text-primary font-bold' : 'text-foreground/80',
         className
       )}
        onClick={(e) => {

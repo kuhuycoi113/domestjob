@@ -490,7 +490,7 @@ export default function HomeClient() {
                         </Popover>
                     </div>
                     <div className="md:col-span-3 space-y-2">
-                        <Label htmlFor="search-location" className="text-foreground">Địa điểm, khu vực</Label>
+                        <Label htmlFor="search-location" className="text-foreground">Địa điểm làm việc</Label>
                         <Select onValueChange={setSelectedLocation}>
                             <SelectTrigger id="search-location">
                             <SelectValue placeholder="Toàn quốc Nhật Bản" />
@@ -542,4 +542,3 @@ export default function HomeClient() {
     </div>
   );
 }
-

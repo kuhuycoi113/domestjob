@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -223,13 +224,13 @@ export default function PartnerPostJobPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="quantity">Số lượng tuyển</Label>
+                          <Label htmlFor="quantity">Số lượng tuyển (1-100)</Label>
                           <Input id="quantity" type="number" min="1" max="100" placeholder="VD: 5" value={jobData.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} required/>
                         </div>
                         
                         <div className="space-y-2">
                            <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
-                           <Input id="age-requirement" placeholder="VD: 18-35" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                           <Input id="age-requirement" placeholder="VD: 18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                         </div>
                         
                         {visibleFields.has('languageRequirement') && (
@@ -279,7 +280,7 @@ export default function PartnerPostJobPage() {
                         {visibleFields.has('netFee') && (
                            <div className="space-y-2">
                                <Label htmlFor="net-fee">Mức phí (nếu có)</Label>
-                               <Input id="net-fee" placeholder="VD: 100tr" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
+                               <Input id="net-fee" placeholder="VD: 100tr hoặc 4000$" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
                            </div>
                         )}
                         

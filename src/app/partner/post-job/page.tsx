@@ -33,6 +33,7 @@ type JobData = {
     description: string;
     requirements: string;
     benefits: string;
+    notes: string; // Added new field for notes/description
     specialConditions: string[];
 };
 
@@ -117,6 +118,7 @@ export default function PartnerPostJobPage() {
     description: '',
     requirements: '',
     benefits: '',
+    notes: '',
     specialConditions: [],
   });
   
@@ -167,7 +169,8 @@ export default function PartnerPostJobPage() {
         netSalary: '160,000 yên/tháng',
         description: "- Chịu trách nhiệm vận hành, giám sát và bảo trì các dây chuyền sản xuất tự động.\n- Đảm bảo các máy móc hoạt động ổn định, đạt năng suất và chất lượng theo yêu cầu.\n- Phối hợp với các bộ phận khác để xử lý sự cố và cải tiến quy trình.",
         requirements: "- Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ điện tử, Tự động hóa hoặc các ngành liên quan.\n- Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.\n- Có khả năng đọc hiểu bản vẽ kỹ thuật.",
-        benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\n- Môi trường làm việc chuyên nghiệp, năng động.\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật."
+        benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\n- Môi trường làm việc chuyên nghiệp, năng động.\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật.",
+        notes: "Ứng viên có thể phải làm việc theo ca. Chi tiết sẽ được trao đổi trong buổi phỏng vấn."
       };
       setJobData(mockData);
       
@@ -306,7 +309,7 @@ export default function PartnerPostJobPage() {
                         
                         <div className="space-y-2">
                            <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
-                           <Input id="age-requirement" placeholder="VD: 18-35" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                           <Input id="age-requirement" placeholder="18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                         </div>
                         
                         {visibleFields.has('languageRequirement') && (
@@ -423,6 +426,10 @@ export default function PartnerPostJobPage() {
                           <Label htmlFor="job-benefits">Quyền lợi</Label>
                           <Textarea id="job-benefits" placeholder="Phúc lợi, lương thưởng, cơ hội phát triển..." rows={3} value={jobData.benefits} onChange={(e) => handleInputChange('benefits', e.target.value)} required/>
                         </div>
+                         <div className="space-y-2">
+                          <Label htmlFor="job-notes">Mô tả/Ghi chú thêm</Label>
+                          <Textarea id="job-notes" placeholder="Các thông tin khác không có trong các mục trên..." rows={3} value={jobData.notes} onChange={(e) => handleInputChange('notes', e.target.value)} />
+                        </div>
                     </div>
                     
                     <div className="flex items-center space-x-2">
@@ -445,4 +452,3 @@ export default function PartnerPostJobPage() {
     </div>
   );
 }
-

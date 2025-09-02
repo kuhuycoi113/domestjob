@@ -213,7 +213,7 @@ export default function PartnerPostJobPage() {
                         
                         <div className="space-y-2">
                            <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
-                           <Input id="age-requirement" placeholder="VD: 18 - 30" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                           <Input id="age-requirement" placeholder="VD: 18 - 69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                         </div>
                         
                         {visibleFields.has('languageRequirement') && (
@@ -267,5 +267,6 @@ export default function PartnerPostJobPage() {
           </Card>
         </div>
       </div>
+    </div>
   );
 }

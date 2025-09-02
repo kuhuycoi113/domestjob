@@ -25,6 +25,7 @@ type JobData = {
     quantity: string;
     ageRequirement: string;
     languageRequirement: string;
+    languageProficiency: string; // New field for Japanese level
     netFee: string;
     description: string;
     requirements: string;
@@ -33,9 +34,9 @@ type JobData = {
 
 // Maps visa detail to the fields that are NOT applicable
 const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
-    'Thực tập sinh 3 năm': ['languageRequirement'],
-    'Thực tập sinh 1 năm': ['languageRequirement'],
-    'Thực tập sinh 3 Go': ['languageRequirement'],
+    'Thực tập sinh 3 năm': ['languageRequirement', 'languageProficiency'],
+    'Thực tập sinh 1 năm': ['languageRequirement', 'languageProficiency'],
+    'Thực tập sinh 3 Go': ['languageRequirement', 'languageProficiency'],
     'Đặc định đầu Việt': [],
     'Đặc định đầu Nhật': ['netFee', 'interviewLocation'],
     'Đặc định đi mới': [],
@@ -55,9 +56,10 @@ export default function PartnerPostJobPage() {
     workLocation: '',
     interviewLocation: '',
     gender: '',
-    quantity: '',
-    ageRequirement: '',
+    quantity: '1',
+    ageRequirement: '18-69',
     languageRequirement: '',
+    languageProficiency: '',
     netFee: '',
     description: '',
     requirements: '',
@@ -76,6 +78,10 @@ export default function PartnerPostJobPage() {
       const newVisibleFields = new Set(allFields.filter(f => !hidden.includes(f)));
       setVisibleFields(newVisibleFields);
     }
+    
+    if (field === 'languageRequirement' && value !== 'Tiếng Nhật') {
+        setJobData(prev => ({...prev, languageProficiency: ''}));
+    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +95,8 @@ export default function PartnerPostJobPage() {
         gender: "Không yêu cầu",
         quantity: "5",
         ageRequirement: "22-35",
-        languageRequirement: "Tiếng Nhật N4",
+        languageRequirement: "Tiếng Nhật",
+        languageProficiency: "N4",
         description: "- Chịu trách nhiệm vận hành, giám sát và bảo trì các dây chuyền sản xuất tự động.\n- Đảm bảo các máy móc hoạt động ổn định, đạt năng suất và chất lượng theo yêu cầu.\n- Phối hợp với các bộ phận khác để xử lý sự cố và cải tiến quy trình.",
         requirements: "- Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ điện tử, Tự động hóa hoặc các ngành liên quan.\n- Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.\n- Có khả năng đọc hiểu bản vẽ kỹ thuật.",
         benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\n- Môi trường làm việc chuyên nghiệp, năng động.\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật."
@@ -122,6 +129,7 @@ export default function PartnerPostJobPage() {
   }
   
   const visaTypes = Object.keys(hiddenFieldsByVisa);
+  const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
@@ -231,6 +239,20 @@ export default function PartnerPostJobPage() {
                                 </Select>
                             </div>
                         )}
+
+                        {visibleFields.has('languageProficiency') && jobData.languageRequirement === 'Tiếng Nhật' && (
+                            <div className="space-y-2">
+                                <Label htmlFor="language-proficiency">Trình độ tiếng Nhật</Label>
+                                <Select value={jobData.languageProficiency} onValueChange={(value) => handleInputChange('languageProficiency', value)}>
+                                    <SelectTrigger id="language-proficiency">
+                                        <SelectValue placeholder="Chọn trình độ tiếng Nhật" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {japaneseLevels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
                         
                         {visibleFields.has('netFee') && (
                            <div className="space-y-2">
@@ -279,3 +301,5 @@ export default function PartnerPostJobPage() {
     </div>
   );
 }
+
+    

@@ -208,7 +208,7 @@ export default function PartnerPostJobPage() {
 
                         <div className="space-y-2">
                           <Label htmlFor="quantity">Số lượng tuyển</Label>
-                          <Input id="quantity" type="number" placeholder="VD: 5" value={jobData.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} required/>
+                          <Input id="quantity" type="number" min="1" max="100" placeholder="VD: 5" value={jobData.quantity} onChange={(e) => handleInputChange('quantity', e.target.value)} required/>
                         </div>
                         
                         <div className="space-y-2">

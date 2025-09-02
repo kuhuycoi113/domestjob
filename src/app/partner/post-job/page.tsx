@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 // Represents all possible fields
 type JobData = {
     title: string;
-    visaDetail: string; // The key field to determine which other fields are shown
+    visaDetail: string;
     industry: string;
     workLocation: string;
     interviewLocation: string;
@@ -25,10 +25,11 @@ type JobData = {
     quantity: string;
     ageRequirement: string;
     languageRequirement: string;
-    languageProficiency: string; // This will hold proficiency for either Japanese or English
+    languageProficiency: string;
     netFee: string;
     basicSalary: string;
     netSalary: string;
+    interviewDate: string;
     description: string;
     requirements: string;
     benefits: string;
@@ -65,6 +66,7 @@ export default function PartnerPostJobPage() {
     netFee: '',
     basicSalary: '',
     netSalary: '',
+    interviewDate: '',
     description: '',
     requirements: '',
     benefits: '',
@@ -139,6 +141,18 @@ export default function PartnerPostJobPage() {
   const visaTypes = Object.keys(hiddenFieldsByVisa);
   const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
+
+  const getMinInterviewDate = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    return today.toISOString().split('T')[0];
+  };
+
+  const getMaxInterviewDate = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 60);
+    return today.toISOString().split('T')[0];
+  };
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
@@ -230,7 +244,7 @@ export default function PartnerPostJobPage() {
                         
                         <div className="space-y-2">
                            <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
-                           <Input id="age-requirement" placeholder="VD: 18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                           <Input id="age-requirement" placeholder="VD: 18-35" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                         </div>
                         
                         {visibleFields.has('languageRequirement') && (
@@ -276,6 +290,18 @@ export default function PartnerPostJobPage() {
                                 </Select>
                             </div>
                         )}
+
+                         <div className="space-y-2">
+                            <Label htmlFor="interview-date">Ngày phỏng vấn</Label>
+                            <Input
+                                id="interview-date"
+                                type="date"
+                                value={jobData.interviewDate}
+                                onChange={(e) => handleInputChange('interviewDate', e.target.value)}
+                                min={getMinInterviewDate()}
+                                max={getMaxInterviewDate()}
+                            />
+                        </div>
                         
                         {visibleFields.has('netFee') && (
                            <div className="space-y-2">

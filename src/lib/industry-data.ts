@@ -48,7 +48,7 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { name: 'Công nghệ ô tô', slug: 'cong-nghe-o-to-ks', keywords: ['ô tô', 'công nghệ', 'Thiết kế ô tô'] },
       { name: 'Vận chuyển hàng hóa', slug: 'van-chuyen-hang-hoa-ks', keywords: ['vận chuyển', 'hàng hóa', 'Đại lý thủ tục hàng hải', 'Quản lý dọn dẹp', 'Quản lý đóng gói', 'Quản lý vận chuyển', 'Quản lý vận chuyển, dọn dẹp, đóng gói'] },
       { name: 'Xây dựng', slug: 'xay-dung-ks', keywords: ['xây dựng', 'kỹ sư xây dựng', 'giám sát', 'Cầu đường', 'Công nghệ xây dựng của nước ngoài', 'Công nhân kết cấu xây dựng', 'Công nhân xây dựng (trừ khung công trình)', 'Công nhân xây dựng mỏ tổng hợp', 'Công nhân xây dựng nước ngoài', 'Đường ống', 'Giám sát thi công', 'Hoàn thiện nội thất', 'Khảo sát', 'Kiến trúc sư', 'Kỹ thuật Khảo sát', 'Kỹ thuật Kiến trúc', 'Kỹ thuật Kiến trúc, Xây dựng, Khảo sát', 'Kỹ thuật Xây dựng', 'Nội thất gỗ', 'Quản lý, giám sát thi công công trình', 'Trắc địa, khảo sát', 'Xây dựng dân dụng'] },
-      { name: 'Khách sạn, lưu trú', slug: 'khach-san-luu-tru-ks', keywords: ['khách sạn', 'lưu trú'] },
+      { name: 'Khách sạn, lưu trú', slug: 'khach-san-luu-tru-ks', keywords: ['khách sạn', 'lưu trú', 'Dịch vụ khách sạn', 'Khu nghỉ dưỡng', 'Lễ tân khách sạn'] },
       { name: 'Y tế, điều dưỡng', slug: 'y-te-dieu-duong-ks', keywords: ['y tế', 'điều dưỡng'] },
       { name: 'Kinh doanh, kinh tế', slug: 'kinh-doanh-kinh-te-ks', keywords: ['kinh doanh', 'kinh tế'] },
       { name: 'Tài chính, kế toán, bảo hiểm', slug: 'tai-chinh-ke-toan-ks', keywords: ['tài chính', 'kế toán', 'bảo hiểm'] },

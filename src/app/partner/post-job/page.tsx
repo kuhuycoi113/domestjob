@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -230,7 +229,7 @@ export default function PartnerPostJobPage() {
                         
                         <div className="space-y-2">
                            <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
-                           <Input id="age-requirement" placeholder="VD: 18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                           <Input id="age-requirement" placeholder="VD: 18-35" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                         </div>
                         
                         {visibleFields.has('languageRequirement') && (
@@ -286,12 +285,12 @@ export default function PartnerPostJobPage() {
                         
                          <div className="space-y-2">
                                <Label htmlFor="basic-salary">Lương cơ bản</Label>
-                               <Input id="basic-salary" placeholder="VD: 180,000 yên/tháng" value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required/>
+                               <Input id="basic-salary" placeholder="100,000 - 2,000,000 yên/tháng" value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required/>
                          </div>
 
                           <div className="space-y-2">
-                               <Label htmlFor="net-salary">Lương thực lĩnh (ước tính)</Label>
-                               <Input id="net-salary" placeholder="VD: 140,000 yên/tháng" value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
+                               <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
+                               <Input id="net-salary" placeholder="60,000 - 1,500,000 yên/tháng" value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
                          </div>
 
                       </div>

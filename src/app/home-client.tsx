@@ -29,6 +29,7 @@ import { cn } from '@/lib/utils';
 import { industriesByJobType, type Industry } from '@/lib/industry-data';
 import { jobData } from '@/lib/mock-data';
 import { JobCard } from '@/components/job-card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 
 const featuredEmployers = [
@@ -148,48 +149,71 @@ export default function HomeClient() {
     </div>
   );
 
-  const FilterSidebar = () => (
-    <div className="md:col-span-1 lg:col-span-1">
-        <Card>
-            <CardHeader>
-                <CardTitle className="text-xl">Bộ lọc</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <div className="space-y-2">
-                    <Label>Mức lương (triệu VND)</Label>
-                    <Slider defaultValue={[20, 50]} max={100} step={1} />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>20tr</span>
-                        <span>100tr</span>
-                    </div>
-                </div>
-                <div className="space-y-2">
-                    <Label>Loại hình công việc</Label>
-                    <div className="space-y-2">
-                        {['Toàn thời gian', 'Bán thời gian', 'Thực tập'].map(item => (
-                            <div key={item} className="flex items-center space-x-2">
-                                <Checkbox id={`type-${item}`} />
-                                <Label htmlFor={`type-${item}`} className="font-normal">{item}</Label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="space-y-2">
-                    <Label>Cấp bậc</Label>
-                    <div className="space-y-2">
-                        {['Thực tập sinh', 'Nhân viên', 'Chuyên viên', 'Trưởng nhóm'].map(item => (
-                            <div key={item} className="flex items-center space-x-2">
-                                <Checkbox id={`level-${item}`} />
-                                <Label htmlFor={`level-${item}`} className="font-normal">{item}</Label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <Button className="w-full bg-primary text-white">Áp dụng</Button>
-            </CardContent>
-        </Card>
-    </div>
-  );
+  const FilterSidebar = () => {
+    const specialConditions = [
+      'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh'
+    ];
+
+    const languageLevels = ['N1', 'N2', 'N3', 'N4', 'N5'];
+      
+    return (
+        <div className="md:col-span-1 lg:col-span-1">
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-xl">Bộ lọc</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'specialConditions']} className="w-full">
+                        <AccordionItem value="salary">
+                            <AccordionTrigger className="text-base font-semibold">Mức lương (JPY)</AccordionTrigger>
+                            <AccordionContent className="pt-4">
+                                <Slider defaultValue={[160000, 250000]} max={500000} step={10000} />
+                                <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                                    <span>16万</span>
+                                    <span>50万</span>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="jobType">
+                            <AccordionTrigger className="text-base font-semibold">Loại hình công việc</AccordionTrigger>
+                            <AccordionContent className="space-y-2 pt-4">
+                                {['Thực tập sinh', 'Kỹ năng đặc định', 'Kỹ sư, tri thức'].map(item => (
+                                    <div key={item} className="flex items-center space-x-2">
+                                        <Checkbox id={`type-${item}`} />
+                                        <Label htmlFor={`type-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                    </div>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="language">
+                            <AccordionTrigger className="text-base font-semibold">Trình độ tiếng Nhật</AccordionTrigger>
+                            <AccordionContent className="space-y-2 pt-4">
+                                {languageLevels.map(item => (
+                                    <div key={item} className="flex items-center space-x-2">
+                                        <Checkbox id={`lang-${item}`} />
+                                        <Label htmlFor={`lang-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                    </div>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="specialConditions">
+                            <AccordionTrigger className="text-base font-semibold">Điều kiện đặc biệt</AccordionTrigger>
+                            <AccordionContent className="space-y-2 pt-4">
+                                {specialConditions.map(item => (
+                                    <div key={item} className="flex items-center space-x-2">
+                                        <Checkbox id={`cond-${item}`} />
+                                        <Label htmlFor={`cond-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                    </div>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                     <Button className="w-full bg-primary text-white mt-6">Áp dụng bộ lọc</Button>
+                </CardContent>
+            </Card>
+        </div>
+    );
+  };
 
   const SearchResults = () => (
      <div className="w-full bg-secondary">

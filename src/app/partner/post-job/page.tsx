@@ -213,13 +213,22 @@ export default function PartnerPostJobPage() {
                         
                         <div className="space-y-2">
                            <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
-                           <Input id="age-requirement" placeholder="VD: 18 - 69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
+                           <Input id="age-requirement" placeholder="VD: 18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                         </div>
                         
                         {visibleFields.has('languageRequirement') && (
                             <div className="space-y-2">
-                                <Label htmlFor="language-requirement">Yêu cầu trình độ ngoại ngữ</Label>
-                                <Input id="language-requirement" placeholder="VD: Tiếng Nhật N4" value={jobData.languageRequirement} onChange={(e) => handleInputChange('languageRequirement', e.target.value)} />
+                                <Label htmlFor="language-requirement">Yêu cầu ngoại ngữ</Label>
+                                <Select value={jobData.languageRequirement} onValueChange={(value) => handleInputChange('languageRequirement', value)}>
+                                    <SelectTrigger id="language-requirement">
+                                        <SelectValue placeholder="Chọn yêu cầu ngoại ngữ" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Tiếng Nhật">Tiếng Nhật</SelectItem>
+                                        <SelectItem value="Tiếng Anh">Tiếng Anh</SelectItem>
+                                        <SelectItem value="Không yêu cầu tiếng">Không yêu cầu tiếng</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         )}
                         

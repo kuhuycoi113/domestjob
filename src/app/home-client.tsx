@@ -74,16 +74,13 @@ const japanJobTypes = [
     'Kỹ sư, tri thức đầu Nhật'
 ];
 
-const japanLocations = {
-    'Hokkaido': ['Hokkaido'],
-    'Tohoku': ['Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima'],
-    'Kanto': ['Ibaraki', 'Tochigi', 'Gunma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa'],
-    'Chubu': ['Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi'],
-    'Kansai': ['Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama'],
-    'Chugoku': ['Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi'],
-    'Shikoku': ['Tokushima', 'Kagawa', 'Ehime', 'Kochi'],
-    'Kyushu': ['Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima'],
-    'Okinawa': ['Okinawa']
+const locations = {
+    "Việt Nam": [
+        "Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ", "An Giang", "Bà Rịa - Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau", "Cao Bằng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Tĩnh", "Hải Dương", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"
+    ],
+    "Nhật Bản": [
+        'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 'Fukui', 'Fukuoka', 'Fukushima', 'Gifu', 'Gunma', 'Hiroshima', 'Hokkaido', 'Hyogo', 'Ibaraki', 'Ishikawa', 'Iwate', 'Kagawa', 'Kagoshima', 'Kanagawa', 'Kochi', 'Kumamoto', 'Kyoto', 'Mie', 'Miyagi', 'Miyazaki', 'Nagano', 'Nagasaki', 'Nara', 'Niigata', 'Oita', 'Okayama', 'Okinawa', 'Osaka', 'Saga', 'Saitama', 'Shiga', 'Shimane', 'Shizuoka', 'Tochigi', 'Tokushima', 'Tokyo', 'Tottori', 'Toyama', 'Wakayama', 'Yamagata', 'Yamaguchi', 'Yamanashi'
+    ]
 };
 
 
@@ -490,21 +487,19 @@ export default function HomeClient() {
                         </Popover>
                     </div>
                     <div className="md:col-span-3 space-y-2">
-                        <Label htmlFor="search-location" className="text-foreground">Địa điểm làm việc</Label>
+                        <Label htmlFor="search-location" className="text-foreground">Phỏng vấn, tuyển tại</Label>
                         <Select onValueChange={setSelectedLocation}>
                             <SelectTrigger id="search-location">
-                            <SelectValue placeholder="Toàn quốc Nhật Bản" />
+                            <SelectValue placeholder="Tất cả địa điểm" />
                             </SelectTrigger>
                             <SelectContent>
-                                {Object.entries(japanLocations).map(([region, prefectures]) => (
-                                    prefectures.length > 0 && (
-                                        <SelectGroup key={region}>
-                                            <SelectLabel>{region}</SelectLabel>
-                                            {prefectures.map(pref => (
-                                                <SelectItem key={pref} value={pref}>{pref}</SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    )
+                                {Object.entries(locations).map(([country, provinces]) => (
+                                    <SelectGroup key={country}>
+                                        <SelectLabel>{country}</SelectLabel>
+                                        {provinces.map(loc => (
+                                            <SelectItem key={loc} value={loc}>{loc}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
                                 ))}
                             </SelectContent>
                         </Select>

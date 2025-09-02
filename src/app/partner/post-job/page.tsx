@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Briefcase, Send, Upload, FileText } from "lucide-react";
+import { Briefcase, Send, Upload, FileText, Star } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
@@ -33,6 +33,7 @@ type JobData = {
     description: string;
     requirements: string;
     benefits: string;
+    specialConditions: string[];
 };
 
 // Maps visa detail to the fields that are NOT applicable
@@ -47,6 +48,52 @@ const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
     'Kỹ sư, tri thức đầu Nhật': ['netFee', 'interviewLocation']
 };
 
+const allSpecialConditions = [
+    'Tuyển gấp', 'Nhóm ngành 1', 'Nhóm ngành 2', 'Nhà xưởng', 'Ngoài trời', 'Làm trên cao', 'Cặp đôi',
+    'Hỗ trợ Ginou 2', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Việc nhẹ', 'Việc nặng',
+    'Muốn về công ty trước khi ra visa', 'Muốn về công ty sau khi ra visa', 'Nhận visa katsudo', 'Không nhận visa katsudo',
+    'Nghỉ T7, CN', 'Không yêu cầu kinh nghiệm', 'Nhân viên chính thức', 'Haken', 'Nhận visa gia đình',
+    'Nhận quay lại', 'Nhận tiếng yếu', 'Nhận trái ngành', 'Nhận thiếu giấy', 'Nhận nhiều loại bằng',
+    'Nhận bằng Senmon', 'Yêu cầu mặc Kimono', 'Lương tốt', 'Tăng ca', 'Tăng lương định kỳ', 'Dễ cày tiền',
+    'Có thưởng', 'Nợ phí', 'Phí mềm', 'Hỗ trợ chỗ ở', 'Hỗ trợ về công ty', 'Chưa vé', 'Có vé',
+    'Công ty uy tín', 'Có người Việt', 'Đơn truyền thống', 'Bay nhanh', 'Trình cục sớm', 'Có bảng lương'
+];
+
+const conditionsByVisaType: { [key: string]: string[] } = {
+    'Thực tập sinh kỹ năng': [
+        'Tuyển gấp', 'Nhà xưởng', 'Ngoài trời', 'Làm trên cao', 'Cặp đôi', 'Yêu cầu bằng lái', 'Nhận tuổi cao',
+        'Việc nhẹ', 'Việc nặng', 'Nghỉ T7, CN', 'Không yêu cầu kinh nghiệm', 'Nhận nhiều loại bằng', 'Lương tốt',
+        'Tăng ca', 'Tăng lương định kỳ', 'Dễ cày tiền', 'Có thưởng', 'Nợ phí', 'Phí mềm', 'Công ty uy tín',
+        'Có người Việt', 'Đơn truyền thống', 'Bay nhanh', 'Trình cục sớm', 'Có bảng lương'
+    ],
+    'Kỹ năng đặc định': [
+        'Tuyển gấp', 'Nhóm ngành 1', 'Nhóm ngành 2', 'Nhà xưởng', 'Ngoài trời', 'Làm trên cao', 'Cặp đôi',
+        'Hỗ trợ Ginou 2', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Việc nhẹ', 'Việc nặng',
+        'Muốn về công ty trước khi ra visa', 'Muốn về công ty sau khi ra visa', 'Nhận visa katsudo',
+        'Không nhận visa katsudo', 'Nghỉ T7, CN', 'Không yêu cầu kinh nghiệm', 'Nhân viên chính thức', 'Haken',
+        'Nhận visa gia đình', 'Nhận quay lại', 'Nhận tiếng yếu', 'Nhận trái ngành', 'Nhận thiếu giấy',
+        'Yêu cầu mặc Kimono', 'Lương tốt', 'Tăng ca', 'Tăng lương định kỳ', 'Dễ cày tiền', 'Có thưởng',
+        'Nợ phí', 'Phí mềm', 'Hỗ trợ chỗ ở', 'Hỗ trợ về công ty', 'Chưa vé', 'Có vé', 'Công ty uy tín',
+        'Có người Việt', 'Đơn truyền thống', 'Bay nhanh', 'Trình cục sớm', 'Có bảng lương'
+    ],
+    'Kỹ sư, tri thức': [
+        'Tuyển gấp', 'Nhà xưởng', 'Ngoài trời', 'Làm trên cao', 'Cặp đôi', 'Yêu cầu bằng lái', 'Nhận tuổi cao',
+        'Việc nhẹ', 'Việc nặng', 'Muốn về công ty trước khi ra visa', 'Muốn về công ty sau khi ra visa',
+        'Nhận visa katsudo', 'Không nhận visa katsudo', 'Nghỉ T7, CN', 'Không yêu cầu kinh nghiệm',
+        'Nhân viên chính thức', 'Haken', 'Nhận visa gia đình', 'Nhận quay lại', 'Nhận tiếng yếu', 'Nhận trái ngành',
+        'Nhận thiếu giấy', 'Nhận bằng Senmon', 'Lương tốt', 'Tăng ca', 'Tăng lương định kỳ', 'Dễ cày tiền',
+        'Có thưởng', 'Nợ phí', 'Phí mềm', 'Hỗ trợ chỗ ở', 'Hỗ trợ về công ty', 'Chưa vé', 'Có vé',
+        'Công ty uy tín', 'Có người Việt', 'Đơn truyền thống', 'Bay nhanh', 'Trình cục sớm', 'Có bảng lương'
+    ],
+};
+
+const getVisaCategory = (visaDetail: string): keyof typeof conditionsByVisaType | null => {
+    if (visaDetail.includes('Thực tập sinh')) return 'Thực tập sinh kỹ năng';
+    if (visaDetail.includes('Đặc định')) return 'Kỹ năng đặc định';
+    if (visaDetail.includes('Kỹ sư, tri thức')) return 'Kỹ sư, tri thức';
+    return null;
+}
+
 
 export default function PartnerPostJobPage() {
   const [activeTab, setActiveTab] = useState('manual');
@@ -58,7 +105,7 @@ export default function PartnerPostJobPage() {
     industry: '',
     workLocation: '',
     interviewLocation: '',
-    gender: '',
+    gender: 'Cả nam và nữ',
     quantity: '1',
     ageRequirement: '18-69',
     languageRequirement: '',
@@ -70,18 +117,21 @@ export default function PartnerPostJobPage() {
     description: '',
     requirements: '',
     benefits: '',
+    specialConditions: [],
   });
   
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData)));
 
-  const handleInputChange = (field: keyof JobData, value: string) => {
+  const handleInputChange = (field: keyof JobData, value: string | string[]) => {
     const newData = { ...jobData, [field]: value };
 
     if (field === 'visaDetail') {
-      const hidden = hiddenFieldsByVisa[value] || [];
+      const hidden = hiddenFieldsByVisa[value as string] || [];
       const allFields: (keyof JobData)[] = Object.keys(jobData) as (keyof JobData)[];
       const newVisibleFields = new Set(allFields.filter(f => !hidden.includes(f)));
       setVisibleFields(newVisibleFields);
+      // Reset special conditions when visa type changes
+      newData.specialConditions = [];
     }
     
     // Reset proficiency when language changes
@@ -90,6 +140,14 @@ export default function PartnerPostJobPage() {
     }
 
     setJobData(newData);
+  };
+  
+  const handleCheckboxChange = (field: keyof JobData, value: string) => {
+    const currentValues = (jobData[field] as string[]) || [];
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter((item) => item !== value)
+      : [...currentValues, value];
+    handleInputChange(field, newValues);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,6 +211,10 @@ export default function PartnerPostJobPage() {
     today.setDate(today.getDate() + 60);
     return today.toISOString().split('T')[0];
   };
+
+  const currentVisaCategory = jobData.visaDetail ? getVisaCategory(jobData.visaDetail) : null;
+  const availableConditions = currentVisaCategory ? conditionsByVisaType[currentVisaCategory] : [];
+
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
@@ -323,6 +385,29 @@ export default function PartnerPostJobPage() {
                       </div>
                     </div>
 
+                    {/* Special Conditions */}
+                    {jobData.visaDetail && availableConditions.length > 0 && (
+                        <div className="space-y-4 p-6 border rounded-lg">
+                           <h3 className="text-xl font-bold font-headline flex items-center gap-2">
+                               <Star className="text-yellow-500"/>
+                               Điều kiện đặc biệt
+                            </h3>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4">
+                                {availableConditions.map(condition => (
+                                    <div key={condition} className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id={`condition-${condition}`}
+                                            checked={jobData.specialConditions?.includes(condition)}
+                                            onCheckedChange={() => handleCheckboxChange('specialConditions', condition)}
+                                        />
+                                        <Label htmlFor={`condition-${condition}`} className="font-normal cursor-pointer">{condition}</Label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+
                     {/* Job Description */}
                     <div className="space-y-4 p-6 border rounded-lg">
                       <h3 className="text-xl font-bold font-headline">Mô tả chi tiết</h3>
@@ -360,3 +445,4 @@ export default function PartnerPostJobPage() {
     </div>
   );
 }
+

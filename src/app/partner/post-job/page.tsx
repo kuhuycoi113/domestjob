@@ -25,7 +25,7 @@ type JobData = {
     quantity: string;
     ageRequirement: string;
     languageRequirement: string;
-    languageProficiency: string; // New field for Japanese level
+    languageProficiency: string; // This will hold proficiency for either Japanese or English
     netFee: string;
     description: string;
     requirements: string;
@@ -70,7 +70,6 @@ export default function PartnerPostJobPage() {
 
   const handleInputChange = (field: keyof JobData, value: string) => {
     const newData = { ...jobData, [field]: value };
-    setJobData(newData);
 
     if (field === 'visaDetail') {
       const hidden = hiddenFieldsByVisa[value] || [];
@@ -79,9 +78,12 @@ export default function PartnerPostJobPage() {
       setVisibleFields(newVisibleFields);
     }
     
-    if (field === 'languageRequirement' && value !== 'Tiếng Nhật') {
-        setJobData(prev => ({...prev, languageProficiency: ''}));
+    // Reset proficiency when language changes
+    if (field === 'languageRequirement') {
+        newData.languageProficiency = '';
     }
+
+    setJobData(newData);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +94,7 @@ export default function PartnerPostJobPage() {
         visaDetail: "Kỹ sư, tri thức đầu Việt",
         industry: "Điện tử",
         workLocation: "Khu công nghệ cao Hòa Lạc, Hà Nội",
-        gender: "Không yêu cầu",
+        gender: "Cả nam và nữ",
         quantity: "5",
         ageRequirement: "22-35",
         languageRequirement: "Tiếng Nhật",
@@ -130,6 +132,7 @@ export default function PartnerPostJobPage() {
   
   const visaTypes = Object.keys(hiddenFieldsByVisa);
   const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
+  const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
@@ -242,13 +245,27 @@ export default function PartnerPostJobPage() {
 
                         {visibleFields.has('languageProficiency') && jobData.languageRequirement === 'Tiếng Nhật' && (
                             <div className="space-y-2">
-                                <Label htmlFor="language-proficiency">Trình độ tiếng Nhật</Label>
+                                <Label htmlFor="language-proficiency-jp">Trình độ tiếng Nhật</Label>
                                 <Select value={jobData.languageProficiency} onValueChange={(value) => handleInputChange('languageProficiency', value)}>
-                                    <SelectTrigger id="language-proficiency">
+                                    <SelectTrigger id="language-proficiency-jp">
                                         <SelectValue placeholder="Chọn trình độ tiếng Nhật" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {japaneseLevels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
+
+                        {visibleFields.has('languageProficiency') && jobData.languageRequirement === 'Tiếng Anh' && (
+                            <div className="space-y-2">
+                                <Label htmlFor="language-proficiency-en">Trình độ tiếng Anh</Label>
+                                <Select value={jobData.languageProficiency} onValueChange={(value) => handleInputChange('languageProficiency', value)}>
+                                    <SelectTrigger id="language-proficiency-en">
+                                        <SelectValue placeholder="Chọn trình độ tiếng Anh" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {englishLevels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -301,5 +318,3 @@ export default function PartnerPostJobPage() {
     </div>
   );
 }
-
-    

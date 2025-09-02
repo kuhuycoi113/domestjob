@@ -56,9 +56,9 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { name: 'Giáo dục, đào tạo', slug: 'giao-duc-dao-tao-ks', keywords: ['giáo dục', 'đào tạo', 'Giảng dạy có chứng chỉ', 'Giảng dạy đại học', 'Giảng dạy ngoài cơ sở giáo dục', 'Giảng dạy ngôn ngữ tại Tiểu học, THCS, PTTH', 'Giảng dạy trường dạy nghề (Senmon)', 'Giảng dạy trường học các loại', 'Giảng dạy trường quốc tế', 'Hướng dẫn nghiên cứu', 'Hướng dẫn thể thao'] },
       { name: 'Hành chính, văn phòng', slug: 'hanh-chinh-van-phong-ks', keywords: ['hành chính', 'văn phòng', 'Biên dịch, phiên dịch', 'Nhân viên văn phòng'] },
       { name: 'Pháp lý', slug: 'phap-ly-ks', keywords: ['pháp lý', 'luật sư'] },
-      { name: 'Nghệ thuật, nghệ sĩ', slug: 'nghe-thuat-ks', keywords: ['nghệ thuật', 'nghệ sĩ', 'Mỹ thuật gia', 'nhiếp ảnh gia', 'Nhà văn', 'Nhạc sĩ', 'nghệ sĩ sân khấu'] },
+      { name: 'Nghệ thuật, nghệ sĩ', slug: 'nghe-thuat-ks', keywords: ['nghệ thuật', 'nghệ sĩ', 'Mỹ thuật gia, nhiếp ảnh gia', 'Nhà văn', 'Nhạc sĩ, nghệ sĩ sân khấu'] },
       { name: 'Thể dục thể thao', slug: 'the-thao-ks', keywords: ['thể dục', 'thể thao', 'Vận động viên chuyên nghiệp', 'Vận động viên nghiệp dư'] },
-      { name: 'Nghề có kỹ năng chuyên nghiệp', slug: 'nghe-chuyen-nghiep-ks', keywords: ['chuyên nghiệp', 'kỹ năng'] },
+      { name: 'Nghề có kỹ năng chuyên nghiệp', slug: 'nghe-chuyen-nghiep-ks', keywords: ['chuyên nghiệp', 'kỹ năng', 'Công chức', 'Giúp việc gia đình đặc khu', 'Huấn luyện động vật', 'Nấu nướng', 'Người pha chế rượu', 'Người quản gia', 'Nhà ngoại giao', 'Nhân viên tôn giáo', 'Phi công'] },
       { name: 'Việc làm bán chuyên nghiệp', slug: 'viec-lam-ban-chuyen-nghiep-ks', keywords: ['bán chuyên nghiệp'] }
     ],
     'Default': defaultIndustries,

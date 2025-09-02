@@ -201,7 +201,7 @@ export default function PartnerPostJobPage() {
                              <SelectContent>
                                <SelectItem value="Nam">Nam</SelectItem>
                                <SelectItem value="Nữ">Nữ</SelectItem>
-                               <SelectItem value="Không yêu cầu">Không yêu cầu</SelectItem>
+                               <SelectItem value="Cả nam và nữ">Cả nam và nữ</SelectItem>
                              </SelectContent>
                            </Select>
                         </div>

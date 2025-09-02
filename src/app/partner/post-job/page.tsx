@@ -27,6 +27,8 @@ type JobData = {
     languageRequirement: string;
     languageProficiency: string; // This will hold proficiency for either Japanese or English
     netFee: string;
+    basicSalary: string;
+    netSalary: string;
     description: string;
     requirements: string;
     benefits: string;
@@ -61,6 +63,8 @@ export default function PartnerPostJobPage() {
     languageRequirement: '',
     languageProficiency: '',
     netFee: '',
+    basicSalary: '',
+    netSalary: '',
     description: '',
     requirements: '',
     benefits: '',
@@ -99,6 +103,8 @@ export default function PartnerPostJobPage() {
         ageRequirement: "22-35",
         languageRequirement: "Tiếng Nhật",
         languageProficiency: "N4",
+        basicSalary: '200,000 yên/tháng',
+        netSalary: '160,000 yên/tháng',
         description: "- Chịu trách nhiệm vận hành, giám sát và bảo trì các dây chuyền sản xuất tự động.\n- Đảm bảo các máy móc hoạt động ổn định, đạt năng suất và chất lượng theo yêu cầu.\n- Phối hợp với các bộ phận khác để xử lý sự cố và cải tiến quy trình.",
         requirements: "- Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ điện tử, Tự động hóa hoặc các ngành liên quan.\n- Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.\n- Có khả năng đọc hiểu bản vẽ kỹ thuật.",
         benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\n- Môi trường làm việc chuyên nghiệp, năng động.\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật."
@@ -277,6 +283,16 @@ export default function PartnerPostJobPage() {
                                <Input id="net-fee" placeholder="VD: 100tr" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
                            </div>
                         )}
+                        
+                         <div className="space-y-2">
+                               <Label htmlFor="basic-salary">Lương cơ bản</Label>
+                               <Input id="basic-salary" placeholder="VD: 180,000 yên/tháng" value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required/>
+                         </div>
+
+                          <div className="space-y-2">
+                               <Label htmlFor="net-salary">Lương thực lĩnh (ước tính)</Label>
+                               <Input id="net-salary" placeholder="VD: 140,000 yên/tháng" value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
+                         </div>
 
                       </div>
                     </div>

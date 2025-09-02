@@ -38,7 +38,7 @@ export interface Job {
     industry: string;
     workLocation: string;
     interviewLocation?: string;
-    gender?: 'Nam' | 'Nữ' | 'Không yêu cầu';
+    gender?: 'Nam' | 'Nữ' | 'Cả nam và nữ';
     quantity: number;
     ageRequirement?: string;
     languageRequirement?: string;
@@ -60,140 +60,74 @@ export interface Job {
         images?: { src: string; alt: string; dataAiHint: string }[];
     }
 }
-  
-export const jobData: Job[] = [
-    {
-        id: 'JP-KRSBA015',
-        isRecording: true,
-        image: { src: 'https://placehold.co/600x400.png', type: 'minhhoa' },
-        likes: '8k2',
-        salary: { actual: '25,5tr', basic: '30tr', annualBonus: 'Có (theo quy định)', annualIncome: 'Khoảng 350-400 vạn Yên' },
-        title: 'Thực tập sinh 3 năm, Chế biến thực phẩm, Nagasaki, 3 Nữ, 18 - 35 tuổi',
-        support: ['lành nghề'],
-        recruiter: { name: 'Nguyễn Thị Ngân', avatar: 'https://placehold.co/32x32.png', company: 'Hoàng Long H...' },
-        status: 'Đang tuyển',
-        interviewDate: '19/02/2024',
-        interviewRounds: 3,
-        netFee: '110tr(4k2)',
-        target: '5tr',
-        tags: ['Cặp đôi', 'Có bằng lái', 'Hỗ trợ chỗ ở'],
-        postedTime: '12:58 06/10/2024',
-        visaType: 'Thực tập sinh',
-        visaDetail: 'Thực tập sinh 3 năm',
-        industry: 'Chế biến thực phẩm',
-        workLocation: 'Nagasaki, Nhật Bản',
-        interviewLocation: 'Trực tuyến (Zoom)',
-        gender: 'Nữ',
-        quantity: 3,
-        ageRequirement: '18 - 35',
-        educationRequirement: 'Tốt nghiệp THPT trở lên',
-        specialConditions: 'Chăm chỉ, chịu khó, có thể làm ca.',
-        details: {
-            description: "<p>Công việc chính là chế biến, đóng gói các sản phẩm cơm hộp, sushi, salad cho chuỗi siêu thị và cửa hàng tiện lợi. Môi trường làm việc sạch sẽ, hiện đại, đảm bảo vệ sinh an toàn thực phẩm.</p><ul><li>Vận hành máy trộn, máy cắt rau củ, máy đóng gói tự động.</li><li>Kiểm tra chất lượng nguyên liệu và thành phẩm.</li><li>Tuân thủ nghiêm ngặt các quy định về vệ sinh cá nhân và khu vực làm việc.</li></ul>",
-            requirements: "<p>Yêu cầu ứng viên chăm chỉ, cẩn thận và có trách nhiệm. Cụ thể:</p><ul><li>Độ tuổi: 18 - 35 tuổi.</li><li>Giới tính: Nữ.</li><li>Sức khỏe tốt, không mắc các bệnh truyền nhiễm.</li><li>Không yêu cầu kinh nghiệm, sẽ được đào tạo bài bản.</li><li>Ưu tiên ứng viên có kinh nghiệm làm trong ngành thực phẩm.</li></ul>",
-            benefits: "<p>Mức lương và chế độ đãi ngộ hấp dẫn:</p><ul><li>Lương cơ bản: 160,000 JPY/tháng (chưa tính tăng ca).</li><li>Thực lĩnh (sau khi trừ thuế, bảo hiểm, nhà ở): Khoảng 120,000 JPY/tháng.</li><li>Được tham gia đầy đủ bảo hiểm xã hội, y tế, thất nghiệp.</li><li>Hỗ trợ nhà ở ký túc xá đầy đủ tiện nghi.</li><li>Có cơ hội gia hạn hợp đồng và phát triển lâu dài.</li></ul>",
-            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            images: [
-                { src: "https://placehold.co/600x400.png", alt: "Dây chuyền sản xuất", dataAiHint: "production line" },
-                { src: "https://placehold.co/600x400.png", alt: "Khu nhà ăn", dataAiHint: "company cafeteria" },
-                { src: "https://placehold.co/600x400.png", alt: "Ký túc xá", dataAiHint: "dormitory room" },
-                { src: "https://placehold.co/600x400.png", alt: "Hoạt động ngoại khóa", dataAiHint: "company event" }
-            ]
-        }
-    },
-    {
-        id: 'JP-ACABA055',
-        isRecording: true,
-        image: { src: 'https://placehold.co/600x400.png', type: 'thucte' },
-        likes: '1',
-        salary: { basic: '30tr' },
-        title: 'Kỹ sư, tri thức đầu Nhật có tiếng, N3, N2, Công nghệ thông tin, Kỹ sư cầu nối, Nam, 22-32 tuổi',
-        support: ['lành nghề'],
-        recruiter: { name: 'Của bạn', avatar: 'https://placehold.co/32x32.png', company: '<chưa rõ>' },
-        status: 'Tạm dừng',
-        interviewDate: '19/02/2024',
-        interviewRounds: 3,
-        target: '',
-        backFee: '12tr',
-        tags: ['IT', 'Kỹ sư', 'N2'],
-        applicants: {
-            count: 3,
-            avatars: ['https://placehold.co/24x24.png', 'https://placehold.co/24x24.png', 'https://placehold.co/24x24.png'],
-        },
-        postedTime: '12:58 06/10/2024',
-        visaType: 'Kỹ sư, tri thức',
-        visaDetail: 'Kỹ sư, tri thức đầu Nhật',
-        industry: 'Công nghệ thông tin',
-        workLocation: 'Tokyo, Nhật Bản',
-        details: { description: "Chi tiết công việc đang được cập nhật.", requirements: "Chi tiết yêu cầu đang được cập nhật.", benefits: "Chi tiết quyền lợi đang được cập nhật.", images: [], videoUrl: "" }
-    },
-    {
-        id: 'JP-ATXAA015',
-        isRecording: true,
-        image: { src: 'https://placehold.co/600x400.png', type: 'minhhoa' },
-        likes: '5k1',
-        salary: { actual: '26tr', basic: '31tr' },
-        title: 'Tuyển 10 nữ dán giấy tường nội thất tại Fukuoka, Nhật Bản. Lương 32tr/tháng.',
-        support: [],
-        recruiter: { name: 'Trần Văn Mạnh', avatar: 'https://placehold.co/32x32.png', company: 'Vinamex' },
-        status: 'Đang tuyển',
-        interviewDate: '25/02/2024',
-        interviewRounds: 2,
-        netFee: '100tr',
-        target: '10tr',
-        tags: ['Xây dựng', 'Nữ'],
-        postedTime: '11:30 06/10/2024',
-        visaType: 'Thực tập sinh',
-        visaDetail: 'Thực tập sinh 3 năm',
-        industry: 'Xây dựng',
-        workLocation: 'Fukuoka, Nhật Bản',
-         details: { description: "Chi tiết công việc đang được cập nhật.", requirements: "Chi tiết yêu cầu đang được cập nhật.", benefits: "Chi tiết quyền lợi đang được cập nhật.", images: [], videoUrl: "" }
-    },
-    {
-        id: 'JP-KBSBA045',
-        isRecording: false,
-        image: { src: 'https://placehold.co/600x400.png', type: 'thucte' },
-        likes: '12k',
-        salary: { basic: '29tr' },
-        title: 'Kỹ sư cơ khí làm việc tại Osaka, yêu cầu N4, có kinh nghiệm vận hành máy phay CNC.',
-        support: ['lành nghề'],
-        recruiter: { name: 'Lê Thuỳ Trang', avatar: 'https://placehold.co/32x32.png', company: 'Esuhai' },
-        status: 'Đang tuyển',
-        interviewDate: '05/03/2024',
-        interviewRounds: 2,
-        target: '2tr',
-        tags: ['Cơ khí', 'Kỹ sư', 'N4'],
-        applicants: {
-            count: 5,
-            avatars: ['https://placehold.co/24x24.png', 'https://placehold.co/24x24.png', 'https://placehold.co/24x24.png'],
-        },
-        postedTime: '10:05 06/10/2024',
-         visaType: 'Kỹ sư, tri thức',
-        visaDetail: 'Kỹ sư, tri thức đầu Việt',
-        industry: 'Cơ khí',
-        workLocation: 'Osaka, Nhật Bản',
-        details: { description: "Chi tiết công việc đang được cập nhật.", requirements: "Chi tiết yêu cầu đang được cập nhật.", benefits: "Chi tiết quyền lợi đang được cập nhật.", images: [], videoUrl: "" }
-    },
-    {
-      id: 'JP-XYZ001',
-      isRecording: false,
-      image: { src: 'https://placehold.co/600x400.png', type: 'minhhoa'},
-      likes: '3k5',
-      salary: { actual: '28tr', basic: '33tr'},
-      title: 'Tuyển dụng 5 Nam TTS Hàn xì làm việc tại Aichi. Yêu cầu có kinh nghiệm.',
-      support: [],
-      recruiter: { name: 'Hoàng An', avatar: 'https://placehold.co/32x32.png', company: 'JapanWorks'},
-      status: 'Đang tuyển',
-      interviewDate: '15/03/2024',
-      interviewRounds: 2,
-      netFee: '105tr',
-      target: '8tr',
-      tags: ['Cơ khí', 'Hàn', 'Nam'],
-      postedTime: '09:00 07/10/2024',
-      visaType: 'Thực tập sinh',
-      visaDetail: 'Thực tập sinh 3 năm',
-      industry: 'Cơ khí',
-      workLocation: 'Aichi, Nhật Bản',
-       details: { description: "Chi tiết công việc đang được cập nhật.", requirements: "Chi tiết yêu cầu đang được cập nhật.", benefits: "Chi tiết quyền lợi đang được cập nhật.", images: [], videoUrl: "" }
-    }
+
+const recruiters = [
+    { name: 'Nguyễn Thị Ngân', avatar: 'https://placehold.co/32x32.png', company: 'Hoàng Long CMS' },
+    { name: 'Trần Văn Mạnh', avatar: 'https://placehold.co/32x32.png', company: 'Vinamex' },
+    { name: 'Lê Thuỳ Trang', avatar: 'https://placehold.co/32x32.png', company: 'Esuhai' },
+    { name: 'Hoàng An', avatar: 'https://placehold.co/32x32.png', company: 'JapanWorks' },
+    { name: 'Phạm Minh Tuấn', avatar: 'https://placehold.co/32x32.png', company: 'Kaizen Yoshida' },
+    { name: 'Vũ Thị Lan', avatar: 'https://placehold.co/32x32.png', company: 'TTC Việt Nam' },
 ];
+
+const industries = ['Chế biến thực phẩm', 'Cơ khí', 'Xây dựng', 'Nông nghiệp', 'Điện tử', 'Dệt may', 'Điều dưỡng', 'Nhà hàng'];
+const locations = ['Tokyo', 'Osaka', 'Aichi', 'Fukuoka', 'Hokkaido', 'Kanagawa', 'Saitama', 'Chiba', 'Hyogo', 'Hiroshima'];
+const visaTypes = ['Thực tập sinh 3 năm', 'Kỹ năng đặc định', 'Kỹ sư, tri thức'];
+const jobTitles = {
+    'Chế biến thực phẩm': ['Chế biến cơm hộp', 'Đóng gói bánh kẹo', 'Làm sushi', 'Chế biến thủy sản'],
+    'Cơ khí': ['Vận hành máy CNC', 'Hàn xì', 'Lắp ráp linh kiện', 'Bảo trì máy móc'],
+    'Xây dựng': ['Lắp đặt giàn giáo', 'Hoàn thiện nội thất', 'Lái máy xúc', 'Thợ mộc'],
+    'Nông nghiệp': ['Trồng rau nhà kính', 'Chăn nuôi gia cầm', 'Thu hoạch hoa quả', 'Làm nông nghiệp công nghệ cao'],
+    'Điện tử': ['Lắp ráp bảng mạch', 'Kiểm tra chất lượng (QC)', 'Vận hành dây chuyền SMT', 'Sửa chữa thiết bị'],
+    'Dệt may': ['May công nghiệp', 'Vận hành máy dệt', 'Nhuộm vải', 'Cắt vải tự động'],
+    'Điều dưỡng': ['Chăm sóc người cao tuổi', 'Hộ lý tại viện dưỡng lão', 'Hỗ trợ sinh hoạt', 'Nhân viên chăm sóc'],
+    'Nhà hàng': ['Phục vụ bàn', 'Phụ bếp', 'Lễ tân nhà hàng', 'Pha chế đồ uống']
+};
+
+const generateRandomJob = (index: number): Job => {
+    const industry = industries[index % industries.length];
+    const visaDetail = visaTypes[index % visaTypes.length];
+    const location = locations[index % locations.length];
+    const recruiter = recruiters[index % recruiters.length];
+    const gender = ['Nam', 'Nữ', 'Cả nam và nữ'][index % 3] as 'Nam' | 'Nữ' | 'Cả nam và nữ';
+    const quantity = (index % 10) + 1;
+    const title = `${jobTitles[industry as keyof typeof jobTitles][index % 4]}, ${location}, ${quantity} ${gender}`;
+
+    return {
+        id: `JP-DEMO${1000 + index}`,
+        isRecording: index % 5 === 0,
+        image: { src: `https://placehold.co/600x400.png?text=Job+${index}`, type: 'minhhoa' },
+        likes: `${Math.floor(Math.random() * 10)}k${Math.floor(Math.random() * 10)}`,
+        salary: {
+            actual: `${(12 + (index % 10)) * 10000} JPY`,
+            basic: `${(18 + (index % 12)) * 10000} JPY`,
+            annualIncome: 'Khoảng ' + (250 + index % 50) + ' vạn Yên',
+            annualBonus: index % 3 === 0 ? 'Có (1-2 lần/năm)' : 'Không có'
+        },
+        title: title,
+        recruiter: recruiter,
+        status: index % 10 === 0 ? 'Tạm dừng' : 'Đang tuyển',
+        interviewDate: `2024-08-${(index % 28) + 1}`,
+        interviewRounds: (index % 3) + 1,
+        netFee: visaDetail.includes('Thực tập sinh') ? `${90 + (index % 20)}tr` : 'Không',
+        target: `${(index % 5) + 1}tr`,
+        tags: [industry, visaDetail.split(' ')[0], gender === 'Cả nam và nữ' ? 'Nam/Nữ' : gender],
+        postedTime: `10:00 01/08/2024`,
+        visaType: visaDetail,
+        visaDetail: visaDetail,
+        industry: industry,
+        workLocation: location,
+        gender: gender,
+        quantity: quantity,
+        ageRequirement: `${18 + (index % 5)}-${35 + (index % 10)}`,
+        languageRequirement: index % 4 === 0 ? 'Không yêu cầu' : 'Tiếng Nhật',
+        specialConditions: 'Chăm chỉ, chịu khó.',
+        details: {
+            description: `<p>Mô tả chi tiết cho công việc <strong>${title}</strong>. Công việc đòi hỏi sự cẩn thận và trách nhiệm cao.</p>`,
+            requirements: `<ul><li>Yêu cầu: Tốt nghiệp THPT trở lên.</li><li>Sức khỏe tốt.</li><li>Có khả năng làm việc nhóm.</li></ul>`,
+            benefits: `<ul><li>Hưởng đầy đủ chế độ bảo hiểm theo quy định của Nhật Bản.</li><li>Hỗ trợ nhà ở và đi lại.</li><li>Có cơ hội được đào tạo và nâng cao tay nghề.</li></ul>`
+        }
+    };
+};
+  
+export const jobData: Job[] = Array.from({ length: 100 }, (_, i) => generateRandomJob(i));

@@ -109,8 +109,9 @@ const addedValues = [
     },
 ]
 
-export default function ConsultantDetailPage({ params }: { params: { id: string } }) {
-    const consultant = consultants.find(c => c.id === params.id);
+export default function ConsultantDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const resolvedParams = use(params);
+    const consultant = consultants.find(c => c.id === resolvedParams.id);
 
     if (!consultant) {
         notFound();

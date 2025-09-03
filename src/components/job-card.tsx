@@ -57,7 +57,6 @@ export const JobCard = ({ job }: { job: Job }) => {
             <p className="text-muted-foreground">{job.recruiter.company}</p>
           </div>
            <Button variant="outline" size="icon" className="h-8 w-8 ml-auto"><Phone className="text-green-500 h-4 w-4"/></Button>
-           <ZaloIcon className="h-6 w-6 cursor-pointer" />
         </div>
       </div>
       
@@ -126,7 +125,6 @@ export const JobCard = ({ job }: { job: Job }) => {
             <div className="flex justify-between items-center border-t pt-2">
                 <div className="flex items-center gap-1">
                     <Button variant="ghost" size="icon" className="h-7 w-7"><Phone className="text-green-500 h-5 w-5"/></Button>
-                    <ZaloIcon className="h-5 w-5 cursor-pointer" />
                     <Button variant="ghost" size="icon" className="h-7 w-7"><User className="h-5 w-5"/></Button>
                 </div>
                 <div>

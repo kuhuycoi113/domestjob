@@ -55,26 +55,25 @@ export const JobCard = ({ job }: { job: Job }) => {
             <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>
             <p className="text-muted-foreground">{job.recruiter.company}</p>
           </div>
-           <Button asChild variant="outline" size="icon" className="h-8 w-8 ml-auto">
-             <Link href="/chat">
-                <MessageSquare className="text-primary h-4 w-4"/>
-             </Link>
-           </Button>
         </div>
       </div>
       
       {/* Right side: Actions and Meta */}
-      <div className="w-1/5 flex flex-col items-end justify-between text-right py-1">
+      <div className="w-1/4 flex flex-col items-end justify-between text-right py-1">
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
               <span>{job.likes}</span>
               <Heart className="w-5 h-5 text-red-500/80 hover:fill-current cursor-pointer" />
           </div>
-          <div className="space-y-1">
-            {job.tags.slice(0, 2).map(tag => <Badge key={tag} variant="outline" className="ml-1 text-xs">{tag}</Badge>)}
-          </div>
-          <Link href={`/jobs/${job.id}`} className="w-full mt-2">
-            <Button size="sm" className="w-full bg-primary text-white"><Briefcase className="mr-1.5"/> Chi tiết</Button>
-          </Link>
+           <div className="mt-auto flex items-center gap-2">
+                 <Button asChild size="sm">
+                     <Link href="/chat">
+                        <MessageSquare className="mr-2 h-4 w-4"/> Tư vấn
+                     </Link>
+                 </Button>
+                <Link href={`/jobs/${job.id}`} className="w-full">
+                    <Button size="sm" variant="outline" className="w-full">Chi tiết</Button>
+                </Link>
+            </div>
       </div>
     </div>
   );

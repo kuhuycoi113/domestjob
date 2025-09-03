@@ -162,7 +162,7 @@ export default function HomeClient() {
                     <CardTitle className="text-xl flex items-center gap-2"><SlidersHorizontal/> Bộ lọc tìm kiếm</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'location', 'requirements']} className="w-full">
+                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'location', 'requirements', 'specialConditions']} className="w-full">
                         
                         <AccordionItem value="salary">
                             <AccordionTrigger className="text-base font-semibold">
@@ -237,7 +237,7 @@ export default function HomeClient() {
                             </AccordionContent>
                         </AccordionItem>
 
-                        <AccordionItem value="specialConditions">
+                        <AccordionItem value="specialConditions" className="border-b-0">
                             <AccordionTrigger className="text-base font-semibold">
                                <span className="flex items-center gap-2"><Check className="h-5 w-5"/>Điều kiện đặc biệt</span>
                             </AccordionTrigger>

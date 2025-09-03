@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check } from 'lucide-react';
+import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
@@ -151,33 +151,34 @@ export default function HomeClient() {
 
   const FilterSidebar = () => {
     const specialConditions = [
-      'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh'
+        'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Không yêu cầu kinh nghiệm'
     ];
+    const languageLevels = ['N1', 'N2', 'N3', 'N4', 'N5', 'Không yêu cầu'];
 
-    const languageLevels = ['N1', 'N2', 'N3', 'N4', 'N5'];
-      
     return (
         <div className="md:col-span-1 lg:col-span-1">
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-xl">Bộ lọc</CardTitle>
+                    <CardTitle className="text-xl flex items-center gap-2"><SlidersHorizontal/> Bộ lọc tìm kiếm</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'specialConditions']} className="w-full">
+                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'location', 'requirements']} className="w-full">
+                        
                         <AccordionItem value="salary">
-                            <AccordionTrigger className="text-base font-semibold">Mức lương (JPY)</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold"><DollarSign className="mr-2 h-5 w-5"/>Mức lương (JPY/tháng)</AccordionTrigger>
                             <AccordionContent className="pt-4">
-                                <Slider defaultValue={[160000, 250000]} max={500000} step={10000} />
+                                <Slider defaultValue={[160000, 300000]} max={500000} step={10000} />
                                 <div className="flex justify-between text-xs text-muted-foreground mt-2">
                                     <span>16万</span>
                                     <span>50万</span>
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
+                        
                         <AccordionItem value="jobType">
-                            <AccordionTrigger className="text-base font-semibold">Loại hình công việc</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold"><Briefcase className="mr-2 h-5 w-5"/>Loại hình công việc</AccordionTrigger>
                             <AccordionContent className="space-y-2 pt-4">
-                                {['Thực tập sinh', 'Kỹ năng đặc định', 'Kỹ sư, tri thức'].map(item => (
+                                {japanJobTypes.map(item => (
                                     <div key={item} className="flex items-center space-x-2">
                                         <Checkbox id={`type-${item}`} />
                                         <Label htmlFor={`type-${item}`} className="font-normal cursor-pointer">{item}</Label>
@@ -185,19 +186,51 @@ export default function HomeClient() {
                                 ))}
                             </AccordionContent>
                         </AccordionItem>
-                         <AccordionItem value="language">
-                            <AccordionTrigger className="text-base font-semibold">Trình độ tiếng Nhật</AccordionTrigger>
-                            <AccordionContent className="space-y-2 pt-4">
-                                {languageLevels.map(item => (
-                                    <div key={item} className="flex items-center space-x-2">
-                                        <Checkbox id={`lang-${item}`} />
-                                        <Label htmlFor={`lang-${item}`} className="font-normal cursor-pointer">{item}</Label>
-                                    </div>
-                                ))}
+
+                         <AccordionItem value="location">
+                            <AccordionTrigger className="text-base font-semibold"><MapPin className="mr-2 h-5 w-5"/>Địa điểm</AccordionTrigger>
+                            <AccordionContent className="space-y-4 pt-4">
+                                <div className="space-y-2">
+                                    <Label>Nơi làm việc (Nhật Bản)</Label>
+                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Nhật Bản</SelectItem>{locations['Nhật Bản'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent></Select>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Nơi phỏng vấn (Việt Nam)</Label>
+                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Việt Nam</SelectItem>{locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent></Select>
+                                </div>
                             </AccordionContent>
                         </AccordionItem>
+
+                         <AccordionItem value="requirements">
+                            <AccordionTrigger className="text-base font-semibold"><UserSearch className="mr-2 h-5 w-5"/>Yêu cầu ứng viên</AccordionTrigger>
+                            <AccordionContent className="space-y-4 pt-4">
+                                <div>
+                                    <Label className="font-semibold">Giới tính</Label>
+                                    <div className="flex items-center space-x-4 pt-2">
+                                         {['Nam', 'Nữ', 'Cả hai'].map(item => (
+                                            <div key={item} className="flex items-center space-x-2">
+                                                <Checkbox id={`gender-${item}`} />
+                                                <Label htmlFor={`gender-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <Label className="font-semibold">Trình độ tiếng Nhật</Label>
+                                    <div className="grid grid-cols-3 gap-2 pt-2">
+                                        {languageLevels.map(item => (
+                                            <div key={item} className="flex items-center space-x-2">
+                                                <Checkbox id={`lang-${item}`} />
+                                                <Label htmlFor={`lang-${item}`} className="font-normal cursor-pointer text-xs">{item}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
                         <AccordionItem value="specialConditions">
-                            <AccordionTrigger className="text-base font-semibold">Điều kiện đặc biệt</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold"><Check className="mr-2 h-5 w-5"/>Điều kiện đặc biệt</AccordionTrigger>
                             <AccordionContent className="space-y-2 pt-4">
                                 {specialConditions.map(item => (
                                     <div key={item} className="flex items-center space-x-2">

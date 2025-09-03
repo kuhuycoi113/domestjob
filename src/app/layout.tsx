@@ -4,6 +4,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { MobileFooter } from '@/components/mobile-footer';
+import { FloatingChatButton } from '@/components/floating-chat-button';
 
 const siteConfig = {
   name: "HelloJob",
@@ -79,6 +80,7 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Footer />
         <MobileFooter />
+        <FloatingChatButton />
         <Toaster />
       </body>
     </html>

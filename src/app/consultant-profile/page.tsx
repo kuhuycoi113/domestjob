@@ -4,8 +4,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Star, PieChart } from 'lucide-react';
+import { Star, PieChart, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const consultants = [
   {
@@ -71,8 +72,8 @@ const consultants = [
 ];
 
 const ConsultantCard = ({ consultant }: { consultant: typeof consultants[0] }) => (
-    <Link href={`/consultant-profile/${consultant.id}`} className="block h-full">
-        <Card className="shadow-xl text-center p-6 flex flex-col h-full transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+     <Card className="shadow-xl text-center p-6 flex flex-col h-full transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+        <Link href={`/consultant-profile/${consultant.id}`} className="block h-full flex flex-col flex-grow">
             <Avatar className="h-24 w-24 mx-auto border-4 border-primary shadow-lg">
                 <AvatarImage src={consultant.avatarUrl} alt={consultant.name} data-ai-hint={consultant.dataAiHint} />
                 <AvatarFallback>{consultant.name.charAt(0)}</AvatarFallback>
@@ -88,8 +89,15 @@ const ConsultantCard = ({ consultant }: { consultant: typeof consultants[0] }) =
                 <p className="flex items-start gap-2"><PieChart className="h-4 w-4 mt-1 text-muted-foreground"/> <strong>Kinh nghiệm:</strong> {consultant.experience}</p>
                 <p className="flex items-start gap-2"><Star className="h-4 w-4 mt-1 text-muted-foreground"/> <strong>Đã hỗ trợ:</strong> {consultant.successfulCandidates}+ ứng viên</p>
             </div>
-        </Card>
-    </Link>
+        </Link>
+        <div className="mt-4 pt-4 border-t">
+            <Button asChild className="w-full">
+                <Link href="/chat">
+                    <MessageSquare className="mr-2 h-4 w-4" /> Chat
+                </Link>
+            </Button>
+        </div>
+    </Card>
 );
 
 export default function ConsultantListPage() {

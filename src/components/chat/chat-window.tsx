@@ -16,30 +16,52 @@ interface ChatWindowProps {
 export function ChatWindow({ conversation }: ChatWindowProps) {
   const [messages, setMessages] = useState<Message[]>(conversation.messages);
   const [newMessage, setNewMessage] = useState('');
-  const otherUser = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
+  
+  // In a real app, the assigned consultant might change.
+  // For now, we'll pick the first non-user participant as the main contact.
+  const mainContact = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
 
-    const message: Message = {
+    const userMessage: Message = {
       id: `msg-${Date.now()}`,
       sender: currentUser,
       text: newMessage,
       timestamp: new Date().toISOString(),
     };
-
-    setMessages([...messages, message]);
+    
+    setMessages(prev => [...prev, userMessage]);
     setNewMessage('');
+
+    // --- AI/Bot Logic Simulation ---
+    // In a real app, this would call a server-side AI flow.
+    // The AI would process `newMessage` and decide on a response.
+    // If it can respond, it crafts a message. If not, it flags for a human.
+    // For this demo, we'll simulate a delayed AI response impersonating the main contact.
+    setTimeout(() => {
+        const aiResponse: Message = {
+            id: `msg-${Date.now() + 1}`,
+            sender: mainContact, // AI responds as the consultant
+            text: `Cảm ơn bạn đã liên hệ. Hệ thống đã ghi nhận câu hỏi của bạn về "${newMessage}". Một tư vấn viên sẽ phản hồi sớm nhất có thể.`,
+            timestamp: new Date().toISOString(),
+        };
+        setMessages(prev => [...prev, aiResponse]);
+    }, 1500);
+    // --- End Simulation ---
   };
 
   return (
     <div className="flex flex-col h-full bg-secondary">
       {/* Header */}
       <header className="flex items-center gap-4 p-3 border-b bg-primary text-primary-foreground shadow-md">
-        <Briefcase className="h-8 w-8" />
+        <Avatar className="h-10 w-10 border-2 border-white">
+          <AvatarImage src={mainContact.avatarUrl} alt={mainContact.name} />
+          <AvatarFallback>{mainContact.name.charAt(0)}</AvatarFallback>
+        </Avatar>
         <div>
-          <p className="text-xl font-bold font-headline">HelloJob</p>
+          <p className="text-lg font-bold font-headline">{mainContact.name}</p>
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-green-400"></div>
             <p className="text-xs text-primary-foreground/80">Đang hoạt động</p>

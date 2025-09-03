@@ -4,9 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Heart, Phone, Briefcase, User, MoreHorizontal, MapPin } from 'lucide-react';
+import { Heart, Briefcase, User, MoreHorizontal, MapPin, MessageSquare } from 'lucide-react';
 import { Job } from '@/lib/mock-data';
-import { ZaloIcon } from './custom-icons';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -56,7 +55,11 @@ export const JobCard = ({ job }: { job: Job }) => {
             <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>
             <p className="text-muted-foreground">{job.recruiter.company}</p>
           </div>
-           <Button variant="outline" size="icon" className="h-8 w-8 ml-auto"><Phone className="text-green-500 h-4 w-4"/></Button>
+           <Button asChild variant="outline" size="icon" className="h-8 w-8 ml-auto">
+             <Link href="/chat">
+                <MessageSquare className="text-primary h-4 w-4"/>
+             </Link>
+           </Button>
         </div>
       </div>
       
@@ -124,7 +127,11 @@ export const JobCard = ({ job }: { job: Job }) => {
 
             <div className="flex justify-between items-center border-t pt-2">
                 <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" className="h-7 w-7"><Phone className="text-green-500 h-5 w-5"/></Button>
+                    <Button asChild variant="ghost" size="icon" className="h-7 w-7">
+                        <Link href="/chat">
+                            <MessageSquare className="text-primary h-5 w-5"/>
+                        </Link>
+                    </Button>
                     <Button variant="ghost" size="icon" className="h-7 w-7"><User className="h-5 w-5"/></Button>
                 </div>
                 <div>

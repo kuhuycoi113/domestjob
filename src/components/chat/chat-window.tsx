@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Send, Phone, Video } from 'lucide-react';
+import { Send, Phone, Video, X, Paperclip, Image as ImageIcon, Briefcase } from 'lucide-react';
 import { ChatMessage } from './chat-message';
 import { type Conversation, type Message, currentUser, users } from '@/lib/chat-data';
 
@@ -34,20 +34,21 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-secondary">
       {/* Header */}
-      <header className="flex items-center gap-4 p-3 border-b bg-background">
-        <Avatar>
-          <AvatarImage src={otherUser.avatarUrl} alt={otherUser.name} />
-          <AvatarFallback>{otherUser.name.charAt(0)}</AvatarFallback>
-        </Avatar>
+      <header className="flex items-center gap-4 p-3 border-b bg-primary text-primary-foreground shadow-md">
+        <Briefcase className="h-8 w-8" />
         <div>
-          <p className="font-bold">{otherUser.name}</p>
-          <p className="text-xs text-muted-foreground">Online</p>
+          <p className="text-xl font-bold font-headline">HelloJob</p>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <p className="text-xs text-primary-foreground/80">Đang hoạt động</p>
+          </div>
         </div>
-        <div className="ml-auto flex items-center gap-2">
-            <Button variant="ghost" size="icon"><Phone /></Button>
-            <Button variant="ghost" size="icon"><Video /></Button>
+        <div className="ml-auto flex items-center gap-1">
+            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><Phone /></Button>
+            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><Video /></Button>
+            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><X /></Button>
         </div>
       </header>
 
@@ -60,15 +61,19 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
 
       {/* Input */}
       <footer className="p-4 border-t bg-background">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+        <form onSubmit={handleSendMessage} className="relative flex items-center gap-2">
+           <div className="flex items-center gap-1">
+             <Button variant="ghost" size="icon" className="text-muted-foreground"><Paperclip /></Button>
+             <Button variant="ghost" size="icon" className="text-muted-foreground"><ImageIcon /></Button>
+           </div>
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Nhập tin nhắn..."
-            className="flex-grow"
+            placeholder="Nhập câu hỏi của bạn ở đây..."
+            className="flex-grow rounded-full pl-4 pr-12 h-12 bg-secondary"
           />
-          <Button type="submit" size="icon">
-            <Send />
+          <Button type="submit" size="icon" className="absolute right-2 h-9 w-9 bg-primary rounded-full">
+            <Send className="h-5 w-5"/>
           </Button>
         </form>
       </footer>

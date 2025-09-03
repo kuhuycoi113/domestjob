@@ -165,7 +165,9 @@ export default function HomeClient() {
                     <Accordion type="multiple" defaultValue={['salary', 'jobType', 'location', 'requirements']} className="w-full">
                         
                         <AccordionItem value="salary">
-                            <AccordionTrigger className="text-base font-semibold"><DollarSign className="mr-2 h-5 w-5"/>Mức lương (JPY/tháng)</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold">
+                                <span className="flex items-center gap-2"><DollarSign className="h-5 w-5"/>Mức lương (JPY/tháng)</span>
+                            </AccordionTrigger>
                             <AccordionContent className="pt-4">
                                 <Slider defaultValue={[160000, 300000]} max={500000} step={10000} />
                                 <div className="flex justify-between text-xs text-muted-foreground mt-2">
@@ -176,7 +178,9 @@ export default function HomeClient() {
                         </AccordionItem>
                         
                         <AccordionItem value="jobType">
-                            <AccordionTrigger className="text-base font-semibold"><Briefcase className="mr-2 h-5 w-5"/>Loại hình công việc</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold">
+                                 <span className="flex items-center gap-2"><Briefcase className="h-5 w-5"/>Loại hình công việc</span>
+                            </AccordionTrigger>
                             <AccordionContent className="space-y-2 pt-4">
                                 {japanJobTypes.map(item => (
                                     <div key={item} className="flex items-center space-x-2">
@@ -188,7 +192,9 @@ export default function HomeClient() {
                         </AccordionItem>
 
                          <AccordionItem value="location">
-                            <AccordionTrigger className="text-base font-semibold"><MapPin className="mr-2 h-5 w-5"/>Địa điểm</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold">
+                                <span className="flex items-center gap-2"><MapPin className="h-5 w-5"/>Địa điểm</span>
+                            </AccordionTrigger>
                             <AccordionContent className="space-y-4 pt-4">
                                 <div className="space-y-2">
                                     <Label>Nơi làm việc (Nhật Bản)</Label>
@@ -202,7 +208,9 @@ export default function HomeClient() {
                         </AccordionItem>
 
                          <AccordionItem value="requirements">
-                            <AccordionTrigger className="text-base font-semibold"><UserSearch className="mr-2 h-5 w-5"/>Yêu cầu ứng viên</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold">
+                                <span className="flex items-center gap-2"><UserSearch className="h-5 w-5"/>Yêu cầu ứng viên</span>
+                            </AccordionTrigger>
                             <AccordionContent className="space-y-4 pt-4">
                                 <div>
                                     <Label className="font-semibold">Giới tính</Label>
@@ -230,7 +238,9 @@ export default function HomeClient() {
                         </AccordionItem>
 
                         <AccordionItem value="specialConditions">
-                            <AccordionTrigger className="text-base font-semibold"><Check className="mr-2 h-5 w-5"/>Điều kiện đặc biệt</AccordionTrigger>
+                            <AccordionTrigger className="text-base font-semibold">
+                               <span className="flex items-center gap-2"><Check className="h-5 w-5"/>Điều kiện đặc biệt</span>
+                            </AccordionTrigger>
                             <AccordionContent className="space-y-2 pt-4">
                                 {specialConditions.map(item => (
                                     <div key={item} className="flex items-center space-x-2">

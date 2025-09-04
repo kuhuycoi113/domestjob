@@ -7,7 +7,7 @@ import { MessageSquare, X } from 'lucide-react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { ChatWindow } from './chat-window';
-import { conversations, helloJobBot } from '@/lib/chat-data';
+import { conversations, helloJobBot, currentUser } from '@/lib/chat-data';
 
 export function FloatingChatWidget() {
   const { isChatOpen, openChat, closeChat, activeConversation } = useChat();
@@ -16,8 +16,10 @@ export function FloatingChatWidget() {
     if (isChatOpen) {
       closeChat();
     } else {
-      // Open with the default bot or the first conversation for demo purposes
-      openChat(activeConversation?.participants.find(p => p.id !== 'user-0') || helloJobBot);
+      // Find the bot conversation or the first one as a fallback
+      const botConversation = conversations.find(c => c.participants.some(p => p.id === helloJobBot.id));
+      const targetUser = botConversation ? helloJobBot : conversations[0]?.participants.find(p => p.id !== currentUser.id);
+      openChat(targetUser || helloJobBot);
     }
   };
   

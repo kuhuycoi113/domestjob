@@ -1,13 +1,13 @@
 
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Conversation, Message, User, conversations, currentUser, helloJobBot } from '@/lib/chat-data';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { Conversation, Message, User, conversations, currentUser, helloJobBot, consultants } from '@/lib/chat-data';
 
 interface ChatContextType {
   isChatOpen: boolean;
   activeConversation: Conversation | null;
-  openChat: (consultant: User) => void;
+  openChat: (user?: User) => void;
   closeChat: () => void;
   sendMessage: (text: string) => void;
 }
@@ -26,24 +26,55 @@ interface ChatProviderProps {
   children: ReactNode;
 }
 
+const getAssignedConsultant = (): User | null => {
+    if (typeof window === 'undefined') return null;
+    const consultantId = localStorage.getItem('assignedConsultantId');
+    if (consultantId) {
+        return consultants.find(c => c.id === consultantId) || null;
+    }
+    return null;
+};
+
+const assignRandomConsultant = (): User => {
+    const randomConsultant = consultants[Math.floor(Math.random() * consultants.length)];
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('assignedConsultantId', randomConsultant.id);
+    }
+    return randomConsultant;
+};
+
+
 export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
 
-  const openChat = (consultant: User) => {
-    // Find if a conversation with this consultant already exists
-    let conversation = conversations.find(c => c.participants.some(p => p.id === consultant.id));
+  const openChat = (user?: User) => {
+    let targetUser = user;
+
+    // If no specific user is provided, use the assignment logic
+    if (!targetUser) {
+        targetUser = getAssignedConsultant() || assignRandomConsultant();
+    }
+    
+    // Default to bot if something goes wrong
+    if (!targetUser) {
+        targetUser = helloJobBot;
+    }
+
+
+    // Find if a conversation with this user already exists
+    let conversation = conversations.find(c => c.participants.some(p => p.id === targetUser!.id));
     
     // If not, create a new one for the demo
     if (!conversation) {
         conversation = {
-            id: `convo-${consultant.id}`,
-            participants: [currentUser, consultant],
+            id: `convo-${targetUser!.id}`,
+            participants: [currentUser, targetUser!],
             messages: [
                 {
                     id: `msg-${Date.now()}`,
-                    sender: consultant,
-                    text: `Chào bạn, tôi là ${consultant.name}. Tôi có thể giúp gì cho bạn?`,
+                    sender: targetUser!,
+                    text: `Chào bạn, tôi là ${targetUser!.name}. Tôi có thể giúp gì cho bạn?`,
                     timestamp: new Date().toISOString()
                 }
             ]

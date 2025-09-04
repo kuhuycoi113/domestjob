@@ -16,10 +16,8 @@ export function FloatingChatWidget() {
     if (isChatOpen) {
       closeChat();
     } else {
-      // Find the bot conversation or the first one as a fallback
-      const botConversation = conversations.find(c => c.participants.some(p => p.id === helloJobBot.id));
-      const targetUser = botConversation ? helloJobBot : conversations[0]?.participants.find(p => p.id !== currentUser.id);
-      openChat(targetUser || helloJobBot);
+      // openChat will now handle the logic of finding or assigning a consultant
+      openChat(); 
     }
   };
   

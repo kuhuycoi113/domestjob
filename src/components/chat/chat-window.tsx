@@ -39,15 +39,14 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     setNewMessage('');
   };
 
-  const handleVideoCallClick = () => {
+  const handleVideoCallClick = (e: React.MouseEvent) => {
     // On mobile, navigate to the page. On desktop, open the dialog.
     const isMobile = window.innerWidth < 768;
-    if (isMobile) {
-      // This requires useRouter, but for now we'll just use Link's behavior
-      // A more robust solution might use router.push('/video-call');
-    } else {
+    if (!isMobile) {
+      e.preventDefault(); // Prevent navigation on desktop
       setIsCallDialogOpen(true);
     }
+    // On mobile, the default Link behavior will navigate to /video-call
   };
 
   return (
@@ -69,18 +68,18 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
           </div>
 
           <div>
-             <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob' : `Tư vấn viên ${mainContact.name}`}</p>
-             <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-                <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>
-            </div>
+             <div className="flex items-center gap-2">
+                 <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob' : `Tư vấn viên ${mainContact.name}`}</p>
+                 <div className="w-2 h-2 rounded-full bg-green-400"></div>
+             </div>
+            <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>
           </div>
           <div className="ml-auto flex items-center gap-1">
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><Phone /></Button>
-              {/* For mobile, this Link will work. For desktop, the onClick will be triggered. */}
-              <Link href="/video-call" passHref legacyBehavior>
-                <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={handleVideoCallClick}>
-                   <a><Video /></a>
+              {/* This link will navigate on mobile, and open a dialog on desktop via onClick */}
+              <Link href="/video-call" onClick={handleVideoCallClick}>
+                <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
+                   <Video />
                 </Button>
               </Link>
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={closeChat}><X /></Button>

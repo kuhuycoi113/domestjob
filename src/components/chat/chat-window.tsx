@@ -7,9 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Send, Phone, Video, X, Paperclip, Image as ImageIcon, Briefcase } from 'lucide-react';
 import { ChatMessage } from './chat-message';
-import { type Conversation, type Message, currentUser, users } from '@/lib/chat-data';
+import { type Conversation, type Message, currentUser, users, helloJobBot } from '@/lib/chat-data';
 import { useChat } from '@/contexts/ChatContext';
 import Link from 'next/link';
+import { Logo } from '@/components/header';
 
 interface ChatWindowProps {
   conversation: Conversation;
@@ -21,6 +22,8 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const mainContact = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
+  const isBotChat = mainContact.id === helloJobBot.id;
+
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -37,13 +40,23 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   return (
     <div className="flex flex-col h-full bg-secondary">
       {/* Header */}
-      <header className="flex items-center gap-4 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
-        <Avatar className="h-10 w-10 border-2 border-white">
-          <AvatarImage src={mainContact.avatarUrl} alt={mainContact.name} />
-          <AvatarFallback>{mainContact.name.charAt(0)}</AvatarFallback>
-        </Avatar>
+      <header className="flex items-center gap-3 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
+        {isBotChat ? (
+             <div className="bg-white rounded-full p-1.5">
+                <Logo className="h-7 w-auto" />
+             </div>
+        ) : (
+            <Avatar className="h-10 w-10 border-2 border-white">
+              <AvatarImage src={mainContact.avatarUrl} alt={mainContact.name} />
+              <AvatarFallback>{mainContact.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+        )}
         <div>
-          <p className="text-lg font-bold font-headline">{`Tư vấn viên ${mainContact.name}`}</p>
+           {isBotChat ? (
+               <p className="text-lg font-bold font-headline">HelloJob</p>
+           ) : (
+                <p className="text-lg font-bold font-headline">{`Tư vấn viên ${mainContact.name}`}</p>
+           )}
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-green-400"></div>
             <p className="text-xs text-primary-foreground/80">Đang hoạt động</p>

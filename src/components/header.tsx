@@ -51,11 +51,8 @@ const quickAccessLinks = [
 ];
 
 
-export function Header() {
-  const pathname = usePathname();
-
-  const Logo = () => (
-    <span className="text-3xl font-black font-headline">
+export const Logo = ({ className }: { className?: string }) => (
+    <span className={cn("text-3xl font-black font-headline", className)}>
       <span className="text-accent">H</span>
       <span className="text-accent-orange">e</span>
       <span className="text-primary">l</span>
@@ -63,7 +60,10 @@ export function Header() {
       <span className="text-accent-green">o</span>
       <span className="text-primary">Job</span>
     </span>
-  );
+);
+
+export function Header() {
+  const pathname = usePathname();
 
   const NavLink = ({ href, label, className, icon: Icon, onClick }: { href: string; label: string, className?: string, icon?: React.ElementType, onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void }) => (
     <Link

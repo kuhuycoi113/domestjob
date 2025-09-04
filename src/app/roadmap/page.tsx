@@ -154,7 +154,7 @@ export default function RoadmapPage() {
 
                 {/* Image: Left side (for even index on desktop) */}
                 <div className={`hidden md:flex w-1/2 h-full items-center ${index % 2 !== 0 ? 'md:pr-16 md:order-1' : 'md:pl-16'}`}>
-                   <Image src={step.image} alt={step.title} width={500} height={300} className="rounded-lg shadow-xl object-contain w-full h-64" data-ai-hint={step.dataAiHint} />
+                   <Image src={step.image} alt={step.title} width={500} height={300} className="rounded-lg shadow-xl object-contain w-full h-56" data-ai-hint={step.dataAiHint} />
                 </div>
               </div>
             )})}

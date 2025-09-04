@@ -42,8 +42,10 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
       {/* Header */}
       <header className="flex items-center gap-3 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
         {isBotChat ? (
-             <div className="bg-white rounded-full p-1.5">
-                <Logo className="h-7 w-auto" />
+             <div className="flex flex-col items-center">
+                <div className="bg-white rounded-full p-1">
+                  <Logo className="h-6 w-auto" />
+                </div>
              </div>
         ) : (
             <Avatar className="h-10 w-10 border-2 border-white">

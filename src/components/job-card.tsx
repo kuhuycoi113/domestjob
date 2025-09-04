@@ -18,9 +18,8 @@ import Link from 'next/link';
 export const JobCard = ({ job }: { job: Job }) => {
   // Desktop layout
   const DesktopLayout = () => (
-    <div className="hidden md:flex flex-row items-stretch w-full p-4 gap-4">
-      {/* Left side: Image */}
-      <div className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden">
+    <div className="hidden md:flex flex-row items-center w-full p-4 gap-4">
+      <div className="relative w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden">
         <Link href={`/jobs/${job.id}`}>
           <Image src={job.image.src} alt={job.title} fill className="object-cover" />
         </Link>
@@ -30,13 +29,13 @@ export const JobCard = ({ job }: { job: Job }) => {
         </div>
       </div>
 
-      {/* Middle side: Main Content */}
-      <div className="flex-grow flex flex-col justify-between py-1">
-        <div>
-          <Link href={`/jobs/${job.id}`} className="group">
+      <div className="flex-grow grid grid-cols-3 gap-4 items-center">
+        {/* Job Title & Location */}
+        <div className="col-span-2">
+           <Link href={`/jobs/${job.id}`} className="group">
             <h3 className="font-bold text-base mb-1 group-hover:text-primary cursor-pointer leading-tight line-clamp-2">{job.title}</h3>
-          </Link>
-          <div className="flex flex-wrap items-center gap-2 mb-2">
+           </Link>
+           <div className="flex flex-wrap items-center gap-2 mb-2">
               {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 border-green-200">Thực lĩnh: {job.salary.actual}</Badge>}
               <Badge variant="secondary" className="text-xs">Cơ bản: {job.salary.basic}</Badge>
           </div>
@@ -45,35 +44,30 @@ export const JobCard = ({ job }: { job: Job }) => {
               <span>{job.workLocation}</span>
           </p>
         </div>
-        
-        <div className="mt-auto flex items-center gap-2 text-xs">
-          <Avatar className="w-8 h-8">
-            <AvatarImage src={job.recruiter.avatar} alt={job.recruiter.name} />
-            <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <div>
-            <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>
-            <p className="text-muted-foreground">{job.recruiter.company}</p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Right side: Actions and Meta */}
-      <div className="w-1/4 flex flex-col items-end justify-between text-right py-1">
-          <div className="flex items-center gap-2 text-muted-foreground text-sm">
-              <span>{job.likes}</span>
-              <Heart className="w-5 h-5 text-red-500/80 hover:fill-current cursor-pointer" />
-          </div>
-           <div className="mt-auto flex items-center gap-2">
-                 <Button asChild size="sm">
+
+        {/* Recruiter & Actions */}
+        <div className="col-span-1 text-right space-y-2">
+            <div className="flex items-center justify-end gap-2 text-xs">
+                 <div>
+                    <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>
+                    <p className="text-muted-foreground">{job.recruiter.company}</p>
+                </div>
+                <Avatar className="w-10 h-10">
+                    <AvatarImage src={job.recruiter.avatar} alt={job.recruiter.name} />
+                    <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+            </div>
+            <div className="flex items-center justify-end gap-2">
+                 <Button asChild size="sm" className="flex-1">
                      <Link href="/chat">
                         <MessageSquare className="mr-2 h-4 w-4"/> Tư vấn
                      </Link>
                  </Button>
-                <Link href={`/jobs/${job.id}`} className="w-full">
+                <Link href={`/jobs/${job.id}`} className="flex-1">
                     <Button size="sm" variant="outline" className="w-full">Chi tiết</Button>
                 </Link>
             </div>
+        </div>
       </div>
     </div>
   );

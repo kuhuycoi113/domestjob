@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import VISA_NAMEASCIEs from "@/lib/visa_nameascii.json";
+import PROVINCES from "@/lib/jp_provinces.json";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -118,4 +120,253 @@ export const getVisaWithLanguage = (visa: string, languageLevel: string) => {
   //   return "thực tập sinh 3 năm";
   // }
   return visa;
+};
+
+export const findVisaByNameAscii = (nameAscii: string) => {
+  return VISA_NAMEASCIEs.find((item) => item.nameAscii === nameAscii) ?? null;
+};
+
+export const convertQueryParamsToJobFilter = (queryParam: { [key: string]: any }) => {
+  const filter: any = {};
+  Object.keys(queryParam).forEach((key) => {
+    const value = queryParam[key];
+    let visaNameAscii = null;
+    // filter visa
+    if (key === "childrenCategoryID") {
+      visaNameAscii = findVisaByNameAscii(value);
+    } else if (key === "jobCategoryID") {
+      visaNameAscii = findVisaByNameAscii(value);
+    }
+    if (!!visaNameAscii) {
+      filter.visa = visaNameAscii.compareStr;
+    }
+    if (key === "career") {
+      filter.career = value;
+    }
+    if (key === "jobs") {
+      filter.jobs = value;
+    }
+    if (key === "workLocation") {
+      filter.workLocation = value;
+    }
+    if (key === "languageLevel") {
+      filter.languageLevel = value;
+    }
+    if (key === "gender") {
+      filter.gender = value;
+    }
+    if (key === "fee") {
+      filter.fee = value;
+    }
+    if (key === "basicSalary") {
+      filter.basicSalary = value;
+    }
+    if (key === "fee") {
+      filter.fee = value;
+    }
+    if (key === "specialConditions") {
+      filter.specialConditions = value;
+    }
+    if (key === "keyword") {
+      filter.keyword = value;
+    }
+  });
+  return filter;
+};
+
+export const convertFilterToQuery = (filter: any, exchangeRates?: any) => {
+  const queryGet: any = {
+    query: {
+      bool: {
+        filter: [
+          {
+            bool: {
+              must_not: [
+                {
+                  terms: {
+                    "statusJob.keyword": ["FULL", "CLOSED", "CANCELED"],
+                  },
+                },
+                {
+                  term: {
+                    "status.keyword": "PENDING",
+                  },
+                },
+              ],
+            },
+          },
+          {
+            terms: {
+              "country.keyword": ["Nhật Bản"],
+            },
+          },
+          {
+            terms: {
+              "source.keyword": ["MANUAL", "Zalo", "ZALO", "zalo"],
+            },
+          },
+        ],
+        must: [],
+      },
+    },
+  };
+  // Xử lý trường hợp "keyword"
+  if (filter?.keyword) {
+    const keyword = filter.keyword.trim();
+    if (keyword.length > 0) {
+      queryGet.query.bool.must.push({
+        multi_match: {
+          query: keyword,
+          type: "phrase",
+          fields: ["code", "languageLevel", "workLocation", "career", "visa", "jobs", "gender", "specialConditions", "aiContent", "baseContent"],
+        },
+      });
+    }
+  }
+  // Xử lý trường hợp "visa"
+  if (filter?.visa) {
+    queryGet.query.bool.must.push({
+      prefix: {
+        "visa.keyword": filter.visa,
+      },
+    });
+  }
+  // Xử lý trường hợp "career"
+  if (filter?.career) {
+    queryGet.query.bool.must.push({
+      term: {
+        "career.keyword": filter.career,
+      },
+    });
+  }
+  // Xử lý trường hợp "jobs"
+  if (filter?.jobs && filter?.jobs?.length > 0) {
+    const jobsArray = Array.isArray(filter.jobs) ? filter.jobs : [filter.jobs];
+    queryGet.query.bool.must.push({
+      terms: {
+        "filter.job.value": jobsArray,
+      },
+    });
+  }
+  // Xử lý trường hợp "workLocation"
+  if (filter?.workLocation) {
+    const workLocationArray = Array.isArray(filter.workLocation) ? filter.workLocation : [filter.workLocation];
+    const locationLabels = workLocationArray
+      .map((val: string) => {
+        const found = PROVINCES.find((p) => p.value === val);
+        return found ? found.label : null;
+      })
+      .filter((label: string | null) => label !== null);
+    if (locationLabels.length > 0) {
+      queryGet.query.bool.must.push({
+        bool: {
+          should: locationLabels.map((label: any) => ({
+            match_phrase: { workLocation: label },
+          })),
+          minimum_should_match: 1,
+        },
+      });
+    }
+  }
+  // Xử lý trường hợp "gender"
+  if (filter?.gender) {
+    if (typeof filter?.gender === "object") {
+      const genderValues = filter.gender.value === "BOTH" ? ["MALE", "FEMALE"] : [filter.gender.value];
+      queryGet.query.bool.must.push({
+        bool: {
+          should: [...genderValues.map((gender) => ({ term: { "gender.keyword": gender } })), { bool: { must_not: { exists: { field: "gender" } } } }],
+          minimum_should_match: 1,
+        },
+      });
+    } else if (typeof filter?.gender === "string") {
+      const genderValues = filter.gender === "BOTH" ? ["MALE", "FEMALE"] : [filter.gender];
+      queryGet.query.bool.must.push({
+        bool: {
+          should: [...genderValues.map((gender) => ({ term: { "gender.keyword": gender } })), { bool: { must_not: { exists: { field: "gender" } } } }],
+          minimum_should_match: 1,
+        },
+      });
+    }
+  }
+  // Xử lý trường hợp "languageLevel"
+  if (filter?.languageLevel) {
+    if (typeof filter?.languageLevel === "object") {
+      if (filter.languageLevel.value === "Không yêu cầu tiếng") {
+        queryGet.query.bool.must.push({
+          bool: {
+            should: [{ match_phrase: { languageLevel: "Không yêu cầu tiếng" } }, { term: { "languageLevel.keyword": "" } }],
+            minimum_should_match: 1,
+          },
+        });
+      } else if (["N1", "N2", "N3", "N4", "N5"].includes(filter.languageLevel.value)) {
+        queryGet.query.bool.must.push({
+          match_phrase: { languageLevel: filter.languageLevel.value },
+        });
+      }
+    } else if (typeof filter?.languageLevel === "string") {
+      if (filter.languageLevel === "Không yêu cầu tiếng") {
+        queryGet.query.bool.must.push({
+          bool: {
+            should: [{ match_phrase: { languageLevel: "Không yêu cầu tiếng" } }, { term: { "languageLevel.keyword": "" } }],
+            minimum_should_match: 1,
+          },
+        });
+      } else if (["N1", "N2", "N3", "N4", "N5"].includes(filter.languageLevel)) {
+        queryGet.query.bool.must.push({
+          match_phrase: { languageLevel: filter.languageLevel },
+        });
+      }
+    }
+  }
+  // Xử lý trường hợp "basicSalary"
+  if (filter?.basicSalary && Array.isArray(filter.basicSalary) && filter.basicSalary.length === 2) {
+    const getRateByCurCode = (code: any) => {
+      if (code === "VND") return 1;
+      return exchangeRates?.find((data: any) => data.fromCurrency === "VND" && data.toCurrency === code)?.value || 1;
+    };
+    const rateJPY = getRateByCurCode("JPY") || 1;
+    const minVND = Number(filter.basicSalary[0]) * 1000000;
+    const maxVND = Number(filter.basicSalary[1]) * 1000000;
+    const minJPY = Math.floor(minVND * rateJPY);
+    const maxJPY = Math.ceil(maxVND * rateJPY);
+    queryGet.query.bool.must.push({
+      range: {
+        basicSalary: {
+          gte: minJPY,
+          lte: maxJPY,
+        },
+      },
+    });
+  }
+  if (filter?.fee && Array.isArray(filter.fee) && filter.fee.length === 2) {
+    const minFee = Number(filter.fee[0]);
+    const maxFee = Number(filter.fee[1]);
+    queryGet.query.bool.must.push({
+      range: {
+        basicSalary: {
+          gte: minFee,
+          lte: maxFee,
+        },
+      },
+    });
+  }
+  // Xử lý trường hợp "specialConditions"
+  // if (filter?.specialConditions) {
+  //   const specialConditionsArray = Array.isArray(filter.specialConditions) ? filter.specialConditions : [filter.specialConditions];
+  //   const locationLabels = specialConditionsArray
+  //     .map((val: string) => {
+  //       const found = SPECIAL_CONDITIONS.find((p) => p.value === val);
+  //       return found ? found.label : null;
+  //     })
+  //     .filter((label: string | null) => label !== null);
+  //   if (locationLabels.length > 0) {
+  //     queryGet.query.bool.must.push({
+  //       terms: {
+  //         "specialConditions.keyword": locationLabels,
+  //       },
+  //     });
+  //   }
+  // }
+
+  return queryGet;
 };

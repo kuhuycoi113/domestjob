@@ -2,59 +2,59 @@
 
 import { search } from "@/lib/elasticsearch";
 import { Pager } from "@/lib/pager";
+import { convertFilterToQuery } from "@/lib/utils";
 
-interface SearchParams {
-  q: string;
-  type: string;
-  location: string;
-  page: number;
-  pageSize?: number;
-}
 
-export async function searchJobs({ q, type, location, page, pageSize = 20 }: SearchParams) {
+export const pagingJobs = async (pager: any, exchangeRates?: any): Promise<any> => {
   try {
-    const searchBody = {
-      from: (page - 1) * pageSize,
-      size: pageSize,
-      query: {
-        // match_all: {}
-        bool: {
-          must: [
-            { exists: { field: "createdID" } }, // phải có field createdID
-            // { term: { source: "MANUAL" } }, // source phải = "MANUAL"
-            { match_all: {} },
-          ],
-        },
-        // In a real scenario, you'd build a proper query based on q, type, location
-        // For example:
-        // bool: {
-        //     must: [
-        //         q ? { multi_match: { query: q, fields: ['baseContent', 'description'] } } : { match_all: {} }
-        //     ],
-        //     filter: [
-        //         type ? { term: { 'jobType.keyword': type } } : null,
-        //         location ? { term: { 'location.keyword': location } } : null
-        //     ].filter(Boolean)
-        // }
-      },
-      sort: [{ createdDate: { order: "desc" } }],
-    };
+    // Chuẩn hóa filter đầu vào (nếu cần)
+    let filter = { ...pager?.filter };
+    console.log("Filter before query:", filter);
 
-    const response = await search({
-      index: "hellojobv5-job-crawled",
-      body: searchBody,
+    // Xử lý chuẩn hóa đầu vào cho jobs/workLocation nếu là chuỗi
+    if (typeof filter.jobs === "string") {
+      filter.jobs = filter.jobs
+        .split(";")
+        .map((item: any) => item.trim())
+        .filter(Boolean);
+    }
+    if (typeof filter.workLocation === "string") {
+      filter.workLocation = filter.workLocation
+        .split(";")
+        .map((item: any) => item.trim())
+        .filter(Boolean);
+    }
+    if (typeof filter.basicSalary === "string") {
+      filter.basicSalary = filter.basicSalary
+        .split(";")
+        .map((item: any) => item.trim())
+        .filter(Boolean);
+    }
+    if (typeof filter.fee === "string") {
+      filter.fee = filter.fee
+        .split(";")
+        .map((item: any) => item.trim())
+        .filter(Boolean);
+    }
+    if (typeof filter.specialConditions === "string") {
+      filter.specialConditions = filter.specialConditions
+        .split(";")
+        .map((item: any) => item.trim())
+        .filter(Boolean);
+    }
+    const queryGet = convertFilterToQuery(filter, exchangeRates);
+    queryGet.from = (pager.currentPage - 1) * pager.displayPerPage;
+    queryGet.size = pager.displayPerPage;
+    queryGet.sort = {
+      postedDate: { order: "desc" },
+    };
+    const index = `${process.env.ELASTICSEARCH_PREFIX}-job-crawled`;
+    const res = await search({
+      index,
+      body: queryGet,
     });
-
-    return {
-      hits: response.hits.hits,
-      total: response.hits.total.value,
-    };
+    return res ?? { hits: { total: { value: 0 }, hits: [] } };
   } catch (error) {
-    console.error("Elasticsearch error:", error);
-    // In a production app, you might want to handle this more gracefully
-    return {
-      hits: [],
-      total: 0,
-    };
+    throw error;
   }
-}
+};

@@ -106,7 +106,7 @@ export const SearchBar = () => {
               </SelectTrigger>
               <SelectContent>
                 {VISA_DETAILS.map((item ,index) => (
-                  <SelectItem key={index} value={item.label}>
+                  <SelectItem key={index} value={item.nameAscii}>
                     {item.label}
                   </SelectItem>
                 ))}

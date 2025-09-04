@@ -73,9 +73,11 @@ export default async function JobDetailPage({ params }: any) {
                             <InfoPill icon={Wallet} label="Phí xuất cảnh" value={job.fee} />
                         </div>
 
+                        {job?.aiContent && 
                         <JobDetailSection title="Mô tả công việc" icon={FileText}>
-                            <div dangerouslySetInnerHTML={{ __html: job.aiContent }} />
+                            <div dangerouslySetInnerHTML={{ __html: job?.aiContent || "" }} />
                         </JobDetailSection>
+                        }
                         {/* <JobDetailSection title="Yêu cầu ứng viên" icon={UserCheck}>
                              <div dangerouslySetInnerHTML={{ __html: job?.details?.requirements }} />
                         </JobDetailSection> */}

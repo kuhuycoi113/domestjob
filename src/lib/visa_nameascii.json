@@ -1,0 +1,13 @@
+[
+  { "compareStr": "Thực tập sinh", "nameAscii": "thuc-tap-sinh" },
+  { "compareStr": "Tokutei", "nameAscii": "dac-dinh" },
+  { "compareStr": "Kỹ sư", "nameAscii": "ky-su" },
+  { "compareStr": "Thực tập sinh 3 năm", "nameAscii": "thuc-tap-sinh-3-nam" },
+  { "compareStr": "Thực tập sinh 1 năm", "nameAscii": "thuc-tap-sinh-1-nam" },
+  { "compareStr": "Thực tập sinh 3 go", "nameAscii": "thuc-tap-sinh-3-go" },
+  { "compareStr": "Tokutei đầu Nhật", "nameAscii": "dac-dinh-dau-nhat" },
+  { "compareStr": "Tokutei đầu Việt", "nameAscii": "dac-dinh-dau-viet" },
+  { "compareStr": "Tokutei đi mới", "nameAscii": "dac-dinh-di-moi" },
+  { "compareStr": "Kỹ sư đầu Nhật", "nameAscii": "ky-su-dau-nhat" },
+  { "compareStr": "Kỹ sư đầu Việt", "nameAscii": "ky-su-dau-viet" }
+]

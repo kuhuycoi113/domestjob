@@ -6,10 +6,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ChevronDown, ListFilter, Plus, Search } from 'lucide-react';
 import { JobCard } from '@/components/job-card';
 import { Input } from '@/components/ui/input';
-import { searchJobs } from '../tim-kiem/actions';
 import { Pager } from '@/lib/pager';
 import { useSearchParams } from "next/navigation";
 import { Pagination } from '@/components/pagination';
+import { pagingJobs } from '../tim-kiem/actions';
 
 const jobTypes = ['Thực tập sinh', 'Kỹ năng đặc định', 'Kỹ sư, Trí thức', 'Bán thời gian'];
 
@@ -33,7 +33,7 @@ export default function JobsPage() {
   }, [q, type, location, page]);
 
   const fetchJobs = async () => {
-    const { hits, total } = await searchJobs({ q, type, location, page, pageSize });
+    const { hits, total } = await pagingJobs({ q, type, location, page, pageSize });
     setResults(hits);
     setPager(new Pager(total, page, pageSize));
   };
@@ -144,7 +144,7 @@ export default function JobsPage() {
                 return <JobCard key={hit._id} job={job} />;
               })}
             </div>
-            {pager && <Pagination pager={pager} buildLink={buildPageLink} />}
+            {/* {pager && <Pagination pager={pager} buildLink={buildPageLink} />} */}
           </div>
         </div>
       </div>

@@ -1,105 +1,96 @@
-"use client";
+"use server";
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { JobCard } from "@/components/job-card";
-import { ListFilter } from "lucide-react";
-import Link from "next/link";
+import { notFound } from "next/navigation";
+import { convertQueryParamsToJobFilter } from "@/lib/utils";
+import { Pager } from "@/app/class/pager.class";
+import { pagingJobs } from "./actions";
+
+// 👉 Các component UI
 import { SearchBar } from "@/components/search-bar";
-import { useEffect, useState } from "react";
-import { Pager } from "@/lib/pager";
-import { Pagination } from "@/components/pagination";
-import { searchJobs } from "./actions";
+import FilterSidebar from "@/app/tim-kiem/FilterSidebar";
+import { JobCard } from "@/components/job-card";
+// import Pagination from "@/components/pagination";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { ListFilter } from "lucide-react";
 
-const FilterSidebar = () => (
-  <div className="md:col-span-1 lg:col-span-1">
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-xl">Bộ lọc</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-2">
-          <Label>Mức lương (triệu VND)</Label>
-          <Slider defaultValue={[20, 50]} max={100} step={1} />
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>20tr</span>
-            <span>100tr</span>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label>Loại hình công việc</Label>
-          <div className="space-y-2">
-            {["Toàn thời gian", "Bán thời gian", "Thực tập"].map((item) => (
-              <div key={item} className="flex items-center space-x-2">
-                <Checkbox id={`type-${item}`} />
-                <Label htmlFor={`type-${item}`} className="font-normal">
-                  {item}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label>Cấp bậc</Label>
-          <div className="space-y-2">
-            {["Thực tập sinh", "Nhân viên", "Chuyên viên", "Trưởng nhóm"].map((item) => (
-              <div key={item} className="flex items-center space-x-2">
-                <Checkbox id={`level-${item}`} />
-                <Label htmlFor={`level-${item}`} className="font-normal">
-                  {item}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
-        <Button className="w-full bg-primary text-white">Áp dụng</Button>
-      </CardContent>
-    </Card>
-  </div>
-);
+type SearchParamsObj = Record<string, string | string[] | undefined>;
 
-const SearchResultsContent = () => {
-  const searchParams = useSearchParams();
-  const [results, setResults] = useState<any[]>([]);
-  const [pager, setPager] = useState<Pager | null>(null);
+type PageProps = {
+  // ✅ Next.js 15: searchParams là Promise
+  searchParams: Promise<SearchParamsObj>;
+  filter?: any;
+};
 
-  const q = searchParams.get("q") || "";
-  const type = searchParams.get("type") || "";
-  const location = searchParams.get("location") || "";
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const pageSize = 20;
-  useEffect(() => {
-    fetchJobs();
-  }, [q, type, location, page]);
+// Helper: ép search params về dạng Record<string, string>
+function normalizeSearchParams(sp: SearchParamsObj): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(sp)) {
+    if (typeof v === "undefined") continue;
+    out[k] = Array.isArray(v) ? v[0] ?? "" : v;
+  }
+  return out;
+}
 
-  const fetchJobs = async () => {
-    const { hits, total } = await searchJobs({ q, type, location, page, pageSize });
-    setResults(hits);
-    setPager(new Pager(total, page, pageSize));
-  };
-  const buildPageLink = (p: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", p.toString());
-    return `/tim-kiem?${params.toString()}`;
-  };
+// Build link phân trang (giữ nguyên filter đang dùng)
+const buildPageLink = (page: number, filter: Record<string, any>) => {
+  const params = new URLSearchParams();
+  Object.entries(filter ?? {}).forEach(([k, v]) => {
+    if (v === undefined || v === null || v === "") return;
+    params.set(k, String(v));
+  });
+  params.set("page", String(page));
+  return `/tim-kiem?${params.toString()}`;
+};
 
+export default async function JobCategoryPage({ searchParams, filter }: PageProps) {
+  // 🔴 BẮT BUỘC: await trong Next 15
+  const rawParams = await searchParams;
+  console.log("🔍 rawParams:", rawParams);
+
+  const params = normalizeSearchParams(rawParams);
+  console.log("✅ normalize params:", params);
+
+  // Trang hiện tại
+  const page = Number(params.page ?? 1);
+
+  // Filter sau khi merge
+  filter = filter ?? {};
+  filter = { ...filter, ...convertQueryParamsToJobFilter(params) };
+  console.log("✅ filter sau khi merge:", filter);
+
+  // Pager
+  const pager = new Pager();
+  pager.filter = filter;
+  pager.currentPage = page;
+
+  // Kết quả job
+  let results: any[] = [];
+  try {
+    const apiData = await pagingJobs(pager);
+    pager.totalResult = apiData?.hits?.total?.value ?? 0;
+    results = apiData?.hits?.hits ?? [];
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    return notFound();
+  }
+
+  // UI
   return (
     <div className="w-full bg-secondary min-h-screen">
+      {/* Thanh search */}
       <div className="bg-gradient-to-r from-blue-600 to-sky-500 text-white pt-6 pb-2">
         <div className="container mx-auto px-4 md:px-6">
           <SearchBar />
         </div>
       </div>
+
+      {/* Nội dung */}
       <div className="container mx-auto px-4 md:px-6 py-6">
+        {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-2">
-            <h2 className="text-xl font-bold">{pager ? `Tìm thấy ${pager.totalItems} kết quả` : "Đang tìm kiếm..."}</h2>
+            <h2 className="text-xl font-bold">{pager.totalResult ? `Tìm thấy ${pager.totalResult} kết quả` : "Đang tìm kiếm..."}</h2>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:hidden">
@@ -119,30 +110,32 @@ const SearchResultsContent = () => {
             </Select>
           </div>
         </div>
+
+        {/* Layout 2 cột */}
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8">
+          {/* Sidebar filter */}
           <div className="hidden md:block">
             <FilterSidebar />
           </div>
 
+          {/* Danh sách job */}
           <div className="md:col-span-3 lg:col-span-3">
             <div className="grid grid-cols-1 gap-4">
-              {results.map((hit) => {
-                const job = { id: hit._id, ...hit._source };
+              {results.map((hit: any) => {
+                const job = {
+                  id: hit._id,
+                  ...hit._source,
+                  expired: hit.fields?.expired?.[0] ?? false,
+                };
                 return <JobCard key={hit._id} job={job} />;
               })}
             </div>
-            {pager && <Pagination pager={pager} buildLink={buildPageLink} />}
+
+            {/* Pagination */}
+            {/* {pager && <Pagination pager={pager} buildLink={(p) => buildPageLink(p, filter)} />} */}
           </div>
         </div>
       </div>
     </div>
-  );
-};
-
-export default function SearchPage() {
-  return (
-    <Suspense fallback={<div>Đang tải...</div>}>
-      <SearchResultsContent />
-    </Suspense>
   );
 }

@@ -390,9 +390,9 @@ export default function HomeClient() {
               Những công ty và nghiệp đoàn lớn uy tín tại Nhật Bản đang tìm kiếm những ứng viên như bạn.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-stretch">
             {featuredEmployers.map(emp => (
-              <Link href={`/employers/${emp.id}`} key={emp.id} className="flex justify-center">
+              <Link href={`/employers/${emp.id}`} key={emp.id} className="flex justify-center items-center">
                 <Image src={emp.logo} alt={emp.name} width={150} height={50} className="grayscale hover:grayscale-0 transition-all duration-300" data-ai-hint={emp.dataAiHint}/>
               </Link>
             ))}

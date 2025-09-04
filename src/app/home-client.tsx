@@ -34,10 +34,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 const featuredEmployers = [
   { id: 'samsung', name: 'Samsung', logo: '/img/taitro1.jpg', dataAiHint: 'samsung logo' },
-  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro2.jpg', dataAiHint: 'vinfast logo' },
-  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro3.jpg', dataAiHint: 'vinfast logo' },
-  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro4.jpg', dataAiHint: 'vinfast logo' },
-  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro5.jpg', dataAiHint: 'vinfast logo' },
+  { id: 'lg', name: 'LG', logo: '/img/taitro2.jpg', dataAiHint: 'lg logo' },
+  { id: 'hyundai', name: 'Hyundai', logo: '/img/taitro3.jpg', dataAiHint: 'hyundai logo' },
+  { id: 'honda', name: 'Honda', logo: '/img/taitro4.jpg', dataAiHint: 'honda logo' },
+  { id: 'canon', name: 'Canon', logo: '/img/taitro5.jpg', dataAiHint: 'canon logo' },
 ];
 
 const featuredCourses = [

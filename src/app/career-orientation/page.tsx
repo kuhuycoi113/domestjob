@@ -60,7 +60,7 @@ export default function CareerOrientationPage() {
             </div>
              <div className="relative flex justify-center">
                 <Image 
-                  src="https://placehold.co/500x500.png"
+                  src="/img/who_am_i.png?v=3"
                   alt="Biểu đồ hướng nghiệp"
                   width={450}
                   height={450}

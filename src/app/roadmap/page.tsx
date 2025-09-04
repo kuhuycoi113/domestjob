@@ -18,7 +18,7 @@ const roadmapSteps = [
     description: 'Bắt đầu từ tốt nghiệp PTTH, HelloJob sẽ cùng bạn đánh giá năng lực, định hướng con đường phù hợp nhất để trở thành lao động lành nghề, dù là làm việc trong nước hay chinh phục thị trường Nhật Bản.',
     salary: 'Mức lương khởi điểm',
     color: 'orange',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/dinh_huong_nghe_nghiep.jpg',
     dataAiHint: 'career guidance compass',
   },
   {
@@ -27,7 +27,7 @@ const roadmapSteps = [
     description: 'Làm các bài test về Văn hoá doanh nghiệp (CTT) để hiểu rõ giá trị bản thân, từ đó tìm kiếm và lựa chọn những công ty có môi trường và văn hoá phù hợp nhất với bạn.',
     salary: 'Tăng sự hài lòng',
     color: 'green',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/van_hoa_cong_ty.jpg',
     dataAiHint: 'corporate culture test',
   },
   {
@@ -36,7 +36,7 @@ const roadmapSteps = [
     description: 'Bắt đầu hành trình tại Nhật với vai trò Thực tập sinh kỹ năng. Đây là giai đoạn để bạn làm quen với môi trường, văn hóa làm việc chuyên nghiệp và tích lũy kinh nghiệm nền tảng đầu tiên.',
     salary: '~30 triệu VNĐ/tháng',
     color: 'light-blue',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/thuc_tap_sinh.jpg?v=3',
     dataAiHint: 'trainee learning japan',
   },
   {
@@ -45,7 +45,7 @@ const roadmapSteps = [
     description: 'Tham gia các khóa học E-learning về tiếng Nhật, văn hoá ứng xử và kỹ năng làm việc tại Nhật Bản. Việc chuẩn bị kỹ lưỡng về ngôn ngữ và kỹ năng mềm là chìa khóa để bạn hòa nhập nhanh chóng và thành công.',
     salary: 'Đầu tư cho tương lai',
     color: 'orange',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/e_learning.jpg',
     dataAiHint: 'e-learning online course',
   },
   {
@@ -54,7 +54,7 @@ const roadmapSteps = [
     description: 'Sau khi hoàn thành chương trình thực tập sinh, bạn sẽ được nâng cấp lên visa Kỹ năng đặc định (Tokutei Ginou 1). Tay nghề cao hơn, được phép chuyển việc trong ngành và nhận mức thu nhập cải thiện rõ rệt.',
     salary: '40-50 triệu VNĐ/tháng',
     color: 'dark-blue',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/tokutei1.jpg',
     dataAiHint: 'skilled worker certificate',
   },
   {
@@ -63,7 +63,7 @@ const roadmapSteps = [
     description: 'Đây là cấp độ cao nhất của lao động kỹ năng. Với visa Tokutei Ginou 2, bạn có cơ hội bảo lãnh gia đình sang sinh sống và làm việc, đồng thời mở ra con đường xin visa vĩnh trú tại Nhật.',
     salary: 'Tiếp tục tăng',
     color: 'green',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/dac_dinh_2_lau_dai.jpg',
     dataAiHint: 'family in japan',
   },
   {
@@ -72,7 +72,7 @@ const roadmapSteps = [
     description: 'Với sự đồng hành và đào tạo chuyên sâu từ HelloJob, bạn sẽ trở thành chuyên gia trong lĩnh vực của mình, đảm nhận những vị trí quan trọng và đạt được mức thu nhập đỉnh cao.',
     salary: '60-70 triệu VNĐ/tháng',
     color: 'dark-blue',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/chuyen_gia_lanh_nghe.jpg',
     dataAiHint: 'expert engineer meeting',
   },
   {
@@ -81,7 +81,7 @@ const roadmapSteps = [
     description: 'Lựa chọn trở về Việt Nam với vị thế một chuyên gia được săn đón, hoặc tiếp tục con đường định cư và phát triển sự nghiệp lâu dài tại Nhật Bản. HelloJob luôn là đối tác tin cậy của bạn.',
     salary: 'Thu nhập chuyên gia',
     color: 'light-blue',
-    image: 'https://placehold.co/500x300.png',
+    image: '/img/su_nghiep_rong_mo.jpg',
     dataAiHint: 'manager working office',
   },
 ];
@@ -154,7 +154,7 @@ export default function RoadmapPage() {
 
                 {/* Image: Left side (for even index on desktop) */}
                 <div className={`hidden md:flex w-1/2 h-full items-center ${index % 2 !== 0 ? 'md:pr-16 md:order-1' : 'md:pl-16'}`}>
-                   <Image src={step.image} alt={step.title} width={500} height={300} className="rounded-lg shadow-xl object-cover w-full h-64" data-ai-hint={step.dataAiHint} />
+                   <Image src={step.image} alt={step.title} width={500} height={300} className="rounded-lg shadow-xl object-contain w-full h-64" data-ai-hint={step.dataAiHint} />
                 </div>
               </div>
             )})}

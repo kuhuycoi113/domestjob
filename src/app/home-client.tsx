@@ -45,21 +45,21 @@ const featuredCourses = [
     id: 'tieng-nhat-giao-tiep',
     title: 'Tiếng Nhật giao tiếp cho người đi làm',
     category: 'Ngoại ngữ',
-    image: 'https://placehold.co/600x400.png',
+    image: '/img/giao_tiep.jpg',
     dataAiHint: 'Japanese language',
   },
   {
     id: 'ky-nang-lam-viec-nhom',
     title: 'Kỹ năng làm việc nhóm hiệu quả',
     category: 'Kỹ năng mềm',
-    image: 'https://placehold.co/600x400.png',
+    image: '/img/teamwork.jpg',
     dataAiHint: 'teamwork collaboration',
   },
   {
     id: 'an-toan-lao-dong',
     title: 'An toàn lao động trong sản xuất',
     category: 'Kỹ thuật',
-    image: 'https://placehold.co/600x400.png',
+    image: '/img/an_toan_lao_dong.jpg',
     dataAiHint: 'factory safety',
   },
 ]
@@ -461,7 +461,7 @@ export default function HomeClient() {
             </div>
              <div className="md:w-1/2 flex justify-center">
               <Image
-                src="https://placehold.co/600x400.png"
+                src="/img/giai_phap_phai_cu.jpg"
                 alt="Hợp tác tuyển dụng tại Nhật"
                 width={500}
                 height={350}

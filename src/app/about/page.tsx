@@ -87,14 +87,14 @@ export default function AboutPage() {
                 <Target className="h-12 w-12 text-accent-orange mb-4" />
                 <h2 className="text-3xl font-headline font-bold text-primary mb-2">Sứ mệnh của chúng tôi</h2>
                 <p className="text-muted-foreground text-lg">
-                  Sứ mệnh của HelloJob là định hình tư duy, nâng cao kỹ năng và xây dựng lộ trình sự nghiệp rõ ràng cho người lao động Việt Nam, đồng thời cung cấp giải pháp tuyển dụng hiệu quả, minh bạch cho các đối tác tuyển dụng Kỹ năng Đặc định (Tokutei Ginou) tại Nhật Bản.
+                  Tạo ra một thế giới việc làm giúp con người phát triển và hạnh phúc
                 </p>
               </div>
               <div>
                 <Lightbulb className="h-12 w-12 text-accent-green mb-4" />
                 <h2 className="text-3xl font-headline font-bold text-primary mb-2">Tầm nhìn</h2>
                 <p className="text-muted-foreground text-lg">
-                  Trở thành nền tảng công nghệ hàng đầu tại Việt Nam trong lĩnh vực cung ứng và phát triển nguồn nhân lực, đặc biệt là cho thị trường lao động tay nghề cao tại Nhật Bản và các quốc gia phát triển.
+                  Trở thành giải pháp dịch chuyển lao động trên toàn cầu
                 </p>
               </div>
             </div>

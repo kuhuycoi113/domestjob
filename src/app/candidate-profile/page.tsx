@@ -520,7 +520,6 @@ export default function CandidateProfilePage() {
     <div className="space-y-4">
         <div className="text-center">
              <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
-             <h3 className="text-2xl font-headline mt-2">TẠO PROFILE TÌM VIỆC</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             

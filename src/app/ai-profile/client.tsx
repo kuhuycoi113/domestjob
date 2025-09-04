@@ -142,6 +142,7 @@ export default function AiProfileClientPage() {
             toast({
                 title: "Phân tích thành công!",
                 description: "AI đã phân tích và trích xuất thông tin từ tệp của bạn.",
+                duration: 1000,
             });
 
         } catch (error: any) {
@@ -176,6 +177,7 @@ export default function AiProfileClientPage() {
             toast({
                 title: "Phân tích thành công!",
                 description: "AI đã phân tích và trích xuất thông tin từ văn bản của bạn.",
+                duration: 1000,
             });
         } catch (error) {
             console.error("AI Profile Generation Error (Text):", error);

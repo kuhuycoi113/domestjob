@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,28 +14,40 @@ export const metadata: Metadata = {
 
 const teamMembers = [
   {
-    name: 'Trần Tuấn Anh',
+    name: 'Nguyễn Quốc Việt',
     role: 'Founder & CEO',
     avatar: 'https://placehold.co/200x200.png',
-    dataAiHint: 'ceo portrait',
+    dataAiHint: 'male ceo portrait',
   },
   {
-    name: 'Lê Thị Bích',
-    role: 'Head of Product',
+    name: 'Phùng Thị Tuyết Nhung',
+    role: 'Founder & COO',
     avatar: 'https://placehold.co/200x200.png',
-    dataAiHint: 'product manager portrait',
+    dataAiHint: 'female coo portrait',
   },
   {
-    name: 'Nguyễn Văn Cường',
-    role: 'CTO',
+    name: 'Trương Quỳnh Phương',
+    role: 'Co-Founder - Thành viên HĐQT',
     avatar: 'https://placehold.co/200x200.png',
-    dataAiHint: 'cto portrait',
+    dataAiHint: 'female board member portrait',
   },
    {
-    name: 'Phạm Thị Dung',
+    name: 'Nguyễn Ngọc Hà',
+    role: 'Co-Founder - Thành viên HĐQT',
+    avatar: 'https://placehold.co/200x200.png',
+    dataAiHint: 'female board member portrait',
+  },
+  {
+    name: 'Bùi Quang Huy',
+    role: 'CTO',
+    avatar: 'https://placehold.co/200x200.png',
+    dataAiHint: 'male cto portrait',
+  },
+  {
+    name: 'Lê Mạnh Hùng',
     role: 'Head of Marketing',
     avatar: 'https://placehold.co/200x200.png',
-    dataAiHint: 'marketing head portrait',
+    dataAiHint: 'male marketing head portrait',
   },
 ];
 
@@ -138,7 +151,7 @@ export default function AboutPage() {
               Những con người tâm huyết đứng sau thành công của HelloJob, luôn nỗ lực vì sự phát triển của bạn.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {teamMembers.map((member) => (
               <div key={member.name} className="text-center">
                 <div className="relative h-32 w-32 md:h-40 md:w-40 mx-auto mb-4">
@@ -151,7 +164,7 @@ export default function AboutPage() {
                   />
                 </div>
                 <h3 className="font-bold text-lg">{member.name}</h3>
-                <p className="text-primary font-semibold">{member.role}</p>
+                <p className="text-primary font-semibold text-sm">{member.role}</p>
               </div>
             ))}
           </div>
@@ -178,3 +191,5 @@ export default function AboutPage() {
     </>
   );
 }
+
+    

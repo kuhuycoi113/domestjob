@@ -14,7 +14,7 @@ const consultants = [
   {
     id: 'le-xuan-long',
     name: 'Lê Xuân Long',
-    avatarUrl: 'https://placehold.co/200x200.png',
+    avatarUrl: '/img/long.jpg',
     dataAiHint: 'professional man portrait',
     experience: '5 năm',
     mainExpertise: 'Tư vấn việc làm Kỹ năng đặc định (Tokutei)',
@@ -26,7 +26,7 @@ const consultants = [
   {
     id: 'nguyen-thi-phuong-loan',
     name: 'Nguyễn Thị Phương Loan',
-    avatarUrl: 'https://placehold.co/200x200.png',
+    avatarUrl: '/img/chiha.jpg',
     dataAiHint: 'professional woman portrait',
     experience: '4 năm',
     mainExpertise: 'Tư vấn việc làm Kỹ sư & Trí thức',
@@ -38,7 +38,7 @@ const consultants = [
   {
     id: 'nguyen-thi-minh-anh',
     name: 'Nguyễn Thị Minh Anh',
-    avatarUrl: 'https://placehold.co/200x200.png',
+    avatarUrl: '/img/minhanh.jpg',
     dataAiHint: 'professional woman portrait',
     experience: '3 năm',
     mainExpertise: 'Chuyên gia tư vấn ngành thực phẩm',

@@ -33,11 +33,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 
 const featuredEmployers = [
-  { id: 'samsung', name: 'Samsung', logo: 'https://placehold.co/150x50.png', dataAiHint: 'samsung logo' },
-  { id: 'vinfast', name: 'Vinfast', logo: 'https://placehold.co/150x50.png', dataAiHint: 'vinfast logo' },
-  { id: 'fpt-software', name: 'FPT Software', logo: 'https://placehold.co/150x50.png', dataAiHint: 'fpt logo' },
-  { id: 'lg-electronics', name: 'LG Electronics', logo: 'https://placehold.co/150x50.png', dataAiHint: 'lg logo' },
-  { id: 'hoaphat', name: 'Hòa Phát Group', logo: 'https://placehold.co/150x50.png', dataAiHint: 'hoaphat logo' },
+  { id: 'samsung', name: 'Samsung', logo: '/img/taitro1.jpg', dataAiHint: 'samsung logo' },
+  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro2.jpg', dataAiHint: 'vinfast logo' },
+  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro3.jpg', dataAiHint: 'vinfast logo' },
+  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro4.jpg', dataAiHint: 'vinfast logo' },
+  { id: 'vinfast', name: 'Vinfast', logo: '/img/taitro5.jpg', dataAiHint: 'vinfast logo' },
 ];
 
 const featuredCourses = [

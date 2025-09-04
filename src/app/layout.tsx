@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/header';
@@ -12,7 +11,7 @@ const siteConfig = {
   name: "HelloJob",
   url: "https://hellojob.vn", // Replace with your actual domain
   description: "Nền tảng việc làm và phát triển sự nghiệp tại Nhật Bản. Tìm kiếm việc làm Kỹ năng đặc định (Tokutei Ginou), Thực tập sinh, Kỹ sư. Xây dựng lộ trình sự nghiệp (SWR) bền vững.",
-  ogImage: "https://hellojob.vn/og-image.png", // Replace with your actual OG image URL
+  ogImage: "/metadata/opengraph-image.jpg",
 };
 
 export const metadata: Metadata = {
@@ -34,6 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "HelloJob Team", url: siteConfig.url }],
   creator: "HelloJob Team",
+  manifest: "/metadata/site.webmanifest",
   openGraph: {
     type: "website",
     locale: "vi_VN",
@@ -58,7 +58,24 @@ export const metadata: Metadata = {
     creator: "@hellojob", // Replace with your Twitter handle
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+        { url: '/metadata/favicon.ico' },
+        { url: '/metadata/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/metadata/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+        { url: '/metadata/apple-touch-icon.png' },
+    ],
+    other: [
+        {
+            rel: 'android-chrome-192x192',
+            url: '/metadata/android-chrome-192x192.png'
+        },
+        {
+            rel: 'android-chrome-512x512',
+            url: '/metadata/android-chrome-512x512.png'
+        }
+    ]
   },
 };
 

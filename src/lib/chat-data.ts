@@ -35,7 +35,7 @@ export const consultants: User[] = [
     {
     id: 'consultant-1',
     name: 'Lê Xuân Long',
-    avatarUrl: 'https://placehold.co/200x200.png',
+    avatarUrl: '/img/long.jpg',
     dataAiHint: 'professional man portrait',
     experience: '5 năm',
     mainExpertise: 'Tư vấn việc làm Kỹ năng đặc định (Tokutei)',
@@ -45,7 +45,7 @@ export const consultants: User[] = [
   {
     id: 'consultant-2',
     name: 'Nguyễn Thị Minh Anh',
-    avatarUrl: 'https://placehold.co/200x200.png',
+    avatarUrl: '/img/minhanh.jpg',
     dataAiHint: 'professional woman portrait',
     experience: '3 năm',
     mainExpertise: 'Chuyên gia tư vấn ngành thực phẩm',
@@ -55,7 +55,7 @@ export const consultants: User[] = [
    {
     id: 'consultant-3',
     name: 'Phạm Thị Hà',
-    avatarUrl: 'https://placehold.co/200x200.png',
+    avatarUrl: '/img/chiha.jpg',
     dataAiHint: 'professional woman portrait',
     experience: '2 năm',
     mainExpertise: 'Tư vấn ngành điều dưỡng & chăm sóc sức khỏe',

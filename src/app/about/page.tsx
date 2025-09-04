@@ -16,37 +16,37 @@ const teamMembers = [
   {
     name: 'Nguyễn Quốc Việt',
     role: 'Founder & CEO',
-    avatar: 'https://placehold.co/200x200.png',
+    avatar: '/img/viet.jpg',
     dataAiHint: 'male ceo portrait',
   },
   {
     name: 'Phùng Thị Tuyết Nhung',
     role: 'Founder & COO',
-    avatar: 'https://placehold.co/200x200.png',
+    avatar: '/img/nhung.jpg',
     dataAiHint: 'female coo portrait',
   },
   {
     name: 'Trương Quỳnh Phương',
     role: 'Co-Founder - Thành viên HĐQT',
-    avatar: 'https://placehold.co/200x200.png',
+    avatar: '/img/phuong.jpg',
     dataAiHint: 'female board member portrait',
   },
    {
     name: 'Nguyễn Ngọc Hà',
     role: 'Co-Founder - Thành viên HĐQT',
-    avatar: 'https://placehold.co/200x200.png',
+    avatar: '/img/ha.jpg',
     dataAiHint: 'female board member portrait',
   },
   {
     name: 'Bùi Quang Huy',
     role: 'CTO',
-    avatar: 'https://placehold.co/200x200.png',
+    avatar: '',
     dataAiHint: 'male cto portrait',
   },
   {
     name: 'Lê Mạnh Hùng',
     role: 'Head of Marketing',
-    avatar: 'https://placehold.co/200x200.png',
+    avatar: '',
     dataAiHint: 'male marketing head portrait',
   },
 ];
@@ -97,10 +97,10 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-square">
               <Image
-                src="https://placehold.co/600x600.png"
+                src="/img/hellojob.jpg"
                 alt="Đội ngũ HelloJob"
                 fill
-                className="object-cover rounded-lg shadow-xl"
+                className="object-contain rounded-lg shadow-xl"
                 data-ai-hint="diverse team working"
               />
             </div>
@@ -159,7 +159,7 @@ export default function AboutPage() {
                     src={member.avatar}
                     alt={member.name}
                     fill
-                    className="rounded-full object-cover shadow-lg"
+                    className="rounded-full object-contain shadow-lg"
                     data-ai-hint={member.dataAiHint}
                   />
                 </div>

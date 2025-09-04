@@ -69,7 +69,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
 
           <div>
              <div className="flex items-center gap-2">
-                 <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob' : `Tư vấn viên ${mainContact.name}`}</p>
+                 <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob' : `HelloJob`}</p>
                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
              </div>
             <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>

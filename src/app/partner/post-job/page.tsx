@@ -122,14 +122,14 @@ export default function PartnerPostJobPage() {
     specialConditions: [],
   });
   
-  const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData)));
+  const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
 
   const handleInputChange = (field: keyof JobData, value: string | string[]) => {
     const newData = { ...jobData, [field]: value };
 
     if (field === 'visaDetail') {
       const hidden = hiddenFieldsByVisa[value as string] || [];
-      const allFields: (keyof JobData)[] = Object.keys(jobData) as (keyof JobData)[];
+      const allFields = Object.keys(jobData) as (keyof JobData)[];
       const newVisibleFields = new Set(allFields.filter(f => !hidden.includes(f)));
       setVisibleFields(newVisibleFields);
       // Reset special conditions when visa type changes
@@ -175,7 +175,7 @@ export default function PartnerPostJobPage() {
       setJobData(mockData);
       
       const hidden = hiddenFieldsByVisa[mockData.visaDetail!] || [];
-      const allFields: (keyof JobData)[] = Object.keys(jobData) as (keyof JobData)[];
+      const allFields = Object.keys(jobData) as (keyof JobData)[];
       setVisibleFields(new Set(allFields.filter(f => !hidden.includes(f))));
       
       setActiveTab('manual');

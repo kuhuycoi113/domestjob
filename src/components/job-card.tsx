@@ -1,4 +1,6 @@
 
+'use client';
+
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -47,16 +49,18 @@ export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecru
 
         {/* Recruiter & Actions */}
         <div className="col-span-1 text-right space-y-2">
-            <div className="flex items-center justify-end gap-2 text-xs">
-                 <div>
-                    {showRecruiterName && <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>}
-                    <p className="text-muted-foreground">{job.recruiter.company}</p>
+            {showRecruiterName && (
+                <div className="flex items-center justify-end gap-2 text-xs">
+                     <div>
+                        <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>
+                        <p className="text-muted-foreground">{job.recruiter.company}</p>
+                    </div>
+                    <Avatar className="w-10 h-10">
+                        <AvatarImage src={job.recruiter.avatar} alt={job.recruiter.name} />
+                        <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
                 </div>
-                <Avatar className="w-10 h-10">
-                    <AvatarImage src={job.recruiter.avatar} alt={job.recruiter.name} />
-                    <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-            </div>
+            )}
             <div className="flex items-center justify-end gap-2">
                  <Button asChild size="sm" className="flex-1">
                      <Link href="/chat">
@@ -107,18 +111,20 @@ export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecru
         </div>
         
         <div className="mt-auto space-y-2">
-            <div className="flex items-center gap-2 text-xs">
-              <Avatar className="w-6 h-6">
-                <AvatarImage src={job.recruiter.avatar} alt={job.recruiter.name} />
-                <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="flex-grow">
-                {showRecruiterName && <p className="font-semibold text-blue-600 truncate">{job.recruiter.name}</p>}
-                <p className="text-muted-foreground truncate">{job.recruiter.company}</p>
-              </div>
-            </div>
+            {showRecruiterName && (
+                <div className="flex items-center gap-2 text-xs">
+                  <Avatar className="w-6 h-6">
+                    <AvatarImage src={job.recruiter.avatar} alt={job.recruiter.name} />
+                    <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-grow">
+                    <p className="font-semibold text-blue-600 truncate">{job.recruiter.name}</p>
+                    <p className="text-muted-foreground truncate">{job.recruiter.company}</p>
+                  </div>
+                </div>
+            )}
 
-            <div className="flex justify-between items-center border-t pt-2">
+            <div className={cn("flex justify-between items-center", showRecruiterName && "border-t pt-2")}>
                 <div className="flex items-center gap-1">
                     <Button asChild variant="ghost" size="icon" className="h-7 w-7">
                         <Link href="/chat">

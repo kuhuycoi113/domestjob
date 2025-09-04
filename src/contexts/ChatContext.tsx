@@ -3,6 +3,9 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Conversation, Message, User, conversations, currentUser, helloJobBot, consultants } from '@/lib/chat-data';
+import { recommendJobs, type JobRecommendationResponse, type RecommendedJob } from '@/ai/flows/recommend-jobs-flow';
+import { JobCard } from '@/components/job-card';
+import { jobData } from '@/lib/mock-data';
 
 interface ChatContextType {
   isChatOpen: boolean;
@@ -51,22 +54,18 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const openChat = (user?: User) => {
     let targetUser = user;
 
-    // If no specific user is provided, use the assignment logic
     if (!targetUser) {
-        targetUser = getAssignedConsultant() || assignRandomConsultant();
-    }
-    
-    // Default to bot if something goes wrong
-    if (!targetUser) {
+        // When opening a general chat, always start with the HelloJob Bot.
         targetUser = helloJobBot;
     }
-
-
-    // Find if a conversation with this user already exists
+    
     let conversation = conversations.find(c => c.participants.some(p => p.id === targetUser!.id));
     
-    // If not, create a new one for the demo
     if (!conversation) {
+        const initialMessage = targetUser.isBot 
+            ? "Chào bạn, tôi là trợ lý AI của HelloJob. Bạn đang tìm kiếm loại công việc nào? Hãy mô tả mong muốn của bạn nhé!"
+            : `Chào bạn, tôi là ${targetUser!.name}. Tôi có thể giúp gì cho bạn?`;
+        
         conversation = {
             id: `convo-${targetUser!.id}`,
             participants: [currentUser, targetUser!],
@@ -74,13 +73,11 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
                 {
                     id: `msg-${Date.now()}`,
                     sender: targetUser!,
-                    text: `Chào bạn, tôi là ${targetUser!.name}. Tôi có thể giúp gì cho bạn?`,
+                    text: initialMessage,
                     timestamp: new Date().toISOString()
                 }
             ]
         }
-        // In a real app, you might not want to push this to the static array
-        // but for demo purposes, this makes it seem persistent.
         if (!conversations.some(c => c.id === conversation!.id)) {
             conversations.push(conversation);
         }
@@ -92,10 +89,9 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
 
   const closeChat = () => {
     setIsChatOpen(false);
-    // setActiveConversation(null); // Optional: clear conversation on close
   };
 
-  const sendMessage = (text: string) => {
+  const sendMessage = async (text: string) => {
     if (!activeConversation) return;
 
     const newMessage: Message = {
@@ -105,40 +101,95 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       timestamp: new Date().toISOString(),
     };
 
-    // Update the conversation state
-    const updatedMessages = [...activeConversation.messages, newMessage];
-    const updatedConversation = { ...activeConversation, messages: updatedMessages };
+    const updatedConversation = { 
+        ...activeConversation, 
+        messages: [...activeConversation.messages, newMessage] 
+    };
     setActiveConversation(updatedConversation);
     
-    // Update the master conversations array
     const convoIndex = conversations.findIndex(c => c.id === activeConversation.id);
     if(convoIndex !== -1) {
         conversations[convoIndex] = updatedConversation;
     }
 
-
-    // Simulate AI/Bot response
     const mainContact = updatedConversation.participants.find(p => p.id !== currentUser.id) || helloJobBot;
-    setTimeout(() => {
-        const aiResponse: Message = {
-            id: `msg-${Date.now() + 1}`,
+    
+    // If talking to the bot, call the AI flow
+    if (mainContact.isBot) {
+        const loadingMessage: Message = {
+            id: `msg-loading-${Date.now()}`,
             sender: mainContact,
-            text: `Cảm ơn bạn đã liên hệ. Hệ thống đã ghi nhận câu hỏi: "${text}". Một tư vấn viên sẽ phản hồi sớm nhất có thể.`,
+            text: '...',
+            isLoading: true,
             timestamp: new Date().toISOString(),
         };
-        
-        setActiveConversation(prev => {
-            if (!prev) return null;
-            const latestMessages = [...prev.messages, aiResponse];
-            const latestConvo = { ...prev, messages: latestMessages };
+        setActiveConversation(prev => prev ? { ...prev, messages: [...prev.messages, loadingMessage] } : null);
+
+        try {
+            const aiResult = await recommendJobs(text);
+            const aiResponseMessage: Message = {
+                id: `msg-ai-${Date.now()}`,
+                sender: mainContact,
+                text: aiResult.message,
+                recommendations: aiResult.recommendations,
+                timestamp: new Date().toISOString(),
+            };
+
+            setActiveConversation(prev => {
+                if (!prev) return null;
+                const filteredMessages = prev.messages.filter(m => !m.isLoading);
+                const newMessages = [...filteredMessages, aiResponseMessage];
+                const newConvo = { ...prev, messages: newMessages };
+                
+                const idx = conversations.findIndex(c => c.id === newConvo.id);
+                if (idx !== -1) conversations[idx] = newConvo;
+
+                return newConvo;
+            });
+
+        } catch (error) {
+             console.error("AI Recommendation Error:", error);
+             const errorMessage: Message = {
+                id: `msg-error-${Date.now()}`,
+                sender: mainContact,
+                text: 'Rất tiếc, đã có lỗi xảy ra khi tìm kiếm việc làm. Bạn có muốn kết nối với một tư vấn viên không?',
+                timestamp: new Date().toISOString(),
+             };
+             setActiveConversation(prev => {
+                if (!prev) return null;
+                const filteredMessages = prev.messages.filter(m => !m.isLoading);
+                const newMessages = [...filteredMessages, errorMessage];
+                const newConvo = { ...prev, messages: newMessages };
+                
+                const idx = conversations.findIndex(c => c.id === newConvo.id);
+                if (idx !== -1) conversations[idx] = newConvo;
+
+                return newConvo;
+            });
+        }
+    } else {
+        // Simulate human consultant response
+        setTimeout(() => {
+            const consultantResponse: Message = {
+                id: `msg-${Date.now() + 1}`,
+                sender: mainContact,
+                text: `Cảm ơn bạn đã liên hệ. Hệ thống đã ghi nhận câu hỏi: "${text}". Tôi sẽ phản hồi sớm nhất có thể.`,
+                timestamp: new Date().toISOString(),
+            };
             
-            const idx = conversations.findIndex(c => c.id === latestConvo.id);
-            if(idx !== -1) conversations[idx] = latestConvo;
+            setActiveConversation(prev => {
+                if (!prev) return null;
+                const latestMessages = [...prev.messages, consultantResponse];
+                const latestConvo = { ...prev, messages: latestMessages };
+                
+                const idx = conversations.findIndex(c => c.id === latestConvo.id);
+                if(idx !== -1) conversations[idx] = latestConvo;
 
-            return latestConvo;
-        });
+                return latestConvo;
+            });
 
-    }, 1500);
+        }, 1500);
+    }
   };
 
   const value = {

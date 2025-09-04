@@ -1,4 +1,6 @@
 
+import { JobRecommendationResponse } from "@/ai/schemas/recommend-jobs-schema";
+
 export type User = {
   id: string;
   name: string;
@@ -16,6 +18,8 @@ export type Message = {
   sender: User;
   text: string;
   timestamp: string;
+  isLoading?: boolean;
+  recommendations?: JobRecommendationResponse['recommendations'];
 };
 
 export type Conversation = {
@@ -68,7 +72,8 @@ export const consultants: User[] = [
 export const helloJobBot: User = {
     id: 'bot-hellojob',
     name: 'HelloJob AI',
-    avatarUrl: 'https://placehold.co/100x100.png?text=HJ',
+    avatarUrl: '/img/logo.png',
+    dataAiHint: 'friendly robot mascot',
     isBot: true,
 };
 
@@ -76,12 +81,15 @@ export const helloJobBot: User = {
 // Initial conversations data
 export const conversations: Conversation[] = [
   {
-    id: 'convo-1',
-    participants: [currentUser, consultants[0]],
+    id: 'convo-bot-hellojob',
+    participants: [currentUser, helloJobBot],
     messages: [
-      { id: 'msg-1', sender: consultants[0], text: 'Chào bạn, tôi là Long, tư vấn viên của HelloJob. Bạn cần hỗ trợ tìm việc hay có câu hỏi nào không ạ?', timestamp: '2024-07-28T10:00:00Z' },
-      { id: 'msg-2', sender: currentUser, text: 'Chào bạn, tôi muốn tìm việc ngành cơ khí ở Aichi.', timestamp: '2024-07-28T10:01:00Z' },
-      { id: 'msg-3', sender: consultants[0], text: 'Chào bạn Hân, tôi thấy bạn đang quan tâm đến ngành cơ khí tại Aichi. Hiện tại chúng tôi có một vài đơn hàng rất tốt, bạn muốn tìm hiểu thêm không?', timestamp: '2024-07-28T10:02:00Z' },
+      { 
+        id: 'msg-bot-1', 
+        sender: helloJobBot, 
+        text: 'Chào bạn, tôi là trợ lý AI của HelloJob. Bạn đang tìm kiếm loại công việc nào? Hãy mô tả mong muốn của bạn nhé!', 
+        timestamp: '2024-07-29T10:00:00Z' 
+      },
     ],
   },
 ];

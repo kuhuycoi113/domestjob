@@ -52,9 +52,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
             </Avatar>
         )}
         <div>
-           {isBotChat ? (
-               <p className="text-lg font-bold font-headline">HelloJob</p>
-           ) : (
+           {!isBotChat && (
                 <p className="text-lg font-bold font-headline">{`Tư vấn viên ${mainContact.name}`}</p>
            )}
           <div className="flex items-center gap-1.5">

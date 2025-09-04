@@ -58,9 +58,9 @@ export const conversations: Conversation[] = [
     id: 'convo-1',
     participants: [currentUser, helloJobBot, ...consultants], // All potential participants
     messages: [
-      { id: 'msg-1', sender: helloJobBot, text: 'Chào bạn, tôi là trợ lý AI của HelloJob. Bạn cần hỗ trợ tìm việc hay có câu hỏi nào không ạ?', timestamp: '2024-07-28T10:00:00Z' },
+      { id: 'msg-1', sender: consultants[0], text: 'Chào bạn, tôi là Long, tư vấn viên của HelloJob. Bạn cần hỗ trợ tìm việc hay có câu hỏi nào không ạ?', timestamp: '2024-07-28T10:00:00Z' },
       { id: 'msg-2', sender: currentUser, text: 'Chào bạn, tôi muốn tìm việc ngành cơ khí ở Aichi.', timestamp: '2024-07-28T10:01:00Z' },
-      { id: 'msg-3', sender: consultants[0], text: 'Chào bạn Hân, tôi là Long, tư vấn viên của HelloJob. Tôi thấy bạn đang quan tâm đến ngành cơ khí tại Aichi. Hiện tại chúng tôi có một vài đơn hàng rất tốt, bạn muốn tìm hiểu thêm không?', timestamp: '2024-07-28T10:02:00Z' },
+      { id: 'msg-3', sender: consultants[0], text: 'Chào bạn Hân, tôi thấy bạn đang quan tâm đến ngành cơ khí tại Aichi. Hiện tại chúng tôi có một vài đơn hàng rất tốt, bạn muốn tìm hiểu thêm không?', timestamp: '2024-07-28T10:02:00Z' },
 
     ],
   },

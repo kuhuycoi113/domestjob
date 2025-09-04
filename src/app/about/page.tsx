@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lightbulb, Target, Users, TrendingUp, Handshake, BarChart, FileSignature } from 'lucide-react';
+import { Lightbulb, Target, Users, TrendingUp, Handshake, BarChart, FileSignature, Heart, Zap, Sparkles, Brain, CheckCircle, Shield } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -40,20 +40,29 @@ const teamMembers = [
 
 const values = [
     {
-        icon: Users,
-        title: "Lấy người dùng làm trung tâm",
-        description: "Mọi sản phẩm, tính năng đều được xây dựng dựa trên nhu cầu và trải nghiệm của người lao động và đối tác tuyển dụng."
+        icon: Heart,
+        title: "Về cơ bản con người là tốt, cho là nhận",
     },
     {
-        icon: TrendingUp,
-        title: "Tăng trưởng bền vững",
-        description: "Chúng tôi không chỉ giúp người lao động tìm việc, mà còn xây dựng lộ trình phát triển sự nghiệp lâu dài và bền vững."
+        icon: Zap,
+        title: "Không ngừng phát triển, không giới hạn",
     },
     {
-        icon: Handshake,
-        title: "Đối tác tin cậy",
-        description: "Xây dựng mối quan hệ hợp tác minh bạch, hiệu quả và cùng có lợi với các đối tác tuyển dụng và nhượng quyền."
-    }
+        icon: Sparkles,
+        title: "Luôn sáng tạo, tìm giải pháp, không nản chí, không than vãn, không bao giờ bỏ cuộc",
+    },
+    {
+        icon: Brain,
+        title: "Be what you dream, Tin tưởng bản thân, trở thành người bạn muốn",
+    },
+    {
+        icon: Shield,
+        title: "Lựa chọn làm điều tốt, trở thành người có ích cho xã hội",
+    },
+    {
+        icon: CheckCircle,
+        title: "Kết quả công việc là câu trả lời chính xác nhất",
+    },
 ]
 
 export default function AboutPage() {
@@ -106,15 +115,14 @@ export default function AboutPage() {
        <section className="py-20 md:py-28 bg-background">
          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-                 <h2 className="text-3xl font-headline font-bold text-primary">Giá trị cốt lõi</h2>
+                 <h2 className="text-3xl font-headline font-bold text-primary">6 Giá trị cốt lõi</h2>
                  <p className="text-muted-foreground mt-4 max-w-3xl mx-auto text-lg">Những nguyên tắc định hướng mọi hành động và quyết định của chúng tôi.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {values.map(value => (
-                    <Card key={value.title} className="p-8 shadow-lg hover:shadow-xl transition-shadow">
-                         <value.icon className="h-16 w-16 text-primary mx-auto mb-4"/>
-                         <h3 className="text-xl font-bold font-headline mb-2">{value.title}</h3>
-                         <p className="text-muted-foreground">{value.description}</p>
+                    <Card key={value.title} className="p-6 shadow-lg hover:shadow-xl transition-shadow flex items-center gap-4">
+                         <value.icon className="h-10 w-10 text-primary flex-shrink-0"/>
+                         <h3 className="text-base font-bold font-headline">{value.title}</h3>
                     </Card>
                 ))}
             </div>

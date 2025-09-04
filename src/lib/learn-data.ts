@@ -33,7 +33,7 @@ export const courses: Course[] = [
     title: 'Tiếng Nhật giao tiếp cho người đi làm (Minna no Nihongo)',
     category: 'Ngoại ngữ',
     description: 'Khóa học được thiết kế đặc biệt cho người lao động, bám sát giáo trình Minna no Nihongo uy tín, tập trung vào các mẫu câu giao tiếp và từ vựng chuyên ngành thường dùng trong môi trường nhà máy Nhật Bản.',
-    image: 'https://placehold.co/600x400.png',
+    image: '/img/tieng_nhat_giao_tiep.jpg',
     'data-ai-hint': 'Japanese language class',
     instructor: {
       name: 'Dung Mochi',
@@ -60,7 +60,7 @@ export const courses: Course[] = [
     title: 'Văn hoá ứng xử trong công ty Nhật',
     category: 'Văn hóa & Xã hội',
     description: 'Nắm vững các quy tắc ứng xử nơi công sở Nhật Bản, từ cách chào hỏi, trao đổi danh thiếp đến văn hóa báo cáo "Hou-Ren-Sou".',
-    image: 'https://placehold.co/600x400.png',
+    image: '/img/van_hoa_ung_xu.jpg',
     'data-ai-hint': 'Japanese office workers bowing',
     instructor: {
         name: 'Tanaka Kenji',
@@ -92,11 +92,11 @@ export const courses: Course[] = [
     title: 'Kỹ năng để Thăng tiến tại Nhật Bản',
     category: 'Phát triển sự nghiệp',
     description: 'Tìm hiểu về tư duy kaizen, kỹ năng quản lý và những yếu tố then chốt giúp bạn không chỉ hoàn thành công việc mà còn thăng tiến.',
-    image: 'https://placehold.co/600x400.png',
+    image: '/img/ky_nang_thang_tien.jpg',
     'data-ai-hint': 'career growth ladder',
     instructor: {
         name: 'Lê Minh Cường',
-        avatar: 'https://placehold.co/100x100.png',
+        avatar: '/img/ky_nang_thang_tien.jpg',
         'data-ai-hint': 'career coach',
         title: 'Chuyên gia Hướng nghiệp',
     },

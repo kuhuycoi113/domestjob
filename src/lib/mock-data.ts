@@ -93,11 +93,15 @@ const generateRandomJob = (index: number): Job => {
     const quantity = (index % 10) + 1;
     const title = `${jobTitles[industry as keyof typeof jobTitles][index % 4]}, ${location}, ${quantity} ${gender}`;
 
+    // Deterministic generation of likes to avoid hydration errors
+    const deterministicLikesK = (index * 7) % 10;
+    const deterministicLikesHundred = (index * 3) % 10;
+
     return {
         id: `JP-DEMO${1000 + index}`,
         isRecording: index % 5 === 0,
         image: { src: `https://placehold.co/600x400.png?text=Job+${index}`, type: 'minhhoa' },
-        likes: `${Math.floor(Math.random() * 10)}k${Math.floor(Math.random() * 10)}`,
+        likes: `${deterministicLikesK}k${deterministicLikesHundred}`,
         salary: {
             actual: `${(12 + (index % 10)) * 10000} JPY`,
             basic: `${(18 + (index % 12)) * 10000} JPY`,

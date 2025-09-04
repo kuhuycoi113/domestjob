@@ -80,6 +80,9 @@ export function VideoCallDialog({ isOpen, onClose }: VideoCallDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-4xl p-0 gap-0 bg-black text-white border-0">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Video Call</DialogTitle>
+        </DialogHeader>
         <div className="relative h-[80vh]">
            {/* Remote participant video (placeholder) */}
             <Image

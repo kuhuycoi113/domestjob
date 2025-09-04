@@ -43,6 +43,8 @@ export const SearchBar = () => {
   const [selectedLocation, setSelectedLocation] = useState('');
   const [availableIndustries, setAvailableIndustries] = useState<Industry[]>([]);
   const [comboboxOpen, setComboboxOpen] = useState(false);
+  const [selectedVisa, setSelectedVisa] = useState<any>(null);
+
 
   const finalSearchTerm = searchQuery || selectedIndustry;
 
@@ -73,9 +75,17 @@ export const SearchBar = () => {
 
   const handleSearchClick = () => {
     const queryParams = new URLSearchParams();
-    if (finalSearchTerm) queryParams.set('q', finalSearchTerm);
-    if (selectedJobType) queryParams.set('type', selectedJobType);
-    if (selectedLocation) queryParams.set('location', selectedLocation);
+
+    if (selectedVisa) {
+      queryParams.set("jobCategoryID", selectedVisa.parent);
+      queryParams.set("childrenCategoryID", selectedVisa.nameAscii);
+      if (selectedVisa?.languageLevel) {
+        queryParams.set("languageLevel", selectedVisa.languageLevel.join(";"));
+      }
+
+    }
+    if (finalSearchTerm) queryParams.set("q", finalSearchTerm);
+    if (selectedLocation) queryParams.set("location", selectedLocation);
 
     router.push(`/tim-kiem?${queryParams.toString()}`);
   };
@@ -91,6 +101,8 @@ export const SearchBar = () => {
         )
     );
   };
+  const getVisaId = (visa: any) => (visa.languageLevel ? `${visa.nameAscii}__${visa.languageLevel}` : visa.nameAscii);
+
 
   return (
     <Card className="max-w-6xl mx-auto shadow-2xl">
@@ -100,13 +112,22 @@ export const SearchBar = () => {
             <Label htmlFor="search-type" className="text-foreground">
               Loại hình, kỹ năng
             </Label>
-            <Select onValueChange={setSelectedJobType} value={selectedJobType}>
+            <Select
+              onValueChange={(value) => {
+                const visaObj = VISA_DETAILS.find((v) => getVisaId(v) === value);
+                if (visaObj) {
+                  setSelectedJobType(getVisaId(visaObj)); // id duy nhất để select UI hoạt động
+                  setSelectedVisa(visaObj); // lưu object đầy đủ để build query
+                }
+              }}
+              value={selectedJobType}
+            >
               <SelectTrigger id="search-type">
                 <SelectValue placeholder="Chọn loại hình" />
               </SelectTrigger>
               <SelectContent>
-                {VISA_DETAILS.map((item ,index) => (
-                  <SelectItem key={index} value={item.nameAscii}>
+                {VISA_DETAILS.map((item, index) => (
+                  <SelectItem key={index} value={getVisaId(item)}>
                     {item.label}
                   </SelectItem>
                 ))}
@@ -119,25 +140,14 @@ export const SearchBar = () => {
             </Label>
             <Popover open={comboboxOpen} onOpenChange={setComboboxOpen}>
               <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={comboboxOpen}
-                  className="w-full justify-between h-10 font-normal text-sm"
-                >
-                  <span className="truncate">
-                    {finalSearchTerm || 'Tất cả ngành nghề'}
-                  </span>
+                <Button variant="outline" role="combobox" aria-expanded={comboboxOpen} className="w-full justify-between h-10 font-normal text-sm">
+                  <span className="truncate">{finalSearchTerm || "Tất cả ngành nghề"}</span>
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
                 <Command shouldFilter={false}>
-                  <CommandInput
-                    placeholder="Tìm ngành nghề..."
-                    value={searchQuery}
-                    onValueChange={setSearchQuery}
-                  />
+                  <CommandInput placeholder="Tìm ngành nghề..." value={searchQuery} onValueChange={setSearchQuery} />
                   <CommandList>
                     <CommandEmpty>Không tìm thấy.</CommandEmpty>
                     <CommandGroup>
@@ -146,23 +156,12 @@ export const SearchBar = () => {
                           key={industry.slug}
                           value={industry.name}
                           onSelect={(currentValue) => {
-                            setSelectedIndustry(
-                              currentValue === selectedIndustry
-                                ? ''
-                                : industry.name
-                            );
-                            setSearchQuery('');
+                            setSelectedIndustry(currentValue === selectedIndustry ? "" : industry.name);
+                            setSearchQuery("");
                             setComboboxOpen(false);
                           }}
                         >
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              selectedIndustry === industry.name
-                                ? 'opacity-100'
-                                : 'opacity-0'
-                            )}
-                          />
+                          <Check className={cn("mr-2 h-4 w-4", selectedIndustry === industry.name ? "opacity-100" : "opacity-0")} />
                           {industry.name}
                         </CommandItem>
                       ))}
@@ -191,7 +190,7 @@ export const SearchBar = () => {
                 </SelectGroup> */}
                 <SelectGroup>
                   <SelectLabel>Tỉnh/Thành phố</SelectLabel>
-                  {WORKLOCATION.filter(item => item.groupCode === "JP").map((item,index) =>(
+                  {WORKLOCATION.filter((item) => item.groupCode === "JP").map((item, index) => (
                     <SelectItem key={index} value={item.value}>
                       {item.label}
                     </SelectItem>
@@ -201,11 +200,7 @@ export const SearchBar = () => {
             </Select>
           </div>
           <div className="md:col-span-2">
-            <Button
-              size="lg"
-              className="w-full bg-primary hover:bg-primary/90 text-white text-lg"
-              onClick={handleSearchClick}
-            >
+            <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white text-lg" onClick={handleSearchClick}>
               <Search className="mr-2 h-5 w-5" /> Tìm kiếm
             </Button>
           </div>

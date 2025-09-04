@@ -2,6 +2,9 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import VISA_NAMEASCIEs from "@/lib/visa_nameascii.json";
 import PROVINCES from "@/lib/jp_provinces.json";
+import MAPPING_IMAGES from "@/lib/mapping_images.json";
+import MAPPING_EXCLUDE_IMAGES from "@/lib/mapping_exclude_images.json";
+import { log } from "console";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -290,6 +293,7 @@ export const convertFilterToQuery = (filter: any, exchangeRates?: any) => {
   }
   // Xử lý trường hợp "languageLevel"
   if (filter?.languageLevel) {
+    console.log("hehehheeh",filter?.languageLevel)
     if (typeof filter?.languageLevel === "object") {
       if (filter.languageLevel.value === "Không yêu cầu tiếng") {
         queryGet.query.bool.must.push({
@@ -369,4 +373,22 @@ export const convertFilterToQuery = (filter: any, exchangeRates?: any) => {
   // }
 
   return queryGet;
+};
+
+export const getJobImage = (job: string, career: string) => {
+  let mappingImage = MAPPING_IMAGES.find((item) => item.newJobs.indexOf(job) > -1);
+  if (!mappingImage) {
+    mappingImage = MAPPING_IMAGES.find((item) => item.newJobs.indexOf(career) > -1);
+  }
+  if (!mappingImage) {
+    return "/img/sample/no-image.jpg";
+  }
+  if (mappingImage.images.length === 1) {
+    return mappingImage.images[0];
+  }
+  let randomInt = Math.floor(Math.random() * mappingImage.images.length);
+  while (MAPPING_EXCLUDE_IMAGES.indexOf(mappingImage.images[randomInt]) > -1) {
+    randomInt = Math.floor(Math.random() * mappingImage.images.length);
+  }
+  return mappingImage.images[randomInt];
 };

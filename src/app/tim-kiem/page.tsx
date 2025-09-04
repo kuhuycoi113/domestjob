@@ -1,7 +1,7 @@
 "use server";
 
 import { notFound } from "next/navigation";
-import { convertQueryParamsToJobFilter } from "@/lib/utils";
+import { convertQueryParamsToJobFilter, getJobImage } from "@/lib/utils";
 import { Pager } from "@/app/class/pager.class";
 import { pagingJobs } from "./actions";
 
@@ -125,6 +125,7 @@ export default async function JobCategoryPage({ searchParams, filter }: PageProp
                 const job = {
                   id: hit._id,
                   ...hit._source,
+                  avatar : getJobImage(hit._source.job , hit._source.career),
                   expired: hit.fields?.expired?.[0] ?? false,
                 };
                 return <JobCard key={hit._id} job={job} />;

@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Upload, FileText, FileUp, Sparkles, Send, Mic, Loader2, StopCircle, Pencil, Award } from "lucide-react";
+import { Upload, FileText, FileUp, Sparkles, Send, Mic, Loader2, StopCircle, Pencil, Award, User, Briefcase, GraduationCap, Star, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
@@ -14,6 +14,7 @@ import { type CandidateProfile } from "@/ai/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import * as faceapi from '@vladmandic/face-api';
+import { Badge } from "@/components/ui/badge";
 
 type ProfileWithAvatar = CandidateProfile & { avatarUrl?: string };
 
@@ -351,29 +352,70 @@ export default function AiProfileClientPage() {
                                 </div>
                             )}
                              {!isLoading && analysisResult && (
-                                <>
-                                    {analysisResult.avatarUrl && (
-                                        <div className="mb-4 text-center">
-                                            <p className="font-semibold mb-2">Ảnh đại diện đề xuất:</p>
-                                            <Image 
+                                <div className="space-y-4">
+                                    <div className="text-center p-4 bg-secondary rounded-lg">
+                                        {analysisResult.avatarUrl && (
+                                             <Image 
                                                 src={analysisResult.avatarUrl} 
                                                 alt="Ảnh đại diện được tạo bởi AI" 
                                                 width={100} 
                                                 height={100} 
-                                                className="rounded-full mx-auto border-4 border-primary shadow-lg"
+                                                className="rounded-full mx-auto border-4 border-primary shadow-lg mb-4"
                                             />
-                                        </div>
-                                    )}
-                                    <div className="max-h-[50vh] overflow-y-auto rounded-lg bg-secondary p-4">
-                                        <pre className="text-xs whitespace-pre-wrap">
-                                            <code>{JSON.stringify(analysisResult, null, 2)}</code>
-                                        </pre>
+                                        )}
+                                        <h3 className="text-xl font-bold font-headline">{analysisResult.name}</h3>
+                                        <p className="text-muted-foreground">{analysisResult.headline}</p>
+                                        <p className="text-sm text-muted-foreground flex items-center justify-center gap-2 mt-1">
+                                            <MapPin className="h-4 w-4" /> {analysisResult.location}
+                                        </p>
+                                    </div>
+                                    <div className="max-h-[45vh] overflow-y-auto space-y-4 p-2">
+                                        {analysisResult.about && (
+                                            <Card>
+                                                <CardHeader><CardTitle className="text-base flex items-center gap-2"><User className="h-4 w-4"/>Giới thiệu</CardTitle></CardHeader>
+                                                <CardContent><p className="text-sm text-muted-foreground">{analysisResult.about}</p></CardContent>
+                                            </Card>
+                                        )}
+                                         {analysisResult.experience?.length > 0 && (
+                                            <Card>
+                                                <CardHeader><CardTitle className="text-base flex items-center gap-2"><Briefcase className="h-4 w-4"/>Kinh nghiệm</CardTitle></CardHeader>
+                                                <CardContent className="space-y-3">
+                                                    {analysisResult.experience.map((exp, i) => (
+                                                        <div key={i} className="text-sm">
+                                                            <p className="font-semibold">{exp.role} tại {exp.company}</p>
+                                                            <p className="text-xs text-muted-foreground">{exp.period}</p>
+                                                        </div>
+                                                    ))}
+                                                </CardContent>
+                                            </Card>
+                                        )}
+                                         {analysisResult.education?.length > 0 && (
+                                            <Card>
+                                                <CardHeader><CardTitle className="text-base flex items-center gap-2"><GraduationCap className="h-4 w-4"/>Học vấn</CardTitle></CardHeader>
+                                                <CardContent className="space-y-3">
+                                                    {analysisResult.education.map((edu, i) => (
+                                                        <div key={i} className="text-sm">
+                                                            <p className="font-semibold">{edu.degree} tại {edu.school}</p>
+                                                            <p className="text-xs text-muted-foreground">Tốt nghiệp: {edu.gradYear}</p>
+                                                        </div>
+                                                    ))}
+                                                </CardContent>
+                                            </Card>
+                                        )}
+                                        {analysisResult.skills?.length > 0 && (
+                                            <Card>
+                                                <CardHeader><CardTitle className="text-base flex items-center gap-2"><Star className="h-4 w-4"/>Kỹ năng</CardTitle></CardHeader>
+                                                <CardContent className="flex flex-wrap gap-2">
+                                                    {analysisResult.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
+                                                </CardContent>
+                                            </Card>
+                                        )}
                                     </div>
                                     <div className="flex justify-end gap-2 mt-4">
                                          <Button variant="outline" onClick={() => setAnalysisResult(null)}>Xóa</Button>
                                          <Button onClick={handleProceed} className="bg-primary text-white">Tiếp tục với hồ sơ này</Button>
                                     </div>
-                                </>
+                                </div>
                             )}
                         </CardContent>
                     </Card>

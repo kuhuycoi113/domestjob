@@ -42,10 +42,8 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
       {/* Header */}
       <header className="flex items-center gap-3 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
         {isBotChat ? (
-             <div className="flex flex-col items-center">
-                <div className="bg-white rounded-full p-1">
-                  <Logo className="h-6 w-auto" />
-                </div>
+             <div className="bg-white rounded-full p-1">
+               <Logo className="h-5 w-auto" />
              </div>
         ) : (
             <Avatar className="h-10 w-10 border-2 border-white">
@@ -56,8 +54,8 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
         <div>
            {isBotChat ? (
                 <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                    <p className="text-xs text-primary-foreground/80">Đang hoạt động</p>
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                    <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>
                 </div>
            ) : (
                 <p className="text-lg font-bold font-headline">{`Tư vấn viên ${mainContact.name}`}</p>

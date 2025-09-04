@@ -43,7 +43,7 @@ export default function JobsDashboardPage() {
     <div className="pt-4">
         {viewMode === 'grid' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {jobs.map((job) => ( <JobCard key={job.id} job={job} /> ))}
+                {jobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
             </div>
         ) : (
             <Card className="shadow-xl"><CardContent className="p-0">

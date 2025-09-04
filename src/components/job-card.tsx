@@ -15,7 +15,7 @@ import {
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
-export const JobCard = ({ job }: { job: Job }) => {
+export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecruiterName?: boolean }) => {
   // Desktop layout
   const DesktopLayout = () => (
     <div className="hidden md:flex flex-row items-center w-full p-4 gap-4">
@@ -49,7 +49,7 @@ export const JobCard = ({ job }: { job: Job }) => {
         <div className="col-span-1 text-right space-y-2">
             <div className="flex items-center justify-end gap-2 text-xs">
                  <div>
-                    <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>
+                    {showRecruiterName && <p className="font-semibold text-primary text-sm">{job.recruiter.name}</p>}
                     <p className="text-muted-foreground">{job.recruiter.company}</p>
                 </div>
                 <Avatar className="w-10 h-10">
@@ -113,7 +113,7 @@ export const JobCard = ({ job }: { job: Job }) => {
                 <AvatarFallback>{job.recruiter.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex-grow">
-                <p className="font-semibold text-blue-600 truncate">{job.recruiter.name}</p>
+                {showRecruiterName && <p className="font-semibold text-blue-600 truncate">{job.recruiter.name}</p>}
                 <p className="text-muted-foreground truncate">{job.recruiter.company}</p>
               </div>
             </div>

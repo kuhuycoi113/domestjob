@@ -1,13 +1,12 @@
+
 'use client';
 
 import { useState } from 'react';
-import { ConversationList } from '@/components/chat/conversation-list';
 import { ChatWindow } from '@/components/chat/chat-window';
-import { conversations, type Conversation } from '@/lib/chat-data';
-import { Card } from '@/components/ui/card';
+import { conversations, helloJobBot } from '@/lib/chat-data';
 
 export default function ChatPage() {
-  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(conversations[0] || null);
+  const [selectedConversation, setSelectedConversation] = useState(conversations.find(c => c.participants.some(p => p.id === helloJobBot.id)) || conversations[0]);
 
   // This page is now primarily for mobile view.
   // We will render the ChatWindow directly for a full-screen experience.

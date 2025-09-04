@@ -7,98 +7,40 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Star, PieChart, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useChat } from '@/contexts/ChatContext';
+import { consultants } from '@/lib/chat-data';
 
-const consultants = [
-  {
-    id: 'le-xuan-long',
-    name: 'Lê Xuân Long',
-    avatarUrl: 'https://placehold.co/200x200.png',
-    dataAiHint: 'professional man portrait',
-    experience: '5 năm',
-    mainExpertise: 'Tư vấn việc làm Kỹ năng đặc định (Tokutei)',
-    subExpertise: 'Thực tập sinh Nhật Bản',
-    successfulCandidates: 412,
-    managedJobs: 250,
-    strengths: ['Tận tình', 'Nhiều đơn', 'Hiểu rõ ngành'],
-  },
-  {
-    id: 'nguyen-thi-phuong-loan',
-    name: 'Nguyễn Thị Phương Loan',
-    avatarUrl: 'https://placehold.co/200x200.png',
-    dataAiHint: 'professional woman portrait',
-    experience: '4 năm',
-    mainExpertise: 'Tư vấn việc làm Kỹ sư & Trí thức',
-    subExpertise: 'Thị trường lao động tại Aichi',
-    successfulCandidates: 350,
-    managedJobs: 210,
-    strengths: ['Nhiệt tình', 'Hỗ trợ 24/7', 'Quan hệ rộng'],
-  },
-  {
-    id: 'nguyen-thi-minh-anh',
-    name: 'Nguyễn Thị Minh Anh',
-    avatarUrl: 'https://placehold.co/200x200.png',
-    dataAiHint: 'professional woman portrait',
-    experience: '3 năm',
-    mainExpertise: 'Chuyên gia tư vấn ngành thực phẩm',
-    subExpertise: 'Các đơn hàng tại Fukuoka',
-    successfulCandidates: 280,
-    managedJobs: 180,
-    strengths: ['Chuyên môn cao', 'Tỷ lệ đỗ cao', 'Hỗ trợ nhanh'],
-  },
-  {
-    id: 'nguyen-thi-ngoc-oanh',
-    name: 'Nguyễn Thị Ngọc Oanh',
-    avatarUrl: 'https://placehold.co/200x200.png',
-    dataAiHint: 'professional woman portrait',
-    experience: '3 năm',
-    mainExpertise: 'Tư vấn ngành xây dựng & cơ khí',
-    subExpertise: 'Các đơn hàng gấp, bay nhanh',
-    successfulCandidates: 310,
-    managedJobs: 190,
-    strengths: ['Nhiều đơn gấp', 'Hỗ trợ nhiệt tình', 'Kinh nghiệm'],
-  },
-  {
-    id: 'pham-thi-ha',
-    name: 'Phạm Thị Hà',
-    avatarUrl: 'https://placehold.co/200x200.png',
-    dataAiHint: 'professional woman portrait',
-    experience: '2 năm',
-    mainExpertise: 'Tư vấn ngành điều dưỡng & chăm sóc sức khỏe',
-    subExpertise: 'Thủ tục visa & giấy tờ',
-    successfulCandidates: 220,
-    managedJobs: 150,
-    strengths: ['Tận tâm', 'Am hiểu thủ tục', 'Hỗ trợ chi tiết'],
-  }
-];
 
-const ConsultantCard = ({ consultant }: { consultant: typeof consultants[0] }) => (
-     <Card className="shadow-xl text-center p-6 flex flex-col h-full transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <Link href={`/consultant-profile/${consultant.id}`} className="block h-full flex flex-col flex-grow">
-            <Avatar className="h-24 w-24 mx-auto border-4 border-primary shadow-lg">
-                <AvatarImage src={consultant.avatarUrl} alt={consultant.name} data-ai-hint={consultant.dataAiHint} />
-                <AvatarFallback>{consultant.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <h2 className="text-xl font-headline font-bold mt-4">{consultant.name}</h2>
-            <p className="text-primary font-semibold text-sm flex-grow">{consultant.mainExpertise}</p>
-            <div className="flex flex-wrap justify-center gap-2 mt-3">
-                {consultant.strengths.map(strength => (
-                    <Badge key={strength} variant="secondary" className="bg-green-100 text-green-800 border-green-200">{strength}</Badge>
-                ))}
+const ConsultantCard = ({ consultant }: { consultant: typeof consultants[0] }) => {
+    const { openChat } = useChat();
+
+    return (
+        <Card className="shadow-xl text-center p-6 flex flex-col h-full transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+            <Link href={`/consultant-profile/${consultant.id}`} className="block h-full flex flex-col flex-grow">
+                <Avatar className="h-24 w-24 mx-auto border-4 border-primary shadow-lg">
+                    <AvatarImage src={consultant.avatarUrl} alt={consultant.name} data-ai-hint={consultant.dataAiHint} />
+                    <AvatarFallback>{consultant.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <h2 className="text-xl font-headline font-bold mt-4">{consultant.name}</h2>
+                <p className="text-primary font-semibold text-sm flex-grow">{consultant.mainExpertise}</p>
+                <div className="flex flex-wrap justify-center gap-2 mt-3">
+                    {consultant.strengths.map(strength => (
+                        <Badge key={strength} variant="secondary" className="bg-green-100 text-green-800 border-green-200">{strength}</Badge>
+                    ))}
+                </div>
+                <div className="mt-4 border-t pt-4 text-sm space-y-2 text-left">
+                    <p className="flex items-start gap-2"><PieChart className="h-4 w-4 mt-1 text-muted-foreground"/> <strong>Kinh nghiệm:</strong> {consultant.experience}</p>
+                    <p className="flex items-start gap-2"><Star className="h-4 w-4 mt-1 text-muted-foreground"/> <strong>Đã hỗ trợ:</strong> {consultant.successfulCandidates}+ ứng viên</p>
+                </div>
+            </Link>
+            <div className="mt-4 pt-4 border-t">
+                <Button className="w-full" onClick={() => openChat(consultant)}>
+                    <MessageSquare className="mr-2 h-4 w-4" /> Chat với tư vấn viên
+                </Button>
             </div>
-            <div className="mt-4 border-t pt-4 text-sm space-y-2 text-left">
-                <p className="flex items-start gap-2"><PieChart className="h-4 w-4 mt-1 text-muted-foreground"/> <strong>Kinh nghiệm:</strong> {consultant.experience}</p>
-                <p className="flex items-start gap-2"><Star className="h-4 w-4 mt-1 text-muted-foreground"/> <strong>Đã hỗ trợ:</strong> {consultant.successfulCandidates}+ ứng viên</p>
-            </div>
-        </Link>
-        <div className="mt-4 pt-4 border-t">
-            <Button asChild className="w-full">
-                <Link href="/chat">
-                    <MessageSquare className="mr-2 h-4 w-4" /> Chat
-                </Link>
-            </Button>
-        </div>
-    </Card>
-);
+        </Card>
+    );
+};
 
 export default function ConsultantListPage() {
   return (
@@ -112,7 +54,7 @@ export default function ConsultantListPage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 items-stretch">
             {consultants.map((consultant) => (
-                <ConsultantCard key={consultant.name} consultant={consultant} />
+                <ConsultantCard key={consultant.id} consultant={consultant} />
             ))}
         </div>
       </div>

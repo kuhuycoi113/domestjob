@@ -1,10 +1,12 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { MobileFooter } from '@/components/mobile-footer';
-import { FloatingChatButton } from '@/components/floating-chat-button';
+import { ChatProvider } from '@/contexts/ChatContext';
+import { FloatingChatWidget } from '@/components/chat/floating-chat-widget';
 
 const siteConfig = {
   name: "HelloJob",
@@ -76,12 +78,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased pb-20 md:pb-0">
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <MobileFooter />
-        <FloatingChatButton />
-        <Toaster />
+        <ChatProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <MobileFooter />
+          <FloatingChatWidget />
+          <Toaster />
+        </ChatProvider>
       </body>
     </html>
   );

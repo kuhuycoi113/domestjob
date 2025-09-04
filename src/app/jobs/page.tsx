@@ -63,6 +63,48 @@ export default function JobsDashboardPage() {
             <h1 className="text-3xl font-bold font-headline">Trang quản lý việc làm</h1>
             <p className="text-muted-foreground mt-1">Quản lý toàn bộ hành trình tìm việc của bạn tại một nơi duy nhất.</p>
         </div>
+
+        {/* Main Content */}
+        <div className="w-full mb-8">
+            <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger className="bg-background px-6 rounded-t-lg font-semibold text-base hover:no-underline">
+                        <div className="flex items-center gap-3">
+                            <Star className="h-5 w-5 text-yellow-500" />
+                            <span>Gợi ý cho bạn</span>
+                            <Badge>{suggestedJobs.length}</Badge>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-background p-6 rounded-b-lg">
+                       <JobListing jobs={suggestedJobs} />
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-2">
+                    <AccordionTrigger className="bg-background px-6 rounded-t-lg font-semibold text-base hover:no-underline mt-4">
+                        <div className="flex items-center gap-3">
+                            <Briefcase className="h-5 w-5 text-blue-500" />
+                            <span>Việc đã ứng tuyển</span>
+                            <Badge>{appliedJobs.length}</Badge>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-background p-6 rounded-b-lg">
+                       <JobListing jobs={appliedJobs} />
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-3" className="border-b-0">
+                    <AccordionTrigger className="bg-background px-6 rounded-t-lg font-semibold text-base hover:no-underline mt-4">
+                        <div className="flex items-center gap-3">
+                            <Bookmark className="h-5 w-5 text-red-500" />
+                            <span>Việc đã lưu</span>
+                            <Badge>{savedJobs.length}</Badge>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-background p-6 rounded-b-lg">
+                       <JobListing jobs={savedJobs} />
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </div>
         
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -135,48 +177,6 @@ export default function JobsDashboardPage() {
                     </CardContent>
                 </Card>
             </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="w-full">
-            <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
-                <AccordionItem value="item-1">
-                    <AccordionTrigger className="bg-background px-6 rounded-t-lg font-semibold text-base hover:no-underline">
-                        <div className="flex items-center gap-3">
-                            <Star className="h-5 w-5 text-yellow-500" />
-                            <span>Gợi ý cho bạn</span>
-                            <Badge>{suggestedJobs.length}</Badge>
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <JobListing jobs={suggestedJobs} />
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="item-2">
-                    <AccordionTrigger className="bg-background px-6 rounded-t-lg font-semibold text-base hover:no-underline mt-4">
-                        <div className="flex items-center gap-3">
-                            <Briefcase className="h-5 w-5 text-blue-500" />
-                            <span>Việc đã ứng tuyển</span>
-                            <Badge>{appliedJobs.length}</Badge>
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <JobListing jobs={appliedJobs} />
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="item-3" className="border-b-0">
-                    <AccordionTrigger className="bg-background px-6 rounded-t-lg font-semibold text-base hover:no-underline mt-4">
-                        <div className="flex items-center gap-3">
-                            <Bookmark className="h-5 w-5 text-red-500" />
-                            <span>Việc đã lưu</span>
-                            <Badge>{savedJobs.length}</Badge>
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <JobListing jobs={savedJobs} />
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
         </div>
 
       </div>

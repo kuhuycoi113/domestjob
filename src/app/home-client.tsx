@@ -355,7 +355,7 @@ export default function HomeClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 items-center">
               <div className="relative h-64 md:h-full order-last md:order-first">
                 <Image 
-                  src="https://placehold.co/600x600.png"
+                  src="/img/bao_duong_oto.jpg"
                   alt="Lao động lành nghề tại Nhật"
                   fill
                   className="object-cover"

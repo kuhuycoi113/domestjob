@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ProfileViewersDialog } from '@/components/profile-viewers-dialog';
 import { StatCard } from '@/components/dashboard/stat-card';
 import { JobStatsChart } from '@/components/dashboard/job-stats-chart';
+import { ProgressTracker } from '@/components/progress-tracker';
 
 const aspirations = [
     { id: 1, title: 'Kỹ sư cơ khí, Osaka', salary: '220,000 JPY', type: 'Kỹ sư' },
@@ -71,6 +72,12 @@ export default function JobsDashboardPage() {
             <StatCard title="Người có cùng nhu cầu" value="1,286" />
         </div>
         
+        {/* Progress Tracker */}
+        <div className="mb-8">
+            <h2 className="text-xl font-bold font-headline mb-4">Tiến độ của bạn</h2>
+            <ProgressTracker />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <JobStatsChart />
             <div className="lg:col-span-1">

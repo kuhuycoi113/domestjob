@@ -145,6 +145,7 @@ export default function PartnerPostJobPage() {
     educationRequirement: '',
     experienceRequirement: '',
     yearsOfExperience: '',
+    companyArrivalTime: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -242,6 +243,20 @@ export default function PartnerPostJobPage() {
     today.setDate(today.getDate() + 60);
     return today.toISOString().split('T')[0];
   };
+
+  const getFutureMonths = () => {
+    const months = [];
+    const today = new Date();
+    for (let i = 1; i <= 12; i++) { // next 12 months
+        const futureDate = new Date(today.getFullYear(), today.getMonth() + i, 1);
+        const month = futureDate.getMonth() + 1;
+        const year = futureDate.getFullYear();
+        months.push(`Tháng ${month}/${year}`);
+    }
+    return months;
+  };
+
+  const futureMonths = getFutureMonths();
 
   const currentVisaCategory = jobData.visaDetail ? getVisaCategory(jobData.visaDetail) : null;
   const availableConditions = currentVisaCategory ? conditionsByVisaType[currentVisaCategory] : [];
@@ -553,10 +568,17 @@ export default function PartnerPostJobPage() {
                         </div>
                     )}
                     {visibleFields.has('companyArrivalTime') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="arrival-time">Yêu cầu thời điểm về công ty</Label>
-                          <Input id="arrival-time" placeholder="VD: Trước/sau khi ra visa" value={jobData.companyArrivalTime} onChange={(e) => handleInputChange('companyArrivalTime', e.target.value)} />
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="arrival-time">Yêu cầu thời điểm về công ty</Label>
+                        <Select value={jobData.companyArrivalTime} onValueChange={(value) => handleInputChange('companyArrivalTime', value)}>
+                          <SelectTrigger id="arrival-time">
+                            <SelectValue placeholder="Chọn thời điểm" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {futureMonths.map(month => <SelectItem key={month} value={month}>{month}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     )}
                      {visibleFields.has('otherSkillRequirement') && (
                         <div className="space-y-2">

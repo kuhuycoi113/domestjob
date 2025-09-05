@@ -29,27 +29,25 @@ interface ChatProviderProps {
   children: ReactNode;
 }
 
-const getAssignedConsultant = (): User | null => {
-    if (typeof window === 'undefined') return null;
-    const consultantId = localStorage.getItem('assignedConsultantId');
-    if (consultantId) {
-        return consultants.find(c => c.id === consultantId) || null;
-    }
-    return null;
-};
-
-const assignRandomConsultant = (): User => {
-    const randomConsultant = consultants[Math.floor(Math.random() * consultants.length)];
-    if (typeof window !== 'undefined') {
-        localStorage.setItem('assignedConsultantId', randomConsultant.id);
-    }
-    return randomConsultant;
-};
-
-
 export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
+  const [assignedConsultant, setAssignedConsultant] = useState<User | null>(null);
+
+  // This effect runs only on the client side after mounting
+  useEffect(() => {
+    const consultantId = localStorage.getItem('assignedConsultantId');
+    let consultant = null;
+    if (consultantId) {
+        consultant = consultants.find(c => c.id === consultantId) || null;
+    }
+    
+    if (!consultant) {
+        consultant = consultants[Math.floor(Math.random() * consultants.length)];
+        localStorage.setItem('assignedConsultantId', consultant.id);
+    }
+    setAssignedConsultant(consultant);
+  }, []);
 
   const openChat = (user?: User) => {
     let targetUser = user;

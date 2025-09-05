@@ -156,6 +156,7 @@ export default function PartnerPostJobPage() {
     yearsOfExperience: '',
     companyArrivalTime: '',
     otherSkillRequirement: [],
+    workShift: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -241,6 +242,17 @@ export default function PartnerPostJobPage() {
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
   const experienceYears = ["trên 0,5 năm", "trên 1 năm", "trên 1,5 năm", "trên 2 năm", "trên 2,5 năm", "trên 3 năm", "trên 3,5 năm", "trên 4 năm", "trên 4,5 năm", "Nhận cả kinh nghiệm ngành khác"];
   const ginouExpiryOptions = ["trên 4,5 năm", "trên 4 năm", "trên 3,5 năm", "trên 3 năm", "trên 2,5 năm", "trên 2 năm", "trên 1,5 năm", "trên 1 năm", "trên 0,5 năm"];
+  const workShifts = [
+    'Ca ngày (thường 08:00-17:00 hoặc 09:00-18:00)',
+    'Ca chiều/tối (thường 16:00-24:00 hoặc 17:00-01:00)',
+    'Ca đêm (thường 24:00-08:00)',
+    'Ca luân phiên (chia ca sáng, chiều và đêm; luân phiên tuần tháng)',
+    'Ca 2-2-3 (làm 2 ngày, nghỉ 2 ngày, làm 3 ngày và lặp lại)',
+    'Ca 4-3-3 (làm 4 ngày, nghỉ 3 ngày và tiếp tục 3 ngày nghỉ)',
+    'Nghỉ thứ 7, Chủ Nhật',
+    'Nghỉ định kỳ trong tuần',
+    'Khác'
+  ];
 
   const getMinInterviewDate = () => {
     const today = new Date();
@@ -591,6 +603,19 @@ export default function PartnerPostJobPage() {
                           </SelectTrigger>
                           <SelectContent>
                             {futureMonths.map(month => <SelectItem key={month} value={month}>{month}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                     {visibleFields.has('workShift') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="work-shift">Ca làm việc</Label>
+                        <Select value={jobData.workShift} onValueChange={(value) => handleInputChange('workShift', value)}>
+                          <SelectTrigger id="work-shift">
+                            <SelectValue placeholder="Chọn ca làm việc" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {workShifts.map(shift => <SelectItem key={shift} value={shift}>{shift}</SelectItem>)}
                           </SelectContent>
                         </Select>
                       </div>

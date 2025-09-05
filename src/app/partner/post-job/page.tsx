@@ -33,21 +33,40 @@ type JobData = {
   description: string;
   requirements: string;
   benefits: string;
-  notes: string; // Added new field for notes/description
+  notes: string;
   specialConditions: string[];
+  tattooRequirement: string;
+  hepatitisBRequirement: string;
+  educationRequirement: string;
+  experienceRequirement: string;
+  yearsOfExperience: string;
+  companyArrivalTime: string;
+  ginouExpiryRequirement: string;
+  otherSkillRequirement: string;
+  workShift: string;
+  visionRequirement: string;
+  interviewFormat: string;
+  interviewRounds: string;
+  heightRequirement: string;
+  weightRequirement: string;
+  dominantHand: string;
+  hourlySalary: string;
+  annualIncome: string;
+  annualBonus: string;
 };
 
-// Maps visa detail to the fields that are NOT applicable
+// Maps visa detail to the fields that are NOT applicable based on the image
 const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
-  'Thực tập sinh 3 năm': ['languageRequirement', 'languageProficiency'],
-  'Thực tập sinh 1 năm': ['languageRequirement', 'languageProficiency'],
-  'Thực tập sinh 3 Go': ['languageRequirement', 'languageProficiency'],
-  'Đặc định đầu Việt': [],
-  'Đặc định đầu Nhật': ['netFee', 'interviewLocation'],
-  'Đặc định đi mới': [],
-  'Kỹ sư, tri thức đầu Việt': ['netFee'],
-  'Kỹ sư, tri thức đầu Nhật': ['netFee', 'interviewLocation']
+  'Thực tập sinh 3 năm': ['companyArrivalTime', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
+  'Thực tập sinh 1 năm': ['companyArrivalTime', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
+  'Thực tập sinh 3 Go': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary'],
+  'Đặc định đầu Việt': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'companyArrivalTime'],
+  'Đặc định đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'netFee', 'interviewLocation'],
+  'Đặc định đi mới': ['hepatitisBRequirement', 'educationRequirement', 'companyArrivalTime', 'ginouExpiryRequirement'],
+  'Kỹ sư, tri thức đầu Việt': ['hepatitisBRequirement', 'companyArrivalTime', 'ginouExpiryRequirement', 'netFee'],
+  'Kỹ sư, tri thức đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'companyArrivalTime', 'ginouExpiryRequirement', 'netFee', 'interviewLocation']
 };
+
 
 const allSpecialConditions = [
   'Tuyển gấp', 'Nhóm ngành 1', 'Nhóm ngành 2', 'Nhà xưởng', 'Ngoài trời', 'Làm trên cao', 'Cặp đôi',
@@ -288,8 +307,75 @@ export default function PartnerPostJobPage() {
                         <Input id="interview-location" placeholder="VD: Hà Nội" value={jobData.interviewLocation} onChange={(e) => handleInputChange('interviewLocation', e.target.value)} />
                       </div>
                     )}
-
+                     <div className="space-y-2">
+                      <Label htmlFor="interview-date">Ngày phỏng vấn</Label>
+                      <Input
+                        id="interview-date"
+                        type="date"
+                        value={jobData.interviewDate}
+                        onChange={(e) => handleInputChange('interviewDate', e.target.value)}
+                        min={getMinInterviewDate()}
+                        max={getMaxInterviewDate()}
+                      />
+                    </div>
+                     {visibleFields.has('interviewRounds') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="interview-rounds">Số vòng phỏng vấn</Label>
+                          <Input id="interview-rounds" placeholder="VD: 2" value={jobData.interviewRounds} onChange={(e) => handleInputChange('interviewRounds', e.target.value)} />
+                        </div>
+                     )}
+                      {visibleFields.has('interviewFormat') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="interview-format">Hình thức phỏng vấn</Label>
+                          <Input id="interview-format" placeholder="VD: Online qua Zoom" value={jobData.interviewFormat} onChange={(e) => handleInputChange('interviewFormat', e.target.value)} />
+                        </div>
+                     )}
+                  </div>
+                </div>
+                 {/* Salary Information */}
+                <div className="space-y-4 p-6 border rounded-lg">
+                  <h3 className="text-xl font-bold font-headline">Lương và Phí</h3>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
+                        <Label htmlFor="basic-salary">Lương cơ bản</Label>
+                        <Input id="basic-salary" placeholder="100,000 - 2,000,000 yên/tháng" value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required />
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
+                        <Input id="net-salary" placeholder="60,000 - 1,500,000 yên/tháng" value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
+                    </div>
+                    {visibleFields.has('hourlySalary') && (
+                        <div className="space-y-2">
+                            <Label htmlFor="hourly-salary">Lương cơ bản (giờ)</Label>
+                            <Input id="hourly-salary" placeholder="VD: 1000 yên/giờ" value={jobData.hourlySalary} onChange={(e) => handleInputChange('hourlySalary', e.target.value)} />
+                        </div>
+                    )}
+                    {visibleFields.has('annualIncome') && (
+                        <div className="space-y-2">
+                            <Label htmlFor="annual-income">Thu nhập (năm)</Label>
+                            <Input id="annual-income" placeholder="VD: 300 vạn yên" value={jobData.annualIncome} onChange={(e) => handleInputChange('annualIncome', e.target.value)} />
+                        </div>
+                    )}
+                    {visibleFields.has('annualBonus') && (
+                        <div className="space-y-2">
+                            <Label htmlFor="annual-bonus">Thưởng (năm)</Label>
+                            <Input id="annual-bonus" placeholder="VD: 2 lần/năm" value={jobData.annualBonus} onChange={(e) => handleInputChange('annualBonus', e.target.value)} />
+                        </div>
+                    )}
+                    {visibleFields.has('netFee') && (
+                        <div className="space-y-2">
+                        <Label htmlFor="net-fee">Mức phí (nếu có)</Label>
+                        <Input id="net-fee" placeholder="VD: 100tr hoặc 4000$" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
+                        </div>
+                    )}
+                   </div>
+                </div>
+
+                {/* Candidate Requirements */}
+                <div className="space-y-4 p-6 border rounded-lg">
+                  <h3 className="text-xl font-bold font-headline">Yêu cầu ứng viên</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div className="space-y-2">
                       <Label htmlFor="gender">Giới tính</Label>
                       <Select value={jobData.gender} onValueChange={(value) => handleInputChange('gender', value)}>
                         <SelectTrigger id="gender"><SelectValue placeholder="Chọn yêu cầu giới tính" /></SelectTrigger>
@@ -310,8 +396,61 @@ export default function PartnerPostJobPage() {
                       <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
                       <Input id="age-requirement" placeholder="18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                     </div>
-
-                    {visibleFields.has('languageRequirement') && (
+                     {visibleFields.has('educationRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="education-requirement">Yêu cầu học vấn</Label>
+                          <Input id="education-requirement" placeholder="VD: Tốt nghiệp THPT" value={jobData.educationRequirement} onChange={(e) => handleInputChange('educationRequirement', e.target.value)} />
+                        </div>
+                     )}
+                      {visibleFields.has('experienceRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="experience-requirement">Yêu cầu kinh nghiệm</Label>
+                          <Input id="experience-requirement" placeholder="VD: 1 năm kinh nghiệm cơ khí" value={jobData.experienceRequirement} onChange={(e) => handleInputChange('experienceRequirement', e.target.value)} />
+                        </div>
+                     )}
+                     {visibleFields.has('yearsOfExperience') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="years-experience">Yêu cầu số năm kinh nghiệm</Label>
+                          <Input id="years-experience" placeholder="VD: 2" value={jobData.yearsOfExperience} onChange={(e) => handleInputChange('yearsOfExperience', e.target.value)} />
+                        </div>
+                     )}
+                      {visibleFields.has('heightRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="height-requirement">Yêu cầu chiều cao (cm)</Label>
+                          <Input id="height-requirement" placeholder="VD: 165" value={jobData.heightRequirement} onChange={(e) => handleInputChange('heightRequirement', e.target.value)} />
+                        </div>
+                     )}
+                      {visibleFields.has('weightRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="weight-requirement">Yêu cầu cân nặng (kg)</Label>
+                          <Input id="weight-requirement" placeholder="VD: 55" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
+                        </div>
+                     )}
+                      {visibleFields.has('dominantHand') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="dominant-hand">Tay thuận</Label>
+                          <Input id="dominant-hand" placeholder="VD: Tay phải" value={jobData.dominantHand} onChange={(e) => handleInputChange('dominantHand', e.target.value)} />
+                        </div>
+                     )}
+                     {visibleFields.has('visionRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="vision-requirement">Yêu cầu thị lực</Label>
+                          <Input id="vision-requirement" placeholder="VD: 8/10" value={jobData.visionRequirement} onChange={(e) => handleInputChange('visionRequirement', e.target.value)} />
+                        </div>
+                     )}
+                     {visibleFields.has('tattooRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="tattoo-requirement">Hình xăm</Label>
+                          <Input id="tattoo-requirement" placeholder="VD: Không có" value={jobData.tattooRequirement} onChange={(e) => handleInputChange('tattooRequirement', e.target.value)} />
+                        </div>
+                     )}
+                      {visibleFields.has('hepatitisBRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="hepatitis-b-requirement">Viêm gan B</Label>
+                          <Input id="hepatitis-b-requirement" placeholder="VD: Không bị" value={jobData.hepatitisBRequirement} onChange={(e) => handleInputChange('hepatitisBRequirement', e.target.value)} />
+                        </div>
+                     )}
+                     {visibleFields.has('languageRequirement') && (
                       <div className="space-y-2">
                         <Label htmlFor="language-requirement">Yêu cầu ngoại ngữ</Label>
                         <Select value={jobData.languageRequirement} onValueChange={(value) => handleInputChange('languageRequirement', value)}>
@@ -354,36 +493,30 @@ export default function PartnerPostJobPage() {
                         </Select>
                       </div>
                     )}
-
-                    <div className="space-y-2">
-                      <Label htmlFor="interview-date">Ngày phỏng vấn</Label>
-                      <Input
-                        id="interview-date"
-                        type="date"
-                        value={jobData.interviewDate}
-                        onChange={(e) => handleInputChange('interviewDate', e.target.value)}
-                        min={getMinInterviewDate()}
-                        max={getMaxInterviewDate()}
-                      />
-                    </div>
-
-                    {visibleFields.has('netFee') && (
-                      <div className="space-y-2">
-                        <Label htmlFor="net-fee">Mức phí (nếu có)</Label>
-                        <Input id="net-fee" placeholder="VD: 100tr hoặc 4000$" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
-                      </div>
+                    {visibleFields.has('ginouExpiryRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="ginou-expiry">Yêu cầu hạn Ginou còn</Label>
+                          <Input id="ginou-expiry" placeholder="VD: còn 3 năm 6 tháng" value={jobData.ginouExpiryRequirement} onChange={(e) => handleInputChange('ginouExpiryRequirement', e.target.value)} />
+                        </div>
                     )}
-
-                    <div className="space-y-2">
-                      <Label htmlFor="basic-salary">Lương cơ bản</Label>
-                      <Input id="basic-salary" placeholder="100,000 - 2,000,000 yên/tháng" value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
-                      <Input id="net-salary" placeholder="60,000 - 1,500,000 yên/tháng" value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
-                    </div>
-
+                    {visibleFields.has('companyArrivalTime') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="arrival-time">Yêu cầu thời điểm về công ty</Label>
+                          <Input id="arrival-time" placeholder="VD: Trước/sau khi ra visa" value={jobData.companyArrivalTime} onChange={(e) => handleInputChange('companyArrivalTime', e.target.value)} />
+                        </div>
+                    )}
+                     {visibleFields.has('otherSkillRequirement') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="other-skills">Yêu cầu kỹ năng khác</Label>
+                          <Input id="other-skills" placeholder="VD: Kỹ năng ABC" value={jobData.otherSkillRequirement} onChange={(e) => handleInputChange('otherSkillRequirement', e.target.value)} />
+                        </div>
+                     )}
+                     {visibleFields.has('workShift') && (
+                        <div className="space-y-2">
+                          <Label htmlFor="work-shift">Ca làm việc</Label>
+                          <Input id="work-shift" placeholder="VD: Làm ca ngày" value={jobData.workShift} onChange={(e) => handleInputChange('workShift', e.target.value)} />
+                        </div>
+                     )}
                   </div>
                 </div>
 
@@ -448,5 +581,4 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
-
 }

@@ -162,6 +162,7 @@ export default function PartnerPostJobPage() {
     interviewRounds: '',
     heightRequirement: '',
     weightRequirement: '',
+    dominantHand: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -523,7 +524,16 @@ export default function PartnerPostJobPage() {
                       {visibleFields.has('dominantHand') && (
                         <div className="space-y-2">
                           <Label htmlFor="dominant-hand">Tay thuận</Label>
-                          <Input id="dominant-hand" placeholder="VD: Tay phải" value={jobData.dominantHand} onChange={(e) => handleInputChange('dominantHand', e.target.value)} />
+                          <Select value={jobData.dominantHand} onValueChange={(value) => handleInputChange('dominantHand', value)}>
+                            <SelectTrigger id="dominant-hand">
+                                <SelectValue placeholder="Chọn tay thuận" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Tay phải">Tay phải</SelectItem>
+                                <SelectItem value="Tay trái">Tay trái</SelectItem>
+                                <SelectItem value="Cả hai tay">Cả hai tay</SelectItem>
+                            </SelectContent>
+                           </Select>
                         </div>
                      )}
                      {visibleFields.has('visionRequirement') && (

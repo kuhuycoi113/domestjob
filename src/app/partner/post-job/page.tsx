@@ -296,6 +296,19 @@ export default function PartnerPostJobPage() {
   const currentVisaCategory = jobData.visaDetail ? getVisaCategory(jobData.visaDetail) : null;
   const availableConditions = currentVisaCategory ? conditionsByVisaType[currentVisaCategory] : [];
 
+  const basicSalaryPlaceholder = (() => {
+    if (jobData.visaDetail?.includes('Thực tập sinh')) {
+      return "120,000 - 500,000 yên/tháng";
+    }
+    if (jobData.visaDetail?.includes('Đặc định')) {
+      return "150,000 - 1,500,000 yên/tháng";
+    }
+    if (jobData.visaDetail?.includes('Kỹ sư, tri thức')) {
+      return "160,000 - 10,000,000 yên/tháng";
+    }
+    return "Nhập mức lương cơ bản";
+  })();
+
 
   return <div className="container mx-auto px-4 md:px-6 py-8">
     <div className="max-w-4xl mx-auto">
@@ -418,7 +431,7 @@ export default function PartnerPostJobPage() {
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <Label htmlFor="basic-salary">Lương cơ bản</Label>
-                        <Input id="basic-salary" placeholder="100,000 - 2,000,000 yên/tháng" value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required />
+                        <Input id="basic-salary" placeholder={basicSalaryPlaceholder} value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required />
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
@@ -522,7 +535,7 @@ export default function PartnerPostJobPage() {
                       {visibleFields.has('weightRequirement') && (
                         <div className="space-y-2">
                           <Label htmlFor="weight-requirement">Yêu cầu cân nặng (kg)</Label>
-                          <Input id="weight-requirement" placeholder="VD: 55" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
+                          <Input id="weight-requirement" placeholder="VD: 40 - 105" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
                         </div>
                      )}
                       {visibleFields.has('dominantHand') && (

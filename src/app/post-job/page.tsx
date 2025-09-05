@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -106,9 +107,9 @@ export default function PostJobPage() {
                             <SelectTrigger id="job-industry"><SelectValue placeholder="Chọn ngành nghề" /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="it">Công nghệ thông tin</SelectItem>
-                              <SelectItem value="cokhi">Cơ khí</SelectItem>
-                              <SelectItem value="detmay">Dệt may</SelectItem>
-                              <SelectItem value="dientu">Điện tử</SelectItem>
+                              <SelectItem value="co-khi">Cơ khí</SelectItem>
+                              <SelectItem value="det-may">Dệt may</SelectItem>
+                              <SelectItem value="dien-tu">Điện tử</SelectItem>
                               <SelectItem value="logistics">Logistics</SelectItem>
                             </SelectContent>
                           </Select>

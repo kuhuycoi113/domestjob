@@ -13,6 +13,7 @@ import { Briefcase, Send, Upload, FileText, Star } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { industriesByJobType } from '@/lib/industry-data';
 
 // Represents all possible fields
 type JobData = {
@@ -226,7 +227,6 @@ export default function PartnerPostJobPage() {
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
 
-
   const getMinInterviewDate = () => {
     const today = new Date();
     today.setDate(today.getDate() + 1);
@@ -298,7 +298,14 @@ export default function PartnerPostJobPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="job-industry">Ngành nghề</Label>
-                      <Input id="job-industry" placeholder="VD: Cơ khí" value={jobData.industry} onChange={(e) => handleInputChange('industry', e.target.value)} required />
+                       <Select value={jobData.industry} onValueChange={(value) => handleInputChange('industry', value)} required>
+                        <SelectTrigger id="job-industry"><SelectValue placeholder="Chọn ngành nghề" /></SelectTrigger>
+                        <SelectContent>
+                          {Object.values(industriesByJobType).flat().filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i).map(industry => (
+                            <SelectItem key={industry.slug} value={industry.name}>{industry.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -417,7 +424,14 @@ export default function PartnerPostJobPage() {
                       {visibleFields.has('experienceRequirement') && (
                         <div className="space-y-2">
                           <Label htmlFor="experience-requirement">Yêu cầu kinh nghiệm</Label>
-                          <Input id="experience-requirement" placeholder="VD: 1 năm kinh nghiệm cơ khí" value={jobData.experienceRequirement} onChange={(e) => handleInputChange('experienceRequirement', e.target.value)} />
+                           <Select value={jobData.experienceRequirement} onValueChange={(value) => handleInputChange('experienceRequirement', value)}>
+                            <SelectTrigger id="experience-requirement"><SelectValue placeholder="Chọn ngành nghề yêu cầu kinh nghiệm" /></SelectTrigger>
+                            <SelectContent>
+                              {Object.values(industriesByJobType).flat().filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i).map(industry => (
+                                <SelectItem key={industry.slug} value={industry.name}>{industry.name}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
                      )}
                      {visibleFields.has('yearsOfExperience') && (

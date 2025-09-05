@@ -140,6 +140,7 @@ export default function PartnerPostJobPage() {
     notes: '',
     specialConditions: [],
     tattooRequirement: '',
+    hepatitisBRequirement: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -457,7 +458,16 @@ export default function PartnerPostJobPage() {
                       {visibleFields.has('hepatitisBRequirement') && (
                         <div className="space-y-2">
                           <Label htmlFor="hepatitis-b-requirement">Viêm gan B</Label>
-                          <Input id="hepatitis-b-requirement" placeholder="VD: Không bị" value={jobData.hepatitisBRequirement} onChange={(e) => handleInputChange('hepatitisBRequirement', e.target.value)} />
+                           <Select value={jobData.hepatitisBRequirement} onValueChange={(value) => handleInputChange('hepatitisBRequirement', value)}>
+                                <SelectTrigger id="hepatitis-b-requirement">
+                                    <SelectValue placeholder="Chọn yêu cầu về viêm gan B" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Không nhận viêm gan B">Không nhận viêm gan B</SelectItem>
+                                    <SelectItem value="Nhận viêm gan B">Nhận viêm gan B</SelectItem>
+                                    <SelectItem value="Sao cũng được">Sao cũng được</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                      )}
                      {visibleFields.has('languageRequirement') && (
@@ -591,4 +601,3 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
-}

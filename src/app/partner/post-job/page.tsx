@@ -309,6 +309,19 @@ export default function PartnerPostJobPage() {
     return "Nhập mức lương cơ bản";
   })();
 
+  const netSalaryPlaceholder = (() => {
+    if (jobData.visaDetail?.includes('Thực tập sinh')) {
+      return "100,000 - 400,000 yên/tháng";
+    }
+    if (jobData.visaDetail?.includes('Đặc định')) {
+      return "120,000 - 1,300,000 yên/tháng";
+    }
+    if (jobData.visaDetail?.includes('Kỹ sư, tri thức')) {
+      return "120,000 - 9,000,000 yên/tháng";
+    }
+    return "Nhập thực lĩnh (ước tính)";
+  })();
+
 
   return <div className="container mx-auto px-4 md:px-6 py-8">
     <div className="max-w-4xl mx-auto">
@@ -435,7 +448,7 @@ export default function PartnerPostJobPage() {
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
-                        <Input id="net-salary" placeholder="60,000 - 1,500,000 yên/tháng" value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
+                        <Input id="net-salary" placeholder={netSalaryPlaceholder} value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
                     </div>
                     {visibleFields.has('hourlySalary') && (
                         <div className="space-y-2">
@@ -757,8 +770,4 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
-    
-
-    
-
     

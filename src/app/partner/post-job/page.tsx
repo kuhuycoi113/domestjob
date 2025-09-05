@@ -143,6 +143,8 @@ export default function PartnerPostJobPage() {
     tattooRequirement: '',
     hepatitisBRequirement: '',
     educationRequirement: '',
+    experienceRequirement: '',
+    yearsOfExperience: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -226,6 +228,8 @@ export default function PartnerPostJobPage() {
   const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
+  const experienceYears = ["trên 0,5 năm", "trên 1 năm", "trên 1,5 năm", "trên 2 năm", "trên 2,5 năm", "trên 3 năm", "trên 3,5 năm", "trên 4 năm", "trên 4,5 năm", "Nhận cả kinh nghiệm ngành khác"];
+
 
   const getMinInterviewDate = () => {
     const today = new Date();
@@ -437,7 +441,12 @@ export default function PartnerPostJobPage() {
                      {visibleFields.has('yearsOfExperience') && (
                         <div className="space-y-2">
                           <Label htmlFor="years-experience">Yêu cầu số năm kinh nghiệm</Label>
-                          <Input id="years-experience" placeholder="VD: 2" value={jobData.yearsOfExperience} onChange={(e) => handleInputChange('yearsOfExperience', e.target.value)} />
+                          <Select value={jobData.yearsOfExperience} onValueChange={(value) => handleInputChange('yearsOfExperience', value)}>
+                            <SelectTrigger id="years-experience"><SelectValue placeholder="Chọn số năm kinh nghiệm" /></SelectTrigger>
+                            <SelectContent>
+                                {experienceYears.map(year => <SelectItem key={year} value={year}>{year}</SelectItem>)}
+                            </SelectContent>
+                           </Select>
                         </div>
                      )}
                       {visibleFields.has('heightRequirement') && (
@@ -625,3 +634,4 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
+    

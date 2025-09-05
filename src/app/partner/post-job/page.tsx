@@ -161,6 +161,7 @@ export default function PartnerPostJobPage() {
     interviewFormat: '',
     interviewRounds: '',
     heightRequirement: '',
+    weightRequirement: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -734,3 +735,5 @@ export default function PartnerPostJobPage() {
     
 
     
+
+  

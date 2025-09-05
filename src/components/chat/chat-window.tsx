@@ -61,7 +61,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
           <div className="flex-shrink-0">
             {isBotChat ? (
               <div className="bg-white rounded-full p-1.5 h-10 w-10 flex items-center justify-center">
-                <Logo />
+                <Image src="/img/favi2.png" alt="HelloJob Bot" width={32} height={32} />
               </div>
             ) : (
               <Avatar className="h-10 w-10 border-2 border-white">
@@ -73,7 +73,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
 
           <div>
              <div className="flex items-center gap-2">
-                 <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob AI' : `Tư vấn viên ${mainContact.name}`}</p>
+                 <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob' : `Tư vấn viên ${mainContact.name}`}</p>
                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
              </div>
             <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>

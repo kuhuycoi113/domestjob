@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
+import Image from 'next/image';
 
 
 const quickAccessLinks = [
@@ -35,14 +36,7 @@ const quickAccessLinks = [
 ];
 
 const Logo = () => (
-    <span className="text-2xl font-black font-headline">
-      <span className="text-accent">H</span>
-      <span className="text-accent-orange">e</span>
-      <span className="text-primary">l</span>
-      <span className="text-accent-orange">l</span>
-      <span className="text-accent-green">o</span>
-      <span className="text-primary">Job</span>
-    </span>
+    <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={110} height={36} className="h-9 w-auto" />
 );
 
 export function MobileFooter() {

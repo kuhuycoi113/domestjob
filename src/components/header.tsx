@@ -24,6 +24,7 @@ import {
   DropdownMenuGroup
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import Image from 'next/image';
 
 const mainNavLinks = [
   { href: '/', label: 'Trang chủ'},
@@ -52,14 +53,7 @@ const quickAccessLinks = [
 
 
 export const Logo = ({ className }: { className?: string }) => (
-    <span className={cn("text-3xl font-black font-headline", className)}>
-      <span className="text-accent">H</span>
-      <span className="text-accent-orange">e</span>
-      <span className="text-primary">l</span>
-      <span className="text-accent-orange">l</span>
-      <span className="text-accent-green">o</span>
-      <span className="text-primary">Job</span>
-    </span>
+    <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={120} height={40} className={cn("h-10 w-auto", className)} priority />
 );
 
 export function Header() {

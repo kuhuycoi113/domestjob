@@ -57,6 +57,9 @@ export default async function JobCategoryPage({ searchParams, filter }: PageProp
   // Filter sau khi merge
   filter = filter ?? {};
   filter = { ...filter, ...convertQueryParamsToJobFilter(params) };
+  if (filter.languageLevel && typeof filter.languageLevel === "string") {
+    filter.languageLevel = filter.languageLevel.split(";").map((lvl:any) => lvl.trim());
+  }
   console.log("✅ filter sau khi merge:", filter);
 
   // Pager

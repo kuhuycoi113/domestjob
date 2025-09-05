@@ -141,6 +141,7 @@ export default function PartnerPostJobPage() {
     specialConditions: [],
     tattooRequirement: '',
     hepatitisBRequirement: '',
+    educationRequirement: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -223,6 +224,8 @@ export default function PartnerPostJobPage() {
   const visaTypes = Object.keys(hiddenFieldsByVisa);
   const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
+  const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
+
 
   const getMinInterviewDate = () => {
     const today = new Date();
@@ -400,8 +403,15 @@ export default function PartnerPostJobPage() {
                     </div>
                      {visibleFields.has('educationRequirement') && (
                         <div className="space-y-2">
-                          <Label htmlFor="education-requirement">Yêu cầu học vấn</Label>
-                          <Input id="education-requirement" placeholder="VD: Tốt nghiệp THPT" value={jobData.educationRequirement} onChange={(e) => handleInputChange('educationRequirement', e.target.value)} />
+                            <Label htmlFor="education-requirement">Yêu cầu học vấn</Label>
+                            <Select value={jobData.educationRequirement} onValueChange={(value) => handleInputChange('educationRequirement', value)}>
+                                <SelectTrigger id="education-requirement">
+                                    <SelectValue placeholder="Chọn yêu cầu học vấn" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {educationLevels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
+                                </SelectContent>
+                            </Select>
                         </div>
                      )}
                       {visibleFields.has('experienceRequirement') && (

@@ -139,6 +139,7 @@ export default function PartnerPostJobPage() {
     benefits: '',
     notes: '',
     specialConditions: [],
+    tattooRequirement: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -440,8 +441,17 @@ export default function PartnerPostJobPage() {
                      )}
                      {visibleFields.has('tattooRequirement') && (
                         <div className="space-y-2">
-                          <Label htmlFor="tattoo-requirement">Hình xăm</Label>
-                          <Input id="tattoo-requirement" placeholder="VD: Không có" value={jobData.tattooRequirement} onChange={(e) => handleInputChange('tattooRequirement', e.target.value)} />
+                            <Label htmlFor="tattoo-requirement">Hình xăm</Label>
+                            <Select value={jobData.tattooRequirement} onValueChange={(value) => handleInputChange('tattooRequirement', value)}>
+                                <SelectTrigger id="tattoo-requirement">
+                                    <SelectValue placeholder="Chọn yêu cầu về hình xăm" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Không nhận xăm">Không nhận xăm</SelectItem>
+                                    <SelectItem value="Nhận xăm nhỏ">Nhận xăm nhỏ</SelectItem>
+                                    <SelectItem value="Nhận xăm to">Nhận xăm to</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                      )}
                       {visibleFields.has('hepatitisBRequirement') && (

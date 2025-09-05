@@ -40,13 +40,13 @@ const teamMembers = [
   {
     name: 'Bùi Quang Huy',
     role: 'CTO',
-    avatar: '',
+    avatar: 'https://placehold.co/200x200.png',
     dataAiHint: 'male cto portrait',
   },
   {
     name: 'Lê Mạnh Hùng',
     role: 'Head of Marketing',
-    avatar: '',
+    avatar: 'https://placehold.co/200x200.png',
     dataAiHint: 'male marketing head portrait',
   },
 ];
@@ -191,5 +191,3 @@ export default function AboutPage() {
     </>
   );
 }
-
-    

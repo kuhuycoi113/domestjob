@@ -159,6 +159,7 @@ export default function PartnerPostJobPage() {
     workShift: '',
     visionRequirement: '',
     interviewFormat: '',
+    interviewRounds: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -257,6 +258,7 @@ export default function PartnerPostJobPage() {
   ];
   const visionRequirements = ["Yêu cầu thị lực rất tốt", "Yêu cầu thị lực tốt", "Không yêu cầu thị lực", "Không nhận cận thị", "Không nhận viễn thị", "Không nhận loạn thị", "Không nhận mù màu"];
   const interviewFormats = ["Phỏng vấn trực tiếp", "Phỏng vấn Online", "Phỏng vấn trực tiếp và Online"];
+  const interviewRoundsOptions = ["1 vòng", "2 vòng", "3 vòng", "4 vòng", "5 vòng"];
 
   const getMinInterviewDate = () => {
     const today = new Date();
@@ -378,7 +380,14 @@ export default function PartnerPostJobPage() {
                      {visibleFields.has('interviewRounds') && (
                         <div className="space-y-2">
                           <Label htmlFor="interview-rounds">Số vòng phỏng vấn</Label>
-                          <Input id="interview-rounds" placeholder="VD: 2" value={jobData.interviewRounds} onChange={(e) => handleInputChange('interviewRounds', e.target.value)} />
+                          <Select value={jobData.interviewRounds} onValueChange={(value) => handleInputChange('interviewRounds', value)}>
+                                <SelectTrigger id="interview-rounds">
+                                    <SelectValue placeholder="Chọn số vòng phỏng vấn" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {interviewRoundsOptions.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
+                                </SelectContent>
+                            </Select>
                         </div>
                      )}
                       {visibleFields.has('interviewFormat') && (

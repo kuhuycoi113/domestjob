@@ -155,6 +155,7 @@ export default function PartnerPostJobPage() {
     experienceRequirement: '',
     yearsOfExperience: '',
     companyArrivalTime: '',
+    ginouExpiryRequirement: '',
     otherSkillRequirement: [],
     workShift: '',
     visionRequirement: '',
@@ -163,6 +164,9 @@ export default function PartnerPostJobPage() {
     heightRequirement: '',
     weightRequirement: '',
     dominantHand: '',
+    hourlySalary: '',
+    annualIncome: '',
+    annualBonus: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -745,5 +749,3 @@ export default function PartnerPostJobPage() {
     
 
     
-
-  

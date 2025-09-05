@@ -60,7 +60,7 @@ type JobData = {
 const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
   'Thực tập sinh 3 năm': ['companyArrivalTime', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
   'Thực tập sinh 1 năm': ['companyArrivalTime', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
-  'Thực tập sinh 3 Go': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary'],
+  'Thực tập sinh 3 Go': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
   'Đặc định đầu Việt': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'companyArrivalTime'],
   'Đặc định đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'netFee', 'interviewLocation'],
   'Đặc định đi mới': ['hepatitisBRequirement', 'educationRequirement', 'companyArrivalTime', 'ginouExpiryRequirement'],

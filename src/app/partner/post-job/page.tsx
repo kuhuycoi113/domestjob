@@ -157,6 +157,7 @@ export default function PartnerPostJobPage() {
     companyArrivalTime: '',
     otherSkillRequirement: [],
     workShift: '',
+    visionRequirement: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -204,9 +205,9 @@ export default function PartnerPostJobPage() {
         languageProficiency: "N4",
         basicSalary: '200,000 yên/tháng',
         netSalary: '160,000 yên/tháng',
-        description: "- Chịu trách nhiệm vận hành, giám sát và bảo trì các dây chuyền sản xuất tự động.\n- Đảm bảo các máy móc hoạt động ổn định, đạt năng suất và chất lượng theo yêu cầu.\n- Phối hợp với các bộ phận khác để xử lý sự cố và cải tiến quy trình.",
-        requirements: "- Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ điện tử, Tự động hóa hoặc các ngành liên quan.\n- Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.\n- Có khả năng đọc hiểu bản vẽ kỹ thuật.",
-        benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\n- Môi trường làm việc chuyên nghiệp, năng động.\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật.",
+        description: "- Chịu trách nhiệm vận hành, giám sát và bảo trì các dây chuyền sản xuất tự động.\\n- Đảm bảo các máy móc hoạt động ổn định, đạt năng suất và chất lượng theo yêu cầu.\\n- Phối hợp với các bộ phận khác để xử lý sự cố và cải tiến quy trình.",
+        requirements: "- Tốt nghiệp Cao đẳng/Đại học chuyên ngành Cơ điện tử, Tự động hóa hoặc các ngành liên quan.\\n- Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.\\n- Có khả năng đọc hiểu bản vẽ kỹ thuật.",
+        benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\\n- Môi trường làm việc chuyên nghiệp, năng động.\\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật.",
         notes: "Ứng viên có thể phải làm việc theo ca. Chi tiết sẽ được trao đổi trong buổi phỏng vấn."
       };
       setJobData(mockData);
@@ -253,6 +254,7 @@ export default function PartnerPostJobPage() {
     'Nghỉ định kỳ trong tuần',
     'Khác'
   ];
+  const visionRequirements = ["Yêu cầu thị lực rất tốt", "Yêu cầu thị lực tốt", "Không yêu cầu thị lực", "Không nhận cận thị", "Không nhận viễn thị", "Không nhận loạn thị", "Không nhận mù màu"];
 
   const getMinInterviewDate = () => {
     const today = new Date();
@@ -507,7 +509,14 @@ export default function PartnerPostJobPage() {
                      {visibleFields.has('visionRequirement') && (
                         <div className="space-y-2">
                           <Label htmlFor="vision-requirement">Yêu cầu thị lực</Label>
-                          <Input id="vision-requirement" placeholder="VD: 8/10" value={jobData.visionRequirement} onChange={(e) => handleInputChange('visionRequirement', e.target.value)} />
+                          <Select value={jobData.visionRequirement} onValueChange={(value) => handleInputChange('visionRequirement', value)}>
+                                <SelectTrigger id="vision-requirement">
+                                    <SelectValue placeholder="Chọn yêu cầu về thị lực" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {visionRequirements.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
+                                </SelectContent>
+                            </Select>
                         </div>
                      )}
                      {visibleFields.has('tattooRequirement') && (
@@ -701,4 +710,6 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
+    
+
     

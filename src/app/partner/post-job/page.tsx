@@ -43,7 +43,7 @@ type JobData = {
   yearsOfExperience: string;
   companyArrivalTime: string;
   ginouExpiryRequirement: string;
-  otherSkillRequirement: string;
+  otherSkillRequirement: string[];
   workShift: string;
   visionRequirement: string;
   interviewFormat: string;
@@ -108,6 +108,15 @@ const conditionsByVisaType: { [key: string]: string[] } = {
   ],
 };
 
+const otherSkills = [
+    "Cần bằng gia công kim loại", "Cần bằng hàn", "Cần bằng tiện, mài", "Cần bằng cắt",
+    "Cần bằng vận hành máy", "Cần lái được xe nâng", "Cần bằng cầu", "Cần làm được giàn giáo",
+    "Cần bằng thi công nội thất", "Cần lái được máy xúc, máy đào", "Cần bằng lái xe AT", "Cần bằng lái xe MT",
+    "Cần bằng lái xe buýt cỡ trung", "Cần bằng lái xe buýt cỡ lớn", "Cần bằng lái xe tải cỡ nhỏ", "Cần bằng lái xe tải cỡ trung",
+    "Cần bằng lái xe tải cỡ lớn", "Cần bằng vận hành máy NC", "Cần bằng vận hành máy CNC", "Dùng được thước đo",
+    "Đọc được bản vẽ kỹ thuật", "Thiết kế BIM xây dựng", "Quản lý thi công xây dựng", "Quản lý khối lượng xây dựng"
+];
+
 const getVisaCategory = (visaDetail: string): keyof typeof conditionsByVisaType | null => {
   if (visaDetail.includes('Thực tập sinh')) return 'Thực tập sinh kỹ năng';
   if (visaDetail.includes('Đặc định')) return 'Kỹ năng đặc định';
@@ -146,6 +155,7 @@ export default function PartnerPostJobPage() {
     experienceRequirement: '',
     yearsOfExperience: '',
     companyArrivalTime: '',
+    otherSkillRequirement: [],
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -585,19 +595,24 @@ export default function PartnerPostJobPage() {
                         </Select>
                       </div>
                     )}
-                     {visibleFields.has('otherSkillRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="other-skills">Yêu cầu kỹ năng khác</Label>
-                          <Input id="other-skills" placeholder="VD: Kỹ năng ABC" value={jobData.otherSkillRequirement} onChange={(e) => handleInputChange('otherSkillRequirement', e.target.value)} />
-                        </div>
-                     )}
-                     {visibleFields.has('workShift') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="work-shift">Ca làm việc</Label>
-                          <Input id="work-shift" placeholder="VD: Làm ca ngày" value={jobData.workShift} onChange={(e) => handleInputChange('workShift', e.target.value)} />
-                        </div>
-                     )}
                   </div>
+                  {visibleFields.has('otherSkillRequirement') && (
+                        <div className="space-y-4 pt-4">
+                            <Label className="font-semibold">Yêu cầu kỹ năng khác</Label>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                {otherSkills.map(skill => (
+                                    <div key={skill} className="flex items-center space-x-2">
+                                        <Checkbox 
+                                            id={`skill-${skill}`} 
+                                            onCheckedChange={() => handleCheckboxChange('otherSkillRequirement', skill)} 
+                                            checked={jobData.otherSkillRequirement?.includes(skill)}
+                                        />
+                                        <Label htmlFor={`skill-${skill}`} className="font-normal text-sm cursor-pointer">{skill}</Label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Special Conditions */}

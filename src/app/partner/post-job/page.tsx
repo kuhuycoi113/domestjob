@@ -230,7 +230,7 @@ export default function PartnerPostJobPage() {
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
   const experienceYears = ["trên 0,5 năm", "trên 1 năm", "trên 1,5 năm", "trên 2 năm", "trên 2,5 năm", "trên 3 năm", "trên 3,5 năm", "trên 4 năm", "trên 4,5 năm", "Nhận cả kinh nghiệm ngành khác"];
-
+  const ginouExpiryOptions = ["trên 4,5 năm", "trên 4 năm", "trên 3,5 năm", "trên 3 năm", "trên 2,5 năm", "trên 2 năm", "trên 1,5 năm", "trên 1 năm", "trên 0,5 năm"];
 
   const getMinInterviewDate = () => {
     const today = new Date();
@@ -564,7 +564,12 @@ export default function PartnerPostJobPage() {
                     {visibleFields.has('ginouExpiryRequirement') && (
                         <div className="space-y-2">
                           <Label htmlFor="ginou-expiry">Yêu cầu hạn Ginou còn</Label>
-                          <Input id="ginou-expiry" placeholder="VD: còn 3 năm 6 tháng" value={jobData.ginouExpiryRequirement} onChange={(e) => handleInputChange('ginouExpiryRequirement', e.target.value)} />
+                          <Select value={jobData.ginouExpiryRequirement} onValueChange={(value) => handleInputChange('ginouExpiryRequirement', value)}>
+                            <SelectTrigger id="ginou-expiry"><SelectValue placeholder="Chọn yêu cầu hạn Ginou" /></SelectTrigger>
+                            <SelectContent>
+                                {ginouExpiryOptions.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                            </SelectContent>
+                           </Select>
                         </div>
                     )}
                     {visibleFields.has('companyArrivalTime') && (

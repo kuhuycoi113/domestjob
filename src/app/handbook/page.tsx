@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, PlusCircle, ChevronDown, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';
@@ -10,6 +10,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export const metadata: Metadata = {
   title: 'Cẩm nang HelloJob - Thông tin việc làm & cuộc sống tại Nhật',
@@ -83,6 +89,38 @@ const VideoCard = ({ article }: { article: HandbookArticle }) => (
   </Link>
 );
 
+const ShareContentCta = () => (
+    <section className="w-full mt-20">
+      <div className="container mx-auto px-4 md:px-6">
+        <Card className="bg-gradient-to-r from-blue-500 to-primary text-primary-foreground shadow-2xl p-8 md:p-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="text-center md:text-left">
+                    <h2 className="text-3xl font-headline font-bold">Chia sẻ kinh nghiệm của bạn</h2>
+                    <p className="mt-2 text-primary-foreground/80">Bạn có câu chuyện, mẹo hay hoặc kinh nghiệm quý báu muốn chia sẻ với cộng đồng người Việt tại Nhật? Hãy đóng góp bài viết, video cho HelloJob!</p>
+                </div>
+                 <div className="flex justify-center md:justify-end">
+                     <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 text-lg px-8">
+                                <PlusCircle className="mr-2"/>
+                                Chia sẻ ngay
+                                <ChevronDown className="ml-2"/>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild><Link href="/handbook/create/post" className="cursor-pointer"><FileText className="mr-2"/>Bài viết</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/video" className="cursor-pointer"><Video className="mr-2"/>Video dài</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/video-short" className="cursor-pointer"><Video className="mr-2"/>Video ngắn</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/image" className="cursor-pointer"><ImageIcon className="mr-2"/>Ảnh</Link></DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                 </div>
+            </div>
+        </Card>
+      </div>
+    </section>
+);
+
 
 export default function HandbookPage() {
 
@@ -100,7 +138,7 @@ export default function HandbookPage() {
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-accent">
             Cẩm nang HelloJob
           </h1>
-          <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto whitespace-nowrap">
+          <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
             Tất cả thông tin bạn cần biết về thị trường lao động, kỹ năng và cuộc sống tại Nhật Bản.
           </p>
         </div>
@@ -186,6 +224,7 @@ export default function HandbookPage() {
             </aside>
         </div>
       </div>
+      <ShareContentCta />
     </div>
   );
 }

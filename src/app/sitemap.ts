@@ -1,5 +1,7 @@
+
 import { MetadataRoute } from 'next';
 import { articles } from '@/lib/handbook-data';
+import { jobData } from '@/lib/mock-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = 'https://hellojob.vn'; // Replace with your actual domain
@@ -21,7 +23,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/franchise',
     '/post-job',
     '/dashboard',
-    '/feedback'
+    '/feedback',
+    '/premium',
+    '/referral',
+    '/jobs',
+    '/chat',
   ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
@@ -36,8 +42,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
-  
-  // You can add more dynamic routes here, e.g., for jobs, employers, etc.
 
-  return [...staticRoutes, ...handbookRoutes];
+  // Dynamic job pages
+  const jobRoutes = jobData.map((job) => ({
+      url: `${siteUrl}/jobs/${job.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.9,
+  }));
+  
+  // You can add more dynamic routes here, e.g., for employers, etc.
+
+  return [...staticRoutes, ...handbookRoutes, ...jobRoutes];
 }

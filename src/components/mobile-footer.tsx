@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, BrainCircuit } from 'lucide-react';
+import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, Gem, UserPlus, Briefcase, MessageSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -17,12 +17,11 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
-import { VnFlagIcon, JpFlagIcon, EnFlagIcon } from './custom-icons';
+import Image from 'next/image';
 
 
 const quickAccessLinks = [
     { href: '/roadmap', label: 'Lộ trình', icon: Compass },
-    { href: '/career-orientation', label: 'Hướng nghiệp', icon: BrainCircuit },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
     { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
@@ -32,17 +31,12 @@ const quickAccessLinks = [
     { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
     { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
     { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
+    { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
 
 const Logo = () => (
-    <span className="text-2xl font-black font-headline">
-      <span className="text-accent">H</span>
-      <span className="text-accent-orange">e</span>
-      <span className="text-primary">l</span>
-      <span className="text-accent-orange">l</span>
-      <span className="text-accent-green">o</span>
-      <span className="text-primary">Job</span>
-    </span>
+    <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={110} height={36} className="h-9 w-auto" />
 );
 
 export function MobileFooter() {
@@ -51,8 +45,8 @@ export function MobileFooter() {
 
   const footerLinks = [
     { href: '/', icon: Home, label: 'Trang chủ' },
-    { href: '/ai-profile', icon: Sparkles, label: 'Tạo hồ sơ AI' },
-    { href: '/candidate-profile', icon: User, label: 'Hồ sơ' },
+    { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
+    { href: '/chat', icon: MessageSquare, label: 'Chat' },
   ];
   
 
@@ -60,7 +54,7 @@ export function MobileFooter() {
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
       <div className="flex justify-around items-center h-16">
         {footerLinks.map(({ href, icon: Icon, label }) => {
-           const isActive = (pathname === href);
+           const isActive = (pathname === href) || (pathname.startsWith(href) && href !== '/');
            return (
             <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/4 pt-1">
               <Icon className={cn("h-6 w-6 mb-1", isActive ? 'text-primary' : '')} />
@@ -89,21 +83,20 @@ export function MobileFooter() {
             </SheetHeader>
             <div className="flex flex-col h-full overflow-y-auto">
               <div className="p-4">
-                 <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
-                      <AvatarFallback>A</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-base font-medium leading-none">HelloJob</p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        Cán bộ tuyển dụng
-                      </p>
+                 <Link href="/candidate-profile" className="block" onClick={() => setIsOpen(false)}>
+                    <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary hover:bg-accent/20">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
+                        <AvatarFallback>A</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          Ứng viên Thực tập sinh
+                        </p>
+                      </div>
                     </div>
-                 </div>
-                 <Button asChild variant="outline" className="mt-4 w-full" onClick={() => setIsOpen(false)}>
-                    <Link href="/candidate-profile">Hồ sơ của tôi</Link>
-                 </Button>
+                 </Link>
               </div>
               
               <DropdownMenuSeparator />

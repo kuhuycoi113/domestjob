@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown, BrainCircuit } from 'lucide-react';
+import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown, Gem, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
@@ -24,7 +24,7 @@ import {
   DropdownMenuGroup
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { VnFlagIcon, JpFlagIcon, EnFlagIcon } from './custom-icons';
+import Image from 'next/image';
 
 const mainNavLinks = [
   { href: '/', label: 'Trang chủ'},
@@ -36,16 +36,9 @@ const mainNavLinks = [
   { href: '/about', label: 'Giới thiệu' },
 ];
 
-const employerLinks = [
-  { href: '/post-job', label: 'Đăng việc làm' },
-  { href: '/dashboard', label: 'Dữ liệu' },
-  { href: '/franchise', label: 'Đối tác tại Nhật' },
-];
-
 const quickAccessLinks = [
     { href: '/ai-profile', label: 'Tạo hồ sơ AI', icon: Sparkles },
     { href: '/roadmap', label: 'Lộ trình', icon: Compass },
-    { href: '/career-orientation', label: 'Hướng nghiệp', icon: BrainCircuit },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
     { href: '/post-job', label: 'Đăng tuyển dụng', icon: PlusCircle },
     { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
@@ -54,56 +47,24 @@ const quickAccessLinks = [
     { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
     { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
+    { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
 
-const LanguageSwitcher = () => {
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2">
-                    <VnFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span className="font-bold hidden sm:inline">VN</span>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                    <VnFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span>VN</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                    <JpFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span>JP</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                    <EnFlagIcon className="h-5 w-5 rounded-sm" />
-                    <span>EN</span>
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    );
-};
 
+export const Logo = ({ className }: { className?: string }) => (
+    <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={120} height={40} className={cn("h-10 w-auto", className)} priority />
+);
 
 export function Header() {
   const pathname = usePathname();
-
-  const Logo = () => (
-    <span className="text-3xl font-black font-headline">
-      <span className="text-accent">H</span>
-      <span className="text-accent-orange">e</span>
-      <span className="text-primary">l</span>
-      <span className="text-accent-orange">l</span>
-      <span className="text-accent-green">o</span>
-      <span className="text-primary">Job</span>
-    </span>
-  );
 
   const NavLink = ({ href, label, className, icon: Icon, onClick }: { href: string; label: string, className?: string, icon?: React.ElementType, onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void }) => (
     <Link
       href={href}
       className={cn(
         'transition-colors hover:text-primary py-2 block font-medium flex items-center gap-2',
-        pathname.startsWith(href) && href !== '/' || pathname === href ? 'text-primary font-bold' : 'text-foreground/80',
+        (pathname === href || (pathname.startsWith(href) && href !== '/')) ? 'text-primary font-bold' : 'text-foreground/80',
         className
       )}
        onClick={(e) => {
@@ -140,9 +101,8 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden md:flex items-center gap-2">
-            <LanguageSwitcher />
-             <Button asChild variant="outline">
-                <Link href="/candidate-profile">Hồ sơ của tôi</Link>
+            <Button asChild variant="outline">
+                <Link href="/jobs">Trang quản lý</Link>
             </Button>
             
             <DropdownMenu>
@@ -153,20 +113,22 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-[360px]" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
-                      <AvatarFallback>A</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-base font-medium leading-none">HelloJob</p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        Cán bộ tuyển dụng
-                      </p>
+                <DropdownMenuItem asChild>
+                  <Link href="/candidate-profile" className="block hover:bg-accent rounded-md p-2 cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
+                        <AvatarFallback>A</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          Ứng viên Thực tập sinh
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </DropdownMenuLabel>
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <div className="grid grid-cols-4 gap-2 p-2">
@@ -185,7 +147,7 @@ export function Header() {
 
         </div>
         <div className="md:hidden">
-            <LanguageSwitcher />
+            {/* The language switcher that was here is now removed. */}
         </div>
       </div>
     </header>

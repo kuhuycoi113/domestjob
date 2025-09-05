@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BrainCircuit, BarChartHorizontal, ClipboardCheck, ArrowRight, UserCheck } from 'lucide-react';
+import { BrainCircuit, BarChartHorizontal, ClipboardCheck, ArrowRight, UserCheck, Heart } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -17,7 +17,7 @@ const tests = [
     icon: ClipboardCheck,
     title: 'Khám phá nghề nghiệp O*NET',
     description: 'Dựa trên sở thích của bạn, bài test sẽ gợi ý danh sách các ngành nghề cụ thể đang có nhu cầu cao trên thị trường, giúp bạn có lựa chọn thực tế và thông minh.',
-    link: '/career-orientation/holland',
+    link: '/career-orientation/onet',
     color: 'accent-blue'
   },
   {
@@ -33,6 +33,13 @@ const tests = [
     description: 'Xác định 1 trong 16 loại tính cách của bạn để hiểu rõ hơn về điểm mạnh, điểm yếu và các ngành nghề phù hợp với xu hướng tự nhiên của bạn.',
     link: '/career-orientation/mbti',
     color: 'accent-blue'
+  },
+   {
+    icon: Heart,
+    title: 'Trắc nghiệm giá trị Barrett (CTT)',
+    description: 'Xác định những giá trị cá nhân cốt lõi của bạn để tìm kiếm một môi trường làm việc có văn hoá doanh nghiệp phù hợp.',
+    link: '/career-orientation/barrett',
+    color: 'accent-red'
   }
 ];
 
@@ -53,7 +60,7 @@ export default function CareerOrientationPage() {
             </div>
              <div className="relative flex justify-center">
                 <Image 
-                  src="https://placehold.co/500x500.png"
+                  src="/img/who_am_i.png?v=3"
                   alt="Biểu đồ hướng nghiệp"
                   width={450}
                   height={450}
@@ -74,7 +81,7 @@ export default function CareerOrientationPage() {
               Các bài kiểm tra này được thiết kế dựa trên các mô hình tâm lý học và hướng nghiệp uy tín trên thế giới.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {tests.map(test => (
               <Card key={test.title} className={`flex flex-col text-center p-6 border-t-4 border-${test.color} shadow-lg hover:shadow-xl transition-shadow`}>
                 <CardHeader>

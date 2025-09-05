@@ -12,9 +12,10 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CreditCard, Lock, ShieldCheck } from 'lucide-react';
+import { CreditCard, Lock, ShieldCheck, UserPlus, Gem } from 'lucide-react';
 import { PayPayIcon, LinePayIcon } from './custom-icons';
 import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 interface PaymentDialogProps {
   isOpen: boolean;
@@ -30,7 +31,7 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
         // For this demo, we'll just simulate a success.
         toast({
             title: "Thanh toán thành công!",
-            description: "Bạn đã mở khóa toàn bộ ứng viên cho tin tuyển dụng này.",
+            description: "Bạn đã mở khóa toàn bộ nội dung khóa học này.",
             className: "bg-green-500 text-white",
         });
         onSuccess();
@@ -41,15 +42,15 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="font-headline text-2xl">Mở khóa toàn bộ ứng viên</DialogTitle>
+          <DialogTitle className="font-headline text-2xl">Mở khóa toàn bộ khóa học</DialogTitle>
           <DialogDescription>
-            Chọn phương thức thanh toán để xem toàn bộ danh sách. Phí dịch vụ là 1,000 JPY.
+            Để xem toàn bộ nội dung, vui lòng chọn một trong các phương thức dưới đây.
           </DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="credit-card" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="credit-card">Thẻ tín dụng</TabsTrigger>
+            <TabsTrigger value="credit-card">Thanh toán trực tiếp</TabsTrigger>
             <TabsTrigger value="gateways">Cổng khác</TabsTrigger>
           </TabsList>
           
@@ -104,11 +105,26 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
           </TabsContent>
         </Tabs>
         
-        <DialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
-          <Button className="w-full" size="lg" onClick={handlePayment}>Thanh toán 1,000 JPY</Button>
-          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+        <DialogFooter className="flex-col gap-3 sm:flex-col sm:space-x-0">
+          <Button className="w-full" size="lg" onClick={handlePayment}>Thanh toán 29.000 VND</Button>
+          <div className="flex items-center gap-4 w-full">
+            <hr className="flex-grow border-border"/>
+            <span className="text-muted-foreground text-xs font-semibold">HOẶC</span>
+            <hr className="flex-grow border-border"/>
+          </div>
+          <Button asChild variant="secondary" className="w-full bg-green-100 hover:bg-green-200 text-green-700 border-green-200 border" size="lg">
+            <Link href="/premium">
+                <Gem className="mr-2"/> Đăng ký tài khoản Premium
+            </Link>
+          </Button>
+           <Button asChild variant="outline" className="w-full bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200" size="lg">
+             <Link href="/referral">
+                <UserPlus className="mr-2"/> Giới thiệu ứng viên khác
+            </Link>
+          </Button>
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mt-2">
              <ShieldCheck className="h-4 w-4 text-green-500" />
-             <span>Thanh toán được bảo mật bởi Stripe</span>
+             <span>Thanh toán được bảo mật</span>
           </div>
         </DialogFooter>
       </DialogContent>

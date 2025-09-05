@@ -33,7 +33,7 @@ type MediaItem = {
   src: string;
   thumbnail?: string; 
   alt: string;
-  dataAiHint: string;
+  "data-ai-hint": string;
 };
 
 type EnrichedCandidateProfile = CandidateProfile & { 
@@ -120,21 +120,21 @@ export default function CandidateProfilePage() {
     let profileToLoad: EnrichedCandidateProfile;
 
     const defaultImages: MediaItem[] = [
-      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trước', dataAiHint: 'front view portrait' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trái', dataAiHint: 'left side portrait' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh phải', dataAiHint: 'right side portrait' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trước', dataAiHint: 'full body front' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trái', dataAiHint: 'full body left' },
-      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân phải', dataAiHint: 'full body right' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trước', "data-ai-hint": 'front view portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trái', "data-ai-hint": 'left side portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh phải', "data-ai-hint": 'right side portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trước', "data-ai-hint": 'full body front' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân trái', "data-ai-hint": 'full body left' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Toàn thân phải', "data-ai-hint": 'full body right' },
     ];
     
     const defaultVideos: MediaItem[] = [
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Giới thiệu bản thân', dataAiHint: 'self introduction video' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 1', dataAiHint: 'skill demonstration' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 2', dataAiHint: 'welding skill' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Trả lời phỏng vấn', dataAiHint: 'interview answers' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Dự án đã làm', dataAiHint: 'project showcase' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Video khác', dataAiHint: 'personal video' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Giới thiệu bản thân', "data-ai-hint": 'self introduction video' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 1', "data-ai-hint": 'skill demonstration' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 2', "data-ai-hint": 'welding skill' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Trả lời phỏng vấn', "data-ai-hint": 'interview answers' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Dự án đã làm', "data-ai-hint": 'project showcase' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Video khác', "data-ai-hint": 'personal video' },
     ];
 
     if (storedProfile) {
@@ -335,60 +335,60 @@ export default function CandidateProfilePage() {
   const Level1EditDialogContent = () => {
     if (!tempCandidate) return null;
     return (
-      <div className="space-y-4">
-          {[
-              { label: '1. Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
-              { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
-              { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
-              { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
-              { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
-              { label: '6. Chiều cao', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
-              { label: '7. Cân nặng', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
-              { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
-              { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Có viêm gan B'] },
-              { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
-              { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
-              { label: '12. Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
-              { label: '13. Tìm việc phỏng vấn, tuyển tại', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
-              { label: '14. Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations' },
-              { label: '15. Mô tả/ghi chú', value: tempCandidate.notes, field: 'notes', type: 'simple', isTextarea: true },
-          ].map(item => (
-              <div key={item.label} className="grid grid-cols-3 items-center gap-4">
-                  <Label className="col-span-1 text-right">{item.label}</Label>
-                  <div className="col-span-2">
-                    {item.isTextarea ? (
-                         <Textarea 
-                            value={item.value || ''} 
-                            onChange={e => handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value)} 
-                        />
-                    ) : item.options ? (
-                        <Select 
-                            value={item.value || ''} 
-                            onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder={`Chọn ${item.label.split('. ')[1].toLowerCase()}`} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
-                            </SelectContent>
-                        </Select>
-                    ) : (
-                        <Input 
-                            value={item.value || ''} 
-                            onChange={e => {
-                                if (item.type === 'simple') {
-                                    handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value);
-                                } else {
-                                    handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, e.target.value);
-                                }
-                            }}
-                        />
-                    )}
-                  </div>
-              </div>
-          ))}
-      </div>
+        <div className="space-y-4">
+            {[
+                { label: '1. Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
+                { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
+                { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
+                { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
+                { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
+                { label: '6. Chiều cao', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
+                { label: '7. Cân nặng', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
+                { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
+                { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Có viêm gan B'] },
+                { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
+                { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
+                { label: '12. Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
+                { label: '13. Tìm việc phỏng vấn, tuyển tại', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
+                { label: '14. Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations' },
+                { label: '15. Mô tả/ghi chú', value: tempCandidate.notes, field: 'notes', type: 'simple', isTextarea: true },
+            ].map(item => (
+                <div key={item.label} className="grid grid-cols-3 items-center gap-4">
+                    <Label className="col-span-1 text-right">{item.label}</Label>
+                    <div className="col-span-2">
+                      {item.isTextarea ? (
+                           <Textarea 
+                              value={item.value || ''} 
+                              onChange={e => handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value)} 
+                          />
+                      ) : item.options ? (
+                          <Select 
+                              value={item.value || ''} 
+                              onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
+                          >
+                              <SelectTrigger>
+                                  <SelectValue placeholder={`Chọn ${item.label.split('. ')[1].toLowerCase()}`} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                  {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                              </SelectContent>
+                          </Select>
+                      ) : (
+                          <Input 
+                              value={item.value || ''} 
+                              onChange={e => {
+                                  if (item.type === 'simple') {
+                                      handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value);
+                                  } else {
+                                      handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, e.target.value);
+                                  }
+                              }}
+                          />
+                      )}
+                    </div>
+                </div>
+            ))}
+        </div>
     );
   };
   
@@ -520,14 +520,13 @@ export default function CandidateProfilePage() {
     <div className="space-y-4">
         <div className="text-center">
              <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
-             <h3 className="text-2xl font-headline mt-2">TẠO PROFILE TÌM VIỆC</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-orange-300">
-                        <h4 className="font-bold text-orange-500">Mức 1</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
                         <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
                     </Card>
@@ -547,8 +546,8 @@ export default function CandidateProfilePage() {
 
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-green-300">
-                        <h4 className="font-bold text-green-500">Mức 2</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-green">
+                        <h4 className="font-bold text-accent-green">Mức 2</h4>
                         <Briefcase className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin đầy đủ)</p>
                     </Card>
@@ -567,8 +566,8 @@ export default function CandidateProfilePage() {
             
             <Dialog>
                 <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-blue-300">
-                        <h4 className="font-bold text-blue-500">Mức 3</h4>
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-blue">
+                        <h4 className="font-bold text-accent-blue">Mức 3</h4>
                         <Contact className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <div className="flex justify-center items-center gap-2 mt-1">
                             <Facebook className="h-5 w-5 text-blue-600" />
@@ -604,7 +603,7 @@ export default function CandidateProfilePage() {
                 {items.slice(0, 6).map((item, index) => (
                     <CarouselItem key={index} className="pl-2 md:pl-4 basis-[30%] md:basis-1/3 lg:basis-1/4">
                        <div className="relative group overflow-hidden rounded-lg aspect-[9/16] cursor-pointer">
-                            <Image src={item.thumbnail || item.src} alt={item.alt} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={item.dataAiHint} />
+                            <Image src={item.thumbnail || item.src} alt={item.alt} fill className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={item['data-ai-hint']} />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <PlayCircle className="h-12 w-12 text-white/80 drop-shadow-lg" />
@@ -647,7 +646,7 @@ export default function CandidateProfilePage() {
                         <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5">
                            <div className="space-y-2">
                                 <div className="relative group aspect-[3/4] rounded-lg overflow-hidden border">
-                                     <Image src={item.src} alt={item.alt} fill className="object-cover" data-ai-hint={item.dataAiHint} />
+                                     <Image src={item.src} alt={item.alt} fill className="object-cover" data-ai-hint={item['data-ai-hint']} />
                                      <Label htmlFor={`image-upload-${index}`} className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                         <Camera className="h-8 w-8 text-white"/>
                                      </Label>

@@ -4,7 +4,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText } from 'lucide-react';
+import { Scroll, Timer, UserCircle, Briefcase, ChevronRight, Video, FileText, PlusCircle, ChevronDown, Newspaper, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { useEffect, useState, use } from 'react';
@@ -14,6 +14,12 @@ import Link from 'next/link';
 import { jobData } from '@/lib/mock-data';
 import { JobCard } from '@/components/job-card';
 import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 
 export default function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -89,7 +95,37 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
         </div>
       </>
     );
-  }
+  };
+  
+  const ShareContentCta = () => (
+    <section className="w-full mt-16 py-16 bg-background rounded-lg">
+        <div className="container mx-auto px-4 md:px-6">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="text-center md:text-left">
+                    <h2 className="text-3xl font-headline font-bold text-accent">Chia sẻ kinh nghiệm của bạn</h2>
+                    <p className="mt-2 text-muted-foreground">Bạn có câu chuyện, mẹo hay hoặc kinh nghiệm quý báu muốn chia sẻ với cộng đồng người Việt tại Nhật? Hãy đóng góp bài viết, video cho HelloJob!</p>
+                </div>
+                 <div className="flex justify-center md:justify-end">
+                     <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button size="lg" className="rounded-full h-14 text-lg px-8">
+                                <PlusCircle className="mr-2"/>
+                                Chia sẻ ngay
+                                <ChevronDown className="ml-2"/>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild><Link href="/handbook/create/post" className="cursor-pointer"><FileText className="mr-2"/>Bài viết</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/video" className="cursor-pointer"><Video className="mr-2"/>Video dài</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/video-short" className="cursor-pointer"><Video className="mr-2"/>Video ngắn</Link></DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link href="/handbook/create/image" className="cursor-pointer"><ImageIcon className="mr-2"/>Ảnh</Link></DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                 </div>
+            </div>
+        </div>
+    </section>
+  );
 
   return (
     <div className="bg-secondary">
@@ -127,7 +163,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     </CardHeader>
                     <CardContent className="space-y-4">
                       {hotJobs.slice(0,2).map(job => (
-                        <Link href={`/jobs/${job.id}`} key={job.id} className="group block">
+                        <Link href="/jobs" key={job.id} className="group block">
                            <p className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-2">{job.title}</p>
                            <p className="text-xs text-muted-foreground">{job.recruiter.company}</p>
                         </Link>
@@ -177,6 +213,8 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                     ))}
                 </div>
             </section>
+
+             <ShareContentCta />
           </main>
           
           {/* Related Articles */}
@@ -196,7 +234,7 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
                         </div>
                       </Card>
                   </Link>
-                ))}\
+                ))}
               </div>
             </div>
           </aside>

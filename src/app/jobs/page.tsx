@@ -111,7 +111,7 @@ export default function JobsDashboardPage() {
             <StatCard title="Job phù hợp/tuần" value="12" change="+5.2%" />
             <StatCard title="Job phù hợp/tháng" value="48" change="+8.1%" />
             <StatCard title="Job cùng ngành nghề" value="315" />
-            <StatCard title="Người có cùng nhu cầu" value="1,286" />
+            <StatCard title="Lượt xem hồ sơ" value={viewers.length} change="+12" />
         </div>
         
         {/* Progress Tracker */}
@@ -156,7 +156,7 @@ export default function JobsDashboardPage() {
                     onClick={() => setIsViewersDialogOpen(true)}
                 >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Lượt xem hồ sơ của bạn</CardTitle>
+                        <CardTitle className="text-sm font-medium">Nhà tuyển dụng đã xem hồ sơ</CardTitle>
                         <Eye className="h-5 w-5 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>

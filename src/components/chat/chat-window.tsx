@@ -112,6 +112,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
 
           <div>
              <div className="flex items-center gap-2">
+                 {/* CHATNAME1 */}
                  <p className="text-sm font-bold font-headline leading-tight">{displayContact.name}</p>
                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
              </div>

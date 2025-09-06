@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-import { ArrowRight, BookOpen, CheckCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle, Handshake } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { courses } from '@/lib/learn-data';
@@ -11,6 +11,28 @@ export const metadata: Metadata = {
   title: 'E-Learning: Chinh phục tiếng Nhật và Kỹ năng làm việc',
   description: 'Nâng cao kỹ năng, mở rộng cơ hội với các khóa học E-learning được thiết kế riêng cho người lao động Việt Nam muốn làm việc tại Nhật Bản.',
 };
+
+const InstructorCta = () => (
+    <section className="w-full mt-20">
+      <div className="container mx-auto px-4 md:px-6">
+        <Card className="bg-gradient-to-r from-accent to-primary text-primary-foreground shadow-2xl p-8 md:p-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="text-center md:text-left">
+                    <h2 className="text-3xl font-headline font-bold">Trở thành người hướng dẫn trên HelloJob</h2>
+                    <p className="mt-2 text-primary-foreground/80">Chia sẻ kiến thức chuyên môn của bạn và kiếm thêm thu nhập bằng cách tạo ra các khóa học online của riêng bạn trên nền tảng của chúng tôi.</p>
+                </div>
+                 <div className="flex justify-center md:justify-end">
+                     <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 text-lg px-8">
+                        <Handshake className="mr-2"/>
+                        Bắt đầu ngay
+                    </Button>
+                 </div>
+            </div>
+        </Card>
+      </div>
+    </section>
+);
+
 
 export default function LearnPage() {
   return (
@@ -57,6 +79,7 @@ export default function LearnPage() {
                   </Card>
             ))}
         </div>
+        <InstructorCta />
       </div>
     </div>
   );

@@ -52,9 +52,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     let targetUser = user;
 
     if (!targetUser) {
-      // If no specific user is provided, default to the assigned consultant.
-      // Fallback to bot if consultant isn't assigned yet (e.g., during initial render).
-      targetUser = assignedConsultant || helloJobBot;
+      // If no specific user is provided, always default to the bot.
+      targetUser = helloJobBot;
     }
     
     let conversation = conversations.find(c => c.participants.some(p => p.id === targetUser!.id));

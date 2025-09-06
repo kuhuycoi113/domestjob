@@ -115,9 +115,9 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
         {/* Header */}
         <header className="flex items-center gap-3 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
           <div className="flex-shrink-0">
-             <Avatar className="h-10 w-10 border-2 border-white">
-                <AvatarImage src={mainContact.avatarUrl} alt={mainContact.name} />
-                <AvatarFallback>{mainContact.name.charAt(0)}</AvatarFallback>
+             <Avatar className="h-10 w-10 border-2 border-white bg-white">
+                <AvatarImage src="/img/favi2.png" alt="HelloJob" />
+                <AvatarFallback>HJ</AvatarFallback>
               </Avatar>
           </div>
 

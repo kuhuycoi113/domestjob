@@ -1,4 +1,3 @@
-
 'use client';
 
 import { cn } from '@/lib/utils';
@@ -35,13 +34,17 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
   if (message.isLoading) {
     return (
         <div className="flex items-start gap-2 justify-start">
+             {/* CHATAVATAR2 */}
             <Avatar className="h-8 w-8">
                 <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
                 <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
+                 {/* CHATNAME2 */}
                  <p className="text-xs text-muted-foreground mb-1 ml-3">
-                    Tư vấn viên {displayUser.name}
+                    <Link href={`/consultant-profile/${displayUser.id}`} className="hover:underline hover:text-primary">
+                        Tư vấn viên {displayUser.name}
+                    </Link>
                 </p>
                 <div className="bg-background rounded-2xl rounded-bl-none px-4 py-2 border flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin"/>
@@ -55,10 +58,13 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
   return (
     <div className={cn('flex items-start gap-2', isCurrentUser ? 'justify-end' : 'justify-start')}>
       {!isCurrentUser && (
-        <Avatar className="h-8 w-8 flex-shrink-0">
-          <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
-          <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
-        </Avatar>
+        <>
+            {/* CHATAVATAR2 */}
+            <Avatar className="h-8 w-8 flex-shrink-0">
+            <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
+            <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+        </>
       )}
       <div className="flex flex-col gap-1" style={{ maxWidth: 'calc(100% - 40px)' }}>
         {/* CHATNAME2 */}

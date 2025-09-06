@@ -19,20 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import Image from 'next/image';
 import { useChat } from '@/contexts/ChatContext';
-
-const quickAccessLinks = [
-    { href: '/roadmap', label: 'Lộ trình', icon: Compass, id: 'MMN01' },
-    { href: '/career-orientation', label: 'Hướng nghiệp', icon: Compass },
-    { href: '/learn', label: 'E-Learning', icon: BookOpen },
-    { href: '/about', label: 'Giới thiệu', icon: Info },
-    { href: '/post-job', label: 'Đăng tuyển dụng', icon: PlusCircle },
-    { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
-    { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
-    { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
-    { href: '/feedback', label: 'Góp ý', icon: MessageSquare },
-    { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
-    { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
-];
+import { mainNavLinks, quickAccessLinks, mobileFooterLinks } from '@/lib/nav-data';
 
 const Logo = () => (
     <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={110} height={36} className="h-9 w-auto" />
@@ -49,20 +36,12 @@ export function MobileFooter() {
     setActivePath(pathname);
   }, [pathname]);
 
-
-  const footerLinks = [
-    { href: '/', icon: Home, label: 'Trang chủ' },
-    { href: '/ai-profile', icon: Sparkles, label: 'Hồ sơ AI' },
-    { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
-    { href: '/handbook', icon: LifeBuoy, label: 'Cẩm nang' },
-  ];
-
-  const isQuickAccessLinkActive = quickAccessLinks.some(link => activePath.startsWith(link.href));
+  const isQuickAccessLinkActive = quickAccessLinks.some(link => activePath.startsWith(link.href) && link.href !== '/');
 
   return (
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
       <div className="flex justify-around items-center h-16">
-        {footerLinks.map(({ href, icon: Icon, label }) => {
+        {mobileFooterLinks.map(({ href, icon: Icon, label }) => {
            const isActive = (activePath === href) || (href !== '/' && activePath.startsWith(href));
            return (
             <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/5 pt-1">
@@ -117,7 +96,7 @@ export function MobileFooter() {
                       return (
                        <Link 
                         key={link.href}
-                        id={link.id}
+                        id={link.href === '/roadmap' ? 'MMN01' : undefined}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
                         className={cn("flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md hover:bg-accent/80", isActive ? "bg-primary/10 ring-2 ring-primary" : "bg-secondary")}>

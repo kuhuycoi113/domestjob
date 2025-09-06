@@ -26,31 +26,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Image from 'next/image';
 import { useChat } from '@/contexts/ChatContext';
-
-const mainNavLinks = [
-  { href: '/', label: 'Trang chủ'},
-  { href: '/roadmap', label: 'Lộ trình' },
-  { href: '/career-orientation', label: 'Hướng nghiệp' },
-  { href: '/ai-profile', label: 'Tạo hồ sơ AI', icon: Sparkles },
-  { href: '/learn', label: 'E-Learning' },
-  { href: '/handbook', label: 'Cẩm nang'},
-  { href: '/about', label: 'Giới thiệu' },
-];
-
-const quickAccessLinks = [
-    { href: '/ai-profile', label: 'Tạo hồ sơ AI', icon: Sparkles },
-    { href: '/roadmap', label: 'Lộ trình', icon: Compass },
-    { href: '/learn', label: 'E-Learning', icon: BookOpen },
-    { href: '/post-job', label: 'Đăng tuyển dụng', icon: PlusCircle },
-    { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
-    { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
-    { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
-    { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
-    { href: '/about', label: 'Giới thiệu', icon: Info },
-    { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
-    { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
-    { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
-];
+import { mainNavLinks, quickAccessLinks } from '@/lib/nav-data';
 
 
 export const Logo = ({ className }: { className?: string }) => (

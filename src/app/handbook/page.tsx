@@ -155,7 +155,7 @@ const ShareDialogContent = () => (
 const ShareContentCta = () => (
     <section className="w-full mt-20">
       <div className="container mx-auto px-4 md:px-6">
-        <Card className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-2xl p-8 md:p-12">
+        <Card className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-2xl p-8">
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="text-center md:text-left">
                     <h2 className="text-3xl font-headline font-bold">Chia sẻ kinh nghiệm của bạn</h2>
@@ -164,7 +164,7 @@ const ShareContentCta = () => (
                  <div className="flex justify-center md:justify-end">
                      <Dialog>
                         <DialogTrigger asChild>
-                            <Button size="lg" className="bg-white text-orange-600 hover:bg-white/90 rounded-full h-14 text-lg px-8">
+                            <Button size="lg" className="bg-white text-orange-600 hover:bg-white/90 rounded-full h-12 text-md px-8">
                                 <PlusCircle className="mr-2"/>
                                 Chia sẻ ngay
                             </Button>

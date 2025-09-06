@@ -25,6 +25,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { cn } from '@/lib/utils';
 import { industriesByJobType, type Industry } from '@/lib/industry-data';
 import { jobData } from '@/lib/mock-data';
@@ -304,10 +312,26 @@ export default function HomeClient() {
                 <div className="md:col-span-3 lg:col-span-3">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-bold">Kết quả ({jobData.length})</h2>
-                        <Button variant="ghost" size="sm" className="flex items-center gap-1 md:hidden">
-                            <ListFilter className="w-4 h-4" />
-                            Lọc
-                        </Button>
+                        <Sheet>
+                          <SheetTrigger asChild>
+                             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:hidden">
+                                <ListFilter className="w-4 h-4" />
+                                Lọc
+                            </Button>
+                          </SheetTrigger>
+                          <SheetContent>
+                            <SheetHeader>
+                              <SheetTitle>Bộ lọc tìm kiếm</SheetTitle>
+                              <SheetDescription>
+                                Tinh chỉnh kết quả tìm kiếm của bạn.
+                              </SheetDescription>
+                            </SheetHeader>
+                            <div className="py-4 h-[calc(100vh-8rem)] overflow-y-auto">
+                              <FilterSidebar />
+                            </div>
+                          </SheetContent>
+                        </Sheet>
+                        
                          <Select>
                             <SelectTrigger className="w-[180px] hidden md:flex">
                                 <SelectValue placeholder="Sắp xếp theo" />

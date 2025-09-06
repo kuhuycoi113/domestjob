@@ -461,7 +461,7 @@ export default function HomeClient() {
                         <TrendingUp /> Xem ngay lộ trình
                       </Link>
                     </Button>
-                    <Button asChild size="lg" variant="outline">
+                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
                         <Link href="/handbook/ginou-2-lao-dong-lanh-nghe">
                            <BookCopy /> Xem ngay bài viết
                         </Link>

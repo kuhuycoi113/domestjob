@@ -37,16 +37,6 @@ export function FloatingChatWidget() {
                 </Button>
             </div>
         </div>
-
-        {/* Mobile floating button */}
-        <div className="md:hidden fixed bottom-24 right-4 z-40">
-             <Button asChild size="icon" className="h-14 w-14 rounded-full bg-primary shadow-lg hover:bg-primary/90">
-                <Link href="/chat">
-                <MessageSquare className="h-7 w-7" />
-                <span className="sr-only">Mở Chat</span>
-                </Link>
-            </Button>
-        </div>
     </>
   );
 }

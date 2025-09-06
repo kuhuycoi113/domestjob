@@ -1,4 +1,6 @@
 
+'use client';
+
 import { JobRecommendationResponse } from "@/ai/schemas/recommend-jobs-schema";
 
 export type User = {
@@ -55,16 +57,6 @@ export const consultants: User[] = [
   },
   {
     id: 'consultant-2',
-    name: 'Nguyễn Thị Minh Anh',
-    avatarUrl: '/img/minhanh.jpg',
-    dataAiHint: 'professional woman portrait',
-    experience: '3 năm',
-    mainExpertise: 'Chuyên gia tư vấn ngành thực phẩm',
-    successfulCandidates: 280,
-    strengths: ['Chuyên môn cao', 'Tỷ lệ đỗ cao', 'Hỗ trợ nhanh'],
-  },
-   {
-    id: 'consultant-3',
     name: 'Phạm Thị Hà',
     avatarUrl: '/img/chiha.jpg',
     dataAiHint: 'professional woman portrait',
@@ -74,7 +66,7 @@ export const consultants: User[] = [
     strengths: ['Tận tâm', 'Am hiểu thủ tục', 'Hỗ trợ chi tiết'],
   },
    {
-    id: 'consultant-4',
+    id: 'consultant-3',
     name: 'Nguyễn Thị Phương Loan',
     avatarUrl: 'https://placehold.co/200x200.png',
     dataAiHint: 'professional woman portrait',
@@ -82,6 +74,36 @@ export const consultants: User[] = [
     mainExpertise: 'Tư vấn việc làm Kỹ sư & Trí thức',
     successfulCandidates: 350,
     strengths: ['Nhiệt tình', 'Hỗ trợ 24/7', 'Quan hệ rộng'],
+  },
+  {
+    id: 'consultant-4',
+    name: 'Nguyễn Thị Ngọc Oanh',
+    avatarUrl: 'https://placehold.co/200x200.png',
+    dataAiHint: 'professional woman portrait',
+    experience: '3 năm',
+    mainExpertise: 'Tư vấn ngành xây dựng & cơ khí',
+    successfulCandidates: 310,
+    strengths: ['Nhiều đơn gấp', 'Hỗ trợ nhiệt tình', 'Kinh nghiệm'],
+  },
+  {
+    id: 'consultant-5',
+    name: 'Nguyễn Văn Minh',
+    avatarUrl: 'https://placehold.co/200x200.png',
+    dataAiHint: 'male consultant portrait',
+    experience: '6 năm',
+    mainExpertise: 'Chuyên gia tư vấn thị trường Kansai',
+    successfulCandidates: 500,
+    strengths: ['Kinh nghiệm', 'Quan hệ rộng', 'Tỷ lệ đỗ cao'],
+  },
+  {
+    id: 'consultant-6',
+    name: 'Nguyễn Thị Thu Trang',
+    avatarUrl: 'https://placehold.co/200x200.png',
+    dataAiHint: 'female consultant smiling',
+    experience: '3 năm',
+    mainExpertise: 'Tư vấn ngành nông nghiệp & thực phẩm',
+    successfulCandidates: 290,
+    strengths: ['Nhiệt tình', 'Am hiểu ngành', 'Hỗ trợ nhanh'],
   },
 ];
 

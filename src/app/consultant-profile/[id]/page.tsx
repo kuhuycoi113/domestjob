@@ -36,18 +36,6 @@ const consultants = [
     strengths: ['Nhiệt tình', 'Hỗ trợ 24/7', 'Quan hệ rộng'],
   },
   {
-    id: 'nguyen-thi-minh-anh',
-    name: 'Nguyễn Thị Minh Anh',
-    avatarUrl: '/img/minhanh.jpg',
-    dataAiHint: 'professional woman portrait',
-    experience: '3 năm',
-    mainExpertise: 'Chuyên gia tư vấn ngành thực phẩm',
-    subExpertise: 'Các đơn hàng tại Fukuoka',
-    successfulCandidates: 280,
-    managedJobs: 180,
-    strengths: ['Chuyên môn cao', 'Tỷ lệ đỗ cao', 'Hỗ trợ nhanh'],
-  },
-  {
     id: 'nguyen-thi-ngoc-oanh',
     name: 'Nguyễn Thị Ngọc Oanh',
     avatarUrl: 'https://placehold.co/200x200.png',
@@ -70,7 +58,31 @@ const consultants = [
     successfulCandidates: 220,
     managedJobs: 150,
     strengths: ['Tận tâm', 'Am hiểu thủ tục', 'Hỗ trợ chi tiết'],
-  }
+  },
+  {
+    id: 'nguyen-van-minh',
+    name: 'Nguyễn Văn Minh',
+    avatarUrl: 'https://placehold.co/200x200.png',
+    dataAiHint: 'male consultant portrait',
+    experience: '6 năm',
+    mainExpertise: 'Chuyên gia tư vấn thị trường Kansai',
+    subExpertise: 'Các đơn hàng lương cao',
+    successfulCandidates: 500,
+    managedJobs: 320,
+    strengths: ['Kinh nghiệm', 'Quan hệ rộng', 'Tỷ lệ đỗ cao'],
+  },
+  {
+    id: 'nguyen-thi-thu-trang',
+    name: 'Nguyễn Thị Thu Trang',
+    avatarUrl: 'https://placehold.co/200x200.png',
+    dataAiHint: 'female consultant smiling',
+    experience: '3 năm',
+    mainExpertise: 'Tư vấn ngành nông nghiệp & thực phẩm',
+    subExpertise: 'Hỗ trợ ứng viên nữ',
+    successfulCandidates: 290,
+    managedJobs: 180,
+    strengths: ['Nhiệt tình', 'Am hiểu ngành', 'Hỗ trợ nhanh'],
+  },
 ];
 
 const companyValues = [

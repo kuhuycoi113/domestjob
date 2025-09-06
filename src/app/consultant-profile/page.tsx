@@ -52,7 +52,7 @@ export default function ConsultantListPage() {
                 Những chuyên gia tận tâm sẽ đồng hành cùng bạn trên con đường chinh phục sự nghiệp tại Nhật Bản.
             </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-stretch">
             {consultants.map((consultant) => (
                 <ConsultantCard key={consultant.id} consultant={consultant} />
             ))}

@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { VideoCallDialog } from '../video-call-dialog';
 import { VoiceCallDialog } from '../voice-call-dialog';
 import { usePathname } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 interface ChatWindowProps {
   conversation: Conversation;
@@ -21,6 +22,7 @@ interface ChatWindowProps {
 
 export function ChatWindow({ conversation }: ChatWindowProps) {
   const { sendMessage, closeChat, assignedConsultant } = useChat();
+  const { toast } = useToast();
   const [newMessage, setNewMessage] = useState('');
   const [isVideoCallDialogOpen, setIsVideoCallDialogOpen] = useState(false);
   const [isVoiceCallDialogOpen, setIsVoiceCallDialogOpen] = useState(false);
@@ -79,20 +81,55 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   };
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+    const files = event.target.files;
+    if (!files) return;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const attachment: Attachment = {
-        type: file.type.startsWith('image/') ? 'image' : 'video',
-        url: e.target?.result as string,
-        fileName: file.name
-      };
-      sendMessage('', attachment);
-    };
-    reader.readAsDataURL(file);
+    const MAX_IMAGES = 50;
+    const MAX_VIDEOS = 20;
+    const MAX_IMAGE_SIZE_MB = 3;
+    const MAX_VIDEO_SIZE_MB = 200;
+    const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+    const MAX_VIDEO_SIZE_BYTES = MAX_VIDEO_SIZE_MB * 1024 * 1024;
 
+    const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+    const videoFiles = Array.from(files).filter(file => file.type.startsWith('video/'));
+
+    if (imageFiles.length > MAX_IMAGES) {
+        toast({ variant: 'destructive', title: 'Lỗi tải lên', description: `Bạn chỉ có thể gửi tối đa ${MAX_IMAGES} ảnh một lần.` });
+        return;
+    }
+    if (videoFiles.length > MAX_VIDEOS) {
+        toast({ variant: 'destructive', title: 'Lỗi tải lên', description: `Bạn chỉ có thể gửi tối đa ${MAX_VIDEOS} video một lần.` });
+        return;
+    }
+
+    const allFiles = [...imageFiles, ...videoFiles];
+
+    for (const file of allFiles) {
+        const isImage = file.type.startsWith('image/');
+        const isVideo = file.type.startsWith('video/');
+
+        if (isImage && file.size > MAX_IMAGE_SIZE_BYTES) {
+            toast({ variant: 'destructive', title: 'Ảnh quá lớn', description: `Ảnh "${file.name}" vượt quá giới hạn ${MAX_IMAGE_SIZE_MB}MB.` });
+            continue; // Skip this file
+        }
+        if (isVideo && file.size > MAX_VIDEO_SIZE_BYTES) {
+            toast({ variant: 'destructive', title: 'Video quá lớn', description: `Video "${file.name}" vượt quá giới hạn ${MAX_VIDEO_SIZE_MB}MB.` });
+            continue; // Skip this file
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const attachment: Attachment = {
+                type: isImage ? 'image' : 'video',
+                url: e.target?.result as string,
+                fileName: file.name
+            };
+            sendMessage('', attachment);
+        };
+        reader.readAsDataURL(file);
+    }
+    
     if (event.target) {
         event.target.value = '';
     }
@@ -158,6 +195,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
               className="hidden" 
               onChange={handleImageChange}
               accept="image/*,video/*"
+              multiple
             />
             <div className="flex items-center gap-1">
               <Button type="button" variant="ghost" size="icon" className="text-muted-foreground" onClick={handleFileButtonClick}><Paperclip /></Button>

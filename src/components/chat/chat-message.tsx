@@ -53,7 +53,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
       <div className="flex flex-col gap-1" style={{ maxWidth: 'calc(100% - 40px)' }}>
         {!isCurrentUser && (
             <p className="text-xs text-muted-foreground ml-3">
-                {message.sender.name}
+                {message.sender.isBot ? message.sender.name : `Tư vấn viên ${message.sender.name}`}
             </p>
         )}
 

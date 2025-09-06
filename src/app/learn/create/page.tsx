@@ -28,7 +28,7 @@ const steps = [
     title: 'Doanh thu',
     description: 'Kiếm tiền từ kiến thức của bạn với mô hình chia sẻ doanh thu minh bạch và hấp dẫn của chúng tôi.',
     buttonText: 'Xem cơ chế',
-    link: '#',
+    link: '/learn/dashboard',
     color: 'green'
   }
 ];

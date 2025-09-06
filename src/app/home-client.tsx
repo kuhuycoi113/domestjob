@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign } from 'lucide-react';
+import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign, Star, Ruler, Weight, Dna } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
@@ -151,9 +151,11 @@ export default function HomeClient() {
 
   const FilterSidebar = () => {
     const specialConditions = [
-        'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Không yêu cầu kinh nghiệm'
+        'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Không yêu cầu kinh nghiệm', 'Việc nhẹ', 'Việc nặng', 'Nghỉ T7, CN', 'Nhận visa katsudo'
     ];
     const languageLevels = ['N1', 'N2', 'N3', 'N4', 'N5', 'Không yêu cầu'];
+    const educationLevels = ["Tốt nghiệp THPT", "Trung cấp", "Cao đẳng", "Đại học", "Senmon", "Không yêu cầu"];
+    const experienceYears = ["Không yêu cầu", "Dưới 1 năm", "1-2 năm", "3-5 năm", "Trên 5 năm"];
 
     return (
         <div className="md:col-span-1 lg:col-span-1">
@@ -232,6 +234,39 @@ export default function HomeClient() {
                                                 <Label htmlFor={`lang-${item}`} className="font-normal cursor-pointer text-xs">{item}</Label>
                                             </div>
                                         ))}
+                                    </div>
+                                </div>
+                                 <div>
+                                    <Label className="font-semibold">Học vấn</Label>
+                                    <div className="grid grid-cols-2 gap-2 pt-2">
+                                        {educationLevels.map(item => (
+                                            <div key={item} className="flex items-center space-x-2">
+                                                <Checkbox id={`edu-${item}`} />
+                                                <Label htmlFor={`edu-${item}`} className="font-normal cursor-pointer text-sm">{item}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <Label className="font-semibold">Kinh nghiệm</Label>
+                                     <Select>
+                                        <SelectTrigger className="mt-2"><SelectValue placeholder="Chọn số năm kinh nghiệm" /></SelectTrigger>
+                                        <SelectContent>
+                                            {experienceYears.map(item => <SelectItem key={item} value={item}>{item}</SelectItem>)}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div>
+                                    <Label className="font-semibold">Yêu cầu khác</Label>
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2">
+                                        <div className="flex items-center space-x-2">
+                                            <Checkbox id="cond-tattoo" />
+                                            <Label htmlFor="cond-tattoo" className="font-normal cursor-pointer text-sm flex items-center gap-1.5"><Star className="h-4 w-4 text-yellow-500" />Không xăm</Label>
+                                        </div>
+                                         <div className="flex items-center space-x-2">
+                                            <Checkbox id="cond-hepatitis" />
+                                            <Label htmlFor="cond-hepatitis" className="font-normal cursor-pointer text-sm flex items-center gap-1.5"><Dna className="h-4 w-4 text-red-500"/>Không VGB</Label>
+                                        </div>
                                     </div>
                                 </div>
                             </AccordionContent>

@@ -30,6 +30,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const [isVoiceCallDialogOpen, setIsVoiceCallDialogOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
   
   const mainContact = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
@@ -74,10 +75,22 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     fileInputRef.current?.click();
   };
 
+  const handleImageButtonClick = () => {
+    imageInputRef.current?.click();
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       console.log('Selected file:', file.name);
+      // Here you can add logic to upload the file or display a preview
+    }
+  };
+  
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log('Selected image:', file.name);
       // Here you can add logic to upload the file or display a preview
     }
   };
@@ -134,9 +147,16 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
               onChange={handleFileChange} 
               accept=".pdf,.doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             />
+            <input 
+              type="file" 
+              ref={imageInputRef} 
+              className="hidden" 
+              onChange={handleImageChange}
+              accept="image/*"
+            />
             <div className="flex items-center gap-1">
               <Button type="button" variant="ghost" size="icon" className="text-muted-foreground" onClick={handleFileButtonClick}><Paperclip /></Button>
-              <Button type="button" variant="ghost" size="icon" className="text-muted-foreground"><ImageIcon /></Button>
+              <Button type="button" variant="ghost" size="icon" className="text-muted-foreground" onClick={handleImageButtonClick}><ImageIcon /></Button>
             </div>
             <Input
               value={newMessage}

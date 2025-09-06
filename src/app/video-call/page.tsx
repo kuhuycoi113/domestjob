@@ -109,7 +109,7 @@ export default function VideoCallPage() {
             {isVideoOff ? <VideoOff /> : <VideoIcon />}
         </Button>
         <Button asChild variant="destructive" size="icon" className="h-14 w-14 rounded-full">
-            <Link href="/chat">
+            <Link href="/">
               <PhoneOff />
             </Link>
         </Button>

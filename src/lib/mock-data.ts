@@ -105,8 +105,8 @@ const generateRandomJob = (index: number): Job => {
         salary: {
             actual: `${(12 + (index % 10)) * 10000} JPY`,
             basic: `${(18 + (index % 12)) * 10000} JPY`,
-            annualIncome: 'Khoảng ' + (250 + index % 50) + ' vạn Yên',
-            annualBonus: index % 3 === 0 ? 'Có (1-2 lần/năm)' : 'Không có'
+            annualIncome: visaDetail.includes('Thực tập sinh') ? undefined : 'Khoảng ' + (250 + index % 50) + ' vạn Yên',
+            annualBonus: visaDetail.includes('Thực tập sinh') ? undefined : (index % 3 === 0 ? 'Có (1-2 lần/năm)' : 'Không có')
         },
         title: title,
         recruiter: recruiter,
@@ -121,17 +121,32 @@ const generateRandomJob = (index: number): Job => {
         visaDetail: visaDetail,
         industry: industry,
         workLocation: location,
+        interviewLocation: 'Hà Nội hoặc TP.HCM',
         gender: gender,
         quantity: quantity,
         ageRequirement: `${18 + (index % 5)}-${35 + (index % 10)}`,
-        languageRequirement: index % 4 === 0 ? 'Không yêu cầu' : 'Tiếng Nhật',
-        specialConditions: 'Chăm chỉ, chịu khó.',
+        languageRequirement: index % 4 === 0 ? 'Không yêu cầu' : 'Tiếng Nhật N4',
+        educationRequirement: 'Tốt nghiệp THPT trở lên',
+        experienceRequirement: 'Không yêu cầu kinh nghiệm',
+        yearsOfExperience: 'Không yêu cầu',
+        heightRequirement: `Trên ${150 + (index % 10)} cm`,
+        weightRequirement: `Trên ${45 + (index % 5)} kg`,
+        visionRequirement: 'Thị lực tốt, không mù màu',
+        tattooRequirement: 'Không yêu cầu',
+        hepatitisBRequirement: 'Không yêu cầu',
+        interviewFormat: 'Phỏng vấn Online',
+        specialConditions: 'Chăm chỉ, chịu khó, có khả năng làm việc nhóm tốt.',
         details: {
-            description: `<p>Mô tả chi tiết cho công việc <strong>${title}</strong>. Công việc đòi hỏi sự cẩn thận và trách nhiệm cao.</p>`,
-            requirements: `<ul><li>Yêu cầu: Tốt nghiệp THPT trở lên.</li><li>Sức khỏe tốt.</li><li>Có khả năng làm việc nhóm.</li></ul>`,
-            benefits: `<ul><li>Hưởng đầy đủ chế độ bảo hiểm theo quy định của Nhật Bản.</li><li>Hỗ trợ nhà ở và đi lại.</li><li>Có cơ hội được đào tạo và nâng cao tay nghề.</li></ul>`
+            description: `<p>Mô tả chi tiết cho công việc <strong>${title}</strong>. Đây là cơ hội tuyệt vời để làm việc trong một môi trường chuyên nghiệp tại Nhật Bản. Công việc đòi hỏi sự cẩn thận, tỉ mỉ và trách nhiệm cao để đảm bảo chất lượng sản phẩm tốt nhất.</p>`,
+            requirements: `<ul><li>Yêu cầu: Tốt nghiệp THPT trở lên.</li><li>Có sức khỏe tốt, không mắc các bệnh truyền nhiễm.</li><li>Có khả năng làm việc nhóm và tuân thủ kỷ luật tốt.</li><li>Ưu tiên ứng viên có kinh nghiệm làm việc trong ngành ${industry}.</li></ul>`,
+            benefits: `<ul><li>Hưởng đầy đủ chế độ bảo hiểm (y tế, hưu trí, thất nghiệp) theo quy định của pháp luật Nhật Bản.</li><li>Hỗ trợ chi phí nhà ở và đi lại.</li><li>Có nhiều cơ hội làm thêm giờ để tăng thu nhập.</li><li>Được đào tạo bài bản và có cơ hội phát triển, gia hạn hợp đồng lâu dài.</li></ul>`,
+            videoUrl: index % 4 === 0 ? 'https://www.youtube.com/embed/dQw4w9WgXcQ' : undefined,
+            images: index % 3 === 0 ? [
+                { src: 'https://placehold.co/600x400.png?text=Workplace', alt: 'Nơi làm việc', dataAiHint: 'factory workplace' },
+                { src: 'https://placehold.co/600x400.png?text=Dormitory', alt: 'Ký túc xá', dataAiHint: 'company dormitory' }
+            ] : []
         }
     };
 };
-  
+
 export const jobData: Job[] = Array.from({ length: 100 }, (_, i) => generateRandomJob(i));

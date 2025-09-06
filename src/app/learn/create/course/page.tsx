@@ -220,6 +220,10 @@ export default function BuildCoursePage() {
                                 <Label>Số tài khoản</Label>
                                 <Input placeholder="Nhập số tài khoản" />
                             </div>
+                            <div className="space-y-2 md:col-span-2">
+                                <Label>Tên chủ tài khoản</Label>
+                                <Input placeholder="Nhập tên chủ tài khoản" />
+                            </div>
                          </div>
                     </div>
                      <div className="space-y-4 pt-4 border-t">

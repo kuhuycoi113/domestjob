@@ -9,6 +9,7 @@ import { JobCard } from '../job-card';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useChat } from '@/contexts/ChatContext';
 
 interface ChatMessageProps {
   message: Message;
@@ -16,7 +17,15 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ message, currentUser }: ChatMessageProps) {
+  const { assignedConsultant } = useChat();
   const isCurrentUser = message.sender.id === currentUser.id;
+  
+  // Determine which user to display for non-current-user messages
+  // If the message is from the bot, display the assigned consultant's info instead.
+  const displayUser = !isCurrentUser 
+    ? (message.sender.isBot ? (assignedConsultant || message.sender) : message.sender)
+    : message.sender;
+
   const recommendedJobs = message.recommendations
     ? message.recommendations
         .map(rec => jobData.find(job => job.id === rec.id))
@@ -27,12 +36,12 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
     return (
         <div className="flex items-start gap-2 justify-start">
             <Avatar className="h-8 w-8">
-                <AvatarImage src={message.sender.avatarUrl} alt={message.sender.name} />
-                <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
+                <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
                  <p className="text-xs text-muted-foreground mb-1 ml-3">
-                    {message.sender.name}
+                    Tư vấn viên {displayUser.name}
                 </p>
                 <div className="bg-background rounded-2xl rounded-bl-none px-4 py-2 border flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin"/>
@@ -47,20 +56,16 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
     <div className={cn('flex items-start gap-2', isCurrentUser ? 'justify-end' : 'justify-start')}>
       {!isCurrentUser && (
         <Avatar className="h-8 w-8 flex-shrink-0">
-          <AvatarImage src={message.sender.avatarUrl} alt={message.sender.name} />
-          <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
+          <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
+          <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
         </Avatar>
       )}
       <div className="flex flex-col gap-1" style={{ maxWidth: 'calc(100% - 40px)' }}>
         {!isCurrentUser && (
             <p className="text-xs text-muted-foreground ml-3">
-                {message.sender.isBot ? (
-                    message.sender.name
-                ) : (
-                    <Link href={`/consultant-profile/${message.sender.id}`} className="hover:underline hover:text-primary">
-                        Tư vấn viên {message.sender.name}
-                    </Link>
-                )}
+                <Link href={`/consultant-profile/${displayUser.id}`} className="hover:underline hover:text-primary">
+                    Tư vấn viên {displayUser.name}
+                </Link>
             </p>
         )}
 

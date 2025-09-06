@@ -5,9 +5,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Send, Phone, Video, X, Paperclip, Image as ImageIcon, Briefcase } from 'lucide-react';
+import { Send, Phone, Video, X, Paperclip, Image as ImageIcon } from 'lucide-react';
 import { ChatMessage } from './chat-message';
-import { type Conversation, type Message, currentUser, users, helloJobBot, Attachment } from '@/lib/chat-data';
+import { type Conversation, type Message, currentUser, User, Attachment, helloJobBot } from '@/lib/chat-data';
 import { useChat } from '@/contexts/ChatContext';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -19,12 +19,8 @@ interface ChatWindowProps {
   conversation: Conversation;
 }
 
-const Logo = () => (
-    <Image src="/img/favi2.png" alt="HelloJob Logo" width={80} height={26} className="h-6 w-auto" />
-);
-
 export function ChatWindow({ conversation }: ChatWindowProps) {
-  const { sendMessage, closeChat } = useChat();
+  const { sendMessage, closeChat, assignedConsultant } = useChat();
   const [newMessage, setNewMessage] = useState('');
   const [isVideoCallDialogOpen, setIsVideoCallDialogOpen] = useState(false);
   const [isVoiceCallDialogOpen, setIsVoiceCallDialogOpen] = useState(false);
@@ -33,9 +29,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
   
-  const mainContact = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
-  const isBotChat = mainContact.isBot;
-
+  const displayContact = assignedConsultant || conversation.participants.find(p => p.id !== currentUser.id) || helloJobBot;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -53,7 +47,6 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
         closeChat();
-        // The navigation will proceed via the Link component
     } else {
       e.preventDefault();
       setIsVideoCallDialogOpen(true);
@@ -64,7 +57,6 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
         closeChat();
-        // The navigation will proceed via the Link component
     } else {
       e.preventDefault();
       setIsVoiceCallDialogOpen(true);
@@ -74,7 +66,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const handleFileButtonClick = () => {
     fileInputRef.current?.click();
   };
-
+  
   const handleImageButtonClick = () => {
     imageInputRef.current?.click();
   };
@@ -83,8 +75,6 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     const file = event.target.files?.[0];
     if (file) {
       console.log('Selected file:', file.name);
-      // Here you can add logic to upload the file or display a preview
-      // For now, let's just log it.
     }
   };
   
@@ -103,7 +93,6 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     };
     reader.readAsDataURL(file);
 
-     // Reset file input
     if (event.target) {
         event.target.value = '';
     }
@@ -116,14 +105,14 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
         <header className="flex items-center gap-3 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
           <div className="flex-shrink-0">
              <Avatar className="h-10 w-10 border-2 border-white bg-white">
-                <AvatarImage src="/img/favi2.png" alt="HelloJob" />
-                <AvatarFallback>HJ</AvatarFallback>
+                <AvatarImage src={displayContact.avatarUrl} alt={displayContact.name} />
+                <AvatarFallback>{displayContact.name.charAt(0)}</AvatarFallback>
               </Avatar>
           </div>
 
           <div>
              <div className="flex items-center gap-2">
-                 <p className="text-sm font-bold font-headline leading-tight">HelloJob</p>
+                 <p className="text-sm font-bold font-headline leading-tight">{displayContact.name}</p>
                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
              </div>
             <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>

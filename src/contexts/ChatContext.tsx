@@ -4,11 +4,11 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Conversation, Message, User, conversations, currentUser, helloJobBot, consultants, Attachment } from '@/lib/chat-data';
 import { recommendJobs, type JobRecommendationResponse } from '@/ai/flows/recommend-jobs-flow';
-import { jobData } from '@/lib/mock-data';
 
 interface ChatContextType {
   isChatOpen: boolean;
   activeConversation: Conversation | null;
+  assignedConsultant: User | null;
   openChat: (user?: User) => void;
   closeChat: () => void;
   sendMessage: (text: string, attachment?: Attachment) => void;
@@ -33,7 +33,6 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
   const [assignedConsultant, setAssignedConsultant] = useState<User | null>(null);
 
-  // This effect runs only on the client side after mounting
   useEffect(() => {
     const consultantId = localStorage.getItem('assignedConsultantId');
     let consultant = null;
@@ -49,27 +48,20 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   }, []);
 
   const openChat = (user?: User) => {
-    let targetUser = user;
-
-    if (!targetUser) {
-      // If no specific user is provided, always default to the bot.
-      targetUser = helloJobBot;
-    }
+    let targetUser = user || assignedConsultant || helloJobBot;
     
-    let conversation = conversations.find(c => c.participants.some(p => p.id === targetUser!.id));
+    let conversation = conversations.find(c => c.participants.some(p => p.id === targetUser.id));
     
     if (!conversation) {
-        const initialMessage = targetUser.isBot 
-            ? "Chào bạn, tôi là trợ lý AI của HelloJob. Bạn đang tìm kiếm loại công việc nào? Hãy mô tả mong muốn của bạn nhé!"
-            : `Chào bạn, tôi là ${targetUser!.name}. Tôi có thể giúp gì cho bạn?`;
+        const initialMessage = `Chào bạn, tôi là ${targetUser.name}, tư vấn viên của HelloJob. Tôi có thể giúp gì cho bạn?`;
         
         conversation = {
-            id: `convo-${targetUser!.id}`,
-            participants: [currentUser, targetUser!],
+            id: `convo-${targetUser.id}`,
+            participants: [currentUser, targetUser],
             messages: [
                 {
                     id: `msg-${Date.now()}`,
-                    sender: targetUser!,
+                    sender: helloJobBot, // The first message is always from the bot system
                     text: initialMessage,
                     timestamp: new Date().toISOString()
                 }
@@ -111,13 +103,10 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         conversations[convoIndex] = updatedConversation;
     }
 
-    const mainContact = updatedConversation.participants.find(p => p.id !== currentUser.id) || helloJobBot;
-    
-    // If talking to the bot, call the AI flow
-    if (mainContact.isBot && text) {
+    if (text) {
         const loadingMessage: Message = {
             id: `msg-loading-${Date.now()}`,
-            sender: mainContact,
+            sender: helloJobBot,
             text: '...',
             isLoading: true,
             timestamp: new Date().toISOString(),
@@ -128,7 +117,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
             const aiResult = await recommendJobs(text);
             const aiResponseMessage: Message = {
                 id: `msg-ai-${Date.now()}`,
-                sender: mainContact,
+                sender: helloJobBot,
                 text: aiResult.message,
                 recommendations: aiResult.recommendations,
                 timestamp: new Date().toISOString(),
@@ -150,7 +139,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
              console.error("AI Recommendation Error:", error);
              const errorMessage: Message = {
                 id: `msg-error-${Date.now()}`,
-                sender: mainContact,
+                sender: helloJobBot,
                 text: 'Rất tiếc, đã có lỗi xảy ra khi tìm kiếm việc làm. Bạn có muốn kết nối với một tư vấn viên không?',
                 timestamp: new Date().toISOString(),
              };
@@ -166,16 +155,14 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
                 return newConvo;
             });
         }
-    } else {
-        // Simulate human consultant response
+    } else if (attachment) {
+        // Simulate human consultant response for file uploads
         setTimeout(() => {
-            const responseText = attachment 
-                ? `Đã nhận được tệp: ${attachment.fileName}`
-                : `Cảm ơn bạn đã liên hệ. Hệ thống đã ghi nhận câu hỏi: "${text}". Tôi sẽ phản hồi sớm nhất có thể.`;
+            const responseText = `Đã nhận được tệp: ${attachment.fileName}`;
 
             const consultantResponse: Message = {
                 id: `msg-${Date.now() + 1}`,
-                sender: mainContact,
+                sender: helloJobBot,
                 text: responseText,
                 timestamp: new Date().toISOString(),
             };
@@ -198,6 +185,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const value = {
     isChatOpen,
     activeConversation,
+    assignedConsultant,
     openChat,
     closeChat,
     sendMessage,

@@ -147,13 +147,15 @@ export default function BuildCoursePage() {
                 <Accordion type="multiple" className="w-full space-y-4" defaultValue={['section-1']}>
                   {sections.map((section, sectionIndex) => (
                     <AccordionItem key={section.id} value={`section-${section.id}`} className="bg-secondary/50 rounded-lg border px-4">
-                      <AccordionTrigger className="hover:no-underline py-0">
-                         <div className="flex items-center gap-2 w-full pr-2">
-                           <span className="font-bold">Chương {sectionIndex + 1}:</span>
-                           <Input value={section.title} onChange={e => updateSectionTitle(section.id, e.target.value)} className="bg-transparent border-0 focus-visible:ring-1" />
-                           <Button type="button" variant="ghost" size="icon" onClick={() => removeSection(section.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                         </div>
-                      </AccordionTrigger>
+                      <div className="flex items-center w-full">
+                        <AccordionTrigger className="hover:no-underline py-3 flex-grow">
+                           <div className="flex items-center gap-2 w-full">
+                             <span className="font-bold">Chương {sectionIndex + 1}:</span>
+                             <Input value={section.title} onChange={e => updateSectionTitle(section.id, e.target.value)} className="bg-transparent border-0 focus-visible:ring-1" onClick={(e) => e.stopPropagation()} />
+                           </div>
+                        </AccordionTrigger>
+                        <Button type="button" variant="ghost" size="icon" className="shrink-0" onClick={() => removeSection(section.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </div>
                       <AccordionContent className="border-t pt-4">
                         <div className="space-y-2 pl-4">
                            {section.lessons.map((lesson, lessonIndex) => (
@@ -232,4 +234,3 @@ export default function BuildCoursePage() {
     </div>
   );
 }
-

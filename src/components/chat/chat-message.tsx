@@ -61,6 +61,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
         </Avatar>
       )}
       <div className="flex flex-col gap-1" style={{ maxWidth: 'calc(100% - 40px)' }}>
+        {/* CHATNAME2 */}
         {!isCurrentUser && (
             <p className="text-xs text-muted-foreground ml-3">
                 <Link href={`/consultant-profile/${displayUser.id}`} className="hover:underline hover:text-primary">

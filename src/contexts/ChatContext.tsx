@@ -53,8 +53,9 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     let targetUser = user;
 
     if (!targetUser) {
-        // When user clicks the general chat button, always start with the bot.
-        targetUser = helloJobBot;
+      // If no specific user is provided, default to the assigned consultant.
+      // Fallback to bot if consultant isn't assigned yet (e.g., during initial render).
+      targetUser = assignedConsultant || helloJobBot;
     }
     
     let conversation = conversations.find(c => c.participants.some(p => p.id === targetUser!.id));
@@ -87,6 +88,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
 
   const closeChat = () => {
     setIsChatOpen(false);
+    setActiveConversation(null);
   };
 
   const sendMessage = async (text: string) => {

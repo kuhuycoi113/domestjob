@@ -47,20 +47,22 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     setNewMessage('');
   };
 
-  const handleVideoCallClick = (e: React.MouseEvent) => {
+  const handleVideoCallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
         closeChat();
+        // The navigation will proceed via the Link component
     } else {
       e.preventDefault();
       setIsVideoCallDialogOpen(true);
     }
   };
 
-  const handleVoiceCallClick = (e: React.MouseEvent) => {
+  const handleVoiceCallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
         closeChat();
+        // The navigation will proceed via the Link component
     } else {
       e.preventDefault();
       setIsVoiceCallDialogOpen(true);
@@ -73,21 +75,15 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
         {/* Header */}
         <header className="flex items-center gap-3 p-3 border-b bg-primary text-primary-foreground shadow-md flex-shrink-0">
           <div className="flex-shrink-0">
-            {isBotChat ? (
-              <div className="bg-white rounded-full p-1.5 h-10 w-10 flex items-center justify-center">
-                <Image src="/img/favi2.png" alt="HelloJob Bot" width={32} height={32} />
-              </div>
-            ) : (
-              <Avatar className="h-10 w-10 border-2 border-white">
+             <Avatar className="h-10 w-10 border-2 border-white">
                 <AvatarImage src={mainContact.avatarUrl} alt={mainContact.name} />
                 <AvatarFallback>{mainContact.name.charAt(0)}</AvatarFallback>
               </Avatar>
-            )}
           </div>
 
           <div>
              <div className="flex items-center gap-2">
-                 <p className="text-sm font-bold font-headline leading-tight">{isBotChat ? 'HelloJob AI' : `Tư vấn viên ${mainContact.name}`}</p>
+                 <p className="text-sm font-bold font-headline leading-tight">HelloJob</p>
                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
              </div>
             <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>

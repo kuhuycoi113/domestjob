@@ -1,4 +1,6 @@
 
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Wrench, Megaphone, DollarSign, BookOpen } from 'lucide-react';
@@ -10,7 +12,7 @@ const steps = [
     title: 'Xây dựng khoá học',
     description: 'Sử dụng các công cụ và tài nguyên của chúng tôi để tạo ra nội dung bài giảng hấp dẫn và chuyên nghiệp.',
     buttonText: 'Bắt đầu xây dựng',
-    link: '#',
+    link: '/learn/create/course',
     color: 'orange'
   },
   {

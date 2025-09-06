@@ -39,7 +39,7 @@ Nhiệm vụ của bạn là hỗ trợ ứng viên tìm được công việc p
 Đây là danh sách các công việc hiện có (định dạng JSON):
 {{json jobList}}
 
-Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các bước sau theo đúng thứ tự ưu tiên:
+Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các bước sau theo đúng thứ tự ưu tiên từ trên xuống dưới:
 
 **TRƯỜNG HỢP 1: Người dùng trả lời câu hỏi về kiến thức (CH002-2)**
 *   **Điều kiện:** Nếu yêu cầu của ứng viên chính xác là "Tôi đã tìm hiểu kỹ rồi".
@@ -67,7 +67,7 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
 *   **recommendations**: Để trống (mảng rỗng []).
 *   **suggestedReplies**: Tạo ra 2 câu trả lời gợi ý: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"]. Đánh dấu "Tôi là người mới, chưa biết gì" là CH001-1. Đánh dấu "Tôi đã tìm hiểu kỹ rồi" là CH002-2.
 
-**BƯỚC 3: Hỏi về kiểu việc làm (Người dùng đã có kiến thức)**
+**BƯỚC 3: Hỏi về kiểu việc làm (Người dùng đã có kiến thức - CH002-2)**
 *   **requiresClarification**: true.
 *   **message**: "Bạn muốn tìm việc Nhật Bản kiểu như nào?"
 *   **recommendations**: Để trống (mảng rỗng []).
@@ -115,4 +115,5 @@ const recommendJobsFlow = ai.defineFlow(
     return output;
   }
 );
+
 

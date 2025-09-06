@@ -20,7 +20,7 @@ const steps = [
     title: 'Quảng bá khoá học',
     description: 'Tiếp cận hàng ngàn học viên tiềm năng trên nền tảng HelloJob và các kênh đối tác của chúng tôi.',
     buttonText: 'Tìm hiểu cách quảng bá',
-    link: '#',
+    link: '/learn/promote',
     color: 'blue'
   },
   {

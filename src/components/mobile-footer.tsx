@@ -18,13 +18,13 @@ import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import Image from 'next/image';
+import { useChat } from '@/contexts/ChatContext';
 
 const quickAccessLinks = [
     { href: '/roadmap', label: 'Lộ trình', icon: Compass, id: 'MMN01' },
+    { href: '/career-orientation', label: 'Hướng nghiệp', icon: Compass },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
-    { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
-    { href: '/ai-profile', label: 'Tạo hồ sơ AI', icon: Sparkles },
     { href: '/post-job', label: 'Đăng tuyển dụng', icon: PlusCircle },
     { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
     { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
@@ -42,8 +42,9 @@ export function MobileFooter() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activePath, setActivePath] = useState('');
+  const { openChat } = useChat();
 
-  // Set active path on client side to avoid hydration mismatch
+
   useEffect(() => {
     setActivePath(pathname);
   }, [pathname]);
@@ -55,7 +56,8 @@ export function MobileFooter() {
     { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
     { href: '/handbook', icon: LifeBuoy, label: 'Cẩm nang' },
   ];
-  
+
+  const isQuickAccessLinkActive = quickAccessLinks.some(link => activePath.startsWith(link.href));
 
   return (
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
@@ -72,8 +74,8 @@ export function MobileFooter() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
              <button className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/5 pt-1">
-               <LayoutGrid className="h-6 w-6 mb-1" />
-               <span className="text-center leading-tight">Menu</span>
+               <LayoutGrid className={cn("h-6 w-6 mb-1", isQuickAccessLinkActive && 'text-primary')} />
+               <span className={cn("text-center leading-tight", isQuickAccessLinkActive && 'text-primary font-bold')}>Menu</span>
              </button>
           </SheetTrigger>
           <SheetContent side="right" className="w-full max-w-sm flex flex-col p-0">
@@ -118,11 +120,11 @@ export function MobileFooter() {
                         id={link.id}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={cn("flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md bg-secondary hover:bg-accent/80", isActive && "bg-primary/10 ring-2 ring-primary")}>
-                         <div className={cn("h-10 flex items-center justify-center text-primary", isActive && "text-primary")}>
+                        className={cn("flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md hover:bg-accent/80", isActive ? "bg-primary/10 ring-2 ring-primary" : "bg-secondary")}>
+                         <div className={cn("h-10 flex items-center justify-center", isActive ? "text-primary" : "text-muted-foreground")}>
                            <link.icon className="h-8 w-8"/>
                          </div>
-                         <span className={cn("text-xs text-center leading-tight font-medium", isActive && "text-primary")}>{link.label}</span>
+                         <span className={cn("text-xs text-center leading-tight font-medium", isActive ? "text-primary" : "text-foreground")}>{link.label}</span>
                        </Link>
                       )
                     })}

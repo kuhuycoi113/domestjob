@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { Conversation, Message, User, conversations, currentUser, helloJobBot, consultants } from '@/lib/chat-data';
+import { Conversation, Message, User, conversations, currentUser, helloJobBot, consultants, Attachment } from '@/lib/chat-data';
 import { recommendJobs, type JobRecommendationResponse, type RecommendedJob } from '@/ai/flows/recommend-jobs-flow';
 import { JobCard } from '@/components/job-card';
 import { jobData } from '@/lib/mock-data';
@@ -12,7 +12,7 @@ interface ChatContextType {
   activeConversation: Conversation | null;
   openChat: (user?: User) => void;
   closeChat: () => void;
-  sendMessage: (text: string) => void;
+  sendMessage: (text: string, attachment?: Attachment) => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -91,7 +91,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     setActiveConversation(null);
   };
 
-  const sendMessage = async (text: string) => {
+  const sendMessage = async (text: string, attachment?: Attachment) => {
     if (!activeConversation) return;
 
     const newMessage: Message = {
@@ -99,6 +99,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       sender: currentUser,
       text: text,
       timestamp: new Date().toISOString(),
+      attachment: attachment,
     };
 
     const updatedConversation = { 
@@ -115,7 +116,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     const mainContact = updatedConversation.participants.find(p => p.id !== currentUser.id) || helloJobBot;
     
     // If talking to the bot, call the AI flow
-    if (mainContact.isBot) {
+    if (mainContact.isBot && text) {
         const loadingMessage: Message = {
             id: `msg-loading-${Date.now()}`,
             sender: mainContact,
@@ -170,10 +171,14 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     } else {
         // Simulate human consultant response
         setTimeout(() => {
+            const responseText = attachment 
+                ? `Đã nhận được tệp: ${attachment.fileName}`
+                : `Cảm ơn bạn đã liên hệ. Hệ thống đã ghi nhận câu hỏi: "${text}". Tôi sẽ phản hồi sớm nhất có thể.`;
+
             const consultantResponse: Message = {
                 id: `msg-${Date.now() + 1}`,
                 sender: mainContact,
-                text: `Cảm ơn bạn đã liên hệ. Hệ thống đã ghi nhận câu hỏi: "${text}". Tôi sẽ phản hồi sớm nhất có thể.`,
+                text: responseText,
                 timestamp: new Date().toISOString(),
             };
             

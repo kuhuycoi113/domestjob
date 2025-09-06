@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Send, Phone, Video, X, Paperclip, Image as ImageIcon, Briefcase } from 'lucide-react';
 import { ChatMessage } from './chat-message';
-import { type Conversation, type Message, currentUser, users, helloJobBot } from '@/lib/chat-data';
+import { type Conversation, type Message, currentUser, users, helloJobBot, Attachment } from '@/lib/chat-data';
 import { useChat } from '@/contexts/ChatContext';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -84,14 +84,28 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     if (file) {
       console.log('Selected file:', file.name);
       // Here you can add logic to upload the file or display a preview
+      // For now, let's just log it.
     }
   };
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      console.log('Selected image/video:', file.name);
-      // Here you can add logic to upload the file or display a preview
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const attachment: Attachment = {
+        type: file.type.startsWith('image/') ? 'image' : 'video',
+        url: e.target?.result as string,
+        fileName: file.name
+      };
+      sendMessage('', attachment);
+    };
+    reader.readAsDataURL(file);
+
+     // Reset file input
+    if (event.target) {
+        event.target.value = '';
     }
   };
 

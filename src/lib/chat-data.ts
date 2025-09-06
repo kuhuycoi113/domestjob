@@ -13,6 +13,12 @@ export type User = {
   strengths?: string[];
 };
 
+export type Attachment = {
+  type: 'image' | 'video' | 'file';
+  url: string;
+  fileName?: string;
+}
+
 export type Message = {
   id: string;
   sender: User;
@@ -20,6 +26,7 @@ export type Message = {
   timestamp: string;
   isLoading?: boolean;
   recommendations?: JobRecommendationResponse['recommendations'];
+  attachment?: Attachment;
 };
 
 export type Conversation = {

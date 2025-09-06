@@ -7,6 +7,7 @@ import type { Message, User } from '@/lib/chat-data';
 import { jobData } from '@/lib/mock-data';
 import { JobCard } from '../job-card';
 import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 interface ChatMessageProps {
   message: Message;
@@ -49,24 +50,40 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
           <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
         </Avatar>
       )}
-      <div className="flex flex-col gap-2" style={{ maxWidth: 'calc(100% - 40px)' }}>
+      <div className="flex flex-col gap-1" style={{ maxWidth: 'calc(100% - 40px)' }}>
         {!isCurrentUser && (
             <p className="text-xs text-muted-foreground ml-3">
                 {message.sender.name}
             </p>
         )}
-        <div
-            className={cn(
-            'max-w-xs md:max-w-md lg:max-w-lg rounded-2xl px-4 py-2 w-fit',
-            isCurrentUser
-                ? 'bg-primary text-primary-foreground rounded-br-none self-end'
-                : 'bg-background rounded-bl-none border'
-            )}
-        >
-            <p className="text-sm">{message.text}</p>
-        </div>
+
+        {message.attachment ? (
+             <div className={cn(
+                'w-48 rounded-2xl overflow-hidden',
+                 isCurrentUser ? 'self-end rounded-br-none' : 'rounded-bl-none'
+             )}>
+                {message.attachment.type === 'image' && (
+                    <Image src={message.attachment.url} alt={message.attachment.fileName || 'Attachment'} width={200} height={200} className="object-cover w-full h-auto"/>
+                )}
+                 {message.attachment.type === 'video' && (
+                    <video src={message.attachment.url} controls className="w-full h-auto" />
+                )}
+             </div>
+        ) : (
+            <div
+                className={cn(
+                'max-w-xs md:max-w-md lg:max-w-lg rounded-2xl px-4 py-2 w-fit',
+                isCurrentUser
+                    ? 'bg-primary text-primary-foreground rounded-br-none self-end'
+                    : 'bg-background rounded-bl-none border'
+                )}
+            >
+                <p className="text-sm">{message.text}</p>
+            </div>
+        )}
+
         {recommendedJobs.length > 0 && (
-            <div className="w-full md:w-[450px] lg:w-[500px] flex-shrink-0">
+            <div className="w-full md:w-[450px] lg:w-[500px] flex-shrink-0 mt-1">
                 <div className="space-y-2">
                 {recommendedJobs.map(job => (
                     <JobCard key={job.id} job={job} />

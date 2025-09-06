@@ -35,6 +35,7 @@ export default function BuildCoursePage() {
   ]);
   const [price, setPrice] = useState('free');
   const [coursePrice, setCoursePrice] = useState('');
+  const [taxObligation, setTaxObligation] = useState('self-pay');
 
   const addSection = () => {
     const newSection: Section = {
@@ -96,7 +97,7 @@ export default function BuildCoursePage() {
       return;
     }
 
-    console.log({ title, description, sections, price, coursePrice });
+    console.log({ title, description, sections, price, coursePrice, taxObligation });
 
     toast({
       title: 'Đã lưu bản nháp!',
@@ -220,6 +221,19 @@ export default function BuildCoursePage() {
                                 <Input placeholder="Nhập số tài khoản" />
                             </div>
                          </div>
+                    </div>
+                     <div className="space-y-4 pt-4 border-t">
+                        <h4 className="font-semibold">Nghĩa vụ thuế</h4>
+                        <RadioGroup value={taxObligation} onValueChange={setTaxObligation} className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="self-pay" id="self-pay" />
+                                <Label htmlFor="self-pay" className="font-normal">Tôi sẽ tự đóng thuế thu nhập cá nhân.</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="hellojob-support" id="hellojob-support" />
+                                <Label htmlFor="hellojob-support" className="font-normal">Nhờ HelloJob hỗ trợ đóng thuế và khấu trừ tại nguồn.</Label>
+                            </div>
+                        </RadioGroup>
                     </div>
                 </CardContent>
             </Card>

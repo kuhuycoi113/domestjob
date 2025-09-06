@@ -102,7 +102,7 @@ export default function HomeClient() {
   const [isSearching, setIsSearching] = useState(false);
   const [comboboxOpen, setComboboxOpen] = useState(false);
   
-  const finalSearchTerm = searchQuery || selectedIndustry;
+  const finalSearchTerm = selectedIndustry || searchQuery;
 
   useEffect(() => {
     let industries: Industry[] = [];
@@ -130,15 +130,6 @@ export default function HomeClient() {
   
   const handleBackToSearch = () => {
       setIsSearching(false);
-  }
-
-  const getFilteredIndustries = () => {
-    if (!searchQuery) return availableIndustries;
-    const lowercasedQuery = searchQuery.toLowerCase();
-    return availableIndustries.filter(industry => 
-      industry.name.toLowerCase().includes(lowercasedQuery) || 
-      industry.keywords.some(keyword => keyword.toLowerCase().includes(lowercasedQuery))
-    );
   }
 
   const CompactSearchForm = () => (
@@ -613,22 +604,17 @@ export default function HomeClient() {
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                                <Command shouldFilter={false}>
-                                    <CommandInput 
-                                        placeholder="Tìm ngành nghề..." 
-                                        value={searchQuery}
-                                        onValueChange={setSearchQuery}
-                                    />
+                                <Command>
+                                    <CommandInput placeholder="Tìm ngành nghề..." />
                                     <CommandList>
                                         <CommandEmpty>Không tìm thấy.</CommandEmpty>
                                         <CommandGroup>
-                                            {getFilteredIndustries().map((industry) => (
+                                            {availableIndustries.map((industry) => (
                                                 <CommandItem
                                                     key={industry.slug}
                                                     value={industry.name}
                                                     onSelect={(currentValue) => {
                                                         setSelectedIndustry(currentValue === selectedIndustry ? "" : industry.name);
-                                                        setSearchQuery("");
                                                         setComboboxOpen(false);
                                                     }}
                                                 >

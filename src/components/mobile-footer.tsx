@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -52,6 +53,7 @@ export function MobileFooter() {
     { href: '/', icon: Home, label: 'Trang chủ' },
     { href: '/ai-profile', icon: Sparkles, label: 'Hồ sơ AI' },
     { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
+    { href: '/handbook', icon: LifeBuoy, label: 'Cẩm nang' },
   ];
   
 
@@ -61,7 +63,7 @@ export function MobileFooter() {
         {footerLinks.map(({ href, icon: Icon, label }) => {
            const isActive = (activePath === href) || (href !== '/' && activePath.startsWith(href));
            return (
-            <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/4 pt-1">
+            <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/5 pt-1">
               <Icon className={cn("h-6 w-6 mb-1", isActive ? 'text-primary' : '')} />
               <span className={cn( "text-center leading-tight", isActive ? 'text-primary font-bold' : '')}>{label}</span>
             </Link>
@@ -69,7 +71,7 @@ export function MobileFooter() {
         })}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-             <button className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/4 pt-1">
+             <button className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/5 pt-1">
                <LayoutGrid className="h-6 w-6 mb-1" />
                <span className="text-center leading-tight">Menu</span>
              </button>

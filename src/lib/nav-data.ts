@@ -29,7 +29,6 @@ export const mainNavLinks = [
   { href: '/learn', label: 'E-Learning' },
   { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy, mobile: true },
   { href: '/about', label: 'Giới thiệu' },
-  { href: '/jobs', label: 'Việc làm', icon: Briefcase, mobile: true },
 ];
 
 export const quickAccessLinks = [
@@ -46,6 +45,9 @@ export const quickAccessLinks = [
   { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
 
-export const mobileFooterLinks = mainNavLinks.filter(
-  (link) => link.mobile && link.href !== '/jobs'
-);
+export const mobileFooterLinks = [
+  { href: '/', label: 'Trang chủ', icon: Home },
+  { href: '/ai-profile', label: 'Hồ sơ AI', icon: Sparkles },
+  { href: '/jobs', label: 'Việc làm', icon: Briefcase },
+  { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
+];

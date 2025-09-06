@@ -640,13 +640,8 @@ export default function HomeClient() {
                             <SelectValue placeholder="Tất cả địa điểm" />
                             </SelectTrigger>
                             <SelectContent>
-                                {Object.entries(locations).map(([country, provinces]) => (
-                                    <SelectGroup key={country}>
-                                        <SelectLabel>{country}</SelectLabel>
-                                        {provinces.map(loc => (
-                                            <SelectItem key={loc} value={loc}>{loc}</SelectItem>
-                                        ))}
-                                    </SelectGroup>
+                                {locations["Nhật Bản"].map(loc => (
+                                    <SelectItem key={loc} value={loc}>{loc}</SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>

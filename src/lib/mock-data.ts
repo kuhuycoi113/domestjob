@@ -84,6 +84,18 @@ const jobTitles = {
     'Nhà hàng': ['Phục vụ bàn', 'Phụ bếp', 'Lễ tân nhà hàng', 'Pha chế đồ uống']
 };
 
+const jobImagePlaceholders: {[key: string]: string} = {
+    'Chế biến thực phẩm': '/img/che_bien_thuc_pham.jpg',
+    'Cơ khí': '/img/bao_duong_oto.jpg',
+    'Xây dựng': '/img/xay_dung.jpg',
+    'Nông nghiệp': '/img/nong_nghiep.jpg',
+    'Điện tử': '/img/dien_tu.jpg',
+    'Dệt may': '/img/det_may.jpg',
+    'Điều dưỡng': '/img/dieu_duong.jpg',
+    'Nhà hàng': '/img/nha_hang.jpg',
+};
+
+
 const generateRandomJob = (index: number): Job => {
     const industry = industries[index % industries.length];
     const visaDetail = visaTypes[index % visaTypes.length];
@@ -96,15 +108,16 @@ const generateRandomJob = (index: number): Job => {
     // Deterministic generation of likes to avoid hydration errors
     const deterministicLikesK = (index * 7) % 10;
     const deterministicLikesHundred = (index * 3) % 10;
+    const imageSrc = jobImagePlaceholders[industry] || `https://placehold.co/600x400.png?text=${encodeURIComponent(industry)}`;
 
     return {
         id: `JP-DEMO${1000 + index}`,
         isRecording: index % 5 === 0,
-        image: { src: `https://placehold.co/600x400.png?text=Job+${index}`, type: 'minhhoa' },
+        image: { src: imageSrc, type: 'minhhoa' },
         likes: `${deterministicLikesK}k${deterministicLikesHundred}`,
         salary: {
-            actual: `${(12 + (index % 10)) * 10000} JPY`,
-            basic: `${(18 + (index % 12)) * 10000} JPY`,
+            actual: `${(12 + (index % 10)) * 10000}`,
+            basic: `${(18 + (index % 12)) * 10000}`,
             annualIncome: visaDetail.includes('Thực tập sinh') ? undefined : 'Khoảng ' + (250 + index % 50) + ' vạn Yên',
             annualBonus: visaDetail.includes('Thực tập sinh') ? undefined : (index % 3 === 0 ? 'Có (1-2 lần/năm)' : 'Không có')
         },
@@ -113,7 +126,7 @@ const generateRandomJob = (index: number): Job => {
         status: index % 10 === 0 ? 'Tạm dừng' : 'Đang tuyển',
         interviewDate: `2024-08-${(index % 28) + 1}`,
         interviewRounds: (index % 3) + 1,
-        netFee: visaDetail.includes('Thực tập sinh') ? `${90 + (index % 20)}tr` : 'Không',
+        netFee: visaDetail.includes('Thực tập sinh') ? `${90 + (index % 20)}tr` : undefined,
         target: `${(index % 5) + 1}tr`,
         tags: [industry, visaDetail.split(' ')[0], gender === 'Cả nam và nữ' ? 'Nam/Nữ' : gender],
         postedTime: `10:00 01/08/2024`,

@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 const InstructorCta = () => (
     <section className="w-full mt-20">
       <div className="container mx-auto px-4 md:px-6">
-        <Card className="bg-gradient-to-r from-accent to-primary text-primary-foreground shadow-2xl p-8 md:p-12">
+        <Card className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-2xl p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="text-center md:text-left">
                     <h2 className="text-3xl font-headline font-bold">Trở thành người hướng dẫn trên HelloJob</h2>
-                    <p className="mt-2 text-primary-foreground/80">Chia sẻ kiến thức chuyên môn của bạn và kiếm thêm thu nhập bằng cách tạo ra các khóa học online của riêng bạn trên nền tảng của chúng tôi.</p>
+                    <p className="mt-2 text-white/90">Chia sẻ kiến thức chuyên môn của bạn và kiếm thêm thu nhập bằng cách tạo ra các khóa học online của riêng bạn trên nền tảng của chúng tôi.</p>
                 </div>
                  <div className="flex justify-center md:justify-end">
-                     <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 text-lg px-8">
+                     <Button size="lg" className="bg-white text-orange-600 hover:bg-white/90 rounded-full h-14 text-lg px-8">
                         <Handshake className="mr-2"/>
                         Bắt đầu ngay
                     </Button>

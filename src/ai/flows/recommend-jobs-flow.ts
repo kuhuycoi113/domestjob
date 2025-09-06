@@ -41,13 +41,13 @@ Nhiệm vụ của bạn là hỗ trợ ứng viên tìm được công việc p
 
 Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các bước sau theo đúng thứ tự ưu tiên từ trên xuống dưới:
 
-**TRƯỜNG HỢP 1: Người dùng trả lời câu hỏi về kiến thức (CH002-2)**
+**TRƯỜNG HỢP 1: Người dùng đã có kiến thức (CH002-2)**
 *   **Điều kiện:** Nếu yêu cầu của ứng viên chính xác là "Tôi đã tìm hiểu kỹ rồi".
 *   **Hành động:** Chuyển ngay sang BƯỚC 3.
 
 **TRƯỜNG HỢP 2: Người dùng hỏi về việc làm Kỹ năng đặc định**
 *   **Điều kiện:** Nếu yêu cầu chứa các từ khóa như "Đặc định", "Tokutei", "Tokutei Ginou".
-*   **Hành động:** Chuyển ngay sang BƯỚC 5.
+*   **Hành động:** Chuyển ngay sang BƯỚC 3 (Vì Đặc định cũng là một loại ngành nghề cụ thể).
 
 **TRƯỜNG HỢP 3: Người dùng đưa ra yêu cầu cụ thể khác**
 *   **Điều kiện:** Nếu yêu cầu đã có chứa từ khóa cụ thể về ngành nghề (ví dụ: "cơ khí", "thực phẩm") hoặc loại visa khác (ví dụ: "kỹ sư").
@@ -67,11 +67,11 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
 *   **recommendations**: Để trống (mảng rỗng []).
 *   **suggestedReplies**: Tạo ra 2 câu trả lời gợi ý: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"]. Đánh dấu "Tôi là người mới, chưa biết gì" là CH001-1. Đánh dấu "Tôi đã tìm hiểu kỹ rồi" là CH002-2.
 
-**BƯỚC 3: Hỏi về kiểu việc làm (Người dùng đã có kiến thức - CH002-2)**
+**BƯỚC 3: Hỏi về ngành nghề mong muốn (Người dùng đã có kiến thức - CH002-2 hoặc hỏi về Tokutei)**
 *   **requiresClarification**: true.
-*   **message**: "Bạn muốn tìm việc Nhật Bản kiểu như nào?"
+*   **message**: "Bạn muốn tìm việc ngành nào?"
 *   **recommendations**: Để trống (mảng rỗng []).
-*   **suggestedReplies**: Đưa ra chính xác các lựa chọn sau: ["Việc làm phổ thông, dễ dàng, ai cũng đi được", "Việc làm yêu cầu tay nghề cụ thể như “Nhà hàng, Điều dưỡng, Thực phẩm…” cần phải thi tiếng Nhật và tay nghề nhưng mức phí thấp hơn", "Việc làm dành cho người tốt nghiệp cao đẳng, đại học"]
+*   **suggestedReplies**: Đưa ra chính xác các lựa chọn sau: ["Nông nghiệp", "Nhà hàng", "Thực phẩm", "Sản xuất, dịch vụ tổng hợp", "Điện, điện tử", "Chế tạo Vật liệu", "Cơ khí, chế tạo máy", "Ô tô", "Hàng không", "Vận tải", "Xây dựng", "Vệ sinh toà nhà", "Lưu trú, khách sạn", "Điều dưỡng", "Ngư nghiệp"]
 
 **BƯỚC 4: Đưa ra gợi ý việc làm (Yêu cầu cụ thể)**
 *   **requiresClarification**: false.
@@ -82,12 +82,6 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
         *   "title": Chức danh của công việc.
         *   "reason": Một câu ngắn gọn, thân thiện bằng tiếng Việt giải thích TẠI SAO công việc này lại phù hợp với yêu cầu của ứng viên. Ví dụ: "Công việc này đúng chuyên ngành cơ khí và lại ở Osaka, rất hợp với mong muốn của bạn."
 *   **suggestedReplies**: Có thể để trống, hoặc gợi ý các câu hỏi tiếp theo như ["Tìm thêm việc khác", "Việc này có yêu cầu gì?"]
-
-**BƯỚC 5: Hỏi về ngành nghề Kỹ năng đặc định**
-*   **requiresClarification**: true.
-*   **message**: "Bạn muốn tìm việc ngành nào?"
-*   **recommendations**: Để trống (mảng rỗng []).
-*   **suggestedReplies**: Đưa ra chính xác các lựa chọn sau: ["Nông nghiệp", "Nhà hàng", "Thực phẩm", "Sản xuất, dịch vụ tổng hợp", "Điện, điện tử", "Chế tạo Vật liệu", "Cơ khí, chế tạo máy", "Ô tô", "Hàng không", "Vận tải", "Xây dựng", "Vệ sinh toà nhà", "Lưu trú, khách sạn", "Điều dưỡng", "Ngư nghiệp"]
 `,
 });
 

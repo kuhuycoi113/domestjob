@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, PlusCircle, ChevronDown, Image as ImageIcon } from 'lucide-react';
+import { LifeBuoy, Search, ArrowRight, Video, FileText, Newspaper, PlusCircle, ChevronDown, Image as ImageIcon, Smartphone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { articles, HandbookArticle } from '@/lib/handbook-data';
@@ -11,11 +11,13 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 
 export const metadata: Metadata = {
   title: 'Cẩm nang HelloJob - Thông tin việc làm & cuộc sống tại Nhật',
@@ -89,6 +91,48 @@ const VideoCard = ({ article }: { article: HandbookArticle }) => (
   </Link>
 );
 
+const ShareDialogContent = () => (
+    <>
+    <DialogHeader className="text-center">
+        <DialogTitle className="text-3xl font-headline">Chọn loại nội dung bạn muốn chia sẻ</DialogTitle>
+        <DialogDescription className="text-base">
+            Đóng góp kiến thức và kinh nghiệm của bạn cho cộng đồng HelloJob.
+        </DialogDescription>
+    </DialogHeader>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+        <Link href="/handbook/create/post">
+            <Card className="text-center p-6 hover:shadow-lg hover:border-primary transition-all duration-300 cursor-pointer h-full">
+                <FileText className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+                <h3 className="font-bold text-xl mb-2">Đăng nội dung dạng chữ</h3>
+                <p className="text-muted-foreground text-sm">Chia sẻ một câu chuyện, mẹo nhỏ, hoặc một câu hỏi.</p>
+            </Card>
+        </Link>
+        <Link href="/handbook/create/image">
+            <Card className="text-center p-6 hover:shadow-lg hover:border-primary transition-all duration-300 cursor-pointer h-full">
+                <ImageIcon className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                <h3 className="font-bold text-xl mb-2">Đăng bài viết dạng ảnh</h3>
+                <p className="text-muted-foreground text-sm">Tạo một bài viết với hình ảnh minh hoạ trực quan.</p>
+            </Card>
+        </Link>
+        <Link href="/handbook/create/video-short">
+            <Card className="text-center p-6 hover:shadow-lg hover:border-primary transition-all duration-300 cursor-pointer h-full">
+                <Smartphone className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                <h3 className="font-bold text-xl mb-2">Đăng video ngắn</h3>
+                <p className="text-muted-foreground text-sm">Chia sẻ một khoảnh khắc hoặc hướng dẫn nhanh.</p>
+            </Card>
+        </Link>
+        <Link href="/handbook/create/video">
+            <Card className="text-center p-6 hover:shadow-lg hover:border-primary transition-all duration-300 cursor-pointer h-full">
+                <Video className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                <h3 className="font-bold text-xl mb-2">Đăng video dài</h3>
+                <p className="text-muted-foreground text-sm">Tạo một video chuyên sâu, phỏng vấn, hoặc vlog.</p>
+            </Card>
+        </Link>
+    </div>
+    </>
+);
+
+
 const ShareContentCta = () => (
     <section className="w-full mt-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -99,21 +143,17 @@ const ShareContentCta = () => (
                     <p className="mt-2 text-primary-foreground/80">Bạn có câu chuyện, mẹo hay hoặc kinh nghiệm quý báu muốn chia sẻ với cộng đồng người Việt tại Nhật? Hãy đóng góp bài viết, video cho HelloJob!</p>
                 </div>
                  <div className="flex justify-center md:justify-end">
-                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                     <Dialog>
+                        <DialogTrigger asChild>
                             <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full h-14 text-lg px-8">
                                 <PlusCircle className="mr-2"/>
                                 Chia sẻ ngay
-                                <ChevronDown className="ml-2"/>
                             </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild><Link href="/handbook/create/post" className="cursor-pointer"><FileText className="mr-2"/>Bài viết</Link></DropdownMenuItem>
-                            <DropdownMenuItem asChild><Link href="/handbook/create/video" className="cursor-pointer"><Video className="mr-2"/>Video dài</Link></DropdownMenuItem>
-                            <DropdownMenuItem asChild><Link href="/handbook/create/video-short" className="cursor-pointer"><Video className="mr-2"/>Video ngắn</Link></DropdownMenuItem>
-                            <DropdownMenuItem asChild><Link href="/handbook/create/image" className="cursor-pointer"><ImageIcon className="mr-2"/>Ảnh</Link></DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-3xl">
+                            <ShareDialogContent />
+                        </DialogContent>
+                    </Dialog>
                  </div>
             </div>
         </Card>

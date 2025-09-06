@@ -12,8 +12,9 @@ export type RecommendedJob = z.infer<typeof RecommendedJobSchema>;
 
 // Define the schema for the flow's output
 export const JobRecommendationResponseSchema = z.object({
-  recommendations: z.array(RecommendedJobSchema).describe('A list of up to 3 recommended jobs.'),
-  message: z.string().describe("A friendly, conversational, and helpful summary message in Vietnamese to the user. Start by acknowledging their request, then briefly introduce the recommendations. For example: 'Chào bạn, dựa trên mong muốn của bạn, HelloJob AI đã tìm thấy một vài cơ hội có thể phù hợp. Cùng xem qua nhé!'"),
+  requiresClarification: z.boolean().describe('Set to true if the user\'s query is too general and they need to be asked about their visa knowledge. If true, do not provide recommendations.'),
+  recommendations: z.array(RecommendedJobSchema).describe('A list of up to 3 recommended jobs. This should be an empty array if requiresClarification is true.'),
+  message: z.string().describe("A friendly, conversational, and helpful summary message in Vietnamese to the user. If requiresClarification is true, this message should be a question to gauge the user's knowledge. Otherwise, it should introduce the job recommendations."),
 });
 
 export type JobRecommendationResponse = z.infer<typeof JobRecommendationResponseSchema>;

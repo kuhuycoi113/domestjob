@@ -134,7 +134,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
                 id: `msg-ai-${Date.now()}`,
                 sender: helloJobBot,
                 text: aiResult.message,
-                recommendations: aiResult.recommendations,
+                recommendations: aiResult.requiresClarification ? [] : aiResult.recommendations,
                 timestamp: new Date().toISOString(),
             };
 

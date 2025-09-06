@@ -90,7 +90,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log('Selected image:', file.name);
+      console.log('Selected image/video:', file.name);
       // Here you can add logic to upload the file or display a preview
     }
   };
@@ -152,7 +152,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
               ref={imageInputRef} 
               className="hidden" 
               onChange={handleImageChange}
-              accept="image/*"
+              accept="image/*,video/*"
             />
             <div className="flex items-center gap-1">
               <Button type="button" variant="ghost" size="icon" className="text-muted-foreground" onClick={handleFileButtonClick}><Paperclip /></Button>

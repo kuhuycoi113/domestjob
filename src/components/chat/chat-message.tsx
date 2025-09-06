@@ -1,3 +1,4 @@
+
 'use client';
 
 import { cn } from '@/lib/utils';
@@ -34,13 +35,11 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
   if (message.isLoading) {
     return (
         <div className="flex items-start gap-2 justify-start">
-             {/* CHATAVATAR2 */}
             <Avatar className="h-8 w-8">
                 <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
                 <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-                 {/* CHATNAME2 */}
                  <p className="text-xs text-muted-foreground mb-1 ml-3">
                     <Link href={`/consultant-profile/${displayUser.id}`} className="hover:underline hover:text-primary">
                         Tư vấn viên {displayUser.name}

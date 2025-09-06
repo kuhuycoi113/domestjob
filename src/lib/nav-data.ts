@@ -45,6 +45,7 @@ export const quickAccessLinks = [
   { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
 
+// Re-ordered to a stable, logical order to fix hydration errors.
 export const mobileFooterLinks = [
   { href: '/', label: 'Trang chủ', icon: Home },
   { href: '/ai-profile', label: 'Hồ sơ AI', icon: Sparkles },

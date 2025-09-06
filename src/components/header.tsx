@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Image from 'next/image';
+import { useChat } from '@/contexts/ChatContext';
 
 const mainNavLinks = [
   { href: '/', label: 'Trang chủ'},
@@ -58,6 +59,7 @@ export const Logo = ({ className }: { className?: string }) => (
 
 export function Header() {
   const pathname = usePathname();
+  const { openChat } = useChat();
 
   const NavLink = ({ href, label, className, icon: Icon, onClick }: { href: string; label: string, className?: string, icon?: React.ElementType, onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void }) => (
     <Link
@@ -147,11 +149,9 @@ export function Header() {
 
         </div>
         <div className="md:hidden">
-            <Button asChild size="icon">
-                <Link href="/chat">
-                    <MessageSquare />
-                    <span className="sr-only">Chat</span>
-                </Link>
+            <Button variant="default" size="icon" onClick={() => openChat()}>
+                <MessageSquare />
+                <span className="sr-only">Chat</span>
             </Button>
         </div>
       </div>

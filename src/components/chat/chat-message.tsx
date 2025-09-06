@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { cn } from '@/lib/utils';
@@ -115,7 +116,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
                     return (
                         <div key={job.id}>
                             {reason && <p className="text-xs text-muted-foreground font-semibold mb-1 ml-2">✨ {reason}</p>}
-                            <JobCard job={job} />
+                            <JobCard job={job} variant="chat" />
                         </div>
                     )
                 })}

@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Heart, Briefcase, User, MoreHorizontal, MapPin, MessageSquare } from 'lucide-react';
+import { Heart, Briefcase, User, MoreHorizontal, MapPin, MessageSquare, DollarSign } from 'lucide-react';
 import { Job } from '@/lib/mock-data';
 import {
     DropdownMenu,
@@ -23,7 +23,30 @@ const formatCurrency = (value?: string) => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecruiterName?: boolean }) => {
+export const JobCard = ({ job, showRecruiterName = true, variant = 'default' }: { job: Job, showRecruiterName?: boolean, variant?: 'default' | 'chat' }) => {
+
+  // New Chat Layout for the chat variant
+  const ChatLayout = () => (
+    <Link href={`/jobs/${job.id}`} className="block w-full">
+        <Card className="flex items-center p-2 gap-3 hover:bg-secondary/50 transition-colors">
+            <div className="relative w-16 h-16 flex-shrink-0">
+                <Image src={job.image.src} alt={job.title} fill className="object-cover rounded-md" />
+            </div>
+            <div className="flex-grow overflow-hidden">
+                <h4 className="font-semibold text-sm truncate">{job.title}</h4>
+                <p className="text-xs text-muted-foreground truncate flex items-center gap-1 mt-1">
+                    <MapPin className="h-3 w-3 flex-shrink-0" />
+                    {job.workLocation}
+                </p>
+                <p className="text-xs text-green-600 font-bold flex items-center gap-1 mt-1">
+                    <DollarSign className="h-3 w-3 flex-shrink-0" />
+                    {formatCurrency(job.salary.basic)}
+                </p>
+            </div>
+        </Card>
+    </Link>
+  );
+
   // Desktop layout
   const DesktopLayout = () => (
     <div className="hidden md:flex flex-row items-stretch w-full p-3 gap-4">
@@ -159,6 +182,10 @@ export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecru
       </div>
     </div>
   );
+
+  if (variant === 'chat') {
+    return <ChatLayout />;
+  }
 
   return (
     <Card className="rounded-lg overflow-hidden shadow-sm border border-border hover:shadow-lg transition-shadow duration-300">

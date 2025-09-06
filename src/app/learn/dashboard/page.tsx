@@ -7,9 +7,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { DollarSign, Users, TrendingUp, Percent, ArrowRight, BookOpen } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line } from 'recharts';
+import { DollarSign, Users, TrendingUp, Percent, ArrowRight, BookOpen, MousePointerClick, Eye, ShoppingCart, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
+
 
 const statsData = [
   { icon: DollarSign, title: 'Tổng doanh thu', value: '12,345,000', change: '+15.2%', currency: 'VND' },
@@ -97,24 +99,32 @@ const PaymentCard = () => (
     </Card>
 );
 
+const FunnelStep = ({ icon: Icon, title, value, colorClass }: { icon: React.ElementType, title: string, value: string, colorClass: string }) => (
+    <Card className={cn("p-4 text-center", colorClass)}>
+        <div className="flex items-center gap-3">
+             <div className="bg-white/50 p-2 rounded-full">
+                 <Icon className="h-6 w-6" />
+             </div>
+            <div>
+                <p className="text-sm font-semibold text-left">{title}</p>
+                <p className="text-2xl font-bold text-left">{value}</p>
+            </div>
+        </div>
+    </Card>
+);
+
 const ConversionFunnel = () => (
     <div className="col-span-1 lg:col-span-3 space-y-4">
-        <h3 className="text-xl font-bold font-headline text-center">Phễu chuyển đổi</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center text-center">
-            <Card><CardContent className="p-4">
-                <p className="text-2xl font-bold">12,450</p>
-                <p className="text-sm text-muted-foreground">Truy cập</p>
-            </CardContent></Card>
-            <ArrowRight className="text-muted-foreground mx-auto hidden md:block"/>
-            <Card><CardContent className="p-4">
-                <p className="text-2xl font-bold">872</p>
-                <p className="text-sm text-muted-foreground">Thêm vào giỏ</p>
-            </CardContent></Card>
-             <ArrowRight className="text-muted-foreground mx-auto hidden md:block"/>
-            <Card><CardContent className="p-4">
-                <p className="text-2xl font-bold">591</p>
-                <p className="text-sm text-muted-foreground">Thanh toán</p>
-            </CardContent></Card>
+        <div className="text-center">
+             <h3 className="text-xl font-bold font-headline">Phễu chuyển đổi</h3>
+             <p className="text-sm text-muted-foreground">Hành trình của người dùng từ khi truy cập đến khi thanh toán thành công.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <FunnelStep icon={MousePointerClick} title="Số lượt truy cập" value="10,250" colorClass="bg-blue-100 text-blue-800" />
+            <FunnelStep icon={Eye} title="Xem bài miễn phí" value="4,870" colorClass="bg-purple-100 text-purple-800" />
+            <FunnelStep icon={ShoppingCart} title="Click thanh toán" value="620" colorClass="bg-fuchsia-100 text-fuchsia-800" />
+            <FunnelStep icon={CheckCircle} title="Mua hàng trả phí" value="415" colorClass="bg-green-100 text-green-800" />
+            <FunnelStep icon={XCircle} title="Bỏ thanh toán" value="205" colorClass="bg-red-100 text-red-800" />
         </div>
     </div>
 );

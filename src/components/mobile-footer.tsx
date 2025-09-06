@@ -45,8 +45,8 @@ export function MobileFooter() {
 
   const footerLinks = [
     { href: '/', icon: Home, label: 'Trang chủ' },
-    { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
     { href: '/ai-profile', icon: Sparkles, label: 'Hồ sơ AI' },
+    { href: '/jobs', icon: Briefcase, label: 'Việc làm' },
   ];
   
 

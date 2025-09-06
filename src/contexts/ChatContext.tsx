@@ -104,6 +104,21 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     }
 
     if (text) {
+        // Simple greeting detection
+        const lowerCaseText = text.toLowerCase().trim();
+        const greetings = ['chào', 'hello', 'hi', 'xin chào'];
+        if (greetings.some(greeting => lowerCaseText.startsWith(greeting))) {
+            const greetingResponse: Message = {
+                id: `msg-greeting-${Date.now()}`,
+                sender: helloJobBot,
+                text: 'Chào bạn, HelloJob có thể giúp gì cho bạn hôm nay?',
+                timestamp: new Date().toISOString(),
+            };
+            setActiveConversation(prev => prev ? { ...prev, messages: [...prev.messages, greetingResponse] } : null);
+            return;
+        }
+
+
         const loadingMessage: Message = {
             id: `msg-loading-${Date.now()}`,
             sender: helloJobBot,

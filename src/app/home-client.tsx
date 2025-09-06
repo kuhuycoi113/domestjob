@@ -456,7 +456,7 @@ export default function HomeClient() {
                   Khám phá lộ trình phát triển sự nghiệp để trở thành lao động tay nghề cao và đạt được mức thu nhập mơ ước.
                 </p>
                 <Button asChild size="lg" className="bg-accent-green hover:bg-accent-green/90 text-white">
-                  <Link href="/roadmap">
+                  <Link href="/handbook/ginou-2-lao-dong-lanh-nghe">
                     <TrendingUp /> Xem ngay lộ trình
                   </Link>
                 </Button>

@@ -1,5 +1,4 @@
 
-
 export type HandbookArticle = {
   slug: string;
   type: 'article' | 'video' | 'post'; // Phân loại nội dung
@@ -67,6 +66,53 @@ export const articles: HandbookArticle[] = [
             <li><strong>Cơ hội chuyển việc:</strong> Người lao động được phép chuyển việc trong cùng một ngành nghề nếu có lý do chính đáng và được công ty mới chấp nhận.</li>
             <li><strong>Phát triển dài hạn:</strong> Có cơ hội phát triển sự nghiệp lâu dài tại Nhật, đặc biệt khi chuyển lên được visa loại 2.</li>
           </ul>
+        `
+      },
+    ],
+  },
+  {
+    slug: 'ginou-2-lao-dong-lanh-nghe',
+    type: 'article',
+    title: 'Ginou 2 - Lao động lành nghề tại Nhật thu nhập bao nhiêu?',
+    category: 'Kỹ năng đặc định',
+    author: 'HelloJob Team',
+    readTime: '7 phút',
+    image: '/img/chuyen_gia_lanh_nghe.jpg',
+    dataAiHint: 'skilled factory worker japan',
+    excerpt: 'Khám phá lộ trình phát triển sự nghiệp để trở thành lao động tay nghề cao (Tokutei Ginou 2) và đạt được mức thu nhập mơ ước, cùng cơ hội định cư lâu dài tại Nhật Bản.',
+    content: [
+      {
+        slug: 'tokutei-ginou-2-la-gi',
+        title: 'Visa Kỹ năng đặc định loại 2 là gì?',
+        body: `
+          <p>Visa Kỹ năng đặc định loại 2 (Tokutei Ginou 2) là cấp độ cao nhất trong chương trình visa lao động kỹ năng của Nhật Bản. Đây là bước tiến dành cho những lao động đã hoàn thành chương trình Tokutei Ginou 1 và vượt qua kỳ thi đánh giá kỹ năng cấp độ cao hơn. Với visa này, bạn được công nhận là một chuyên gia có tay nghề thành thạo trong lĩnh vực của mình.</p>
+        `
+      },
+      {
+        slug: 'quyen-loi-vuot-troi',
+        title: 'Những quyền lợi vượt trội của Tokutei Ginou 2',
+        body: `
+          <p>Việc đạt được visa Tokutei Ginou 2 mang lại những quyền lợi đột phá, tương đương với một kỹ sư hoặc nhân viên chính thức người Nhật:</p>
+          <ul>
+            <li><strong>Thời hạn lưu trú không giới hạn:</strong> Không giống như Tokutei Ginou 1 (tối đa 5 năm), visa loại 2 có thể được gia hạn vô thời hạn, mở ra con đường định cư lâu dài.</li>
+            <li><strong>Bảo lãnh gia đình:</strong> Bạn được phép bảo lãnh vợ/chồng và con cái sang Nhật Bản sinh sống, học tập và làm việc.</li>
+            <li><strong>Cơ hội xin vĩnh trú:</strong> Sau một thời gian sinh sống và làm việc ổn định với visa Tokutei Ginou 2, bạn sẽ đủ điều kiện để nộp đơn xin visa vĩnh trú (永住権).</li>
+            <li><strong>Mức lương cao hơn:</strong> Thu nhập của lao động Tokutei Ginou 2 thường cao hơn đáng kể so với loại 1, phản ánh đúng trình độ kỹ năng và kinh nghiệm của bạn. Mức lương có thể lên tới 60-70 triệu VNĐ/tháng hoặc hơn, tùy thuộc vào ngành nghề và công ty.</li>
+          </ul>
+        `
+      },
+      {
+        slug: 'dieu-kien-dat-duoc',
+        title: 'Làm thế nào để đạt được Tokutei Ginou 2?',
+        body: `
+          <p>Con đường đến với Tokutei Ginou 2 đòi hỏi sự nỗ lực và chuẩn bị kỹ lưỡng:</p>
+          <ol>
+            <li><strong>Hoàn thành chương trình Tokutei Ginou 1:</strong> Bạn cần có kinh nghiệm làm việc thực tế tại Nhật dưới visa Tokutei Ginou 1.</li>
+            <li><strong>Vượt qua kỳ thi tay nghề cấp cao:</strong> Đây là yêu cầu bắt buộc. Kỳ thi này sẽ đánh giá trình độ chuyên môn và kỹ năng quản lý ở mức độ cao hơn.</li>
+            <li><strong>Trình độ tiếng Nhật:</strong> Mặc dù không có quy định cứng về JLPT, khả năng giao tiếp và đọc hiểu tài liệu chuyên ngành bằng tiếng Nhật là cực kỳ quan trọng để vượt qua kỳ thi và làm việc hiệu quả.</li>
+            <li><strong>Ngành nghề áp dụng:</strong> Hiện tại, visa Tokutei Ginou 2 chỉ áp dụng cho 2 ngành là Xây dựng và Đóng tàu. Tuy nhiên, chính phủ Nhật đang xem xét mở rộng ra các ngành nghề khác trong tương lai.</li>
+          </ol>
+          <p>HelloJob với lộ trình SWR sẽ đồng hành cùng bạn, cung cấp các khóa học E-learning và định hướng cần thiết để bạn có thể chinh phục thành công visa Tokutei Ginou 2.</p>
         `
       },
     ],

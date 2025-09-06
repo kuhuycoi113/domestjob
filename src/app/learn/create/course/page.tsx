@@ -86,6 +86,18 @@ export default function BuildCoursePage() {
     }));
   };
 
+  const handlePreview = () => {
+    const previewData = {
+      title,
+      description,
+      sections,
+      price,
+      coursePrice,
+    };
+    localStorage.setItem('coursePreviewData', JSON.stringify(previewData));
+    window.open('/learn/preview', '_blank');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || sections.length === 0) {
@@ -149,10 +161,10 @@ export default function BuildCoursePage() {
                   {sections.map((section, sectionIndex) => (
                     <AccordionItem key={section.id} value={`section-${section.id}`} className="bg-secondary/50 rounded-lg border px-4">
                       <div className="flex items-center w-full">
-                        <AccordionTrigger className="hover:no-underline py-3 flex-grow">
+                        <AccordionTrigger className="hover:no-underline py-0 flex-grow">
                            <div className="flex items-center gap-2 w-full">
                              <span className="font-bold">Chương {sectionIndex + 1}:</span>
-                             <Input value={section.title} onChange={e => updateSectionTitle(section.id, e.target.value)} className="bg-transparent border-0 focus-visible:ring-1" onClick={(e) => e.stopPropagation()} />
+                             <Input value={section.title} onChange={e => updateSectionTitle(section.id, e.target.value)} className="bg-transparent border-0 focus-visible:ring-1 h-auto py-3" onClick={(e) => e.stopPropagation()} />
                            </div>
                         </AccordionTrigger>
                         <Button type="button" variant="ghost" size="icon" className="shrink-0" onClick={() => removeSection(section.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
@@ -243,7 +255,7 @@ export default function BuildCoursePage() {
             </Card>
 
             <div className="flex justify-end gap-4">
-                <Button type="button" variant="outline">Xem trước</Button>
+                <Button type="button" variant="outline" onClick={handlePreview}>Xem trước</Button>
                 <Button type="submit">Lưu và Xuất bản</Button>
             </div>
           </form>

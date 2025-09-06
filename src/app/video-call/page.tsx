@@ -92,7 +92,7 @@ export default function VideoCallPage() {
         
         {/* User video preview */}
         <div className="absolute bottom-6 right-6">
-            <Card className="h-40 w-60 overflow-hidden border-2 border-primary shadow-lg bg-black">
+            <Card className="h-32 w-24 overflow-hidden border-2 border-primary shadow-lg bg-black">
                 <video ref={userVideoRef} className="h-full w-full object-cover" autoPlay muted />
             </Card>
         </div>

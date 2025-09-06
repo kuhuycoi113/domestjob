@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { notFound } from 'next/navigation';
@@ -23,6 +24,12 @@ const JobDetailSection = ({ title, children, icon: Icon }: { title: string, chil
         </CardContent>
     </Card>
 );
+
+const formatCurrency = (value?: string) => {
+    if (!value) return 'N/A';
+    // Use regex to add commas to numbers in the string
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 export default function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
@@ -150,11 +157,11 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                             <CardContent className="space-y-4">
                                <div className="space-y-2">
                                     <p className="text-sm text-muted-foreground">Lương cơ bản</p>
-                                    <p className="text-2xl font-bold text-accent-green">{job.salary.basic}</p>
-                                    {job.salary.actual && <p className="font-semibold text-muted-foreground">Thực lĩnh: ~{job.salary.actual}</p>}
+                                    <p className="text-2xl font-bold text-accent-green">{formatCurrency(job.salary.basic)}</p>
+                                    {job.salary.actual && <p className="font-semibold text-muted-foreground">Thực lĩnh: ~{formatCurrency(job.salary.actual)}</p>}
                                </div>
                                <div className="border-t pt-4 space-y-2 text-sm">
-                                   <p>Thu nhập năm: <strong>{job.salary.annualIncome || 'N/A'}</strong></p>
+                                   <p>Thu nhập năm: <strong>{formatCurrency(job.salary.annualIncome)}</strong></p>
                                    <p>Thưởng: <strong>{job.salary.annualBonus || 'N/A'}</strong></p>
                                </div>
                             </CardContent>

@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import Image from 'next/image';
@@ -16,6 +17,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+
+const formatCurrency = (value?: string) => {
+    if (!value) return 'N/A';
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecruiterName?: boolean }) => {
   // Desktop layout
@@ -40,8 +46,8 @@ export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecru
                 <h3 className="font-bold text-base mb-2 group-hover:text-primary cursor-pointer leading-tight line-clamp-2">{job.title}</h3>
             </Link>
              <div className="flex flex-wrap items-center gap-2 mb-2">
-              {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 border-green-200">Thực lĩnh: {job.salary.actual}</Badge>}
-              <Badge variant="secondary" className="text-xs">Cơ bản: {job.salary.basic}</Badge>
+              {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 border-green-200">Thực lĩnh: {formatCurrency(job.salary.actual)}</Badge>}
+              <Badge variant="secondary" className="text-xs">Cơ bản: {formatCurrency(job.salary.basic)}</Badge>
             </div>
             <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
@@ -100,8 +106,8 @@ export const JobCard = ({ job, showRecruiterName = true }: { job: Job, showRecru
                  <h3 className="font-bold text-sm mb-2 group-hover:text-primary cursor-pointer leading-tight line-clamp-3">{job.title}</h3>
             </Link>
             <div className="flex flex-wrap gap-1 mb-2">
-                {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">Thực lĩnh: {job.salary.actual}</Badge>}
-                <Badge variant="secondary" className="text-xs">Cơ bản: {job.salary.basic}</Badge>
+                {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">Thực lĩnh: {formatCurrency(job.salary.actual)}</Badge>}
+                <Badge variant="secondary" className="text-xs">Cơ bản: {formatCurrency(job.salary.basic)}</Badge>
             </div>
              <p className="flex items-center gap-1 text-xs text-muted-foreground mb-2">
                 <MapPin className="h-3 w-3" />

@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign, Star, Ruler, Weight, Dna, Loader2 } from 'lucide-react';
+import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign, Star, Ruler, Weight, Dna, Loader2, BookCopy } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
@@ -455,11 +455,18 @@ export default function HomeClient() {
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto md:mx-0">
                   Khám phá lộ trình phát triển sự nghiệp để trở thành lao động tay nghề cao và đạt được mức thu nhập mơ ước.
                 </p>
-                <Button asChild size="lg" className="bg-accent-green hover:bg-accent-green/90 text-white">
-                  <Link href="/handbook/ginou-2-lao-dong-lanh-nghe">
-                    <TrendingUp /> Xem ngay lộ trình
-                  </Link>
-                </Button>
+                <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <Button asChild size="lg" className="bg-accent-green hover:bg-accent-green/90 text-white">
+                      <Link href="/roadmap">
+                        <TrendingUp /> Xem ngay lộ trình
+                      </Link>
+                    </Button>
+                    <Button asChild size="lg" variant="outline">
+                        <Link href="/handbook/ginou-2-lao-dong-lanh-nghe">
+                           <BookCopy /> Xem ngay bài viết
+                        </Link>
+                    </Button>
+                </div>
               </div>
             </div>
           </Card>
@@ -599,7 +606,7 @@ export default function HomeClient() {
                                     aria-expanded={comboboxOpen}
                                     className="w-full justify-between h-10 font-normal text-sm"
                                 >
-                                    <span className="truncate">{finalSearchTerm || "Tất cả ngành nghề"}</span>
+                                    <span className="truncate">{selectedIndustry || "Tất cả ngành nghề"}</span>
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>

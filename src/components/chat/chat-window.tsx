@@ -20,7 +20,7 @@ interface ChatWindowProps {
 }
 
 const Logo = () => (
-    <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={80} height={26} className="h-6 w-auto" />
+    <Image src="/img/favi2.png" alt="HelloJob Logo" width={80} height={26} className="h-6 w-auto" />
 );
 
 export function ChatWindow({ conversation }: ChatWindowProps) {
@@ -29,6 +29,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const [isVideoCallDialogOpen, setIsVideoCallDialogOpen] = useState(false);
   const [isVoiceCallDialogOpen, setIsVoiceCallDialogOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
   
   const mainContact = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
@@ -66,6 +67,18 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     } else {
       e.preventDefault();
       setIsVoiceCallDialogOpen(true);
+    }
+  };
+
+  const handleFileButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log('Selected file:', file.name);
+      // Here you can add logic to upload the file or display a preview
     }
   };
 
@@ -114,9 +127,16 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
         {/* Input */}
         <footer className="p-4 border-t bg-background flex-shrink-0">
           <form onSubmit={handleSendMessage} className="relative flex items-center gap-2">
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              onChange={handleFileChange} 
+              accept="image/*,video/*"
+            />
             <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon" className="text-muted-foreground"><Paperclip /></Button>
-              <Button variant="ghost" size="icon" className="text-muted-foreground"><ImageIcon /></Button>
+              <Button type="button" variant="ghost" size="icon" className="text-muted-foreground" onClick={handleFileButtonClick}><Paperclip /></Button>
+              <Button type="button" variant="ghost" size="icon" className="text-muted-foreground"><ImageIcon /></Button>
             </div>
             <Input
               value={newMessage}

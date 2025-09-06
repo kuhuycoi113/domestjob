@@ -147,7 +147,7 @@ export function Header() {
 
         </div>
         <div className="md:hidden">
-            <Button asChild variant="ghost" size="icon">
+            <Button asChild size="icon">
                 <Link href="/chat">
                     <MessageSquare />
                     <span className="sr-only">Chat</span>

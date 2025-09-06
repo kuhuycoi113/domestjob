@@ -61,13 +61,13 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
 *   **requiresClarification**: 'true'.
 *   **message**: Viết một tin nhắn hỏi để làm rõ mức độ hiểu biết của ứng viên. Tin nhắn phải thân thiện. Ví dụ: "Chào bạn, HelloJob sẵn lòng hỗ trợ. Để đưa ra gợi ý chính xác nhất, bạn cho mình hỏi một chút nhé: Bạn đã tìm hiểu về các loại visa làm việc tại Nhật (như Thực tập sinh, Kỹ năng đặc định, Kỹ sư...) và quy trình tìm việc chưa ạ?"
 *   **recommendations**: Để trống (mảng rỗng []).
-*   **suggestedReplies**: Tạo ra 2 câu trả lời gợi ý: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"]. Đánh dấu "Tôi là người mới, chưa biết gì" là CH001-1.
+*   **suggestedReplies**: Tạo ra 2 câu trả lời gợi ý: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"]. Đánh dấu "Tôi là người mới, chưa biết gì" là CH001-1. Đánh dấu "Tôi đã tìm hiểu kỹ rồi" là CH002-2.
 
-**BƯỚC 3: Hỏi loại visa (CH003 - Người dùng đã có kiến thức)**
+**BƯỚC 3: Hỏi về kiểu việc làm (Người dùng đã có kiến thức)**
 *   **requiresClarification**: 'true'.
-*   **message**: "Bạn cần tìm việc làm Nhật Bản loại visa nào?"
+*   **message**: "Bạn muốn tìm việc Nhật Bản kiểu như nào?"
 *   **recommendations**: Để trống (mảng rỗng []).
-*   **suggestedReplies**: Đưa ra chính xác các lựa chọn sau: ["Thực tập sinh 3 năm", "Thực tập sinh 1 năm", "Thực tập sinh 3 Go", "Đặc định đầu Nhật", "Đặc định đầu Việt", "Đặc định đi mới", "Kỹ sư, tri thức đầu Nhật", "Kỹ sư, tri thức đầu Việt"]
+*   **suggestedReplies**: Đưa ra chính xác các lựa chọn sau: ["Việc làm phổ thông, dễ dàng, ai cũng đi được", "Việc làm yêu cầu tay nghề cụ thể như “Nhà hàng, Điều dưỡng, Thực phẩm…” cần phải thi tiếng Nhật và tay nghề nhưng mức phí thấp hơn", "Việc làm dành cho người tốt nghiệp cao đẳng, đại học"]
 
 **BƯỚC 4: Đưa ra gợi ý việc làm (Yêu cầu cụ thể)**
 *   **requiresClarification**: 'false'.

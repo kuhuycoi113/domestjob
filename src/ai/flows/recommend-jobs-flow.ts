@@ -115,5 +115,3 @@ const recommendJobsFlow = ai.defineFlow(
     return output;
   }
 );
-
-

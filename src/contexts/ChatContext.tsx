@@ -53,13 +53,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     let targetUser = user;
 
     if (!targetUser) {
-        // If no specific user is provided (e.g., clicking general chat button),
-        // use the assigned consultant. Fallback to bot if not yet assigned.
-        targetUser = assignedConsultant || helloJobBot;
-    }
-    
-    // For general queries, always start with the bot first.
-    if (!user) {
+        // When user clicks the general chat button, always start with the bot.
         targetUser = helloJobBot;
     }
     

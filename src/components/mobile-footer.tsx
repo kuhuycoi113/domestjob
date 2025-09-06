@@ -110,17 +110,22 @@ export function MobileFooter() {
 
               <div className="p-2">
                  <div className="grid grid-cols-3 gap-2">
-                    {quickAccessLinks.map((link) => (
+                    {quickAccessLinks.map((link) => {
+                      const isActive = (activePath === link.href) || (link.href !== '/' && activePath.startsWith(link.href));
+                      return (
                        <Link 
                         key={link.href}
                         id={link.id}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className="flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md bg-secondary hover:bg-accent/80">
-                         <div className="h-10 flex items-center justify-center text-primary"><link.icon className="h-8 w-8"/></div>
-                         <span className="text-xs text-center leading-tight font-medium">{link.label}</span>
+                        className={cn("flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md bg-secondary hover:bg-accent/80", isActive && "bg-primary/10 ring-2 ring-primary")}>
+                         <div className={cn("h-10 flex items-center justify-center text-primary", isActive && "text-primary")}>
+                           <link.icon className="h-8 w-8"/>
+                         </div>
+                         <span className={cn("text-xs text-center leading-tight font-medium", isActive && "text-primary")}>{link.label}</span>
                        </Link>
-                    ))}
+                      )
+                    })}
                 </div>
               </div>
               

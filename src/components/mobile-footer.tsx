@@ -1,8 +1,7 @@
-
 'use client';
 
 import Link from 'next/link';
-import { Home, Sparkles, User, LogOut, PlusCircle, Shield, FileText, MessageSquareWarning, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, ChevronDown, Gem, UserPlus, Briefcase, MessageSquare } from 'lucide-react';
+import { Home, Sparkles, User, Briefcase, MessageSquare, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, Gem, UserPlus, PlusCircle, FileText } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -19,7 +18,6 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import Image from 'next/image';
 
-
 const quickAccessLinks = [
     { href: '/roadmap', label: 'Lộ trình', icon: Compass },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
@@ -30,7 +28,7 @@ const quickAccessLinks = [
     { href: '/dashboard', label: 'Dữ liệu & Báo cáo', icon: FileText },
     { href: '/franchise', label: 'Đối tác tại Nhật', icon: Handshake },
     { href: '/consultant-profile', label: 'Tư vấn viên', icon: User },
-    { href: '/feedback', label: 'Góp ý', icon: MessageSquareWarning },
+    { href: '/feedback', label: 'Góp ý', icon: MessageSquare },
     { href: '/premium', label: 'Nâng cấp Premium', icon: Gem },
     { href: '/referral', label: 'Giới thiệu bạn bè', icon: UserPlus },
 ];
@@ -49,6 +47,7 @@ export function MobileFooter() {
     setActivePath(pathname);
   }, [pathname]);
 
+
   const footerLinks = [
     { href: '/', icon: Home, label: 'Trang chủ' },
     { href: '/ai-profile', icon: Sparkles, label: 'Hồ sơ AI' },
@@ -60,7 +59,7 @@ export function MobileFooter() {
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
       <div className="flex justify-around items-center h-16">
         {footerLinks.map(({ href, icon: Icon, label }) => {
-           const isActive = (activePath === href) || (activePath.startsWith(href) && href !== '/');
+           const isActive = (activePath === href) || (href !== '/' && activePath.startsWith(href));
            return (
             <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/4 pt-1">
               <Icon className={cn("h-6 w-6 mb-1", isActive ? 'text-primary' : '')} />

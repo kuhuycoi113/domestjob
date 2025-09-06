@@ -46,11 +46,12 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const handleVideoCallClick = (e: React.MouseEvent) => {
     // On mobile, navigate to the page. On desktop, open the dialog.
     const isMobile = window.innerWidth < 768;
-    if (!isMobile) {
+    if (isMobile) {
+        closeChat(); // Close the chat overlay before navigating
+    } else {
       e.preventDefault(); // Prevent navigation on desktop
       setIsCallDialogOpen(true);
     }
-    // On mobile, the default Link behavior will navigate to /video-call
   };
 
   return (

@@ -12,6 +12,7 @@ import { useChat } from '@/contexts/ChatContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import { VideoCallDialog } from '../video-call-dialog';
+import { usePathname } from 'next/navigation';
 
 interface ChatWindowProps {
   conversation: Conversation;
@@ -26,9 +27,10 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
   const [isCallDialogOpen, setIsCallDialogOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
   
   const mainContact = conversation.participants.find(p => p.id !== currentUser.id) || users[0];
-  const isBotChat = mainContact.id === helloJobBot.id;
+  const isBotChat = mainContact.isBot;
 
 
   useEffect(() => {
@@ -82,7 +84,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
           <div className="ml-auto flex items-center gap-1">
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><Phone /></Button>
               {/* This link will navigate on mobile, and open a dialog on desktop via onClick */}
-              <Link href="/video-call" onClick={handleVideoCallClick}>
+              <Link href={`/video-call?redirect=${encodeURIComponent(pathname)}`} onClick={handleVideoCallClick}>
                 <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
                    <div><Video /></div>
                 </Button>

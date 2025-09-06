@@ -9,14 +9,20 @@ import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
+
 
 export default function VideoCallPage() {
   const { toast } = useToast();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
   const userVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  
+  const redirectPath = searchParams.get('redirect') || '/';
 
   useEffect(() => {
     const getMediaPermissions = async () => {
@@ -65,6 +71,10 @@ export default function VideoCallPage() {
     }
   };
 
+  const handleEndCall = () => {
+    router.push(redirectPath);
+  };
+
 
   return (
     <div className="flex h-screen w-full flex-col bg-black text-white">
@@ -108,10 +118,8 @@ export default function VideoCallPage() {
          <Button variant="secondary" size="icon" className="h-14 w-14 rounded-full" onClick={toggleVideo}>
             {isVideoOff ? <VideoOff /> : <VideoIcon />}
         </Button>
-        <Button asChild variant="destructive" size="icon" className="h-14 w-14 rounded-full">
-            <Link href="/">
-              <PhoneOff />
-            </Link>
+        <Button onClick={handleEndCall} variant="destructive" size="icon" className="h-14 w-14 rounded-full">
+            <PhoneOff />
         </Button>
       </div>
     </div>

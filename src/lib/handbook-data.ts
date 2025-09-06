@@ -1,7 +1,7 @@
 
 export type HandbookArticle = {
   slug: string;
-  type: 'article' | 'video' | 'post'; // Phân loại nội dung
+  type: 'article' | 'video' | 'post' | 'image-story'; // Phân loại nội dung
   title: string;
   category: string;
   author: string;
@@ -71,53 +71,6 @@ export const articles: HandbookArticle[] = [
     ],
   },
   {
-    slug: 'ginou-2-lao-dong-lanh-nghe',
-    type: 'article',
-    title: 'Ginou 2 - Lao động lành nghề tại Nhật thu nhập bao nhiêu?',
-    category: 'Kỹ năng đặc định',
-    author: 'HelloJob Team',
-    readTime: '7 phút',
-    image: '/img/chuyen_gia_lanh_nghe.jpg',
-    dataAiHint: 'skilled factory worker japan',
-    excerpt: 'Khám phá lộ trình phát triển sự nghiệp để trở thành lao động tay nghề cao (Tokutei Ginou 2) và đạt được mức thu nhập mơ ước, cùng cơ hội định cư lâu dài tại Nhật Bản.',
-    content: [
-      {
-        slug: 'tokutei-ginou-2-la-gi',
-        title: 'Visa Kỹ năng đặc định loại 2 là gì?',
-        body: `
-          <p>Visa Kỹ năng đặc định loại 2 (Tokutei Ginou 2) là cấp độ cao nhất trong chương trình visa lao động kỹ năng của Nhật Bản. Đây là bước tiến dành cho những lao động đã hoàn thành chương trình Tokutei Ginou 1 và vượt qua kỳ thi đánh giá kỹ năng cấp độ cao hơn. Với visa này, bạn được công nhận là một chuyên gia có tay nghề thành thạo trong lĩnh vực của mình.</p>
-        `
-      },
-      {
-        slug: 'quyen-loi-vuot-troi',
-        title: 'Những quyền lợi vượt trội của Tokutei Ginou 2',
-        body: `
-          <p>Việc đạt được visa Tokutei Ginou 2 mang lại những quyền lợi đột phá, tương đương với một kỹ sư hoặc nhân viên chính thức người Nhật:</p>
-          <ul>
-            <li><strong>Thời hạn lưu trú không giới hạn:</strong> Không giống như Tokutei Ginou 1 (tối đa 5 năm), visa loại 2 có thể được gia hạn vô thời hạn, mở ra con đường định cư lâu dài.</li>
-            <li><strong>Bảo lãnh gia đình:</strong> Bạn được phép bảo lãnh vợ/chồng và con cái sang Nhật Bản sinh sống, học tập và làm việc.</li>
-            <li><strong>Cơ hội xin vĩnh trú:</strong> Sau một thời gian sinh sống và làm việc ổn định với visa Tokutei Ginou 2, bạn sẽ đủ điều kiện để nộp đơn xin visa vĩnh trú (永住権).</li>
-            <li><strong>Mức lương cao hơn:</strong> Thu nhập của lao động Tokutei Ginou 2 thường cao hơn đáng kể so với loại 1, phản ánh đúng trình độ kỹ năng và kinh nghiệm của bạn. Mức lương có thể lên tới 60-70 triệu VNĐ/tháng hoặc hơn, tùy thuộc vào ngành nghề và công ty.</li>
-          </ul>
-        `
-      },
-      {
-        slug: 'dieu-kien-dat-duoc',
-        title: 'Làm thế nào để đạt được Tokutei Ginou 2?',
-        body: `
-          <p>Con đường đến với Tokutei Ginou 2 đòi hỏi sự nỗ lực và chuẩn bị kỹ lưỡng:</p>
-          <ol>
-            <li><strong>Hoàn thành chương trình Tokutei Ginou 1:</strong> Bạn cần có kinh nghiệm làm việc thực tế tại Nhật dưới visa Tokutei Ginou 1.</li>
-            <li><strong>Vượt qua kỳ thi tay nghề cấp cao:</strong> Đây là yêu cầu bắt buộc. Kỳ thi này sẽ đánh giá trình độ chuyên môn và kỹ năng quản lý ở mức độ cao hơn.</li>
-            <li><strong>Trình độ tiếng Nhật:</strong> Mặc dù không có quy định cứng về JLPT, khả năng giao tiếp và đọc hiểu tài liệu chuyên ngành bằng tiếng Nhật là cực kỳ quan trọng để vượt qua kỳ thi và làm việc hiệu quả.</li>
-            <li><strong>Ngành nghề áp dụng:</strong> Hiện tại, visa Tokutei Ginou 2 chỉ áp dụng cho 2 ngành là Xây dựng và Đóng tàu. Tuy nhiên, chính phủ Nhật đang xem xét mở rộng ra các ngành nghề khác trong tương lai.</li>
-          </ol>
-          <p>HelloJob với lộ trình SWR sẽ đồng hành cùng bạn, cung cấp các khóa học E-learning và định hướng cần thiết để bạn có thể chinh phục thành công visa Tokutei Ginou 2.</p>
-        `
-      },
-    ],
-  },
-  {
     slug: 'meo-phong-van-video',
     type: 'video',
     title: '3 Mẹo phỏng vấn ONLINE qua video với nhà tuyển dụng Nhật',
@@ -127,7 +80,7 @@ export const articles: HandbookArticle[] = [
     image: 'https://placehold.co/400x600.png',
     dataAiHint: 'online job interview',
     excerpt: 'Tác phong, ánh sáng và cách trả lời là 3 yếu tố quyết định sự thành công của buổi phỏng vấn online. Xem ngay video để không bỏ lỡ cơ hội!',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
    {
     slug: 'kinh-nghiem-phong-van-tokutei',
@@ -149,8 +102,8 @@ export const articles: HandbookArticle[] = [
         slug: 'tac-phong-chuyen-nghiep',
         title: 'Tác phong chuyên nghiệp',
         body: '<p>Trang phục lịch sự, thái độ khiêm tốn, lễ phép và luôn đúng giờ là những yếu tố cực kỳ quan trọng trong văn hóa Nhật Bản.</p>'
-      },
-    ],
+      }
+    ]
   },
   {
     slug: 'chi-phi-sinh-hoat-o-nhat',
@@ -172,8 +125,8 @@ export const articles: HandbookArticle[] = [
         slug: 'chi-phi-trung-binh',
         title: 'Chi phí trung bình tại các thành phố lớn',
         body: '<p>Tại các thành phố lớn như Tokyo, Osaka, chi phí thuê nhà và sinh hoạt sẽ cao hơn đáng kể so với các vùng nông thôn. Một người độc thân sống ở Tokyo có thể tốn khoảng 120,000 - 150,000 yên/tháng. Trong khi đó ở các tỉnh lẻ, con số này có thể chỉ khoảng 80,000 - 100,000 yên.</p>'
-      },
-    ],
+      }
+    ]
   },
    {
     slug: 'cach-chuyen-tien-nhat-viet',
@@ -185,7 +138,7 @@ export const articles: HandbookArticle[] = [
     image: 'https://placehold.co/400x600.png',
     dataAiHint: 'money transfer app',
     excerpt: 'Tổng hợp các cách chuyển tiền phổ biến và uy tín nhất dành cho người lao động tại Nhật Bản.',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
     slug: 'van-hoa-lam-viec-nhat-ban',
@@ -194,9 +147,9 @@ export const articles: HandbookArticle[] = [
     category: 'Cuộc sống ở Nhật',
     author: 'Akira Lê',
     readTime: '5 phút',
-    image: '/img/bai_viet2.jpg',
+    image: '/img/bai_viet4.jpg',
     dataAiHint: 'japanese office meeting',
-    excerpt: 'Hiểu rõ về Hourensou (Báo cáo - Liên lạc - Thảo luận) và các quy tắc ngầm trong văn hóa công sở sẽ giúp bạn hòa nhập nhanh chóng và làm việc hiệu quả hơn tại Nhật.',
+    excerpt: 'Hiểu rõ về Hourensou (Báo cáo - Liên lạc - Thảo luận) và các quy tắc ngầm trong văn hóa công sở sẽ giúp bạn hòa nhập nhanh chóng và làm việc hiệu quả hơn tại Nhật.'
   },
   {
     slug: 'meo-viet-jikoshoukai',
@@ -205,9 +158,9 @@ export const articles: HandbookArticle[] = [
     category: 'Kinh nghiệm phỏng vấn',
     author: 'Dung Mochi',
     readTime: '6 phút',
-    image: '/img/bai_viet2.jpg',
+    image: '/img/bai_viet5.jpg',
     dataAiHint: 'person writing resume',
-    excerpt: 'Jikoshoukai là phần không thể thiếu trong bất kỳ buổi phỏng vấn nào tại Nhật. Cùng học cách xây dựng một bài giới thiệu bản thân ngắn gọn, súc tích và ghi điểm với nhà tuyển dụng.',
+    excerpt: 'Jikoshoukai là phần không thể thiếu trong bất kỳ buổi phỏng vấn nào tại Nhật. Cùng học cách xây dựng một bài giới thiệu bản thân ngắn gọn, súc tích và ghi điểm với nhà tuyển dụng.'
   },
   {
     slug: 'luu-y-khi-tim-viec-tokutei',
@@ -216,9 +169,9 @@ export const articles: HandbookArticle[] = [
     category: 'Kinh nghiệm phỏng vấn',
     author: 'HelloJob Team',
     readTime: '4 phút',
-    image: '/img/bai_viet3.jpg',
+    image: '/img/bai_viet1.jpg',
     dataAiHint: 'person searching job online',
-    excerpt: 'Tránh những sai lầm phổ biến và tăng cơ hội thành công của bạn với những lời khuyên hữu ích này khi tự mình tìm kiếm cơ hội việc làm Kỹ năng đặc định.',
+    excerpt: 'Tránh những sai lầm phổ biến và tăng cơ hội thành công của bạn với những lời khuyên hữu ích này khi tự mình tìm kiếm cơ hội việc làm Kỹ năng đặc định.'
   },
   {
     slug: 'cac-app-ho-tro-cuoc-song-nhat',
@@ -227,9 +180,9 @@ export const articles: HandbookArticle[] = [
     category: 'Cuộc sống ở Nhật',
     author: 'Mai Linh',
     readTime: '3 phút',
-    image: '/img/bai_viet4.jpg',
+    image: '/img/bai_viet2.jpg',
     dataAiHint: 'smartphone apps japan',
-    excerpt: 'Từ ứng dụng tàu điện đến từ điển và khuyến mãi, đây là những công cụ sẽ giúp cuộc sống của bạn tại Nhật Bản trở nên dễ dàng và tiết kiệm hơn rất nhiều.',
+    excerpt: 'Từ ứng dụng tàu điện đến từ điển và khuyến mãi, đây là những công cụ sẽ giúp cuộc sống của bạn tại Nhật Bản trở nên dễ dàng và tiết kiệm hơn rất nhiều.'
   },
   {
     slug: 'so-sanh-tts-vs-tokutei',
@@ -246,8 +199,8 @@ export const articles: HandbookArticle[] = [
         slug: 'muc-dich',
         title: 'Về mục đích chương trình',
         body: '<p>Chương trình TTS tập trung vào việc "đào tạo kỹ năng", chuyển giao công nghệ. Trong khi đó, Tokutei Ginou có mục đích chính là "bù đắp thiếu hụt lao động" cho Nhật Bản.</p>'
-      },
-    ],
+      }
+    ]
   },
   {
     slug: 'xin-visa-vinh-tru',
@@ -264,7 +217,18 @@ export const articles: HandbookArticle[] = [
         slug: 'thoi-gian-luu-tru',
         title: 'Yêu cầu về thời gian lưu trú',
         body: '<p>Theo nguyên tắc, bạn cần phải sinh sống liên tục tại Nhật Bản ít nhất 10 năm. Tuy nhiên, có một số trường hợp được xét duyệt ưu tiên với thời gian ngắn hơn, ví dụ như người có đóng góp lớn cho Nhật Bản hoặc vợ/chồng của người Nhật.',
-      },
-    ],
+      }
+    ]
   },
+  {
+    slug: 'khoanh-khac-hoa-anh-dao',
+    type: 'image-story',
+    title: 'Khoảnh khắc mùa hoa anh đào ở công viên Ueno',
+    category: 'Cuộc sống ở Nhật',
+    author: 'Han',
+    readTime: '1 phút',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'cherry blossoms ueno park',
+    excerpt: 'Một buổi chiều dạo bước dưới những tán hoa anh đào nở rộ tại công viên Ueno, Tokyo. Một trải nghiệm không thể nào quên.',
+  }
 ];

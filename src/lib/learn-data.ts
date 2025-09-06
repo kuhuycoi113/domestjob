@@ -23,6 +23,7 @@ export type Course = {
     rating: number;
     lessons: number;
     level: string;
+    likes: number;
   };
   curriculum: CourseLesson[];
 };
@@ -46,6 +47,7 @@ export const courses: Course[] = [
       rating: 4.8,
       lessons: 25,
       level: 'N5',
+      likes: 512,
     },
     curriculum: [
       { title: 'Bài 1: Giới thiệu bản thân', duration: '15:20', videoId: 'e-kFz1d4kE8' },
@@ -73,6 +75,7 @@ export const courses: Course[] = [
         rating: 4.7,
         lessons: 10,
         level: 'Mọi cấp độ',
+        likes: 430,
     },
     curriculum: [
       { title: 'Bài 1: Nguyên tắc nền tảng trong công ty Nhật', duration: '12:30', videoId: 'placeholder01' },
@@ -105,6 +108,7 @@ export const courses: Course[] = [
         rating: 4.8,
         lessons: 10,
         level: 'Nâng cao',
+        likes: 388,
     },
     curriculum: [
       { title: 'Bài 1: Tư duy thăng tiến trong môi trường Nhật', duration: '15:00', videoId: 'placeholder11' },

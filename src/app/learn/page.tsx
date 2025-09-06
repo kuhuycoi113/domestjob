@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-import { ArrowRight, BookOpen, CheckCircle, Handshake } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle, Handshake, Users, Heart, Star } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { courses } from '@/lib/learn-data';
@@ -69,7 +69,23 @@ export default function LearnPage() {
                       <Link href={`/learn/${course.id}`} className="flex-grow">
                           <CardTitle className="font-headline text-xl mb-2 group-hover:text-primary transition-colors">{course.title}</CardTitle>
                       </Link>
-                      <p className="text-sm text-muted-foreground mt-2 line-clamp-3">{course.description}</p>
+                      <p className="text-sm text-muted-foreground mt-2 line-clamp-3 flex-grow">{course.description}</p>
+                      
+                       <div className="mt-4 pt-4 border-t flex justify-between items-center text-sm text-muted-foreground">
+                            <div className="flex items-center gap-1.5">
+                                <Users className="h-4 w-4"/>
+                                <span>{course.stats.students.toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <Heart className="h-4 w-4"/>
+                                <span>{course.stats.likes.toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <Star className="h-4 w-4 text-yellow-500 fill-yellow-500"/>
+                                <span className="font-bold text-foreground">{course.stats.rating}</span>
+                            </div>
+                        </div>
+
                     </CardContent>
                     <div className="p-6 pt-0 mt-auto">
                        <Button asChild className="w-full">

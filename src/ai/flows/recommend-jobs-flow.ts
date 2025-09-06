@@ -50,7 +50,7 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
     *   **requiresClarification**: 'true'.
     *   **message**: Viết một tin nhắn hỏi để làm rõ mức độ hiểu biết của ứng viên. Tin nhắn phải thân thiện. Ví dụ: "Chào bạn, HelloJob sẵn lòng hỗ trợ. Để đưa ra gợi ý chính xác nhất, bạn cho mình hỏi một chút nhé: Bạn đã tìm hiểu về các loại visa làm việc tại Nhật (như Thực tập sinh, Kỹ năng đặc định, Kỹ sư...) và quy trình tìm việc chưa ạ?"
     *   **recommendations**: Để trống (mảng rỗng []).
-    *   **suggestedReplies**: Tạo ra 2 câu trả lời gợi ý: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"] (đặt tên cho lựa chọn này là CH002-2)
+    *   **suggestedReplies**: Tạo ra 2 câu trả lời gợi ý: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"]
 
 3.  **Trường hợp 2: Hỏi loại visa (CH003 - Người dùng đã có kiến thức)**
     *   **requiresClarification**: 'true'.

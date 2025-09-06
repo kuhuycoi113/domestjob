@@ -28,6 +28,7 @@ export type Message = {
   timestamp: string;
   isLoading?: boolean;
   recommendations?: JobRecommendationResponse['recommendations'];
+  suggestedReplies?: string[];
   attachment?: Attachment;
 };
 

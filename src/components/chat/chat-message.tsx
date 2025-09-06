@@ -10,6 +10,7 @@ import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useChat } from '@/contexts/ChatContext';
+import { Button } from '../ui/button';
 
 interface ChatMessageProps {
   message: Message;
@@ -17,7 +18,7 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ message, currentUser }: ChatMessageProps) {
-  const { assignedConsultant } = useChat();
+  const { assignedConsultant, sendMessage } = useChat();
   const isCurrentUser = message.sender.id === currentUser.id;
   
   // Determine which user to display for non-current-user messages
@@ -32,6 +33,11 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
         .filter((job): job is NonNullable<typeof job> => job !== undefined)
     : [];
 
+  const handleSuggestedReplyClick = (reply: string) => {
+    sendMessage(reply);
+  };
+
+
   if (message.isLoading) {
     return (
         <div className="flex items-start gap-2 justify-start">
@@ -41,6 +47,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
             </Avatar>
             <div className="flex flex-col">
                  <p className="text-xs text-muted-foreground mb-1 ml-3">
+                    {/* CHATNAME2 */}
                     <Link href={`/consultant-profile/${displayUser.id}`} className="hover:underline hover:text-primary">
                         Tư vấn viên {displayUser.name}
                     </Link>
@@ -65,7 +72,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
             </Avatar>
         </>
       )}
-      <div className="flex flex-col gap-1" style={{ maxWidth: 'calc(100% - 40px)' }}>
+      <div className="flex flex-col gap-1 items-start" style={{ maxWidth: 'calc(100% - 40px)' }}>
         {/* CHATNAME2 */}
         {!isCurrentUser && (
             <p className="text-xs text-muted-foreground ml-3">
@@ -96,7 +103,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
                     : 'bg-background rounded-bl-none border'
                 )}
             >
-                <p className="text-sm">{message.text}</p>
+                <p className="text-sm whitespace-pre-line">{message.text}</p>
             </div>
         )}
 
@@ -113,6 +120,22 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
                     )
                 })}
                 </div>
+            </div>
+        )}
+
+        {!isCurrentUser && message.suggestedReplies && message.suggestedReplies.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2 ml-3">
+                {message.suggestedReplies.map((reply, index) => (
+                    <Button
+                        key={index}
+                        variant="outline"
+                        size="sm"
+                        className="bg-primary/5 hover:bg-primary/10 border-primary/20 text-primary"
+                        onClick={() => handleSuggestedReplyClick(reply)}
+                    >
+                        {reply}
+                    </Button>
+                ))}
             </div>
         )}
       </div>

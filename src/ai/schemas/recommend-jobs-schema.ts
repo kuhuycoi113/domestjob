@@ -15,6 +15,7 @@ export const JobRecommendationResponseSchema = z.object({
   requiresClarification: z.boolean().describe('Set to true if the user\'s query is too general and they need to be asked about their visa knowledge. If true, do not provide recommendations.'),
   recommendations: z.array(RecommendedJobSchema).describe('A list of up to 3 recommended jobs. This should be an empty array if requiresClarification is true.'),
   message: z.string().describe("A friendly, conversational, and helpful summary message in Vietnamese to the user. If requiresClarification is true, this message should be a question to gauge the user's knowledge. Otherwise, it should introduce the job recommendations."),
+  suggestedReplies: z.array(z.string()).optional().describe('A list of short, suggested replies for the user to click on to continue the conversation.'),
 });
 
 export type JobRecommendationResponse = z.infer<typeof JobRecommendationResponseSchema>;

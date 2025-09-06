@@ -113,6 +113,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
                 sender: helloJobBot,
                 text: 'Chào bạn, HelloJob có thể giúp gì cho bạn hôm nay?',
                 timestamp: new Date().toISOString(),
+                 suggestedReplies: ["Tôi muốn tìm việc", "Tôi cần tư vấn", "Tôi muốn xem lại hồ sơ"]
             };
             setActiveConversation(prev => prev ? { ...prev, messages: [...prev.messages, greetingResponse] } : null);
             return;
@@ -135,6 +136,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
                 sender: helloJobBot,
                 text: aiResult.message,
                 recommendations: aiResult.requiresClarification ? [] : aiResult.recommendations,
+                suggestedReplies: aiResult.suggestedReplies || [],
                 timestamp: new Date().toISOString(),
             };
 

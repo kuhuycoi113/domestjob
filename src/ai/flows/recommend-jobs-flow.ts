@@ -49,6 +49,7 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
     *   **Trường hợp 1: Nếu 'requiresClarification' là 'true'**:
         *   **message**: Viết một tin nhắn hỏi để làm rõ mức độ hiểu biết của ứng viên. Tin nhắn phải thân thiện và có hai lựa chọn rõ ràng. Ví dụ: "Chào bạn, HelloJob sẵn lòng hỗ trợ. Để đưa ra gợi ý chính xác nhất, bạn cho mình hỏi một chút nhé: Bạn đã tìm hiểu về các loại visa làm việc tại Nhật (như Thực tập sinh, Kỹ năng đặc định, Kỹ sư...) và quy trình tìm việc chưa ạ?"
         *   **recommendations**: Để trống (mảng rỗng []).
+        *   **suggestedReplies**: Tạo ra 2-3 câu trả lời gợi ý ngắn gọn để người dùng lựa chọn. Ví dụ: ["Tôi là người mới, chưa biết gì", "Tôi đã tìm hiểu kỹ rồi"]
 
     *   **Trường hợp 2: Nếu 'requiresClarification' là 'false'**:
         *   **Lọc và chọn lọc:** Từ danh sách công việc ở trên, chọn ra tối đa 3 công việc phù hợp nhất với yêu cầu. Ưu tiên những công việc khớp với nhiều tiêu chí nhất.
@@ -57,6 +58,7 @@ Dựa vào yêu cầu của ứng viên: "{{{input}}}", hãy thực hiện các 
             *   "id": ID của công việc.
             *   "title": Chức danh của công việc.
             *   "reason": Một câu ngắn gọn, thân thiện bằng tiếng Việt giải thích TẠI SAO công việc này lại phù hợp với yêu cầu của ứng viên. Ví dụ: "Công việc này đúng chuyên ngành cơ khí và lại ở Osaka, rất hợp với mong muốn của bạn."
+        *   **suggestedReplies**: Có thể để trống, hoặc gợi ý các câu hỏi tiếp theo như ["Tìm thêm việc khác", "Việc này có yêu cầu gì?"]
 `,
 });
 

@@ -132,7 +132,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
               ref={fileInputRef} 
               className="hidden" 
               onChange={handleFileChange} 
-              accept="image/*,video/*"
+              accept=".pdf,.doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             />
             <div className="flex items-center gap-1">
               <Button type="button" variant="ghost" size="icon" className="text-muted-foreground" onClick={handleFileButtonClick}><Paperclip /></Button>

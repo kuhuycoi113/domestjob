@@ -1,10 +1,10 @@
 
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign, Star, Ruler, Weight, Dna } from 'lucide-react';
+import { Briefcase, Users, ArrowRight, BookOpen, Search, MapIcon, GraduationCap, Building, MapPin, TrendingUp, Cpu, ListFilter, ChevronLeft, ChevronsUpDown, Check, SlidersHorizontal, UserSearch, DollarSign, Star, Ruler, Weight, Dna, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
@@ -301,7 +301,33 @@ export default function HomeClient() {
     );
   };
 
-  const SearchResults = () => (
+  const SearchResults = () => {
+    const [visibleJobsCount, setVisibleJobsCount] = useState(24);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const observer = useRef<IntersectionObserver | null>(null);
+
+    const loadMoreJobs = useCallback(() => {
+        setIsLoadingMore(true);
+        setTimeout(() => {
+            setVisibleJobsCount(prevCount => Math.min(prevCount + 24, jobData.length));
+            setIsLoadingMore(false);
+        }, 1000); // Simulate network delay
+    }, []);
+
+    const lastJobElementRef = useCallback((node: HTMLDivElement) => {
+        if (isLoadingMore) return;
+        if (observer.current) observer.current.disconnect();
+
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && visibleJobsCount < jobData.length) {
+                loadMoreJobs();
+            }
+        });
+
+        if (node) observer.current.observe(node);
+    }, [isLoadingMore, loadMoreJobs, visibleJobsCount]);
+      
+    return (
      <div className="w-full bg-secondary">
         <div className="container mx-auto px-4 md:px-6 py-6">
             <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8">
@@ -344,15 +370,24 @@ export default function HomeClient() {
                         </Select>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
-                      {jobData.map((job) => (
-                        <JobCard key={job.id} job={job} />
-                      ))}
+                      {jobData.slice(0, visibleJobsCount).map((job, index) => {
+                          if (index === visibleJobsCount - 1) {
+                              return <div ref={lastJobElementRef} key={job.id}><JobCard job={job} /></div>
+                          }
+                          return <JobCard key={job.id} job={job} />
+                      })}
                     </div>
+                    {isLoadingMore && (
+                        <div className="flex justify-center items-center p-4">
+                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
      </div>
-  );
+    )
+  };
 
 
   const MainContent = () => (

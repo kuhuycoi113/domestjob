@@ -13,7 +13,7 @@ import {
   SheetClose,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
@@ -42,6 +42,12 @@ const Logo = () => (
 export function MobileFooter() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [activePath, setActivePath] = useState('');
+
+  // Set active path on client side to avoid hydration mismatch
+  useEffect(() => {
+    setActivePath(pathname);
+  }, [pathname]);
 
   const footerLinks = [
     { href: '/', icon: Home, label: 'Trang chủ' },
@@ -54,7 +60,7 @@ export function MobileFooter() {
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
       <div className="flex justify-around items-center h-16">
         {footerLinks.map(({ href, icon: Icon, label }) => {
-           const isActive = (pathname === href) || (pathname.startsWith(href) && href !== '/');
+           const isActive = (activePath === href) || (activePath.startsWith(href) && href !== '/');
            return (
             <Link href={href} key={href} className="flex flex-col items-center justify-center text-xs text-muted-foreground hover:text-primary transition-colors w-1/4 pt-1">
               <Icon className={cn("h-6 w-6 mb-1", isActive ? 'text-primary' : '')} />

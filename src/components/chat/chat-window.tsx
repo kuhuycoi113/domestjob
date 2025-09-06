@@ -82,8 +82,8 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><Phone /></Button>
               {/* This link will navigate on mobile, and open a dialog on desktop via onClick */}
               <Link href="/video-call" onClick={handleVideoCallClick}>
-                <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
-                   <Video />
+                <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
+                   <div><Video /></div>
                 </Button>
               </Link>
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={closeChat}><X /></Button>

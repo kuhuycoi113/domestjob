@@ -1,7 +1,17 @@
 
 import { z } from 'zod';
 
-// Define the schema for a single recommended job
+// Schema for the AI to extract structured search criteria
+export const JobSearchCriteriaSchema = z.object({
+  industry: z.string().optional().describe('Ngành nghề mà người dùng muốn tìm, ví dụ: "Cơ khí", "Thực phẩm".'),
+  workLocation: z.string().optional().describe('Địa điểm làm việc mong muốn, ví dụ: "Tokyo", "Aichi".'),
+  visaType: z.string().optional().describe('Loại hình visa, ví dụ: "Thực tập sinh", "Kỹ năng đặc định", "Kỹ sư".'),
+  gender: z.string().optional().describe('Yêu cầu về giới tính, là "Nam" hoặc "Nữ".'),
+  sortBy: z.string().optional().describe('Tiêu chí sắp xếp, ví dụ: "lương cao nhất", "mới nhất".'),
+  limit: z.number().optional().describe('Số lượng kết quả mong muốn, ví dụ: 10.'),
+});
+
+// Define the schema for a single recommended job in the response
 export const RecommendedJobSchema = z.object({
   id: z.string().describe('The unique ID of the job from the provided list.'),
   title: z.string().describe('The title of the job.'),
@@ -10,11 +20,10 @@ export const RecommendedJobSchema = z.object({
 
 export type RecommendedJob = z.infer<typeof RecommendedJobSchema>;
 
-// Define the schema for the flow's output
+// Define the schema for the final flow's output to the user
 export const JobRecommendationResponseSchema = z.object({
-  requiresClarification: z.boolean().describe('Set to true if the user\'s query is too general and they need to be asked about their visa knowledge. If true, do not provide recommendations.'),
-  recommendations: z.array(RecommendedJobSchema).describe('A list of up to 3 recommended jobs. This should be an empty array if requiresClarification is true.'),
-  message: z.string().describe("A friendly, conversational, and helpful summary message in Vietnamese to the user. If requiresClarification is true, this message should be a question to gauge the user's knowledge. Otherwise, it should introduce the job recommendations."),
+  recommendations: z.array(RecommendedJobSchema).describe('A list of recommended jobs.'),
+  message: z.string().describe("A friendly, conversational, and helpful summary message in Vietnamese to the user."),
   suggestedReplies: z.array(z.string()).optional().describe('A list of short, suggested replies for the user to click on to continue the conversation.'),
 });
 

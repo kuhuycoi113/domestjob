@@ -22,9 +22,11 @@ const InstructorCta = () => (
                     <p className="mt-2 text-white/90">Chia sẻ kiến thức chuyên môn của bạn và kiếm thêm thu nhập bằng cách tạo ra các khóa học online của riêng bạn trên nền tảng của chúng tôi.</p>
                 </div>
                  <div className="flex justify-center md:justify-end">
-                     <Button size="lg" className="bg-white text-orange-600 hover:bg-white/90 rounded-full h-14 text-lg px-8">
-                        <Handshake className="mr-2"/>
-                        Bắt đầu ngay
+                     <Button asChild size="lg" className="bg-white text-orange-600 hover:bg-white/90 rounded-full h-14 text-lg px-8">
+                        <Link href="/learn/create">
+                            <Handshake className="mr-2"/>
+                            Bắt đầu ngay
+                        </Link>
                     </Button>
                  </div>
             </div>

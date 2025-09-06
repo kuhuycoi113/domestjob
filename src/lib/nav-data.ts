@@ -48,6 +48,6 @@ export const quickAccessLinks = [
 export const mobileFooterLinks = [
   { href: '/', label: 'Trang chủ', icon: Home },
   { href: '/ai-profile', label: 'Hồ sơ AI', icon: Sparkles },
-  { href: '/jobs', label: 'Việc làm', icon: Briefcase },
   { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
+  { href: '/jobs', label: 'Việc làm', icon: Briefcase },
 ];

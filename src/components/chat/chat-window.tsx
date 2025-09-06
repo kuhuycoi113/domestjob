@@ -12,6 +12,7 @@ import { useChat } from '@/contexts/ChatContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import { VideoCallDialog } from '../video-call-dialog';
+import { VoiceCallDialog } from '../voice-call-dialog';
 import { usePathname } from 'next/navigation';
 
 interface ChatWindowProps {
@@ -25,7 +26,8 @@ const Logo = () => (
 export function ChatWindow({ conversation }: ChatWindowProps) {
   const { sendMessage, closeChat } = useChat();
   const [newMessage, setNewMessage] = useState('');
-  const [isCallDialogOpen, setIsCallDialogOpen] = useState(false);
+  const [isVideoCallDialogOpen, setIsVideoCallDialogOpen] = useState(false);
+  const [isVoiceCallDialogOpen, setIsVoiceCallDialogOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   
@@ -46,13 +48,22 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   };
 
   const handleVideoCallClick = (e: React.MouseEvent) => {
-    // On mobile, navigate to the page. On desktop, open the dialog.
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
-        closeChat(); // Close the chat overlay before navigating
+        closeChat();
     } else {
-      e.preventDefault(); // Prevent navigation on desktop
-      setIsCallDialogOpen(true);
+      e.preventDefault();
+      setIsVideoCallDialogOpen(true);
+    }
+  };
+
+  const handleVoiceCallClick = (e: React.MouseEvent) => {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+        closeChat();
+    } else {
+      e.preventDefault();
+      setIsVoiceCallDialogOpen(true);
     }
   };
 
@@ -82,8 +93,11 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
             <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>
           </div>
           <div className="ml-auto flex items-center gap-1">
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20"><Phone /></Button>
-              {/* This link will navigate on mobile, and open a dialog on desktop via onClick */}
+              <Link href={`/voice-call?redirect=${encodeURIComponent(pathname)}`} onClick={handleVoiceCallClick}>
+                 <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
+                    <div><Phone /></div>
+                 </Button>
+              </Link>
               <Link href={`/video-call?redirect=${encodeURIComponent(pathname)}`} onClick={handleVideoCallClick}>
                 <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
                    <div><Video /></div>
@@ -120,7 +134,8 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
           </form>
         </footer>
       </div>
-      <VideoCallDialog isOpen={isCallDialogOpen} onClose={() => setIsCallDialogOpen(false)} />
+      <VideoCallDialog isOpen={isVideoCallDialogOpen} onClose={() => setIsVideoCallDialogOpen(false)} />
+      <VoiceCallDialog isOpen={isVoiceCallDialogOpen} onClose={() => setIsVoiceCallDialogOpen(false)} />
     </>
   );
 }

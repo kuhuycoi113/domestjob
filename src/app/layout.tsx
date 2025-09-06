@@ -92,7 +92,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isVideoCallPage = pathname.startsWith('/video-call');
+  const isCallPage = pathname.startsWith('/video-call') || pathname.startsWith('/voice-call');
 
   return (
     <html lang="vi" className="scroll-smooth">
@@ -107,11 +107,11 @@ export default function RootLayout({
       </head>
       <body className="antialiased pb-20 md:pb-0">
         <ChatProvider>
-          {!isVideoCallPage && <Header />}
+          {!isCallPage && <Header />}
           <main className="min-h-screen">{children}</main>
-          {!isVideoCallPage && <Footer />}
-          {!isVideoCallPage && <MobileFooter />}
-          {!isVideoCallPage && <FloatingChatWidget />}
+          {!isCallPage && <Footer />}
+          {!isCallPage && <MobileFooter />}
+          {!isCallPage && <FloatingChatWidget />}
           <Toaster />
         </ChatProvider>
       </body>

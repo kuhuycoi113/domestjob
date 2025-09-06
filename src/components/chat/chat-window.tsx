@@ -106,8 +106,8 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
           <div className="flex-shrink-0">
              {/* CHATAVATAR1 */}
              <Avatar className="h-10 w-10 border-2 border-white bg-white">
-                <AvatarImage src={displayContact.avatarUrl} alt={displayContact.name} />
-                <AvatarFallback>{displayContact.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src="/img/favi2.png" alt="HelloJob AI" />
+                <AvatarFallback>HJ</AvatarFallback>
               </Avatar>
           </div>
 

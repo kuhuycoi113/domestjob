@@ -66,13 +66,23 @@ export const consultants: User[] = [
     successfulCandidates: 220,
     strengths: ['Tận tâm', 'Am hiểu thủ tục', 'Hỗ trợ chi tiết'],
   },
+   {
+    id: 'consultant-4',
+    name: 'Nguyễn Thị Phương Loan',
+    avatarUrl: 'https://placehold.co/200x200.png',
+    dataAiHint: 'professional woman portrait',
+    experience: '4 năm',
+    mainExpertise: 'Tư vấn việc làm Kỹ sư & Trí thức',
+    successfulCandidates: 350,
+    strengths: ['Nhiệt tình', 'Hỗ trợ 24/7', 'Quan hệ rộng'],
+  },
 ];
 
 // AI Bot persona
 export const helloJobBot: User = {
     id: 'bot-hellojob',
     name: 'HelloJob AI',
-    avatarUrl: '/img/logo.png',
+    avatarUrl: '/img/favi2.png',
     dataAiHint: 'friendly robot mascot',
     isBot: true,
 };

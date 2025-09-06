@@ -16,7 +16,8 @@ export function FloatingChatWidget() {
     if (isChatOpen) {
       closeChat();
     } else {
-      // openChat will now handle the logic of finding or assigning a consultant
+      // When user clicks the general chat button, openChat without a specific user.
+      // The context will decide whether to show the bot or an assigned consultant.
       openChat(); 
     }
   };

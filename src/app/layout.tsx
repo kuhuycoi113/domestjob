@@ -1,3 +1,6 @@
+
+'use client';
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/header';
@@ -6,6 +9,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { MobileFooter } from '@/components/mobile-footer';
 import { ChatProvider } from '@/contexts/ChatContext';
 import { FloatingChatWidget } from '@/components/chat/floating-chat-widget';
+import { usePathname } from 'next/navigation';
 
 const siteConfig = {
   name: "HelloJob",
@@ -14,6 +18,9 @@ const siteConfig = {
   ogImage: "/metadata/opengraph-image.jpg",
 };
 
+// Metadata can't be in a client component, so we export it separately.
+// We'll apply the component-level metadata pattern in the page files.
+/*
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -78,12 +85,15 @@ export const metadata: Metadata = {
     ]
   },
 };
-
+*/
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isVideoCallPage = pathname.startsWith('/video-call');
+
   return (
     <html lang="vi" className="scroll-smooth">
       <head>
@@ -93,14 +103,15 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap"
           rel="stylesheet"
         />
+        <title>{siteConfig.name}</title>
       </head>
       <body className="antialiased pb-20 md:pb-0">
         <ChatProvider>
-          <Header />
+          {!isVideoCallPage && <Header />}
           <main className="min-h-screen">{children}</main>
-          <Footer />
-          <MobileFooter />
-          <FloatingChatWidget />
+          {!isVideoCallPage && <Footer />}
+          {!isVideoCallPage && <MobileFooter />}
+          {!isVideoCallPage && <FloatingChatWidget />}
           <Toaster />
         </ChatProvider>
       </body>

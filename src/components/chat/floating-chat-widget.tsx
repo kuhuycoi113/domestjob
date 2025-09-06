@@ -34,7 +34,7 @@ export function FloatingChatWidget() {
       {/* Desktop floating window */}
       <div className="hidden md:block fixed bottom-6 right-6 z-50">
         {isChatOpen && activeConversation && (
-          <Card className="h-[70vh] max-h-[700px] w-[400px] shadow-2xl flex flex-col overflow-hidden rounded-2xl">
+          <Card className="h-[80vh] max-h-[800px] w-[400px] shadow-2xl flex flex-col overflow-hidden rounded-2xl">
             <ChatWindow conversation={activeConversation} />
           </Card>
         )}

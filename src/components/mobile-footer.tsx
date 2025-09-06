@@ -20,7 +20,7 @@ import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import Image from 'next/image';
 
 const quickAccessLinks = [
-    { href: '/roadmap', label: 'Lộ trình', icon: Compass },
+    { href: '/roadmap', label: 'Lộ trình', icon: Compass, id: 'MMN01' },
     { href: '/learn', label: 'E-Learning', icon: BookOpen },
     { href: '/handbook', label: 'Cẩm nang', icon: LifeBuoy },
     { href: '/about', label: 'Giới thiệu', icon: Info },
@@ -113,6 +113,7 @@ export function MobileFooter() {
                     {quickAccessLinks.map((link) => (
                        <Link 
                         key={link.href}
+                        id={link.id}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
                         className="flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md bg-secondary hover:bg-accent/80">

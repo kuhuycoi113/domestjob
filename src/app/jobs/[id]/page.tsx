@@ -103,7 +103,9 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                                 <RequirementItem icon={CalendarDays} label="Số năm kinh nghiệm" value={job.yearsOfExperience}/>
                                 <RequirementItem icon={Ruler} label="Chiều cao" value={job.heightRequirement}/>
                                 <RequirementItem icon={Weight} label="Cân nặng" value={job.weightRequirement}/>
-                                <RequirementItem icon={Dna} label="Viêm gan B" value={job.hepatitisBRequirement}/>
+                                {job.hepatitisBRequirement === 'Không nhận viêm gan B' && (
+                                    <RequirementItem icon={Dna} label="Viêm gan B" value={job.hepatitisBRequirement}/>
+                                )}
                                 <RequirementItem icon={User} label="Hình xăm" value={job.tattooRequirement}/>
                                 <RequirementItem icon={ImageIcon} label="Yêu cầu thị lực" value={job.visionRequirement}/>
                                 <RequirementItem icon={ClipboardCheck} label="Hình thức phỏng vấn" value={job.interviewFormat}/>

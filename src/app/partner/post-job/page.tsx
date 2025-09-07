@@ -54,18 +54,19 @@ type JobData = {
   hourlySalary: string;
   annualIncome: string;
   annualBonus: string;
+  financialAbility: string; // Thêm trường Khả năng tài chính
 };
 
 // Maps visa detail to the fields that are NOT applicable based on the image
 const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
-  'Thực tập sinh 3 năm': ['companyArrivalTime', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
-  'Thực tập sinh 1 năm': ['companyArrivalTime', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
-  'Thực tập sinh 3 Go': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'ginouExpiryRequirement', 'interviewRounds', 'hourlySalary', 'annualIncome', 'annualBonus'],
-  'Đặc định đầu Việt': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'companyArrivalTime'],
-  'Đặc định đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'educationRequirement', 'netFee', 'interviewLocation'],
-  'Đặc định đi mới': ['hepatitisBRequirement', 'educationRequirement', 'companyArrivalTime', 'ginouExpiryRequirement'],
-  'Kỹ sư, tri thức đầu Việt': ['hepatitisBRequirement', 'companyArrivalTime', 'ginouExpiryRequirement', 'netFee'],
-  'Kỹ sư, tri thức đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'companyArrivalTime', 'ginouExpiryRequirement', 'netFee', 'interviewLocation']
+  'Thực tập sinh 3 năm': [],
+  'Thực tập sinh 1 năm': [],
+  'Thực tập sinh 3 Go': ['tattooRequirement', 'hepatitisBRequirement', 'interviewLocation'],
+  'Đặc định đầu Việt': ['tattooRequirement', 'hepatitisBRequirement'],
+  'Đặc định đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'financialAbility', 'interviewLocation'],
+  'Đặc định đi mới': ['hepatitisBRequirement'],
+  'Kỹ sư, tri thức đầu Việt': ['hepatitisBRequirement'],
+  'Kỹ sư, tri thức đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'financialAbility', 'interviewLocation']
 };
 
 
@@ -167,6 +168,7 @@ export default function PartnerPostJobPage() {
     hourlySalary: '',
     annualIncome: '',
     annualBonus: '',
+    financialAbility: '',
   });
 
   const [visibleFields, setVisibleFields] = useState<Set<keyof JobData>>(new Set(Object.keys(jobData) as (keyof JobData)[]));
@@ -219,12 +221,13 @@ export default function PartnerPostJobPage() {
         benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\\n- Môi trường làm việc chuyên nghiệp, năng động.\\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật.",
         notes: "Ứng viên có thể phải làm việc theo ca. Chi tiết sẽ được trao đổi trong buổi phỏng vấn."
       };
-      setJobData(mockData);
-
+      
       const hidden = hiddenFieldsByVisa[mockData.visaDetail!] || [];
       const allFields = Object.keys(jobData) as (keyof JobData)[];
       setVisibleFields(new Set(allFields.filter(f => !hidden.includes(f))));
 
+      setJobData(prev => ({...prev, ...mockData}));
+      
       setActiveTab('manual');
       toast({
         title: "Phân tích thành công!",
@@ -472,6 +475,12 @@ export default function PartnerPostJobPage() {
                         <div className="space-y-2">
                         <Label htmlFor="net-fee">Mức phí (nếu có)</Label>
                         <Input id="net-fee" placeholder="VD: 100tr hoặc 4000$" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
+                        </div>
+                    )}
+                    {visibleFields.has('financialAbility') && (
+                        <div className="space-y-2">
+                            <Label htmlFor="financial-ability">Khả năng tài chính</Label>
+                            <Input id="financial-ability" placeholder="VD: 90 triệu" value={jobData.financialAbility} onChange={(e) => handleInputChange('financialAbility', e.target.value)} />
                         </div>
                     )}
                    </div>
@@ -770,4 +779,5 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
+    
     

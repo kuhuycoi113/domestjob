@@ -14,14 +14,14 @@ const defaultIndustries: Industry[] = [
 ];
 
 export const industriesByJobType: { [key: string]: Industry[] } = {
-    'Thực tập sinh': [
+    'Thực tập sinh kỹ năng': [
       { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt', 'nuôi trồng thủy sản'] },
       { name: 'Nông nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi'] },
       { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ['thực phẩm', 'chế biến', 'đóng gói', 'cơm hộp'] },
       { name: 'Sản xuất, dịch vụ tổng hợp', slug: 'san-xuat-dich-vu-tong-hop-tts', keywords: ['sản xuất', 'dịch vụ', 'tổng hợp', 'đúc', 'in ấn'] },
       { name: 'Cơ khí, kim loại', slug: 'co-khi-kim-loai-tts', keywords: ['cơ khí', 'kim loại', 'hàn', 'tiện', 'phay', 'dập', 'gia công'] },
       { name: 'Xây dựng', slug: 'xay-dung-tts', keywords: ['xây dựng', 'giàn giáo', 'cốp pha', 'hoàn thiện nội thất'] },
-      { name: 'May mặc', slug: 'may-mac-tts', keywords: ['may mặc', 'dệt', 'may công nghiệp'] },
+      { name: 'May mặc', slug: 'may-mac-tts', keywords: ['may mặc', 'dệt', 'may công nghiệp'] }
     ],
     'Kỹ năng đặc định': [
       { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tokutei', keywords: ['ngư nghiệp', 'nuôi trồng', 'chế biến thủy sản'] },
@@ -36,7 +36,7 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { name: 'Hàng không Vận tải Xây dựng', slug: 'hang-khong-van-tai-xay-dung-tokutei', keywords: ['hàng không', 'vận tải', 'xây dựng', 'sân bay', 'bốc dỡ'] },
       { name: 'Vệ sinh toà nhà', slug: 've-sinh-toa-nha-tokutei', keywords: ['vệ sinh', 'tòa nhà', 'làm sạch'] },
       { name: 'Lưu trú, khách sạn', slug: 'luu-tru-khach-san-tokutei', keywords: ['lưu trú', 'khách sạn', 'lễ tân', 'phục vụ'] },
-      { name: 'Điều dưỡng', slug: 'dieu-duong-tokutei', keywords: ['điều dưỡng', 'chăm sóc người già', 'hộ lý'] },
+      { name: 'Điều dưỡng', slug: 'dieu-duong-tokutei', keywords: ['điều dưỡng', 'chăm sóc người già', 'hộ lý'] }
     ],
     'Kỹ sư, tri thức': [
       { name: 'Nông lâm ngư nghiệp', slug: 'nong-lam-ngu-nghiep-ks', keywords: ['nông nghiệp', 'lâm nghiệp', 'ngư nghiệp', 'Chăn nuôi', 'Công nghệ nông, lâm, ngư nghiệp', 'Công nhân chăn nuôi đặc khu', 'Công nhân Nông, Lâm, Ngư nghiệp', 'Công nhân trồng trọt đặc khu'] },
@@ -63,3 +63,5 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
     ],
     'Default': defaultIndustries,
 };
+
+    

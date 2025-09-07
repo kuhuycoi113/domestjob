@@ -26,8 +26,8 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
     'Kỹ năng đặc định': [
       { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tokutei', keywords: ["Câu cá ngừ cần và dây", "Câu mực", "Câu tôm, cua bằng lồng", "Đánh cá dây câu dài", "Đánh cá lưới kéo", "Đánh cá lưới rê", "Đánh cá lưới sào", "Đánh cá lưới thả", "Đặt lưới đánh cá", "Nuôi sò điệp"] },
       { name: 'Nông nghiệp', slug: 'nong-nghiep-tokutei', keywords: ["Chăn nuôi bò", "Chăn nuôi bò sữa", "Chăn nuôi gà", "Chăn nuôi lợn", "Nhặt trứng gà", "Nông nghiệp chăn nuôi", "Nông nghiệp trồng trọt", "Thu hoạch bắp cải", "Thu hoạch cà chua", "Thu hoạch dâu tây", "Thu hoạch hoa", "Thu hoạch hoa quả", "Thu hoạch rau củ", "Trồng cây ăn quả", "Trồng nấm", "Trồng nấm công nghệ cao", "Trồng rau củ", "Trồng trọt nhà kính"] },
-      { name: 'Nhà hàng', slug: 'nha-hang-tokutei', keywords: ['nhà hàng'] },
-      { name: 'Thực phẩm', slug: 'thuc-pham-tokutei', keywords: ['thực phẩm'] },
+      { name: 'Nhà hàng', slug: 'nha-hang-tokutei', keywords: ["Chạy bàn", "Mua hàng", "Nấu bếp", "Nhà hàng", "Phụ bếp", "Quản lý", "Rửa bát", "Thu ngân"] },
+      { name: 'Thực phẩm', slug: 'thuc-pham-tokutei', keywords: ["Bánh gạo", "Bếp viện", "Chế biến cá", "Gia công", "Làm bánh", "Làm mỳ", "Sơ chế", "Xúc xích", "Cơm hộp"] },
       { name: 'Sản xuất, dịch vụ tổng hợp', slug: 'san-xuat-dich-vu-tong-hop-tokutei', keywords: ['sản xuất, dịch vụ tổng hợp'] },
       { name: 'Điện, điện tử', slug: 'dien-dien-tu-tokutei', keywords: ['điện, điện tử'] },
       { name: 'Chế tạo Vật liệu', slug: 'che-tao-vat-lieu-tokutei', keywords: ['chế tạo vật liệu'] },

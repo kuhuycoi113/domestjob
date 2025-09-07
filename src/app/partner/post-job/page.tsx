@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,7 @@ import { industriesByJobType } from '@/lib/industry-data';
 // Represents all possible fields
 type JobData = {
   title: string;
+  visaType: string;
   visaDetail: string;
   industry: string;
   workLocation: string;
@@ -67,6 +68,12 @@ const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
   'Đặc định đi mới': ['hepatitisBRequirement'],
   'Kỹ sư, tri thức đầu Việt': ['hepatitisBRequirement'],
   'Kỹ sư, tri thức đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'financialAbility', 'interviewLocation']
+};
+
+const visaDetailsByVisaType: { [key: string]: string[] } = {
+    'Thực tập sinh kỹ năng': ['Thực tập sinh 3 năm', 'Thực tập sinh 1 năm', 'Thực tập sinh 3 Go'],
+    'Kỹ năng đặc định': ['Đặc định đầu Việt', 'Đặc định đầu Nhật', 'Đặc định đi mới'],
+    'Kỹ sư, tri thức': ['Kỹ sư, tri thức đầu Việt', 'Kỹ sư, tri thức đầu Nhật']
 };
 
 
@@ -132,6 +139,7 @@ export default function PartnerPostJobPage() {
   const router = useRouter();
   const [jobData, setJobData] = useState<Partial<JobData>>({
     title: '',
+    visaType: '',
     visaDetail: '',
     industry: '',
     workLocation: '',
@@ -176,6 +184,10 @@ export default function PartnerPostJobPage() {
   const handleInputChange = (field: keyof JobData, value: string | string[]) => {
     const newData = { ...jobData, [field]: value };
 
+    if (field === 'visaType') {
+        newData.visaDetail = ''; // Reset dependent dropdown
+    }
+
     if (field === 'visaDetail') {
       const hidden = hiddenFieldsByVisa[value as string] || [];
       const allFields = Object.keys(jobData) as (keyof JobData)[];
@@ -206,6 +218,7 @@ export default function PartnerPostJobPage() {
       // Simulate AI processing and pre-filling the form
       const mockData: Partial<JobData> = {
         title: "Kỹ sư Vận hành Dây chuyền Tự động",
+        visaType: "Kỹ sư, tri thức",
         visaDetail: "Kỹ sư, tri thức đầu Việt",
         industry: "Điện tử",
         workLocation: "Khu công nghệ cao Hòa Lạc, Hà Nội",
@@ -249,7 +262,7 @@ export default function PartnerPostJobPage() {
     }, 1500);
   }
 
-  const visaTypes = Object.keys(hiddenFieldsByVisa);
+  const visaTypes = Object.keys(visaDetailsByVisaType);
   const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
@@ -368,13 +381,23 @@ export default function PartnerPostJobPage() {
                       <Label htmlFor="job-title">Chức danh</Label>
                       <Input id="job-title" placeholder="VD: Kỹ sư vận hành máy CNC" value={jobData.title} onChange={(e) => handleInputChange('title', e.target.value)} required />
                     </div>
+                    
+                    <div className="space-y-2">
+                        <Label htmlFor="visa-type">Loại visa</Label>
+                        <Select value={jobData.visaType} onValueChange={(value) => handleInputChange('visaType', value)} required>
+                            <SelectTrigger id="visa-type"><SelectValue placeholder="Chọn loại visa" /></SelectTrigger>
+                            <SelectContent>
+                            {visaTypes.map(vt => <SelectItem key={vt} value={vt}>{vt}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                    </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="visa-detail">Chi tiết loại hình visa</Label>
-                      <Select value={jobData.visaDetail} onValueChange={(value) => handleInputChange('visaDetail', value)} required>
+                      <Select value={jobData.visaDetail} onValueChange={(value) => handleInputChange('visaDetail', value)} required disabled={!jobData.visaType}>
                         <SelectTrigger id="visa-detail"><SelectValue placeholder="Chọn loại hình visa chi tiết" /></SelectTrigger>
                         <SelectContent>
-                          {visaTypes.map(vt => <SelectItem key={vt} value={vt}>{vt}</SelectItem>)}
+                          {(visaDetailsByVisaType[jobData.visaType || ''] || []).map(vd => <SelectItem key={vd} value={vd}>{vd}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
@@ -779,5 +802,4 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
-    
     

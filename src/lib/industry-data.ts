@@ -56,7 +56,7 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { "name": "Công nghệ thông tin", "slug": "it-ks", "keywords": ["Blockchain", "BrSE (Bridge System Engineer)", "Business Analyst (BA)", "Công nghệ thông tin", "COO (Chief Operation Officer)", "CTO (Chief Technology Officer)", "ITM (Information Technical Manager)", "Lập trình nhúng", "Lập trình viên", "PM (Product Manager)", "PO (Product Owner)", "Tester", "Thiết kế", "Thiết kế UI, UX", "Trí tuệ nhân tạo", "Vận hành web thương mại điện tử"] },
       { "name": "Nghiên cứu, phân tích", "slug": "nghien-cuu-phan-tich-ks", "keywords": ["Khảo sát đất đai, nhà ở", "Nghiên cứu", "Nghiên cứu thị trường"] },
       { "name": "Giáo dục, đào tạo", "slug": "giao-duc-dao-tao-ks", "keywords": ["Giảng dạy có chứng chỉ", "Giảng dạy đại học", "Giảng dạy ngoài cơ sở giáo dục", "Giảng dạy ngôn ngữ tại Tiểu học, THCS, PTTH", "Giảng dạy trường dạy nghề (Senmon)", "Giảng dạy trường học các loại", "Giảng dạy trường quốc tế", "Hướng dẫn nghiên cứu", "Hướng dẫn thể thao"] },
-      { "name": "Hành chính, văn phòng", "slug": "hanh-chinh-van-phong-ks", "keywords": ["hành chính", "văn phòng", "thư ký", "trợ lý"] },
+      { "name": "Hành chính, văn phòng", "slug": "hanh-chinh-van-phong-ks", "keywords": ["Biên dịch, phiên dịch", "Nhân viên văn phòng"] },
       { "name": "Pháp lý", "slug": "phap-ly-ks", "keywords": ["pháp lý", "luật sư"] },
       { "name": "Nghệ thuật, nghệ sĩ", "slug": "nghe-thuat-ks", "keywords": ["nghệ thuật", "nghệ sĩ"] },
       { "name": "Thể dục thể thao", "slug": "the-thao-ks", "keywords": ["thể dục", "thể thao"] },
@@ -65,3 +65,5 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
     ],
     'Default': defaultIndustries,
 };
+
+    

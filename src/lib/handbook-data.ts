@@ -238,7 +238,7 @@ export const articles: HandbookArticle[] = [
     category: 'Cuộc sống ở Nhật',
     author: 'Ken',
     readTime: '1 phút',
-    image: 'https://placehold.co/600x600.png',
+    image: '/img/kyoto-o.jpg',
     dataAiHint: 'kiyomizu-dera temple sunrise',
     excerpt: 'Khoảnh khắc bình yên và hùng vĩ khi những tia nắng đầu tiên chiếu rọi ngôi chùa cổ kính Kiyomizu-dera ở Kyoto.',
   }

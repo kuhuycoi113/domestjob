@@ -41,7 +41,7 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { name: 'Điều dưỡng', slug: 'dieu-duong-tokutei', keywords: ['điều dưỡng', 'chăm sóc người già', 'hộ lý'] }
     ],
     'Kỹ sư, tri thức': [
-      { name: 'Nông lâm ngư nghiệp', slug: 'nong-lam-ngu-nghiep-ks', keywords: ["nông nghiệp", "lâm nghiệp", "ngư nghiệp"] },
+      { name: 'Nông lâm ngư nghiệp', slug: 'nong-lam-ngu-nghiep-ks', keywords: ["Chăn nuôi", "Công nghệ nông, lâm, ngư nghiệp", "Công nhân chăn nuôi đặc khu", "Công nhân Nông, Lâm, Ngư nghiệp", "Công nhân trồng trọt đặc khu"] },
       { name: 'Thực phẩm', slug: 'thuc-pham-ks', keywords: ["thực phẩm", "đồ uống"] },
       { name: 'Sản xuất, chế tạo, công nghệ', slug: 'san-xuat-cong-nghe-ks', keywords: ["sản xuất", "chế tạo", "công nghệ"] },
       { name: 'Cơ khí, máy móc', slug: 'co-khi-may-moc-ks', keywords: ["cơ khí", "máy móc"] },

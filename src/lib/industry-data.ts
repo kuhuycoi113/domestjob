@@ -15,10 +15,10 @@ const defaultIndustries: Industry[] = [
 
 export const industriesByJobType: { [key: string]: Industry[] } = {
     'Thực tập sinh kỹ năng': [
-      { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ['ngư nghiệp', 'đánh bắt', 'nuôi trồng thủy sản', 'Câu cá ngừ cần và dây', 'Câu mực', 'Câu tôm, cua bằng lồng', 'Đánh cá dây câu dài', 'Đánh cá lưới kéo', 'Đánh cá lưới rê', 'Đánh cá lưới sào', 'Đánh cá lưới thả', 'Đặt lưới đánh cá', 'Nuôi sò điệp'] },
-      { name: 'Nông nghiệp', slug: 'nong-nghiep-tts', keywords: ['nông nghiệp', 'trồng trọt', 'chăn nuôi'] },
-      { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ['thực phẩm', 'chế biến', 'đóng gói', 'cơm hộp'] },
-      { name: 'Sản xuất, dịch vụ tổng hợp', slug: 'san-xuat-dich-vu-tong-hop-tts', keywords: ['sản xuất', 'dịch vụ', 'tổng hợp', 'đúc', 'in ấn'] },
+      { name: 'Ngư nghiệp', slug: 'ngu-nghiep-tts', keywords: ["ngư nghiệp", "đánh bắt", "nuôi trồng thủy sản", "Câu cá ngừ cần và dây", "Câu mực", "Câu tôm, cua bằng lồng", "Đánh cá dây câu dài", "Đánh cá lưới kéo", "Đánh cá lưới rê", "Đánh cá lưới sào", "Đánh cá lưới thả", "Đặt lưới đánh cá", "Nuôi sò điệp"] },
+      { name: 'Nông nghiệp', slug: 'nong-nghiep-tts', keywords: ["nông nghiệp", "trồng trọt", "chăn nuôi", "Chăn nuôi bò", "Chăn nuôi bò sữa", "Chăn nuôi gà", "Chăn nuôi lợn", "Nhặt trứng gà", "Nông nghiệp chăn nuôi", "Nông nghiệp trồng trọt", "Thu hoạch bắp cải", "Thu hoạch cà chua", "Thu hoạch dâu tây", "Thu hoạch hoa", "Thu hoạch hoa quả", "Thu hoạch rau củ", "Trồng cây ăn quả", "Trồng nấm", "Trồng nấm công nghệ cao", "Trồng rau củ", "Trồng trọt nhà kính"] },
+      { name: 'Thực phẩm', slug: 'thuc-pham-tts', keywords: ["thực phẩm", "chế biến", "đóng gói", "cơm hộp"] },
+      { name: 'Sản xuất, dịch vụ tổng hợp', slug: 'san-xuat-dich-vu-tong-hop-tts', keywords: ["sản xuất", "dịch vụ", "tổng hợp", "đúc", "in ấn"] },
       { name: 'Cơ khí, kim loại', slug: 'co-khi-kim-loai-tts', keywords: ['cơ khí', 'kim loại', 'hàn', 'tiện', 'phay', 'dập', 'gia công'] },
       { name: 'Xây dựng', slug: 'xay-dung-tts', keywords: ['xây dựng', 'giàn giáo', 'cốp pha', 'hoàn thiện nội thất'] },
       { name: 'May mặc', slug: 'may-mac-tts', keywords: ['may mặc', 'dệt', 'may công nghiệp'] }
@@ -65,3 +65,5 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
 };
 
   
+
+    

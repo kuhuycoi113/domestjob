@@ -60,7 +60,7 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { name: "Pháp lý", slug: "phap-ly-ks", keywords: ["pháp lý", "luật sư"] },
       { name: "Nghệ thuật, nghệ sĩ", slug: "nghe-thuat-ks", keywords: ["Mỹ thuật gia", "nhiếp ảnh gia", "Nhà văn", "Nhạc sĩ", "nghệ sĩ sân khấu"] },
       { name: "Thể dục thể thao", slug: "the-thao-ks", keywords: ["Vận động viên chuyên nghiệp", "Vận động viên nghiệp dư"] },
-      { name: "Nghề có kỹ năng chuyên nghiệp", slug: "nghe-chuyen-nghiep-ks", keywords: ["chuyên nghiệp", "kỹ năng"] },
+      { name: "Nghề có kỹ năng chuyên nghiệp", slug: "nghe-chuyen-nghiep-ks", keywords: ["Công chức", "Giúp việc gia đình đặc khu", "Huấn luyện động vật", "Nấu nướng", "Người pha chế rượu", "Người quản gia", "Nhà ngoại giao", "Nhân viên tôn giáo", "Phi công"] },
       { name: "Việc làm bán chuyên nghiệp", slug: "viec-lam-ban-chuyen-nghiep-ks", keywords: ["bán chuyên nghiệp"] }
     ],
     'Default': defaultIndustries,

@@ -37,7 +37,7 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
       { name: 'Vận tải', slug: 'van-tai-tokutei', keywords: ["Hậu cần vận tải", "Lái xe", "Lái xe buýt cỡ lớn", "Lái xe buýt cỡ trung", "Lái xe nâng", "Lái xe tải cỡ lớn", "Lái xe tải cỡ nhỏ", "Lái xe tải cỡ trung", "Lái xe taxi", "Phụ xe", "Quản lý kho vận tải", "Thực tập lái xe"] },
       { name: 'Xây dựng', slug: 'xay-dung-tokutei', keywords: ["Bê tông", "Buộc thép", "Chống thấm", "Cốp pha công trình", "Dán tường", "Đổ bê tông áp lực", "Đổ nhựa đường", "Dựng giàn giáo", "Đường ống", "Đường ống điều hoà", "Đường ống nhà máy", "Đường ống nước", "Đường ống xây dựng", "Gia công đường ống", "Gia công khung thép", "Gia công khung thép trong xưởng", "Gia công sắt trong xưởng", "Gia công vật liệu đá", "Hàn khung thép trên cao", "Hoàn thiện nội thất", "Hoàn thiện sàn nhựa", "Hoàn thiện sàn thảm", "Hoàn thiện ván", "Hút nước ngầm công trình", "Khoan giếng máy dập", "Khoan giếng máy khoan", "Khung chắn toà nhà", "Lái máy ủi", "Lái máy xây dựng", "Lái máy xúc", "Lái máy xúc lật", "Lái xe lu", "Làm nền, móng", "Lắp bồn tắm", "Lắp đặt đường ống", "Lắp đặt lò nung-xây dựng", "Lắp đặt pin năng lượng", "Lắp điện lạnh, điều hòa", "Lắp ghép cốt thép", "Lát đá", "Lợp mái nhà", "Lợp ngói", "Mộc cốp pha", "Nội thất gỗ-xây dựng", "Ốp lát gạch", "Phá dỡ", "San lấp mặt bằng", "Sản xuất bê tông", "Sơn xây dựng", "Tấm kim loại kiến trúc", "Tấm kim loại ống gió", "Thi công dán tường", "Thi công lắp rèm", "Thi công móng thép", "Thợ mộc xây dựng", "Trát vữa", "Xây dựng tổng hợp"] },
       { name: 'Vệ sinh toà nhà', slug: 've-sinh-toa-nha-tokutei', keywords: ["Buồng phòng khách sạn", "Vệ sinh toà nhà"] },
-      { name: 'Lưu trú, khách sạn', slug: 'luu-tru-khach-san-tokutei', keywords: ['lưu trú', 'khách sạn', 'lễ tân', 'phục vụ'] },
+      { name: 'Lưu trú, khách sạn', slug: 'luu-tru-khach-san-tokutei', keywords: ["(Khách sạn) Tiếp khách, quản lý vệ sinh", "Hành lý khách sạn", "Lễ tân khách sạn", "Lưu trú khách sạn", "Quản lý khách sạn"] },
       { name: 'Điều dưỡng', slug: 'dieu-duong-tokutei', keywords: ['điều dưỡng', 'chăm sóc người già', 'hộ lý'] }
     ],
     'Kỹ sư, tri thức': [
@@ -65,5 +65,3 @@ export const industriesByJobType: { [key: string]: Industry[] } = {
     ],
     'Default': defaultIndustries,
 };
-
-    

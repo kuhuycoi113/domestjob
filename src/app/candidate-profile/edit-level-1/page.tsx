@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -141,7 +142,7 @@ const StepByStepEditDialog = ({ trigger, tempCandidate, setTempCandidate, onSave
 
     const fields = [
         { number: 1, label: 'Họ và tên', content: <Input placeholder="Nhập họ và tên" value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} /> },
-        { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Khác">Khác</SelectItem></SelectContent></Select> },
+        { number: 2, label: 'Giới tính', content: <Select value={tempCandidate.personalInfo.gender} onValueChange={v => handleNestedChange('personalInfo', 'gender', v)}><SelectTrigger><SelectValue placeholder="Chọn giới tính" /></SelectTrigger><SelectContent><SelectItem value="Nam">Nam</SelectItem><SelectItem value="Nữ">Nữ</SelectItem><SelectItem value="Chưa rõ">Chưa rõ</SelectItem></SelectContent></Select> },
         { number: 3, label: 'Ngày sinh', content: <Input type="date" value={tempCandidate.personalInfo.dateOfBirth || ''} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} /> },
         { number: 4, label: 'Ngành nghề mong muốn', content: <Input placeholder="Chọn ngành nghề" value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} /> },
         { number: 5, label: 'Địa điểm mong muốn', content: <Input placeholder="Chọn địa điểm" value={tempCandidate.aspirations?.desiredLocation} onChange={e => handleNestedChange('aspirations', 'desiredLocation', e.target.value)} /> },

@@ -230,5 +230,16 @@ export const articles: HandbookArticle[] = [
     image: 'https://placehold.co/600x600.png',
     dataAiHint: 'cherry blossoms ueno park',
     excerpt: 'Một buổi chiều dạo bước dưới những tán hoa anh đào nở rộ tại công viên Ueno, Tokyo. Một trải nghiệm không thể nào quên.',
+  },
+  {
+    slug: 'buoi-sang-o-chua-kiyomizu',
+    type: 'image-story',
+    title: 'Bình minh trên chùa Kiyomizu-dera, Kyoto',
+    category: 'Cuộc sống ở Nhật',
+    author: 'Ken',
+    readTime: '1 phút',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'kiyomizu-dera temple sunrise',
+    excerpt: 'Khoảnh khắc bình yên và hùng vĩ khi những tia nắng đầu tiên chiếu rọi ngôi chùa cổ kính Kiyomizu-dera ở Kyoto.',
   }
 ];

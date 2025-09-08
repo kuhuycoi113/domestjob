@@ -1,12 +1,12 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid, PlusCircle, Edit, LogIn, UserPlus } from 'lucide-react';
 import { JobCard } from '@/components/job-card';
-import { jobData } from '@/lib/mock-data';
+import { jobData, type Job } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { JobListRow } from '@/components/job-list-row';
@@ -18,6 +18,10 @@ import { JobStatsChart } from '@/components/dashboard/job-stats-chart';
 import { ProgressTracker } from '@/components/progress-tracker';
 import { useAuth } from '@/contexts/AuthContext';
 import Image from 'next/image';
+import { matchJobsToProfile } from '@/ai/flows/match-jobs-to-profile-flow';
+import { type CandidateProfile } from '@/ai/schemas';
+import { Skeleton } from '@/components/ui/skeleton';
+
 
 const aspirations = [
     { id: 1, title: 'Kỹ sư cơ khí, Osaka', salary: '220,000 JPY', type: 'Kỹ sư' },
@@ -26,7 +30,7 @@ const aspirations = [
 
 const appliedJobs = jobData.slice(0, 3).map(job => ({ ...job, applicationStatus: 'NTD đã xem', appliedDate: '2024-07-20' }));
 const savedJobs = jobData.slice(2, 5);
-const suggestedJobs = jobData.slice(0, 4);
+
 
 const viewers = [
   { name: 'A', src: 'https://placehold.co/40x40.png?text=A' },
@@ -39,6 +43,35 @@ const viewers = [
 
 const LoggedInView = () => {
     const [isViewersDialogOpen, setIsViewersDialogOpen] = useState(false);
+    const [suggestedJobs, setSuggestedJobs] = useState<Job[]>([]);
+    const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(true);
+
+    useEffect(() => {
+        const fetchSuggestedJobs = async () => {
+            setIsLoadingSuggestions(true);
+            try {
+                const storedProfile = localStorage.getItem('generatedCandidateProfile');
+                if (storedProfile) {
+                    const profile: CandidateProfile = JSON.parse(storedProfile);
+                    const matchResults = await matchJobsToProfile(profile);
+                    // Extract job object from each match result
+                    const jobs = matchResults.map(result => result.job);
+                    setSuggestedJobs(jobs);
+                } else {
+                    // Fallback to some default jobs if no profile is found
+                    setSuggestedJobs(jobData.slice(0, 4));
+                }
+            } catch (error) {
+                console.error("Failed to fetch suggested jobs:", error);
+                setSuggestedJobs(jobData.slice(0, 4)); // Fallback on error
+            } finally {
+                setIsLoadingSuggestions(false);
+            }
+        };
+
+        fetchSuggestedJobs();
+    }, []);
+
     return (
         <>
         <div className="text-center md:text-left mb-8">
@@ -53,13 +86,33 @@ const LoggedInView = () => {
                         <div className="flex items-center gap-3">
                             <Star className="h-5 w-5 text-yellow-500" />
                             <span>Gợi ý cho bạn</span>
-                            <Badge>{suggestedJobs.length}</Badge>
+                            <Badge>{isLoadingSuggestions ? '...' : suggestedJobs.length}</Badge>
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {suggestedJobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
-                        </div>
+                       {isLoadingSuggestions ? (
+                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {Array.from({ length: 4 }).map((_, i) => (
+                                    <Card key={i}>
+                                        <CardContent className="p-4 space-y-3">
+                                            <Skeleton className="h-28 w-full" />
+                                            <Skeleton className="h-4 w-3/4" />
+                                            <Skeleton className="h-4 w-1/2" />
+                                            <Skeleton className="h-4 w-full" />
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                       ) : suggestedJobs.length > 0 ? (
+                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {suggestedJobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
+                            </div>
+                       ) : (
+                           <div className="text-center py-8 text-muted-foreground">
+                             <p>Không tìm thấy công việc nào phù hợp với hồ sơ của bạn.</p>
+                             <p className="text-sm mt-2">Hãy thử cập nhật <Link href="/candidate-profile" className="text-primary underline">hồ sơ và nguyện vọng</Link> của bạn.</p>
+                           </div>
+                       )}
                     </AccordionContent>
                 </AccordionItem>
                  <AccordionItem value="item-2">
@@ -179,9 +232,9 @@ const LoggedOutView = () => {
                         <Briefcase className="h-12 w-12 text-primary"/>
                     </div>
                     <CardTitle className="text-3xl font-headline">Quản lý việc làm của bạn</CardTitle>
-                    <p className="text-muted-foreground pt-2">
+                    <CardDescription className="text-base pt-2">
                         Đăng nhập để xem các công việc được gợi ý riêng cho bạn, theo dõi các đơn đã ứng tuyển và quản lý các việc làm đã lưu.
-                    </p>
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button asChild size="lg">
@@ -208,5 +261,3 @@ export default function JobsDashboardPage() {
     </div>
   );
 }
-
-    

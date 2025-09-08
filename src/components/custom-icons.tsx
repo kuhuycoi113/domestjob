@@ -41,10 +41,10 @@ export const VnFlagIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export const JpFlagIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" {...props}>
-    <rect fill="#fff" width="900" height="600"/>
-    <circle fill="#bc002d" cx="450" cy="300" r="180"/>
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" {...props}>
+        <rect fill="#fff" width="900" height="600"/>
+        <circle fill="#bc002d" cx="450" cy="300" r="180"/>
+    </svg>
 );
 
 export const EnFlagIcon = (props: React.SVGProps<SVGSVGElement>) => (

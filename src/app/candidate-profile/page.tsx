@@ -884,12 +884,12 @@ export default function CandidateProfilePage() {
                  <div className="md:ml-auto mt-4 md:mt-0 flex items-center gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" disabled={isTranslating}>
-                          {isTranslating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Globe className="mr-2 h-4 w-4"/>}
-                          {currentLang === 'vi' && 'Tiếng Việt'}
-                          {currentLang === 'ja' && '日本語'}
-                          {currentLang === 'en' && 'English'}
-                          <ChevronDown className="ml-2 h-4 w-4"/>
+                        <Button variant="outline" size="icon" disabled={isTranslating}>
+                           {isTranslating ? <Loader2 className="h-5 w-5 animate-spin" /> :
+                            currentLang === 'vi' ? <VnFlagIcon className="w-6 h-6 rounded-full object-cover"/> :
+                            currentLang === 'ja' ? <JpFlagIcon className="w-6 h-6 rounded-full object-cover"/> :
+                            <EnFlagIcon className="w-6 h-6 rounded-full object-cover"/>
+                           }
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>

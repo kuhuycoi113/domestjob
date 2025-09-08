@@ -15,7 +15,7 @@ const programTypes = [
   {
     icon: HardHat,
     title: 'Thực tập sinh kỹ năng',
-    description: 'Chương trình giúp bạn học hỏi kỹ năng, tích lũy kinh nghiệm thực tế và làm quen với văn hóa làm việc chuyên nghiệp tại Nhật Bản trong 3-5 năm.',
+    description: 'Đây là hình thức phổ biến nhất, không yêu cầu bằng cấp và không cần thi tuyển tay nghề, phù hợp với lao động phổ thông muốn tích lũy kinh nghiệm và tài chính tại Nhật.',
     color: 'orange'
   },
   {

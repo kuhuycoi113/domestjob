@@ -94,7 +94,7 @@ const locations = {
         "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
         "Kansai": ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"],
         "Chugoku": ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"],
-        "Shikoku": [],
+        "Shikoku": ["Tokushima", "Kagawa", "Ehime", "Kochi"],
         "Kyushu": [],
         "Okinawa": []
     }

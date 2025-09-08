@@ -619,9 +619,9 @@ export default function PartnerPostJobPage() {
                                     <SelectValue placeholder="Chọn yêu cầu về hình xăm" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Không nhận xăm">Không nhận xăm</SelectItem>
-                                    <SelectItem value="Nhận xăm nhỏ">Nhận xăm nhỏ</SelectItem>
-                                    <SelectItem value="Nhận xăm to">Nhận xăm to</SelectItem>
+                                    <SelectItem value="Không hình xăm">Không hình xăm</SelectItem>
+                                    <SelectItem value="Có xăm nhỏ (kín)">Có xăm nhỏ (kín)</SelectItem>
+                                    <SelectItem value="Có xăm to (lộ)">Có xăm to (lộ)</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

@@ -162,17 +162,19 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
           <Logo />
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          {mainNavLinks.map((link) => (
-             <NavLink 
-                key={link.href} 
-                href={link.href}
-                label={link.label}
-                icon={link.href === '/ai-profile' ? link.icon : undefined}
-                onClick={link.href === '/' ? handleHomeClick : undefined} 
-             />
-          ))}
-        </nav>
+        {isClient && (
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            {mainNavLinks.map((link) => (
+              <NavLink 
+                  key={link.href} 
+                  href={link.href}
+                  label={link.label}
+                  icon={link.href === '/ai-profile' ? link.icon : undefined}
+                  onClick={link.href === '/' ? handleHomeClick : undefined} 
+              />
+            ))}
+          </nav>
+        )}
         <div className="hidden md:flex items-center gap-2">
             <Button asChild variant="outline">
               <Link href="/jobs">Trang việc làm</Link>

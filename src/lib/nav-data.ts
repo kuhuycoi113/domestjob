@@ -19,7 +19,6 @@ import {
 
 export const mainNavLinks = [
   { href: '/', label: 'Trang chủ', icon: Home, mobile: true },
-  { href: '/jobs', label: 'Việc làm' },
   { href: '/roadmap', label: 'Lộ trình' },
   { href: '/career-orientation', label: 'Hướng nghiệp' },
   {

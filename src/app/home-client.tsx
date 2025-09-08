@@ -87,9 +87,17 @@ const locations = {
     "Việt Nam": [
         "An Giang", "Bắc Ninh", "Cao Bằng", "Cà Mau", "Cần Thơ", "Đà Nẵng", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Đắk Lắk", "Gia Lai", "Hà Nội", "Hà Tĩnh", "Hải Phòng", "Hưng Yên", "Thừa Thiên Huế", "Khánh Hòa", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Nghệ An", "Ninh Bình", "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh", "Thanh Hóa", "Thành phố Hồ Chí Minh", "Thái Nguyên", "Tuyên Quang", "Vĩnh Long"
     ],
-    "Nhật Bản": [
-        "Aichi", "Akita", "Aomori", "Chiba", "Ehime", "Fukui", "Fukuoka", "Fukushima", "Gifu", "Gunma", "Hiroshima", "Hokkaido", "Hyogo", "Ibaraki", "Ishikawa", "Iwate", "Kagawa", "Kagoshima", "Kanagawa", "Kochi", "Kumamoto", "Kyoto", "Mie", "Miyagi", "Miyazaki", "Nagano", "Nagasaki", "Nara", "Niigata", "Oita", "Okayama", "Okinawa", "Osaka", "Saga", "Saitama", "Shiga", "Shimane", "Shizuoka", "Tochigi", "Tokushima", "Tokyo", "Tottori", "Toyama", "Wakayama", "Yamagata", "Yamaguchi", "Yamanashi"
-    ]
+    "Nhật Bản": {
+        "Hokkaido": [],
+        "Tohoku": [],
+        "Kanto": [],
+        "Chubu": [],
+        "Kansai": [],
+        "Chugoku": [],
+        "Shikoku": [],
+        "Kyushu": [],
+        "Okinawa": []
+    }
 };
 
 
@@ -199,7 +207,7 @@ export default function HomeClient() {
                             <AccordionContent className="space-y-4 pt-4">
                                 <div className="space-y-2">
                                     <Label>Nơi làm việc (Nhật Bản)</Label>
-                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Nhật Bản</SelectItem>{locations['Nhật Bản'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent></Select>
+                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Nhật Bản</SelectItem>{Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (<SelectGroup key={region}><SelectLabel>{region}</SelectLabel>{(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
                                 </div>
                                 <div className="space-y-2">
                                     <Label>Nơi phỏng vấn (Việt Nam)</Label>
@@ -647,8 +655,11 @@ export default function HomeClient() {
                             <SelectValue placeholder="Tất cả địa điểm" />
                             </SelectTrigger>
                             <SelectContent>
-                                {locations["Nhật Bản"].map(loc => (
-                                    <SelectItem key={loc} value={loc}>{loc}</SelectItem>
+                                {Object.entries(locations["Nhật Bản"]).map(([region, prefectures]) => (
+                                    <SelectGroup key={region}>
+                                        <SelectLabel>{region}</SelectLabel>
+                                        {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                                    </SelectGroup>
                                 ))}
                             </SelectContent>
                         </Select>

@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award, Briefcase, Handshake, MessageSquare, PieChart, Send, ShieldCheck, Sparkles, Star, Target, Users, Phone } from 'lucide-react';
 import { MessengerIcon, ZaloIcon } from '@/components/custom-icons';
 
-const consultants = [
+const consultantData = [
   {
     id: 'le-xuan-long',
     name: 'Lê Xuân Long',
@@ -123,7 +123,7 @@ const addedValues = [
 
 export default function ConsultantDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
-    const consultant = consultants.find(c => c.id === resolvedParams.id);
+    const consultant = consultantData.find(c => c.id === resolvedParams.id);
 
     if (!consultant) {
         notFound();

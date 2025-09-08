@@ -93,10 +93,10 @@ const locations = {
         "Kanto": ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"],
         "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
         "Kansai": ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"],
-        "Chugoku": [],
-        "Shikoku": [],
-        "Kyushu": [],
-        "Okinawa": []
+        "Chugoku": ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"],
+        "Shikoku": ["Tokushima", "Kagawa", "Ehime", "Kochi"],
+        "Kyushu": ["Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima"],
+        "Okinawa": ["Okinawa"]
     }
 };
 

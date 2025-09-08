@@ -580,7 +580,7 @@ export default function PartnerPostJobPage() {
                       {visibleFields.has('weightRequirement') && (
                         <div className="space-y-2">
                           <Label htmlFor="weight-requirement">Yêu cầu cân nặng (kg)</Label>
-                          <Input id="weight-requirement" placeholder="VD: 40 - 105" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
+                          <Input id="weight-requirement" placeholder="40 - 105" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
                         </div>
                      )}
                       {visibleFields.has('dominantHand') && (

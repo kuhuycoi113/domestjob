@@ -163,7 +163,7 @@ export function Header() {
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          {mainNavLinks.filter(link => link.href !== '/jobs').map((link) => (
+          {mainNavLinks.map((link) => (
              <NavLink 
                 key={link.href} 
                 href={link.href}

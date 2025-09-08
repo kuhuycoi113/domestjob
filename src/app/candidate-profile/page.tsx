@@ -35,7 +35,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from '@/components/ui/select';
-import { translateProfile, type TranslateProfileInput } from '@/ai/flows/translate-profile-flow';
+import { translateProfile } from '@/ai/flows/translate-profile-flow';
+import { type TranslateProfileInput } from '@/ai/schemas/translate-profile-schema';
 import { JpFlagIcon, EnFlagIcon, VnFlagIcon } from '@/components/custom-icons';
 
 

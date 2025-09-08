@@ -10,6 +10,8 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import { CandidateProfileSchema, type CandidateProfile } from '@/ai/schemas';
+import { TranslateProfileInputSchema } from '@/ai/schemas/translate-profile-schema';
+import type { TranslateProfileInput } from '@/ai/schemas/translate-profile-schema';
 
 // Create a partial schema for translation to avoid re-translating static data
 const TranslatableCandidateProfileSchema = CandidateProfileSchema.partial().pick({
@@ -45,13 +47,6 @@ const TranslatableCandidateProfileSchema = CandidateProfileSchema.partial().pick
     skills: z.array(z.string()).optional(),
     certifications: z.array(z.string()).optional(),
 });
-
-
-export const TranslateProfileInputSchema = z.object({
-  profile: CandidateProfileSchema,
-  targetLanguage: z.string().describe('The language to translate the profile into (e.g., "Japanese", "English", "Vietnamese").'),
-});
-export type TranslateProfileInput = z.infer<typeof TranslateProfileInputSchema>;
 
 export async function translateProfile(
   input: TranslateProfileInput

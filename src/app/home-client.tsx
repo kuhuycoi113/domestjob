@@ -88,7 +88,7 @@ const locations = {
         "An Giang", "Bắc Ninh", "Cao Bằng", "Cà Mau", "Cần Thơ", "Đà Nẵng", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Đắk Lắk", "Gia Lai", "Hà Nội", "Hà Tĩnh", "Hải Phòng", "Hưng Yên", "Thừa Thiên Huế", "Khánh Hòa", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Nghệ An", "Ninh Bình", "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh", "Thanh Hóa", "Thành phố Hồ Chí Minh", "Thái Nguyên", "Tuyên Quang", "Vĩnh Long"
     ],
     "Nhật Bản": {
-        "Hokkaido": [],
+        "Hokkaido": ["Hokkaido"],
         "Tohoku": [],
         "Kanto": [],
         "Chubu": [],
@@ -121,7 +121,7 @@ export default function HomeClient() {
         industries = uniqueIndustries;
     } else {
         let jobTypeKey: keyof typeof industriesByJobType | 'Default' = 'Default';
-        if (selectedJobType.includes('Thực tập sinh')) jobTypeKey = 'Thực tập sinh';
+        if (selectedJobType.includes('Thực tập sinh')) jobTypeKey = 'Thực tập sinh kỹ năng';
         else if (selectedJobType.includes('Đặc định')) jobTypeKey = 'Kỹ năng đặc định';
         else if (selectedJobType.includes('Kỹ sư, tri thức')) jobTypeKey = 'Kỹ sư, tri thức';
         industries = industriesByJobType[jobTypeKey];

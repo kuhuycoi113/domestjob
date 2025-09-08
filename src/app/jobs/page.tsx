@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid, PlusCircle, Edit } from 'lucide-react';
+import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid, PlusCircle, Edit, LogIn, UserPlus } from 'lucide-react';
 import { JobCard } from '@/components/job-card';
 import { jobData } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
@@ -16,6 +16,8 @@ import { ProfileViewersDialog } from '@/components/profile-viewers-dialog';
 import { StatCard } from '@/components/dashboard/stat-card';
 import { JobStatsChart } from '@/components/dashboard/job-stats-chart';
 import { ProgressTracker } from '@/components/progress-tracker';
+import { useAuth } from '@/contexts/AuthContext';
+import Image from 'next/image';
 
 const aspirations = [
     { id: 1, title: 'Kỹ sư cơ khí, Osaka', salary: '220,000 JPY', type: 'Kỹ sư' },
@@ -35,36 +37,15 @@ const viewers = [
   { name: 'F', src: 'https://placehold.co/40x40.png?text=F' },
 ];
 
-export default function JobsDashboardPage() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [isViewersDialogOpen, setIsViewersDialogOpen] = useState(false);
-    
-  const JobListing = ({ jobs }: { jobs: (typeof jobData) }) => (
-    <div className="pt-4">
-        {viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {jobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
-            </div>
-        ) : (
-            <Card className="shadow-xl"><CardContent className="p-0">
-                <div className="space-y-px">
-                    {jobs.map((job) => ( <JobListRow key={job.id} job={job} />))}
-                </div>
-            </CardContent></Card>
-        )}
-    </div>
-  );
-
-  return (
-    <>
-    <div className="bg-secondary min-h-screen">
-      <div className="container mx-auto px-2 md:px-4 py-8">
+const LoggedInView = () => {
+    const [isViewersDialogOpen, setIsViewersDialogOpen] = useState(false);
+    return (
+        <>
         <div className="text-center md:text-left mb-8">
             <h1 className="text-3xl font-bold font-headline">Trang quản lý việc làm</h1>
             <p className="text-muted-foreground mt-1">Quản lý toàn bộ hành trình tìm việc của bạn tại một nơi duy nhất.</p>
         </div>
-
-        {/* Main Content */}
+         {/* Main Content */}
         <div className="w-full mb-8">
             <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
                 <AccordionItem value="item-1">
@@ -76,7 +57,9 @@ export default function JobsDashboardPage() {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <JobListing jobs={suggestedJobs} />
+                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {suggestedJobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
                  <AccordionItem value="item-2">
@@ -88,7 +71,9 @@ export default function JobsDashboardPage() {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <JobListing jobs={appliedJobs} />
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {appliedJobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
                  <AccordionItem value="item-3" className="border-b-0">
@@ -100,7 +85,9 @@ export default function JobsDashboardPage() {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="bg-background p-6 rounded-b-lg">
-                       <JobListing jobs={savedJobs} />
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {savedJobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
@@ -178,10 +165,48 @@ export default function JobsDashboardPage() {
                 </Card>
             </div>
         </div>
+        <ProfileViewersDialog isOpen={isViewersDialogOpen} onClose={() => setIsViewersDialogOpen(false)} />
+    </>
+    )
+}
 
+const LoggedOutView = () => {
+    return (
+        <div className="flex items-center justify-center text-center py-20">
+            <Card className="max-w-2xl p-8 shadow-2xl">
+                <CardHeader>
+                    <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit mb-4">
+                        <Briefcase className="h-12 w-12 text-primary"/>
+                    </div>
+                    <CardTitle className="text-3xl font-headline">Quản lý việc làm của bạn</CardTitle>
+                    <p className="text-muted-foreground pt-2">
+                        Đăng nhập để xem các công việc được gợi ý riêng cho bạn, theo dõi các đơn đã ứng tuyển và quản lý các việc làm đã lưu.
+                    </p>
+                </CardHeader>
+                <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button asChild size="lg">
+                        <Link href="/candidate-profile"><LogIn className="mr-2"/>Đăng nhập</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="lg">
+                        <Link href="/register"><UserPlus className="mr-2"/>Tạo tài khoản mới</Link>
+                    </Button>
+                </CardContent>
+            </Card>
+        </div>
+    )
+}
+
+export default function JobsDashboardPage() {
+  const { role } = useAuth();
+  const isLoggedIn = role === 'candidate';
+
+  return (
+    <div className="bg-secondary min-h-screen">
+      <div className="container mx-auto px-2 md:px-4 py-8">
+        {isLoggedIn ? <LoggedInView /> : <LoggedOutView />}
       </div>
     </div>
-    <ProfileViewersDialog isOpen={isViewersDialogOpen} onClose={() => setIsViewersDialogOpen(false)} />
-    </>
   );
 }
+
+    

@@ -11,6 +11,28 @@ export const metadata: Metadata = {
   description: 'Khám phá lộ trình phát triển sự nghiệp (SWR) bền vững từ Thực tập sinh, Kỹ năng đặc định (Tokutei Ginou) 1 & 2, đến chuyên gia tay nghề cao tại Nhật Bản cùng HelloJob.',
 };
 
+const programTypes = [
+  {
+    icon: HardHat,
+    title: 'Thực tập sinh kỹ năng',
+    description: 'Chương trình giúp bạn học hỏi kỹ năng, tích lũy kinh nghiệm thực tế và làm quen với văn hóa làm việc chuyên nghiệp tại Nhật Bản trong 3-5 năm.',
+    color: 'orange'
+  },
+  {
+    icon: UserCheck,
+    title: 'Kỹ năng đặc định (Tokutei)',
+    description: 'Dành cho lao động có tay nghề, cho phép làm việc lâu hơn tại Nhật, hưởng mức lương cao hơn và có thể chuyển việc trong cùng ngành.',
+     color: 'dark-blue'
+  },
+  {
+    icon: Briefcase,
+    title: 'Kỹ sư, tri thức',
+    description: 'Dành cho người có trình độ chuyên môn cao (Cao đẳng, Đại học), mở ra cơ hội phát triển sự nghiệp lâu dài và bảo lãnh người thân.',
+    color: 'green'
+  }
+];
+
+
 const roadmapSteps = [
   {
     icon: Compass,
@@ -51,7 +73,7 @@ const roadmapSteps = [
   {
     icon: Star,
     title: 'Bước 5: Kỹ năng đặc định 1 (Tối đa 5 năm)',
-    description: 'Sau khi hoàn thành chương trình thực tập sinh, bạn sẽ được nâng cấp lên visa Kỹ năng đặc định (Tokutei Ginou 1). Tay nghề cao hơn, được phép chuyển việc trong ngành và nhận mức thu nhập cải thiện rõ rệt.',
+    description: 'Sau khi hoàn thành chương trình thực tập sinh, bạn sẽ được nâng cấp lên visa Kỹ năng đặc định (Tokutei Ginou 1). Tay nghề cao hơn, được phép chuyển việc trong cùng ngành và nhận mức thu nhập cải thiện rõ rệt.',
     salary: '40-50 triệu VNĐ/tháng',
     color: 'dark-blue',
     image: '/img/tokutei1.jpg',
@@ -105,6 +127,25 @@ export default function RoadmapPage() {
           <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
             Chúng tôi cam kết đồng hành cùng bạn trên con đường phát triển sự nghiệp bền vững, từ bước đầu tiên đến khi trở thành chuyên gia tay nghề cao.
           </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+          {programTypes.map((program) => {
+            const colors = colorClasses[program.color] || colorClasses['light-blue'];
+            return (
+              <Card key={program.title} className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                   <div className={cn("mx-auto rounded-full p-4 w-fit", colors.bg)}>
+                      <program.icon className="h-10 w-10 text-white" />
+                  </div>
+                  <CardTitle className={cn("font-headline mt-4 text-xl", colors.text)}>{program.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm">{program.description}</p>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
 
         <div className="relative max-w-6xl mx-auto">

@@ -353,74 +353,101 @@ export default function CandidateProfilePage() {
     if (!tempCandidate) return null;
     return (
         <div className="space-y-4">
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label className="col-span-1 text-right">Địa điểm mong muốn</Label>
-              <div className="col-span-2">
-                <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleNestedChange('aspirations', 'desiredLocation', value)}>
-                  <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
-                    {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
-                        <SelectGroup key={region}>
-                            <SelectLabel>{region}</SelectLabel>
-                            {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                        </SelectGroup>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            {[
-                { label: '1. Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
-                { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
-                { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
-                { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
-                { label: '6. Chiều cao (cm)', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
-                { label: '7. Cân nặng (kg)', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
-                { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Có xăm nhỏ (kín)', 'Có xăm to (lộ)'] },
-                { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ["Không viêm gan B", "Viêm gan B thể tĩnh", "Viêm gan B thể động"] },
-                { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
-                { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
-                { label: '12. Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
-                { label: '13. Tìm việc phỏng vấn, tuyển tại', value: tempCandidate.aspirations?.interviewLocation, field: 'interviewLocation', type: 'aspirations' },
-                { label: '14. Nguyện vọng đặc biệt', value: tempCandidate.aspirations?.specialAspirations, field: 'specialAspirations', type: 'aspirations' },
-                { label: '15. Mô tả/ghi chú', value: tempCandidate.notes, field: 'notes', type: 'simple', isTextarea: true },
-            ].map(item => (
-                <div key={item.label} className="grid grid-cols-3 items-center gap-4">
-                    <Label className="col-span-1 text-right">{item.label}</Label>
-                    <div className="col-span-2">
-                      {item.isTextarea ? (
-                           <Textarea 
-                              value={item.value || ''} 
-                              onChange={e => handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value)} 
-                          />
-                      ) : item.options ? (
-                          <Select 
-                              value={item.value || ''} 
-                              onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
-                          >
-                              <SelectTrigger>
-                                  <SelectValue placeholder={`Chọn`} />
-                              </SelectTrigger>
-                              <SelectContent>
-                                  {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
-                              </SelectContent>
-                          </Select>
-                      ) : (
-                          <Input 
-                              value={item.value || ''} 
-                              onChange={e => {
-                                  if (item.type === 'simple') {
-                                      handleSimpleChange(item.field as keyof EnrichedCandidateProfile, e.target.value);
-                                  } else {
-                                      handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, e.target.value);
-                                  }
-                              }}
-                          />
-                      )}
-                    </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label>Họ và tên</Label>
+                    <Input value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} />
                 </div>
-            ))}
+                <div className="space-y-2">
+                    <Label>Số điện thoại</Label>
+                    <Input value={tempCandidate.personalInfo.phone} onChange={e => handleNestedChange('personalInfo', 'phone', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Ngày sinh</Label>
+                    <Input type="date" value={tempCandidate.personalInfo.dateOfBirth?.split('T')[0]} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Ngành nghề mong muốn</Label>
+                    <Input value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Địa điểm mong muốn</Label>
+                     <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleNestedChange('aspirations', 'desiredLocation', value)}>
+                        <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
+                            {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
+                                <SelectGroup key={region}>
+                                    <SelectLabel>{region}</SelectLabel>
+                                    {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                                </SelectGroup>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="space-y-2">
+                    <Label>Chiều cao (cm)</Label>
+                    <Input placeholder="150 - 205" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Cân nặng (kg)</Label>
+                    <Input placeholder="40 - 105" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label>Hình xăm</Label>
+                    <Select value={tempCandidate.personalInfo.tattooStatus || ''} onValueChange={value => handleNestedChange('personalInfo', 'tattooStatus', value)}>
+                        <SelectTrigger><SelectValue placeholder="Chọn tình trạng hình xăm" /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Không có">Không có</SelectItem>
+                            <SelectItem value="Có xăm nhỏ (kín)">Có xăm nhỏ (kín)</SelectItem>
+                            <SelectItem value="Có xăm to (lộ)">Có xăm to (lộ)</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                 <div className="space-y-2">
+                    <Label>Viêm gan B</Label>
+                    <Select value={tempCandidate.personalInfo.hepatitisBStatus || ''} onValueChange={value => handleNestedChange('personalInfo', 'hepatitisBStatus', value)}>
+                        <SelectTrigger><SelectValue placeholder="Chọn tình trạng viêm gan B" /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Không viêm gan B">Không viêm gan B</SelectItem>
+                            <SelectItem value="Viêm gan B thể tĩnh">Viêm gan B thể tĩnh</SelectItem>
+                            <SelectItem value="Viêm gan B thể động">Viêm gan B thể động</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                 <div className="space-y-2">
+                    <Label>Lương cơ bản mong muốn/tháng</Label>
+                    <Input value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Thực lĩnh mong muốn</Label>
+                    <Input value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Khả năng tài chính</Label>
+                    <Input value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} />
+                </div>
+                 <div className="space-y-2">
+                    <Label>Tìm việc, phỏng vấn, tuyển tại</Label>
+                     <Select value={tempCandidate.aspirations?.interviewLocation || ''} onValueChange={value => handleNestedChange('aspirations', 'interviewLocation', value)}>
+                        <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+                        <SelectContent>
+                             <SelectGroup>
+                                <SelectLabel>Việt Nam</SelectLabel>
+                                {locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}
+                             </SelectGroup>
+                             <SelectGroup>
+                                <SelectLabel>Nhật Bản</SelectLabel>
+                                {Object.values(locations['Nhật Bản']).flat().map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                             </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
+                 <div className="md:col-span-2 space-y-2">
+                    <Label>Nguyện vọng đặc biệt</Label>
+                    <Textarea value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} />
+                </div>
+             </div>
         </div>
     );
   };
@@ -564,7 +591,7 @@ export default function CandidateProfilePage() {
                         <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
                     </Card>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-xl">
+                <DialogContent className="sm:max-w-3xl">
                     <DialogHeader>
                         <DialogTitle className="font-headline text-2xl">Thông tin tài khoản ứng viên Mức 1</DialogTitle>
                     </DialogHeader>
@@ -572,7 +599,7 @@ export default function CandidateProfilePage() {
                       <Level1EditDialogContent />
                     </div>
                     <DialogFooter>
-                        <Button onClick={handleSave} className="bg-primary text-white w-full">Đăng thông tin</Button>
+                        <Button onClick={handleSave} className="bg-primary text-white w-full">Lưu thông tin</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

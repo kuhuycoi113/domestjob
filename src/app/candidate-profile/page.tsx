@@ -360,18 +360,20 @@ export default function CandidateProfilePage() {
         
         setCandidate(prev => {
             if (!prev) return null;
+             // A more robust way to merge, handling potentially missing keys in translatedProfile
+            const mergedProfile = { ...originalCandidate }; // Start with a fresh copy of original
+
+            // Iterate over keys of the translated profile and merge them
+            for (const key in translatedProfile) {
+                const aKey = key as keyof Partial<CandidateProfile>;
+                if (translatedProfile[aKey] !== undefined) {
+                    // @ts-ignore
+                    mergedProfile[aKey] = translatedProfile[aKey];
+                }
+            }
+
             return {
-                ...prev, // Start with previous state to keep all fields
-                ...originalCandidate, // Re-apply original to keep non-translatable data
-                ...translatedProfile, // Override with translated text fields
-                personalInfo: {
-                    ...originalCandidate.personalInfo,
-                    ...(translatedProfile.personalInfo || {}),
-                },
-                aspirations: originalCandidate.aspirations ? {
-                    ...originalCandidate.aspirations,
-                    ...(translatedProfile.aspirations || {}),
-                } : undefined,
+                ...mergedProfile,
                 education: originalCandidate.education.map((edu, index) => ({
                     ...edu,
                     ...(translatedProfile.education?.[index] || {}),
@@ -380,7 +382,7 @@ export default function CandidateProfilePage() {
                     ...exp,
                     ...(translatedProfile.experience?.[index] || {}),
                 })),
-            }
+            };
         });
 
     } catch (error) {

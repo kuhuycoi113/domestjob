@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { MobileFooter } from '@/components/mobile-footer';
 import { ChatProvider } from '@/contexts/ChatContext';
 import { FloatingChatWidget } from '@/components/chat/floating-chat-widget';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export function RootProvider({
     children,
@@ -18,12 +19,14 @@ export function RootProvider({
 
     return (
         <ChatProvider>
-            {!isCallPage && <Header />}
-            <main className="min-h-screen">{children}</main>
-            {!isCallPage && <Footer />}
-            {!isCallPage && <MobileFooter />}
-            {!isCallPage && <FloatingChatWidget />}
-            <Toaster />
+            <AuthProvider>
+                {!isCallPage && <Header />}
+                <main className="min-h-screen">{children}</main>
+                {!isCallPage && <Footer />}
+                {!isCallPage && <MobileFooter />}
+                {!isCallPage && <FloatingChatWidget />}
+                <Toaster />
+            </AuthProvider>
         </ChatProvider>
     );
 }

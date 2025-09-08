@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, Sparkles, User, Briefcase, MessageSquare, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, Gem, UserPlus, PlusCircle, FileText } from 'lucide-react';
+import { Home, Sparkles, User, Briefcase, MessageSquare, LayoutGrid, X, Compass, BookOpen, LifeBuoy, Info, Handshake, Gem, UserPlus, PlusCircle, FileText, LogIn } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -20,6 +20,8 @@ import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import Image from 'next/image';
 import { useChat } from '@/contexts/ChatContext';
 import { mainNavLinks, quickAccessLinks, mobileFooterLinks } from '@/lib/nav-data';
+import { useAuth } from '@/contexts/AuthContext';
+
 
 const Logo = () => (
     <Image src="/img/HJPNG.png" alt="HelloJob Logo" width={110} height={36} className="h-9 w-auto" />
@@ -30,6 +32,8 @@ export function MobileFooter() {
   const [isOpen, setIsOpen] = useState(false);
   const [activePath, setActivePath] = useState('');
   const { openChat } = useChat();
+  const { role, setRole } = useAuth();
+  const isLoggedIn = role !== 'guest';
 
 
   useEffect(() => {
@@ -37,6 +41,64 @@ export function MobileFooter() {
   }, [pathname]);
 
   const isQuickAccessLinkActive = quickAccessLinks.some(link => activePath.startsWith(link.href) && link.href !== '/');
+
+  const LoggedInContent = () => (
+    <>
+       <div className="p-4">
+            <Link href="/candidate-profile" className="block" onClick={() => setIsOpen(false)}>
+            <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary hover:bg-accent/20">
+                <Avatar className="h-12 w-12">
+                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
+                <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col space-y-1">
+                <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                    Ứng viên Thực tập sinh
+                </p>
+                </div>
+            </div>
+            </Link>
+        </div>
+        
+        <DropdownMenuSeparator />
+
+        <div className="p-2">
+            <div className="grid grid-cols-3 gap-2">
+            {quickAccessLinks.map((link) => {
+                const isActive = (activePath === link.href) || (link.href !== '/' && activePath.startsWith(link.href));
+                return (
+                <Link 
+                    key={link.href}
+                    id={link.href === '/roadmap' ? 'MMN01' : undefined}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={cn("flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md hover:bg-accent/80", isActive ? "bg-primary/10 ring-2 ring-primary" : "bg-secondary")}>
+                    <div className={cn("h-10 flex items-center justify-center", isActive ? "text-primary" : "text-muted-foreground")}>
+                    <link.icon className="h-8 w-8"/>
+                    </div>
+                    <span className={cn("text-xs text-center leading-tight font-medium", isActive ? "text-primary" : "text-foreground")}>{link.label}</span>
+                </Link>
+                )
+            })}
+            </div>
+        </div>
+    </>
+  );
+
+  const LoggedOutContent = () => (
+     <div className="p-4 space-y-4">
+        <p className="text-muted-foreground text-center">Đăng nhập để trải nghiệm đầy đủ tính năng của HelloJob.</p>
+        <div className="grid grid-cols-2 gap-4">
+           <Button asChild className="w-full" size="lg" variant="outline" onClick={() => setIsOpen(false)}>
+                <Link href="/register"><UserPlus/> Đăng ký</Link>
+            </Button>
+            <Button asChild className="w-full" size="lg" onClick={() => setIsOpen(false)}>
+                <Link href="/candidate-profile"><LogIn/> Đăng nhập</Link>
+            </Button>
+        </div>
+     </div>
+  );
 
   return (
     <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
@@ -70,45 +132,7 @@ export function MobileFooter() {
                </SheetTitle>
             </SheetHeader>
             <div className="flex flex-col h-full overflow-y-auto">
-              <div className="p-4">
-                 <Link href="/candidate-profile" className="block" onClick={() => setIsOpen(false)}>
-                    <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary hover:bg-accent/20">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
-                        <AvatarFallback>A</AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-base font-medium leading-none">Lê Ngọc Hân</p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                          Ứng viên Thực tập sinh
-                        </p>
-                      </div>
-                    </div>
-                 </Link>
-              </div>
-              
-              <DropdownMenuSeparator />
-
-              <div className="p-2">
-                 <div className="grid grid-cols-3 gap-2">
-                    {quickAccessLinks.map((link) => {
-                      const isActive = (activePath === link.href) || (link.href !== '/' && activePath.startsWith(link.href));
-                      return (
-                       <Link 
-                        key={link.href}
-                        id={link.href === '/roadmap' ? 'MMN01' : undefined}
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className={cn("flex flex-col items-center justify-start p-2 h-24 cursor-pointer rounded-md hover:bg-accent/80", isActive ? "bg-primary/10 ring-2 ring-primary" : "bg-secondary")}>
-                         <div className={cn("h-10 flex items-center justify-center", isActive ? "text-primary" : "text-muted-foreground")}>
-                           <link.icon className="h-8 w-8"/>
-                         </div>
-                         <span className={cn("text-xs text-center leading-tight font-medium", isActive ? "text-primary" : "text-foreground")}>{link.label}</span>
-                       </Link>
-                      )
-                    })}
-                </div>
-              </div>
+               {isLoggedIn ? <LoggedInContent /> : <LoggedOutContent />}
               
               <div className="mt-auto p-4">
                   <DropdownMenuSeparator />

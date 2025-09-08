@@ -72,7 +72,13 @@ const recruiters = [
 
 const industries = ['Chế biến thực phẩm', 'Cơ khí', 'Xây dựng', 'Nông nghiệp', 'Điện tử', 'Dệt may', 'Điều dưỡng', 'Nhà hàng'];
 const locations = ['Tokyo', 'Osaka', 'Aichi', 'Fukuoka', 'Hokkaido', 'Kanagawa', 'Saitama', 'Chiba', 'Hyogo', 'Hiroshima'];
-const visaTypes = ['Thực tập sinh 3 năm', 'Kỹ năng đặc định', 'Kỹ sư, tri thức'];
+
+const visaDetailsByVisaType: { [key: string]: string[] } = {
+    'Thực tập sinh kỹ năng': ['Thực tập sinh 3 năm', 'Thực tập sinh 1 năm', 'Thực tập sinh 3 Go'],
+    'Kỹ năng đặc định': ['Đặc định đầu Việt', 'Đặc định đầu Nhật', 'Đặc định đi mới'],
+    'Kỹ sư, tri thức': ['Kỹ sư, tri thức đầu Việt', 'Kỹ sư, tri thức đầu Nhật']
+};
+
 const jobTitles = {
     'Chế biến thực phẩm': ['Chế biến cơm hộp', 'Đóng gói bánh kẹo', 'Làm sushi', 'Chế biến thủy sản'],
     'Cơ khí': ['Vận hành máy CNC', 'Hàn xì', 'Lắp ráp linh kiện', 'Bảo trì máy móc'],
@@ -98,7 +104,11 @@ const jobImagePlaceholders: {[key: string]: string} = {
 
 const generateRandomJob = (index: number): Job => {
     const industry = industries[index % industries.length];
-    const visaDetail = visaTypes[index % visaTypes.length];
+    const visaTypeKeys = Object.keys(visaDetailsByVisaType);
+    const visaType = visaTypeKeys[index % visaTypeKeys.length];
+    const visaDetails = visaDetailsByVisaType[visaType];
+    const visaDetail = visaDetails[index % visaDetails.length];
+    
     const location = locations[index % locations.length];
     const recruiter = recruiters[index % recruiters.length];
     const gender = ['Nam', 'Nữ', 'Cả nam và nữ'][index % 3] as 'Nam' | 'Nữ' | 'Cả nam và nữ';
@@ -118,19 +128,19 @@ const generateRandomJob = (index: number): Job => {
         salary: {
             actual: `${(12 + (index % 10)) * 10000}`,
             basic: `${(18 + (index % 12)) * 10000}`,
-            annualIncome: visaDetail.includes('Thực tập sinh') ? undefined : 'Khoảng ' + (250 + index % 50) + ' vạn Yên',
-            annualBonus: visaDetail.includes('Thực tập sinh') ? undefined : (index % 3 === 0 ? 'Có (1-2 lần/năm)' : 'Không có')
+            annualIncome: visaType.includes('Thực tập sinh') ? undefined : 'Khoảng ' + (250 + index % 50) + ' vạn Yên',
+            annualBonus: visaType.includes('Thực tập sinh') ? undefined : (index % 3 === 0 ? 'Có (1-2 lần/năm)' : 'Không có')
         },
         title: title,
         recruiter: recruiter,
         status: index % 10 === 0 ? 'Tạm dừng' : 'Đang tuyển',
         interviewDate: `2024-08-${(index % 28) + 1}`,
         interviewRounds: (index % 3) + 1,
-        netFee: visaDetail.includes('Thực tập sinh') ? `${90 + (index % 20)}tr` : undefined,
+        netFee: visaType.includes('Thực tập sinh') ? `${90 + (index % 20)}tr` : undefined,
         target: `${(index % 5) + 1}tr`,
-        tags: [industry, visaDetail.split(' ')[0], gender === 'Cả nam và nữ' ? 'Nam/Nữ' : gender],
+        tags: [industry, visaType.split(' ')[0], gender === 'Cả nam và nữ' ? 'Nam/Nữ' : gender],
         postedTime: `10:00 01/08/2024`,
-        visaType: visaDetail,
+        visaType: visaType,
         visaDetail: visaDetail,
         industry: industry,
         workLocation: location,

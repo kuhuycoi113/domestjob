@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone, FilePen, Globe, ChevronDown, Loader2 } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone, FilePen, Globe, ChevronDown, Loader2, Send } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -607,7 +607,7 @@ export default function CandidateProfilePage() {
 
   const renderAspirationsEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
+        <div className="space-y-2 md:col-span-2">
           <Label>Ngành nghề mong muốn</Label>
           <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', null, e.target.value)} />
         </div>
@@ -887,6 +887,8 @@ export default function CandidateProfilePage() {
                   </p>
                 </div>
                  <div className="md:ml-auto mt-4 md:mt-0 flex items-center gap-2">
+                     <Button variant="outline"><FileDown/> Tải hồ sơ</Button>
+                     <Button variant="outline"><Send/> Gửi hồ sơ</Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="icon" disabled={isTranslating}>

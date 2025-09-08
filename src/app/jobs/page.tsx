@@ -1,10 +1,11 @@
 
+
 'use client';
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid, PlusCircle, Edit, LogIn, UserPlus } from 'lucide-react';
+import { Briefcase, Bookmark, Star, Eye, List, LayoutGrid, PlusCircle, Edit, LogIn, UserPlus, Loader2 } from 'lucide-react';
 import { JobCard } from '@/components/job-card';
 import { jobData, type Job } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
@@ -45,6 +46,9 @@ const LoggedInView = () => {
     const [isViewersDialogOpen, setIsViewersDialogOpen] = useState(false);
     const [suggestedJobs, setSuggestedJobs] = useState<Job[]>([]);
     const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(true);
+    const [visibleJobsCount, setVisibleJobsCount] = useState(8); // Show 8 jobs initially
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
 
     useEffect(() => {
         const fetchSuggestedJobs = async () => {
@@ -59,11 +63,11 @@ const LoggedInView = () => {
                     setSuggestedJobs(jobs);
                 } else {
                     // Fallback to some default jobs if no profile is found
-                    setSuggestedJobs(jobData.slice(0, 4));
+                    setSuggestedJobs(jobData.slice(0, 20));
                 }
             } catch (error) {
                 console.error("Failed to fetch suggested jobs:", error);
-                setSuggestedJobs(jobData.slice(0, 4)); // Fallback on error
+                setSuggestedJobs(jobData.slice(0, 20)); // Fallback on error
             } finally {
                 setIsLoadingSuggestions(false);
             }
@@ -71,6 +75,14 @@ const LoggedInView = () => {
 
         fetchSuggestedJobs();
     }, []);
+
+    const handleLoadMore = () => {
+        setIsLoadingMore(true);
+        setTimeout(() => {
+            setVisibleJobsCount(prev => prev + 8);
+            setIsLoadingMore(false);
+        }, 500); // Simulate network delay
+    };
 
     return (
         <>
@@ -104,9 +116,25 @@ const LoggedInView = () => {
                                 ))}
                             </div>
                        ) : suggestedJobs.length > 0 ? (
-                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                {suggestedJobs.map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
-                            </div>
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {suggestedJobs.slice(0, visibleJobsCount).map((job) => ( <JobCard key={job.id} job={job} showRecruiterName={false} /> ))}
+                                </div>
+                                {visibleJobsCount < suggestedJobs.length && (
+                                    <div className="text-center mt-8">
+                                        <Button onClick={handleLoadMore} disabled={isLoadingMore}>
+                                            {isLoadingMore ? (
+                                                <>
+                                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                                    Đang tải...
+                                                </>
+                                            ) : (
+                                                'Xem thêm'
+                                            )}
+                                        </Button>
+                                    </div>
+                                )}
+                            </>
                        ) : (
                            <div className="text-center py-8 text-muted-foreground">
                              <p>Không tìm thấy công việc nào phù hợp với hồ sơ của bạn.</p>
@@ -261,3 +289,4 @@ export default function JobsDashboardPage() {
     </div>
   );
 }
+

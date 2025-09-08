@@ -45,72 +45,149 @@ type EnrichedCandidateProfile = CandidateProfile & {
 
 
 const emptyCandidate: EnrichedCandidateProfile = {
-    name: 'Chưa có thông tin',
-    headline: 'Vui lòng tạo hồ sơ bằng AI hoặc cập nhật thủ công',
-    location: 'Chưa có thông tin',
-    about: '',
-    education: [],
-    experience: [],
+    name: 'Lê Thị An',
+    headline: 'Kỹ sư Cơ khí với 2 năm kinh nghiệm',
+    location: 'TP. Hồ Chí Minh, Việt Nam',
+    about: 'Là một kỹ sư cơ khí năng động và ham học hỏi với 2 năm kinh nghiệm trong lĩnh vực thiết kế và vận hành máy móc công nghiệp. Có khả năng sử dụng thành thạo AutoCAD, SolidWorks và có kiến thức nền tảng về hệ thống CNC. Mong muốn tìm kiếm một cơ hội làm việc tại Nhật Bản để phát triển kỹ năng chuyên môn và đóng góp vào sự thành công của công ty.',
+    education: [
+        { school: 'Đại học Bách Khoa TP.HCM', degree: 'Kỹ sư Cơ khí', gradYear: 2022 },
+        { school: 'Trung tâm tiếng Nhật Sakura', degree: 'Chứng chỉ N3', gradYear: 2023 }
+    ],
+    experience: [
+        { company: 'Công ty TNHH Cơ khí Chính xác ABC', role: 'Kỹ sư Vận hành', period: '08/2022 - Hiện tại', description: 'Chịu trách nhiệm vận hành và bảo trì dây chuyền máy phay CNC. Lập trình và tối ưu hóa các chương trình gia công. Đảm bảo chất lượng sản phẩm đầu ra.' },
+    ],
     personalInfo: {
-      birthYear: new Date().getFullYear(),
-      gender: 'N/A',
-      phone: 'N/A',
-      language: 'N/A',
-      dateOfBirth: 'N/A',
-      height: 'N/A',
-      weight: 'N/A',
-      tattooStatus: 'N/A',
-      hepatitisBStatus: 'N/A',
+      birthYear: 2000,
+      gender: 'Nữ',
+      phone: '*********',
+      language: 'Tiếng Nhật N3, Tiếng Anh giao tiếp',
+      dateOfBirth: '2000-05-15',
+      height: '160',
+      weight: '50',
+      tattooStatus: 'Không có',
+      hepatitisBStatus: 'Không viêm gan B',
     },
     aspirations: {
-        desiredLocation: 'N/A',
-        desiredSalary: 'N/A',
-        desiredNetSalary: 'N/A',
-        financialAbility: 'N/A',
-        interviewLocation: 'N/A',
-        specialAspirations: 'N/A',
+        desiredLocation: 'Osaka',
+        desiredSalary: '220,000 yên',
+        desiredNetSalary: '180,000 yên',
+        financialAbility: 'Không yêu cầu',
+        interviewLocation: 'Thành phố Hồ Chí Minh',
+        specialAspirations: 'Mong muốn có nhiều cơ hội làm thêm giờ và được hỗ trợ đào tạo chuyên sâu về kỹ năng quản lý.',
     },
     notes: '',
-    interests: [],
-    skills: [],
-    certifications: [],
-    desiredIndustry: 'N/A',
+    interests: ['Cơ khí', 'Tự động hóa', 'Sản xuất'],
+    skills: ['Vận hành máy CNC', 'AutoCAD', 'SolidWorks', 'Làm việc nhóm', 'Giải quyết vấn đề'],
+    certifications: ['Chứng chỉ JLPT N3', 'Chứng chỉ An toàn lao động'],
+    desiredIndustry: 'Cơ khí, Chế tạo máy',
     avatarUrl: 'https://placehold.co/128x128.png',
-    videos: [],
-    images: [],
+    videos: [
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Giới thiệu bản thân', "data-ai-hint": 'self introduction video' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 1', "data-ai-hint": 'skill demonstration' },
+        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 2', "data-ai-hint": 'welding skill' },
+    ],
+    images: [
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trước', "data-ai-hint": 'front view portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh trái', "data-ai-hint": 'left side portrait' },
+      { src: 'https://placehold.co/400x600.png', alt: 'Ảnh phải', "data-ai-hint": 'right side portrait' },
+    ],
 };
 
 
 const commonSkills = ['Vận hành máy CNC', 'AutoCAD', 'Kiểm tra chất lượng', 'Làm việc nhóm', 'Giải quyết vấn đề', 'Tiếng Anh giao tiếp'];
 const commonInterests = ['Cơ khí', 'Điện tử', 'IT', 'Logistics', 'Dệt may', 'Chế biến thực phẩm'];
 
-const EditDialog = ({ children, title, onSave, content, description }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const EditDialog = ({
+  children,
+  title,
+  onSave,
+  renderContent,
+  description,
+  candidate
+}: {
+  children: React.ReactNode;
+  title: string;
+  onSave: (updatedCandidate: EnrichedCandidateProfile) => void;
+  renderContent: (
+    tempData: EnrichedCandidateProfile,
+    handleTempChange: (
+      section: keyof EnrichedCandidateProfile | 'personalInfo' | 'aspirations',
+      ...args: any[]
+    ) => void
+  ) => React.ReactNode;
+  description?: string;
+  candidate: EnrichedCandidateProfile;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [tempCandidate, setTempCandidate] = useState<EnrichedCandidateProfile>(candidate);
 
-    const handleSave = () => {
-        onSave();
-        setIsOpen(false);
+  useEffect(() => {
+    if (isOpen) {
+      setTempCandidate(JSON.parse(JSON.stringify(candidate)));
     }
-    
-    return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-                {children}
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-                <DialogHeader>
-                    <DialogTitle className="font-headline text-2xl">{title}</DialogTitle>
-                    {description && <DialogDescription>{description}</DialogDescription>}
-                </DialogHeader>
-                <div className="grid gap-4 py-4 max-h-[70vh] overflow-y-auto pr-4">
-                    {content}
-                </div>
-                <DialogFooter>
-                    <Button type="submit" onClick={handleSave} className="bg-primary text-white">Lưu thay đổi</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    )
+  }, [isOpen, candidate]);
+
+  const handleSave = () => {
+    onSave(tempCandidate);
+    setIsOpen(false);
+  };
+
+  const handleTempChange = (
+    section: keyof EnrichedCandidateProfile | 'personalInfo' | 'aspirations',
+    ...args: any[]
+  ) => {
+    setTempCandidate(prev => {
+      if (!prev) return prev;
+      const newCandidate = { ...prev };
+
+      if (section === 'personalInfo' || section === 'aspirations') {
+        const [field, value] = args;
+        // @ts-ignore
+        newCandidate[section] = { ...newCandidate[section], [field]: value };
+      } else if (['experience', 'education'].includes(section)) {
+        const [index, field, value] = args;
+        // @ts-ignore
+        newCandidate[section][index][field] = value;
+      } else if (section === 'certifications') {
+         const [index, value] = args;
+         newCandidate.certifications[index] = value;
+      } else if (['skills', 'interests'].includes(section)) {
+          const [value, isAdding] = args;
+          // @ts-ignore
+          const currentValues = newCandidate[section];
+          // @ts-ignore
+          newCandidate[section] = isAdding
+              ? [...currentValues, value]
+              : currentValues.filter((item: string) => item !== value);
+      }
+      else {
+        const [value] = args;
+        // @ts-ignore
+        newCandidate[section] = value;
+      }
+
+      return newCandidate;
+    });
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle className="font-headline text-2xl">{title}</DialogTitle>
+          {description && <DialogDescription>{description}</DialogDescription>}
+        </DialogHeader>
+        <div className="grid gap-4 py-4 max-h-[70vh] overflow-y-auto pr-4">
+          {renderContent(tempCandidate, handleTempChange)}
+        </div>
+        <DialogFooter>
+          <Button type="submit" onClick={handleSave} className="bg-primary text-white">
+            Lưu thay đổi
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+  );
 };
 
 
@@ -139,7 +216,6 @@ const locations = {
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
-  const [tempCandidate, setTempCandidate] = useState<EnrichedCandidateProfile | null>(null);
   const [newSkill, setNewSkill] = useState('');
   const [newInterest, setNewInterest] = useState('');
 
@@ -160,9 +236,6 @@ export default function CandidateProfilePage() {
         { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Giới thiệu bản thân', "data-ai-hint": 'self introduction video' },
         { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 1', "data-ai-hint": 'skill demonstration' },
         { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Tay nghề 2', "data-ai-hint": 'welding skill' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Trả lời phỏng vấn', "data-ai-hint": 'interview answers' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Dự án đã làm', "data-ai-hint": 'project showcase' },
-        { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'https://placehold.co/400x600.png', alt: 'Video khác', "data-ai-hint": 'personal video' },
     ];
 
     if (storedProfile) {
@@ -188,7 +261,6 @@ export default function CandidateProfilePage() {
         };
     }
     setCandidate(profileToLoad);
-    setTempCandidate(JSON.parse(JSON.stringify(profileToLoad)));
   }, []);
 
   useEffect(() => {
@@ -198,7 +270,7 @@ export default function CandidateProfilePage() {
   }, [candidate]);
 
 
-  if (!candidate || !tempCandidate) {
+  if (!candidate) {
       return (
         <div className="bg-secondary">
             <div className="container mx-auto px-4 md:px-6 py-12">
@@ -224,8 +296,8 @@ export default function CandidateProfilePage() {
       );
   }
 
-  const handleSave = () => {
-    setCandidate(JSON.parse(JSON.stringify(tempCandidate)));
+  const handleSave = (updatedCandidate: EnrichedCandidateProfile) => {
+    setCandidate(updatedCandidate);
   };
   
   const handleMediaChange = (type: 'avatar' | 'image', e: React.ChangeEvent<HTMLInputElement>, index?: number) => {
@@ -234,16 +306,14 @@ export default function CandidateProfilePage() {
       const reader = new FileReader();
       reader.onload = () => {
         const newUrl = reader.result as string;
-        setTempCandidate(prev => {
+        setCandidate(prev => {
           if (!prev) return null;
-          const newCandidate = {...prev};
+          const newCandidate = JSON.parse(JSON.stringify(prev));
           if (type === 'avatar') {
              newCandidate.avatarUrl = newUrl;
           } else if (type === 'image' && index !== undefined) {
              newCandidate.images[index].src = newUrl;
           }
-          // Also update the final candidate state to reflect change immediately
-          setCandidate(JSON.parse(JSON.stringify(newCandidate)));
           return newCandidate;
         });
       };
@@ -251,49 +321,10 @@ export default function CandidateProfilePage() {
     }
   };
 
-
-  const handleNestedChange = (
-      section: 'personalInfo' | 'aspirations', 
-      field: string, 
-      value: any
-  ) => {
-      setTempCandidate(prev => {
-          if (!prev) return null;
-          return {
-              ...prev,
-              [section]: {
-                  ...prev[section],
-                  [field]: value
-              }
-          };
-      });
-  };
-
-  const handleSimpleChange = (field: keyof EnrichedCandidateProfile, value: any) => {
-    setTempCandidate(prev => {
-        if (!prev) return null;
-        return { ...prev, [field]: value };
-    });
-  };
-
-
-  const handleChange = (section: keyof EnrichedCandidateProfile, index: number, field: string, value: any) => {
-      setTempCandidate(prev => {
-          if (!prev) return null;
-          const newCandidate = { ...prev };
-          // @ts-ignore
-          if (Array.isArray(newCandidate[section])) {
-            // @ts-ignore
-            newCandidate[section][index][field] = value;
-          }
-          return newCandidate;
-      });
-  };
-
   const handleAddItem = (section: 'experience' | 'education' | 'certifications') => {
-      setTempCandidate(prev => {
+      setCandidate(prev => {
           if (!prev) return null;
-          const newCandidate = { ...prev };
+          const newCandidate = JSON.parse(JSON.stringify(prev));
           if (section === 'experience') {
               newCandidate.experience.push({ company: '', role: '', period: '', description: '' });
           } else if (section === 'education') {
@@ -305,330 +336,305 @@ export default function CandidateProfilePage() {
       });
   };
 
-  const handleRemoveItem = (section: 'experience' | 'education' | 'certifications' | 'skills' | 'interests', indexOrValue: number | string) => {
-      setTempCandidate(prev => {
+  const handleRemoveItem = (
+      section: 'experience' | 'education' | 'certifications' | 'skills' | 'interests',
+      indexOrValue: number | string
+  ) => {
+      setCandidate(prev => {
           if (!prev) return null;
-          const newCandidate = { ...prev };
+          const newCandidate = JSON.parse(JSON.stringify(prev));
           if (section === 'skills' || section === 'interests') {
               // @ts-ignore
               newCandidate[section] = newCandidate[section].filter(item => item !== indexOrValue);
           } else {
-            // @ts-ignore
-            newCandidate[section].splice(indexOrValue, 1);
+              // @ts-ignore
+              newCandidate[section].splice(indexOrValue, 1);
           }
           return newCandidate;
       });
-  };
-  
-  const handleCertificationChange = (index: number, value: string) => {
-      setTempCandidate(prev => {
-          if (!prev) return null;
-          const newCandidate = { ...prev };
-          newCandidate.certifications[index] = value;
-          return newCandidate;
-      });
-  };
-  
-  const handleCheckboxChange = (field: 'skills' | 'interests', value: string) => {
-    setTempCandidate(prev => {
-        if (!prev) return null;
-        const newCandidate = { ...prev };
-        const currentValues = newCandidate[field];
-        const newValues = currentValues.includes(value)
-          ? currentValues.filter((item: string) => item !== value)
-          : [...currentValues, value];
-        // @ts-ignore
-        newCandidate[field] = newValues;
-        return newCandidate;
-    });
   };
 
   const handleAddNewChip = (field: 'skills' | 'interests') => {
-      if (!tempCandidate) return;
-      const valueToAdd = field === 'skills' ? newSkill.trim() : newInterest.trim();
-      if (valueToAdd && !tempCandidate[field].includes(valueToAdd)) {
-          setTempCandidate(prev => ({
-              ...prev!,
-              // @ts-ignore
-              [field]: [...prev![field], valueToAdd]
-          }));
-          if (field === 'skills') {
-              setNewSkill('');
-          } else {
-              setNewInterest('');
-          }
+    if (!candidate) return;
+    const valueToAdd = field === 'skills' ? newSkill.trim() : newInterest.trim();
+    if (valueToAdd && !candidate[field].includes(valueToAdd)) {
+      setCandidate(prev => ({
+        ...prev!,
+        [field]: [...prev![field], valueToAdd],
+      }));
+      if (field === 'skills') {
+        setNewSkill('');
+      } else {
+        setNewInterest('');
       }
+    }
   };
 
-  const Level1EditDialogContent = () => {
-    if (!tempCandidate) return null;
-    return (
-        <div className="space-y-4">
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <Label>Họ và tên</Label>
-                    <Input value={tempCandidate.name} onChange={e => handleSimpleChange('name', e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                    <Label>Số điện thoại</Label>
-                    <Input value={tempCandidate.personalInfo.phone} onChange={e => handleNestedChange('personalInfo', 'phone', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Ngày sinh</Label>
-                    <Input type="date" value={tempCandidate.personalInfo.dateOfBirth?.split('T')[0]} onChange={e => handleNestedChange('personalInfo', 'dateOfBirth', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Ngành nghề mong muốn</Label>
-                    <Input value={tempCandidate.desiredIndustry} onChange={e => handleSimpleChange('desiredIndustry', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Địa điểm mong muốn</Label>
-                     <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleNestedChange('aspirations', 'desiredLocation', value)}>
-                        <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
-                            {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
-                                <SelectGroup key={region}>
-                                    <SelectLabel>{region}</SelectLabel>
-                                    {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                                </SelectGroup>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-                <div className="space-y-2">
-                    <Label>Chiều cao (cm)</Label>
-                    <Input placeholder="150 - 205" value={tempCandidate.personalInfo.height} onChange={e => handleNestedChange('personalInfo', 'height', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Cân nặng (kg)</Label>
-                    <Input placeholder="40 - 105" value={tempCandidate.personalInfo.weight} onChange={e => handleNestedChange('personalInfo', 'weight', e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                    <Label>Hình xăm</Label>
-                    <Select value={tempCandidate.personalInfo.tattooStatus || ''} onValueChange={value => handleNestedChange('personalInfo', 'tattooStatus', value)}>
-                        <SelectTrigger><SelectValue placeholder="Chọn tình trạng hình xăm" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Không có">Không có</SelectItem>
-                            <SelectItem value="Có xăm nhỏ (kín)">Có xăm nhỏ (kín)</SelectItem>
-                            <SelectItem value="Có xăm to (lộ)">Có xăm to (lộ)</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                 <div className="space-y-2">
-                    <Label>Viêm gan B</Label>
-                    <Select value={tempCandidate.personalInfo.hepatitisBStatus || ''} onValueChange={value => handleNestedChange('personalInfo', 'hepatitisBStatus', value)}>
-                        <SelectTrigger><SelectValue placeholder="Chọn tình trạng viêm gan B" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Không viêm gan B">Không viêm gan B</SelectItem>
-                            <SelectItem value="Viêm gan B thể tĩnh">Viêm gan B thể tĩnh</SelectItem>
-                            <SelectItem value="Viêm gan B thể động">Viêm gan B thể động</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                 <div className="space-y-2">
-                    <Label>Lương cơ bản mong muốn/tháng</Label>
-                    <Input value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleNestedChange('aspirations', 'desiredSalary', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Thực lĩnh mong muốn</Label>
-                    <Input value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleNestedChange('aspirations', 'desiredNetSalary', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Khả năng tài chính</Label>
-                    <Input value={tempCandidate.aspirations?.financialAbility} onChange={e => handleNestedChange('aspirations', 'financialAbility', e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                    <Label>Tìm việc, phỏng vấn, tuyển tại</Label>
-                     <Select value={tempCandidate.aspirations?.interviewLocation || ''} onValueChange={value => handleNestedChange('aspirations', 'interviewLocation', value)}>
-                        <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
-                        <SelectContent>
-                             <SelectGroup>
-                                <SelectLabel>Việt Nam</SelectLabel>
-                                {locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}
-                             </SelectGroup>
-                             <SelectGroup>
-                                <SelectLabel>Nhật Bản</SelectLabel>
-                                {Object.values(locations['Nhật Bản']).flat().map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                             </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
-                 <div className="md:col-span-2 space-y-2">
-                    <Label>Nguyện vọng đặc biệt</Label>
-                    <Textarea value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleNestedChange('aspirations', 'specialAspirations', e.target.value)} />
-                </div>
-             </div>
+
+  const renderAboutEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <Textarea
+      value={tempCandidate.about}
+      onChange={e => handleTempChange('about', e.target.value)}
+      rows={6}
+    />
+  );
+
+  const renderExperienceEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <div className="space-y-6">
+      {tempCandidate.experience.map((exp, index) => (
+        <div key={index} className="p-4 border rounded-lg space-y-2 relative">
+          <div className="flex justify-between items-center mb-2">
+            <h4 className="font-bold">Kinh nghiệm #{index + 1}</h4>
+            <Button variant="ghost" size="icon" onClick={() => handleRemoveItem('experience', index)}>
+              <Trash2 className="h-4 w-4 text-destructive"/>
+            </Button>
+          </div>
+          <Label>Vai trò</Label>
+          <Input value={exp.role} onChange={e => handleTempChange('experience', index, 'role', e.target.value)} />
+          <Label>Công ty</Label>
+          <Input value={exp.company} onChange={e => handleTempChange('experience', index, 'company', e.target.value)} />
+          <Label>Thời gian</Label>
+          <Input value={exp.period} onChange={e => handleTempChange('experience', index, 'period', e.target.value)} />
+          <Label>Mô tả</Label>
+          <Textarea value={exp.description} onChange={e => handleTempChange('experience', index, 'description', e.target.value)} />
         </div>
-    );
-  };
-  
-  const experienceEditDialogContent = (
-      <div className="space-y-6">
-          {tempCandidate.experience.map((exp, index) => (
-              <div key={index} className="p-4 border rounded-lg space-y-2 relative">
-                  <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-bold">Kinh nghiệm #{index + 1}</h4>
-                      <Button variant="ghost" size="icon" onClick={() => handleRemoveItem('experience', index)}>
-                          <Trash2 className="h-4 w-4 text-destructive"/>
-                      </Button>
-                  </div>
-                  <Label>Vai trò</Label>
-                  <Input value={exp.role} onChange={e => handleChange('experience', index, 'role', e.target.value)} />
-                  <Label>Công ty</Label>
-                  <Input value={exp.company} onChange={e => handleChange('experience', index, 'company', e.target.value)} />
-                  <Label>Thời gian</Label>
-                  <Input value={exp.period} onChange={e => handleChange('experience', index, 'period', e.target.value)} />
-                  <Label>Mô tả</Label>
-                  <Textarea value={exp.description} onChange={e => handleChange('experience', index, 'description', e.target.value)} />
-              </div>
-          ))}
-          <Button variant="outline" className="w-full" onClick={() => handleAddItem('experience')}>
-              <PlusCircle className="mr-2"/> Thêm kinh nghiệm
-          </Button>
-      </div>
-  );
-  
-  const educationEditDialogContent = (
-      <div className="space-y-6">
-          {tempCandidate.education.map((edu, index) => (
-              <div key={index} className="p-4 border rounded-lg space-y-2 relative">
-                  <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-bold">Học vấn #{index + 1}</h4>
-                      <Button variant="ghost" size="icon" onClick={() => handleRemoveItem('education', index)}>
-                          <Trash2 className="h-4 w-4 text-destructive"/>
-                      </Button>
-                  </div>
-                  <Label>Trường</Label>
-                  <Input value={edu.school} onChange={e => handleChange('education', index, 'school', e.target.value)} />
-                  <Label>Chuyên ngành</Label>
-                  <Input value={edu.degree} onChange={e => handleChange('education', index, 'degree', e.target.value)} />
-                  <Label>Năm tốt nghiệp</Label>
-                  <Input type="number" value={edu.gradYear} onChange={e => handleChange('education', index, 'gradYear', parseInt(e.target.value))} />
-              </div>
-          ))}
-          <Button variant="outline" className="w-full" onClick={() => handleAddItem('education')}>
-              <PlusCircle className="mr-2"/> Thêm học vấn
-          </Button>
-      </div>
-  );
-  
-  const skillsInterestsEditDialogContent = (
-      <div className="space-y-6">
-          <div className="space-y-2">
-              <Label className="font-bold">Kỹ năng</Label>
-              <div className="flex flex-wrap gap-2 mb-4">
-                  {tempCandidate.skills.map((skill) => (
-                      <Badge key={skill} variant="secondary" className="pr-1">
-                          {skill}
-                          <button onClick={() => handleRemoveItem('skills', skill)} className="ml-2 rounded-full hover:bg-destructive/80 p-0.5">
-                              <X className="h-3 w-3" />
-                          </button>
-                      </Badge>
-                  ))}
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                  {commonSkills.filter(s => !tempCandidate.skills.includes(s)).map((skill) => (
-                    <div key={skill} className="flex items-center space-x-2">
-                      <Checkbox id={`skill-${skill}`} onCheckedChange={() => handleCheckboxChange('skills', skill)} checked={tempCandidate.skills.includes(skill)}/>
-                      <Label htmlFor={`skill-${skill}`} className="text-sm font-normal cursor-pointer">{skill}</Label>
-                    </div>
-                  ))}
-              </div>
-              <div className="flex gap-2 mt-2">
-                  <Input value={newSkill} onChange={e => setNewSkill(e.target.value)} placeholder="Thêm kỹ năng khác..." />
-                  <Button onClick={() => handleAddNewChip('skills')}>Thêm</Button>
-              </div>
-          </div>
-           <div className="space-y-2">
-              <Label className="font-bold">Lĩnh vực quan tâm</Label>
-              <div className="flex flex-wrap gap-2 mb-4">
-                  {tempCandidate.interests.map((interest) => (
-                      <Badge key={interest} className="bg-accent-blue text-white pr-1">
-                          {interest}
-                          <button onClick={() => handleRemoveItem('interests', interest)} className="ml-2 rounded-full hover:bg-destructive/80 p-0.5">
-                              <X className="h-3 w-3" />
-                          </button>
-                      </Badge>
-                  ))}
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                  {commonInterests.filter(i => !tempCandidate.interests.includes(i)).map((interest) => (
-                    <div key={interest} className="flex items-center space-x-2">
-                      <Checkbox id={`interest-${interest}`} onCheckedChange={() => handleCheckboxChange('interests', interest)} checked={tempCandidate.interests.includes(interest)}/>
-                      <Label htmlFor={`interest-${interest}`} className="text-sm font-normal cursor-pointer">{interest}</Label>
-                    </div>
-                  ))}
-              </div>
-              <div className="flex gap-2 mt-2">
-                  <Input value={newInterest} onChange={e => setNewInterest(e.target.value)} placeholder="Thêm lĩnh vực khác..." />
-                  <Button onClick={() => handleAddNewChip('interests')}>Thêm</Button>
-              </div>
-          </div>
-      </div>
-  );
-  
-  const certificationsEditDialogContent = (
-       <div className="space-y-6">
-          {tempCandidate.certifications.map((cert, index) => (
-              <div key={index} className="p-4 border rounded-lg space-y-2 relative">
-                   <div className="flex justify-between items-center mb-2">
-                      <Label htmlFor={`cert-${index}`}>Chứng chỉ #{index + 1}</Label>
-                      <Button variant="ghost" size="icon" onClick={() => handleRemoveItem('certifications', index)}>
-                          <Trash2 className="h-4 w-4 text-destructive"/>
-                      </Button>
-                  </div>
-                  <Input id={`cert-${index}`} value={cert} onChange={(e) => handleCertificationChange(index, e.target.value)} />
-              </div>
-          ))}
-          <Button variant="outline" className="w-full" onClick={() => handleAddItem('certifications')}>
-              <PlusCircle className="mr-2"/> Thêm chứng chỉ
-          </Button>
-       </div>
+      ))}
+      <Button variant="outline" className="w-full" onClick={() => handleAddItem('experience')}>
+        <PlusCircle className="mr-2"/> Thêm kinh nghiệm
+      </Button>
+    </div>
   );
 
-  const MainEditDialogContent = () => {
-    const [isLevel1Open, setIsLevel1Open] = useState(false);
-    
+  const renderEducationEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <div className="space-y-6">
+      {tempCandidate.education.map((edu, index) => (
+        <div key={index} className="p-4 border rounded-lg space-y-2 relative">
+          <div className="flex justify-between items-center mb-2">
+            <h4 className="font-bold">Học vấn #{index + 1}</h4>
+            <Button variant="ghost" size="icon" onClick={() => handleRemoveItem('education', index)}>
+              <Trash2 className="h-4 w-4 text-destructive"/>
+            </Button>
+          </div>
+          <Label>Trường</Label>
+          <Input value={edu.school} onChange={e => handleTempChange('education', index, 'school', e.target.value)} />
+          <Label>Chuyên ngành</Label>
+          <Input value={edu.degree} onChange={e => handleTempChange('education', index, 'degree', e.target.value)} />
+          <Label>Năm tốt nghiệp</Label>
+          <Input type="number" value={edu.gradYear} onChange={e => handleTempChange('education', index, 'gradYear', parseInt(e.target.value))} />
+        </div>
+      ))}
+      <Button variant="outline" className="w-full" onClick={() => handleAddItem('education')}>
+        <PlusCircle className="mr-2"/> Thêm học vấn
+      </Button>
+    </div>
+  );
+
+  const renderSkillsInterestsEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <Label className="font-bold">Kỹ năng</Label>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tempCandidate.skills.map((skill) => (
+            <Badge key={skill} variant="secondary" className="pr-1">
+              {skill}
+              <button onClick={() => handleRemoveItem('skills', skill)} className="ml-2 rounded-full hover:bg-destructive/80 p-0.5">
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          {commonSkills.filter(s => !tempCandidate.skills.includes(s)).map((skill) => (
+            <div key={skill} className="flex items-center space-x-2">
+              <Checkbox id={`skill-${skill}`} onCheckedChange={(checked) => handleTempChange('skills', skill, checked)} checked={tempCandidate.skills.includes(skill)}/>
+              <Label htmlFor={`skill-${skill}`} className="text-sm font-normal cursor-pointer">{skill}</Label>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-2 mt-2">
+          <Input value={newSkill} onChange={e => setNewSkill(e.target.value)} placeholder="Thêm kỹ năng khác..." />
+          <Button onClick={() => handleAddNewChip('skills')}>Thêm</Button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <Label className="font-bold">Lĩnh vực quan tâm</Label>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tempCandidate.interests.map((interest) => (
+            <Badge key={interest} className="bg-accent-blue text-white pr-1">
+              {interest}
+              <button onClick={() => handleRemoveItem('interests', interest)} className="ml-2 rounded-full hover:bg-destructive/80 p-0.5">
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          {commonInterests.filter(i => !tempCandidate.interests.includes(i)).map((interest) => (
+            <div key={interest} className="flex items-center space-x-2">
+              <Checkbox id={`interest-${interest}`} onCheckedChange={(checked) => handleTempChange('interests', interest, checked)} checked={tempCandidate.interests.includes(interest)}/>
+              <Label htmlFor={`interest-${interest}`} className="text-sm font-normal cursor-pointer">{interest}</Label>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-2 mt-2">
+          <Input value={newInterest} onChange={e => setNewInterest(e.target.value)} placeholder="Thêm lĩnh vực khác..." />
+          <Button onClick={() => handleAddNewChip('interests')}>Thêm</Button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderCertificationsEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <div className="space-y-6">
+      {tempCandidate.certifications.map((cert, index) => (
+        <div key={index} className="p-4 border rounded-lg space-y-2 relative">
+          <div className="flex justify-between items-center mb-2">
+            <Label htmlFor={`cert-${index}`}>Chứng chỉ #{index + 1}</Label>
+            <Button variant="ghost" size="icon" onClick={() => handleRemoveItem('certifications', index)}>
+              <Trash2 className="h-4 w-4 text-destructive"/>
+            </Button>
+          </div>
+          <Input id={`cert-${index}`} value={cert} onChange={(e) => handleTempChange('certifications', index, e.target.value)} />
+        </div>
+      ))}
+      <Button variant="outline" className="w-full" onClick={() => handleAddItem('certifications')}>
+        <PlusCircle className="mr-2"/> Thêm chứng chỉ
+      </Button>
+    </div>
+  );
+
+  const renderLevel1Edit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Họ và tên</Label>
+          <Input value={tempCandidate.name} onChange={e => handleTempChange('name', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Số điện thoại</Label>
+          <Input value={tempCandidate.personalInfo.phone} onChange={e => handleTempChange('personalInfo', 'phone', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Ngày sinh</Label>
+          <Input type="date" value={tempCandidate.personalInfo.dateOfBirth?.split('T')[0]} onChange={e => handleTempChange('personalInfo', 'dateOfBirth', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Ngành nghề mong muốn</Label>
+          <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Địa điểm mong muốn</Label>
+          <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleTempChange('aspirations', 'desiredLocation', value)}>
+            <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
+              {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
+                <SelectGroup key={region}>
+                  <SelectLabel>{region}</SelectLabel>
+                  {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                </SelectGroup>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label>Chiều cao (cm)</Label>
+          <Input placeholder="150 - 205" value={tempCandidate.personalInfo.height} onChange={e => handleTempChange('personalInfo', 'height', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Cân nặng (kg)</Label>
+          <Input placeholder="40 - 105" value={tempCandidate.personalInfo.weight} onChange={e => handleTempChange('personalInfo', 'weight', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Hình xăm</Label>
+          <Select value={tempCandidate.personalInfo.tattooStatus || ''} onValueChange={value => handleTempChange('personalInfo', 'tattooStatus', value)}>
+            <SelectTrigger><SelectValue placeholder="Chọn tình trạng hình xăm" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Không có">Không có</SelectItem>
+              <SelectItem value="Có xăm nhỏ (kín)">Có xăm nhỏ (kín)</SelectItem>
+              <SelectItem value="Có xăm to (lộ)">Có xăm to (lộ)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label>Viêm gan B</Label>
+          <Select value={tempCandidate.personalInfo.hepatitisBStatus || ''} onValueChange={value => handleTempChange('personalInfo', 'hepatitisBStatus', value)}>
+            <SelectTrigger><SelectValue placeholder="Chọn tình trạng viêm gan B" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Không viêm gan B">Không viêm gan B</SelectItem>
+              <SelectItem value="Viêm gan B thể tĩnh">Viêm gan B thể tĩnh</SelectItem>
+              <SelectItem value="Viêm gan B thể động">Viêm gan B thể động</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label>Lương cơ bản mong muốn/tháng</Label>
+          <Input value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleTempChange('aspirations', 'desiredSalary', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Thực lĩnh mong muốn</Label>
+          <Input value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleTempChange('aspirations', 'desiredNetSalary', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Khả năng tài chính</Label>
+          <Input value={tempCandidate.aspirations?.financialAbility} onChange={e => handleTempChange('aspirations', 'financialAbility', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Tìm việc, phỏng vấn, tuyển tại</Label>
+          <Select value={tempCandidate.aspirations?.interviewLocation || ''} onValueChange={value => handleTempChange('aspirations', 'interviewLocation', value)}>
+            <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Việt Nam</SelectLabel>
+                {locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Nhật Bản</SelectLabel>
+                {Object.values(locations['Nhật Bản']).flat().map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="md:col-span-2 space-y-2">
+          <Label>Nguyện vọng đặc biệt</Label>
+          <Textarea value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleTempChange('aspirations', 'specialAspirations', e.target.value)} />
+        </div>
+      </div>
+    </div>
+  );
+
+  const MainEditDialogContent = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => {
     return (
         <div className="space-y-4">
             <div className="text-center">
                 <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                
-                <Dialog open={isLevel1Open} onOpenChange={setIsLevel1Open}>
-                    <DialogTrigger asChild>
-                        <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
-                            <h4 className="font-bold text-accent-orange">Mức 1</h4>
-                            <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
-                            <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
-                        </Card>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-3xl">
-                        <DialogHeader>
-                            <DialogTitle className="font-headline text-2xl">Thông tin tài khoản ứng viên Mức 1</DialogTitle>
-                        </DialogHeader>
-                        <div className="max-h-[70vh] overflow-y-auto pr-4">
-                          <Level1EditDialogContent />
-                        </div>
-                        <DialogFooter>
-                            <Button onClick={() => { handleSave(); setIsLevel1Open(false); }} className="bg-primary text-white w-full">Lưu thông tin</Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                 <EditDialog
+                    title="Chỉnh sửa Thông tin Mức 1"
+                    onSave={handleSave}
+                    renderContent={renderLevel1Edit}
+                    candidate={candidate!}
+                >
+                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
+                        <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
+                        <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
+                    </Card>
+                </EditDialog>
 
-                <EditDialog
+                 <EditDialog
                     title="Chỉnh sửa Kinh nghiệm & Học vấn"
                     onSave={handleSave}
-                    content={
-                         <div className="max-h-[60vh] overflow-y-auto pr-4 space-y-4">
+                    renderContent={(temp, handleChange) => (
+                        <div className="max-h-[60vh] overflow-y-auto pr-4 space-y-4">
                             <h3 className="font-bold text-lg">Kinh nghiệm</h3>
-                            {experienceEditDialogContent}
+                            {renderExperienceEdit(temp, handleChange)}
                             <h3 className="font-bold text-lg mt-4">Học vấn</h3>
-                            {educationEditDialogContent}
+                            {renderEducationEdit(temp, handleChange)}
                         </div>
-                    }
+                    )}
+                    candidate={candidate!}
                 >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-green">
                         <h4 className="font-bold text-accent-green">Mức 2</h4>
@@ -640,7 +646,8 @@ export default function CandidateProfilePage() {
                  <EditDialog
                     title="Chỉnh sửa Thông tin liên hệ"
                     onSave={handleSave}
-                    content={<div>Coming soon...</div>}
+                    renderContent={() => <div>Coming soon...</div>}
+                    candidate={candidate!}
                 >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-blue">
                         <h4 className="font-bold text-accent-blue">Mức 3</h4>
@@ -654,7 +661,6 @@ export default function CandidateProfilePage() {
                         <p className="text-sm text-muted-foreground">(Thông tin liên hệ)</p>
                     </Card>
                 </EditDialog>
-
             </div>
             <p className="text-center mt-4 text-muted-foreground">Để <span className="text-primary font-semibold">Nhà tuyển dụng</span> hiểu rõ về bạn, hãy <span className="text-green-500 font-semibold">Cập nhật thông tin</span>.</p>
         </div>
@@ -763,9 +769,10 @@ export default function CandidateProfilePage() {
                 </div>
                  <EditDialog
                     title="Hoàn thiện hồ sơ"
-                    onSave={() => { /* No-op, saves happen in sub-dialogs */ }}
-                    content={<MainEditDialogContent />}
+                    onSave={handleSave}
+                    renderContent={MainEditDialogContent}
                     description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."
+                    candidate={candidate}
                  >
                     <Button className="md:ml-auto mt-4 md:mt-0" variant="outline"><Edit /> Sửa hồ sơ</Button>
                  </EditDialog>
@@ -781,7 +788,8 @@ export default function CandidateProfilePage() {
                      <EditDialog
                         title="Chỉnh sửa Giới thiệu bản thân"
                         onSave={handleSave}
-                        content={<Textarea value={tempCandidate.about} onChange={e => handleSimpleChange('about', e.target.value)} rows={6} />}
+                        renderContent={renderAboutEdit}
+                        candidate={candidate}
                         description="Viết một đoạn giới thiệu ngắn về bản thân, kỹ năng và mục tiêu nghề nghiệp của bạn."
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
@@ -793,7 +801,7 @@ export default function CandidateProfilePage() {
                     ) : (
                       <div className="text-muted-foreground">
                         <span>Chưa có thông tin. </span>
-                        <EditDialog title="Chỉnh sửa Giới thiệu bản thân" onSave={handleSave} content={<Textarea value={tempCandidate.about} onChange={e => handleSimpleChange('about', e.target.value)} rows={6} />}>
+                        <EditDialog title="Chỉnh sửa Giới thiệu bản thân" onSave={handleSave} renderContent={renderAboutEdit} candidate={candidate}>
                             <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                         </EditDialog>
                       </div>
@@ -812,7 +820,8 @@ export default function CandidateProfilePage() {
                      <EditDialog
                         title="Chỉnh sửa Kinh nghiệm làm việc"
                         onSave={handleSave}
-                        content={experienceEditDialogContent}
+                        renderContent={renderExperienceEdit}
+                        candidate={candidate}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                      </EditDialog>
@@ -828,7 +837,7 @@ export default function CandidateProfilePage() {
                     )) : (
                         <div className="text-muted-foreground">
                            <span>Chưa có thông tin. </span>
-                            <EditDialog title="Chỉnh sửa Kinh nghiệm làm việc" onSave={handleSave} content={experienceEditDialogContent}>
+                            <EditDialog title="Chỉnh sửa Kinh nghiệm làm việc" onSave={handleSave} renderContent={renderExperienceEdit} candidate={candidate}>
                                <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>
@@ -842,7 +851,8 @@ export default function CandidateProfilePage() {
                      <EditDialog
                         title="Chỉnh sửa Học vấn"
                         onSave={handleSave}
-                        content={educationEditDialogContent}
+                        renderContent={renderEducationEdit}
+                        candidate={candidate}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -857,7 +867,7 @@ export default function CandidateProfilePage() {
                      )) : (
                         <div className="text-muted-foreground">
                             <span>Chưa có thông tin. </span>
-                            <EditDialog title="Chỉnh sửa Học vấn" onSave={handleSave} content={educationEditDialogContent}>
+                            <EditDialog title="Chỉnh sửa Học vấn" onSave={handleSave} renderContent={renderEducationEdit} candidate={candidate}>
                                 <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>
@@ -874,7 +884,8 @@ export default function CandidateProfilePage() {
                     <EditDialog
                         title="Chỉnh sửa Thông tin cá nhân"
                         onSave={handleSave}
-                        content={<Level1EditDialogContent />}
+                        renderContent={renderLevel1Edit}
+                        candidate={candidate}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -895,7 +906,8 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Kỹ năng & Lĩnh vực"
                         description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn."
                         onSave={handleSave}
-                        content={skillsInterestsEditDialogContent}
+                        renderContent={renderSkillsInterestsEdit}
+                        candidate={candidate}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -906,7 +918,7 @@ export default function CandidateProfilePage() {
                         {candidate.skills.length > 0 ? candidate.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>) : 
                         <div className="text-muted-foreground text-sm">
                             <span>Chưa có kỹ năng. </span>
-                            <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} content={skillsInterestsEditDialogContent}>
+                            <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} renderContent={renderSkillsInterestsEdit} candidate={candidate}>
                                <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>}
@@ -916,7 +928,7 @@ export default function CandidateProfilePage() {
                         {candidate.interests.length > 0 ? candidate.interests.map(interest => <Badge key={interest} className="bg-accent-blue text-white">{interest}</Badge>) : 
                         <div className="text-muted-foreground text-sm">
                             <span>Chưa có lĩnh vực quan tâm. </span>
-                            <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} content={skillsInterestsEditDialogContent}>
+                             <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} renderContent={renderSkillsInterestsEdit} candidate={candidate}>
                                 <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>}
@@ -930,7 +942,8 @@ export default function CandidateProfilePage() {
                      <EditDialog
                         title="Chỉnh sửa Chứng chỉ & Giải thưởng"
                         onSave={handleSave}
-                        content={certificationsEditDialogContent}
+                        renderContent={renderCertificationsEdit}
+                        candidate={candidate}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -941,7 +954,7 @@ export default function CandidateProfilePage() {
                      )) : 
                      <div className="text-muted-foreground text-sm">
                         <span>Chưa có chứng chỉ. </span>
-                        <EditDialog title="Chỉnh sửa Chứng chỉ & Giải thưởng" onSave={handleSave} content={certificationsEditDialogContent}>
+                        <EditDialog title="Chỉnh sửa Chứng chỉ & Giải thưởng" onSave={handleSave} renderContent={renderCertificationsEdit} candidate={candidate}>
                             <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                         </EditDialog>
                     </div>}

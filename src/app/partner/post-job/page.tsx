@@ -619,9 +619,9 @@ export default function PartnerPostJobPage() {
                                     <SelectValue placeholder="Chọn yêu cầu về hình xăm" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Không hình xăm">Không hình xăm</SelectItem>
-                                    <SelectItem value="Có xăm nhỏ (kín)">Có xăm nhỏ (kín)</SelectItem>
-                                    <SelectItem value="Có xăm to (lộ)">Có xăm to (lộ)</SelectItem>
+                                    <SelectItem value="Không nhận hình xăm">Không nhận hình xăm</SelectItem>
+                                    <SelectItem value="Nhận xăm nhỏ (kín)">Nhận xăm nhỏ (kín)</SelectItem>
+                                    <SelectItem value="Nhận cả xăm to (lộ)">Nhận cả xăm to (lộ)</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -635,8 +635,9 @@ export default function PartnerPostJobPage() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="Không nhận viêm gan B">Không nhận viêm gan B</SelectItem>
-                                    <SelectItem value="Nhận viêm gan B">Nhận viêm gan B</SelectItem>
-                                    <SelectItem value="Sao cũng được">Sao cũng được</SelectItem>
+                                    <SelectItem value="Nhận viêm gan B (thể tĩnh)">Nhận viêm gan B (thể tĩnh)</SelectItem>
+                                    <SelectItem value="Nhận viêm gan B (thể động)">Nhận viêm gan B (thể động)</SelectItem>
+                                    <SelectItem value="Không yêu cầu">Không yêu cầu</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

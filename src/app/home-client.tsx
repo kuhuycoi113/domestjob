@@ -89,7 +89,7 @@ const locations = {
     ],
     "Nhật Bản": {
         "Hokkaido": ["Hokkaido"],
-        "Tohoku": [],
+        "Tohoku": ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"],
         "Kanto": [],
         "Chubu": [],
         "Kansai": [],

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Briefcase, Send, Upload, FileText, Star } from "lucide-react";
@@ -124,6 +124,23 @@ const otherSkills = [
     "Cần bằng lái xe tải cỡ lớn", "Cần bằng vận hành máy NC", "Cần bằng vận hành máy CNC", "Dùng được thước đo",
     "Đọc được bản vẽ kỹ thuật", "Thiết kế BIM xây dựng", "Quản lý thi công xây dựng", "Quản lý khối lượng xây dựng"
 ];
+
+const locations = {
+    "Việt Nam": [
+        "An Giang", "Bắc Ninh", "Cao Bằng", "Cà Mau", "Cần Thơ", "Đà Nẵng", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Đắk Lắk", "Gia Lai", "Hà Nội", "Hà Tĩnh", "Hải Phòng", "Hưng Yên", "Thừa Thiên Huế", "Khánh Hòa", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Nghệ An", "Ninh Bình", "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh", "Thanh Hóa", "Thành phố Hồ Chí Minh", "Thái Nguyên", "Tuyên Quang", "Vĩnh Long"
+    ],
+    "Nhật Bản": {
+        "Hokkaido": ["Hokkaido"],
+        "Tohoku": ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"],
+        "Kanto": ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"],
+        "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
+        "Kansai": ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"],
+        "Chugoku": ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"],
+        "Shikoku": ["Tokushima", "Kagawa", "Ehime", "Kochi"],
+        "Kyushu": ["Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima"],
+        "Okinawa": ["Okinawa"]
+    }
+};
 
 const getVisaCategory = (visaDetail: string): keyof typeof conditionsByVisaType | null => {
   if (visaDetail.includes('Thực tập sinh')) return 'Thực tập sinh kỹ năng';
@@ -415,9 +432,22 @@ export default function PartnerPostJobPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="job-location">Địa điểm làm việc</Label>
-                      <Input id="job-location" placeholder="VD: Aichi, Nhật Bản" value={jobData.workLocation} onChange={(e) => handleInputChange('workLocation', e.target.value)} required />
+                        <Label htmlFor="job-location">Địa điểm làm việc</Label>
+                        <Select value={jobData.workLocation} onValueChange={(value) => handleInputChange('workLocation', value)}>
+                            <SelectTrigger id="job-location">
+                                <SelectValue placeholder="Chọn địa điểm làm việc" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(locations["Nhật Bản"]).map(([region, prefectures]) => (
+                                    <SelectGroup key={region}>
+                                        <SelectLabel>{region}</SelectLabel>
+                                        {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                                    </SelectGroup>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
+
 
                     {visibleFields.has('interviewLocation') && (
                       <div className="space-y-2">
@@ -803,4 +833,3 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
-    

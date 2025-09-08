@@ -27,7 +27,7 @@ import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from '@/components/ui/select';
 
 type MediaItem = {
   src: string;
@@ -108,6 +108,23 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
         <path d="M131 0C58.649 0 0 58.649 0 131C0 203.351 58.649 262 131 262C203.351 262 262 203.351 262 131C262 58.649 203.351 0 131 0ZM197.838 170.368L173.962 194.244C171.139 197.067 167.247 197.68 163.639 196.223L126.541 182.903C125.129 182.413 123.824 181.711 122.625 180.892L74.832 144.37C71.748 142.029 70.832 137.989 72.585 134.577L84.975 111.758C86.728 108.347 90.722 106.889 94.276 108.347L131.374 121.612C132.786 122.102 134.091 122.748 135.29 123.623L183.083 160.145C186.167 162.486 187.083 166.526 185.33 169.937L197.838 170.368Z" fill="#0068FF"/>
     </svg>
 )
+
+const locations = {
+    "Việt Nam": [
+        "An Giang", "Bắc Ninh", "Cao Bằng", "Cà Mau", "Cần Thơ", "Đà Nẵng", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Đắk Lắk", "Gia Lai", "Hà Nội", "Hà Tĩnh", "Hải Phòng", "Hưng Yên", "Thừa Thiên Huế", "Khánh Hòa", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Nghệ An", "Ninh Bình", "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh", "Thanh Hóa", "Thành phố Hồ Chí Minh", "Thái Nguyên", "Tuyên Quang", "Vĩnh Long"
+    ],
+    "Nhật Bản": {
+        "Hokkaido": ["Hokkaido"],
+        "Tohoku": ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"],
+        "Kanto": ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"],
+        "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
+        "Kansai": ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"],
+        "Chugoku": ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"],
+        "Shikoku": ["Tokushima", "Kagawa", "Ehime", "Kochi"],
+        "Kyushu": ["Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima"],
+        "Okinawa": ["Okinawa"]
+    }
+};
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
@@ -336,16 +353,33 @@ export default function CandidateProfilePage() {
     if (!tempCandidate) return null;
     return (
         <div className="space-y-4">
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label className="col-span-1 text-right">Địa điểm mong muốn</Label>
+              <div className="col-span-2">
+                <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleNestedChange('aspirations', 'desiredLocation', value)}>
+                  <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
+                    {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
+                        <SelectGroup key={region}>
+                            <SelectLabel>{region}</SelectLabel>
+                            {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                        </SelectGroup>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
             {[
                 { label: '1. Họ và tên', value: tempCandidate.name, field: 'name', type: 'simple' },
                 { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
                 { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
                 { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
-                { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
-                { label: '6. Chiều cao', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
-                { label: '7. Cân nặng', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
+                // { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
+                { label: '6. Chiều cao (cm)', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
+                { label: '7. Cân nặng (kg)', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
                 { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
-                { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ['Không viêm gan B', 'Viêm gan B thể tĩnh', 'Viêm gan B thể động'] },
+                { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ["Không viêm gan B", "Viêm gan B thể tĩnh", "Viêm gan B thể động"] },
                 { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
                 { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
                 { label: '12. Khả năng tài chính', value: tempCandidate.aspirations?.financialAbility, field: 'financialAbility', type: 'aspirations' },
@@ -367,7 +401,7 @@ export default function CandidateProfilePage() {
                               onValueChange={value => handleNestedChange(item.type as 'personalInfo' | 'aspirations', item.field, value)}
                           >
                               <SelectTrigger>
-                                  <SelectValue placeholder={`Chọn ${item.label.split('. ')[1].toLowerCase()}`} />
+                                  <SelectValue placeholder={`Chọn`} />
                               </SelectTrigger>
                               <SelectContent>
                                   {item.options.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}

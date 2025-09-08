@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -71,6 +71,8 @@ const emptyCandidate: EnrichedCandidateProfile = {
         desiredLocation: 'Osaka',
         desiredSalary: '220000',
         desiredNetSalary: '180000',
+        desiredVisaType: 'Kỹ năng đặc định',
+        desiredVisaDetail: 'Đặc định đầu Nhật',
         financialAbility: 'Không yêu cầu',
         interviewLocation: 'Thành phố Hồ Chí Minh',
         specialAspirations: 'Mong muốn có nhiều cơ hội làm thêm giờ và được hỗ trợ đào tạo chuyên sâu về kỹ năng quản lý.',
@@ -140,8 +142,7 @@ const EditDialog = ({
     ...args: any[]
   ) => {
     setTempCandidate(prev => {
-      if (!prev) return prev;
-      const newCandidate = { ...prev };
+      const newCandidate = { ...prev! };
 
       if (section === 'personalInfo' || section === 'aspirations') {
         const [field, value] = args;
@@ -227,6 +228,13 @@ const formatYen = (value?: string) => {
     if (isNaN(numericValue)) return value;
     return `${numericValue.toLocaleString('en-US')} yên`;
 };
+
+const visaDetailsByVisaType: { [key: string]: string[] } = {
+    'Thực tập sinh kỹ năng': ['Thực tập sinh 3 năm', 'Thực tập sinh 1 năm', 'Thực tập sinh 3 Go'],
+    'Kỹ năng đặc định': ['Đặc định đầu Việt', 'Đặc định đầu Nhật', 'Đặc định đi mới'],
+    'Kỹ sư, tri thức': ['Kỹ sư, tri thức đầu Việt', 'Kỹ sư, tri thức đầu Nhật']
+};
+const visaTypes = Object.keys(visaDetailsByVisaType);
 
 
 export default function CandidateProfilePage() {
@@ -520,6 +528,24 @@ export default function CandidateProfilePage() {
 
   const renderAspirationsEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Loại visa mong muốn</Label>
+          <Select value={tempCandidate.aspirations?.desiredVisaType || ''} onValueChange={value => { handleTempChange('aspirations', 'desiredVisaType', value); handleTempChange('aspirations', 'desiredVisaDetail', ''); }}>
+            <SelectTrigger><SelectValue placeholder="Chọn loại visa" /></SelectTrigger>
+            <SelectContent>
+              {visaTypes.map(vt => <SelectItem key={vt} value={vt}>{vt}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </div>
+         <div className="space-y-2">
+          <Label>Chi tiết visa</Label>
+          <Select value={tempCandidate.aspirations?.desiredVisaDetail || ''} onValueChange={value => handleTempChange('aspirations', 'desiredVisaDetail', value)} disabled={!tempCandidate.aspirations?.desiredVisaType}>
+            <SelectTrigger><SelectValue placeholder="Chọn chi tiết" /></SelectTrigger>
+            <SelectContent>
+                {(visaDetailsByVisaType[tempCandidate.aspirations?.desiredVisaType || ''] || []).map(vd => <SelectItem key={vd} value={vd}>{vd}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </div>
         <div className="space-y-2">
             <Label>Địa điểm mong muốn</Label>
             <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleTempChange('aspirations', 'desiredLocation', value)}>
@@ -928,6 +954,8 @@ export default function CandidateProfilePage() {
                     </EditDialog>
                   </CardHeader>
                    <CardContent className="space-y-3 text-sm">
+                        <p><strong>Loại Visa:</strong> {candidate.aspirations?.desiredVisaType}</p>
+                        <p><strong>Chi tiết Visa:</strong> {candidate.aspirations?.desiredVisaDetail}</p>
                         <p><strong>Ngành nghề:</strong> {candidate.desiredIndustry}</p>
                         <p><strong>Địa điểm:</strong> {candidate.aspirations?.desiredLocation}</p>
                         <p><strong>Lương cơ bản:</strong> {formatYen(candidate.aspirations?.desiredSalary)}</p>

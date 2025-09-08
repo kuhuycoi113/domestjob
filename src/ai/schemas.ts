@@ -36,6 +36,8 @@ export const CandidateProfileSchema = z.object({
     desiredLocation: z.string().optional().describe('The desired work location (e.g., "Osaka").'),
     desiredSalary: z.string().optional().describe('The desired basic salary (e.g., "180,000 yên").'),
     desiredNetSalary: z.string().optional().describe('The desired net salary (e.g., "160,000 yên").'),
+    desiredVisaType: z.string().optional().describe('The desired visa type (e.g., "Kỹ năng đặc định").'),
+    desiredVisaDetail: z.string().optional().describe('The detailed desired visa type (e.g., "Đặc định đầu Nhật").'),
     financialAbility: z.string().optional().describe('Financial ability (e.g., "90 triệu").'),
     interviewLocation: z.string().optional().describe('The location for job interviews (e.g., "Hà Nội").'),
     specialAspirations: z.string().optional().describe('Special requests or aspirations (e.g., "Tăng ca, hỗ trợ...").'),

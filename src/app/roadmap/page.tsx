@@ -15,7 +15,7 @@ const programTypes = [
   {
     icon: HardHat,
     title: 'Thực tập sinh kỹ năng',
-    description: 'Đây là hình thức phổ biến nhất với thời hạn 3-5 năm, dành cho lao động phổ thông không yêu cầu bằng cấp, không cần thi tuyển tay nghề và có thể nâng cấp lên visa Kỹ năng đặc định sau khi hoàn thành.',
+    description: 'Đây là hình thức phổ biến nhất với thời hạn 3-5 năm, dành cho <strong><em>lao động phổ thông</em></strong> không yêu cầu bằng cấp, không cần thi tuyển tay nghề và có thể nâng cấp lên visa Kỹ năng đặc định sau khi hoàn thành.',
     color: 'orange'
   },
   {
@@ -141,7 +141,7 @@ export default function RoadmapPage() {
                   <CardTitle className={cn("font-headline mt-4 text-xl", colors.text)}>{program.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground text-sm">{program.description}</p>
+                  <p className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: program.description }}></p>
                 </CardContent>
               </Card>
             )

@@ -27,7 +27,7 @@ const programTypes = [
   {
     icon: Briefcase,
     title: 'Kỹ sư, tri thức',
-    description: 'Dành cho người có trình độ chuyên môn cao (<i><b>Cao đẳng, Đại học</b></i>), làm việc đúng chuyên ngành và là con đường chính thống để phát triển <i><b>sự nghiệp lâu dài</b></i>, mở ra cơ hội xin visa vĩnh trú và <i><b>bảo lãnh gia đình</b></i> sang Nhật sinh sống, định cư.',
+    description: 'Dành cho người có trình độ chuyên môn cao (<i><b>Cao đẳng, Đại học</b></i>), làm việc đúng chuyên ngành và là con đường chính thống để phát triển <i><b>sự nghiệp lâu dài</b></i>, mở ra cơ hội xin visa vĩnh trú và bảo lãnh gia đình sang Nhật sinh sống, định cư.',
     color: 'green'
   }
 ];

@@ -17,6 +17,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -83,25 +84,35 @@ const emptyCandidate: EnrichedCandidateProfile = {
 const commonSkills = ['Vận hành máy CNC', 'AutoCAD', 'Kiểm tra chất lượng', 'Làm việc nhóm', 'Giải quyết vấn đề', 'Tiếng Anh giao tiếp'];
 const commonInterests = ['Cơ khí', 'Điện tử', 'IT', 'Logistics', 'Dệt may', 'Chế biến thực phẩm'];
 
-const EditDialog = ({ children, title, onSave, content, description }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string }) => (
-    <Dialog>
-        <DialogTrigger asChild>
-            {children}
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px]">
-            <DialogHeader>
-                <DialogTitle className="font-headline text-2xl">{title}</DialogTitle>
-                {description && <DialogDescription>{description}</DialogDescription>}
-            </DialogHeader>
-            <div className="grid gap-4 py-4 max-h-[70vh] overflow-y-auto pr-4">
-                {content}
-            </div>
-            <DialogFooter>
-                <Button type="submit" onClick={onSave} className="bg-primary text-white">Lưu thay đổi</Button>
-            </DialogFooter>
-        </DialogContent>
-    </Dialog>
-);
+const EditDialog = ({ children, title, onSave, content, description }: { children: React.ReactNode, title: string, onSave: () => void, content: React.ReactNode, description?: string }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleSave = () => {
+        onSave();
+        setIsOpen(false);
+    }
+    
+    return (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                {children}
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
+                <DialogHeader>
+                    <DialogTitle className="font-headline text-2xl">{title}</DialogTitle>
+                    {description && <DialogDescription>{description}</DialogDescription>}
+                </DialogHeader>
+                <div className="grid gap-4 py-4 max-h-[70vh] overflow-y-auto pr-4">
+                    {content}
+                </div>
+                <DialogFooter>
+                    <Button type="submit" onClick={handleSave} className="bg-primary text-white">Lưu thay đổi</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+};
+
 
 const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg viewBox="0 0 262 263" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -576,56 +587,61 @@ export default function CandidateProfilePage() {
        </div>
   );
 
-  const mainEditDialogContent = (
-    <div className="space-y-4">
-        <div className="text-center">
-             <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
-                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
-                        <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
-                        <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
-                    </Card>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-3xl">
-                    <DialogHeader>
-                        <DialogTitle className="font-headline text-2xl">Thông tin tài khoản ứng viên Mức 1</DialogTitle>
-                    </DialogHeader>
-                    <div className="max-h-[70vh] overflow-y-auto pr-4">
-                      <Level1EditDialogContent />
-                    </div>
-                    <DialogFooter>
-                        <Button onClick={handleSave} className="bg-primary text-white w-full">Lưu thông tin</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+  const MainEditDialogContent = () => {
+    const [isLevel1Open, setIsLevel1Open] = useState(false);
+    
+    return (
+        <div className="space-y-4">
+            <div className="text-center">
+                <Image src="https://placehold.co/100x100.png" alt="AI Assistant" width={80} height={80} data-ai-hint="friendly robot mascot" className="mx-auto" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <Dialog open={isLevel1Open} onOpenChange={setIsLevel1Open}>
+                    <DialogTrigger asChild>
+                        <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
+                            <h4 className="font-bold text-accent-orange">Mức 1</h4>
+                            <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
+                            <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
+                        </Card>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-3xl">
+                        <DialogHeader>
+                            <DialogTitle className="font-headline text-2xl">Thông tin tài khoản ứng viên Mức 1</DialogTitle>
+                        </DialogHeader>
+                        <div className="max-h-[70vh] overflow-y-auto pr-4">
+                          <Level1EditDialogContent />
+                        </div>
+                        <DialogFooter>
+                            <Button onClick={() => { handleSave(); setIsLevel1Open(false); }} className="bg-primary text-white w-full">Lưu thông tin</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
 
-            <Dialog>
-                <DialogTrigger asChild>
+                <EditDialog
+                    title="Chỉnh sửa Kinh nghiệm & Học vấn"
+                    onSave={handleSave}
+                    content={
+                         <div className="max-h-[60vh] overflow-y-auto pr-4 space-y-4">
+                            <h3 className="font-bold text-lg">Kinh nghiệm</h3>
+                            {experienceEditDialogContent}
+                            <h3 className="font-bold text-lg mt-4">Học vấn</h3>
+                            {educationEditDialogContent}
+                        </div>
+                    }
+                >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-green">
                         <h4 className="font-bold text-accent-green">Mức 2</h4>
                         <Briefcase className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin đầy đủ)</p>
                     </Card>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[600px]">
-                    <DialogHeader><DialogTitle>Chỉnh sửa Kinh nghiệm & Học vấn</DialogTitle></DialogHeader>
-                    <div className="max-h-[60vh] overflow-y-auto pr-4 space-y-4">
-                        <h3 className="font-bold text-lg">Kinh nghiệm</h3>
-                        {experienceEditDialogContent}
-                        <h3 className="font-bold text-lg mt-4">Học vấn</h3>
-                        {educationEditDialogContent}
-                    </div>
-                    <DialogFooter><Button onClick={handleSave}>Lưu</Button></DialogFooter>
-                </DialogContent>
-            </Dialog>
-            
-            <Dialog>
-                <DialogTrigger asChild>
+                </EditDialog>
+                
+                 <EditDialog
+                    title="Chỉnh sửa Thông tin liên hệ"
+                    onSave={handleSave}
+                    content={<div>Coming soon...</div>}
+                >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-blue">
                         <h4 className="font-bold text-accent-blue">Mức 3</h4>
                         <Contact className="h-12 w-12 text-gray-300 mx-auto my-2" />
@@ -637,19 +653,13 @@ export default function CandidateProfilePage() {
                         </div>
                         <p className="text-sm text-muted-foreground">(Thông tin liên hệ)</p>
                     </Card>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader><DialogTitle>Chỉnh sửa Thông tin liên hệ</DialogTitle></DialogHeader>
-                    {/* Placeholder for now */}
-                    <div>Coming soon...</div>
-                    <DialogFooter><Button onClick={handleSave}>Lưu</Button></DialogFooter>
-                </DialogContent>
-            </Dialog>
+                </EditDialog>
 
+            </div>
+            <p className="text-center mt-4 text-muted-foreground">Để <span className="text-primary font-semibold">Nhà tuyển dụng</span> hiểu rõ về bạn, hãy <span className="text-green-500 font-semibold">Cập nhật thông tin</span>.</p>
         </div>
-        <p className="text-center mt-4 text-muted-foreground">Để <span className="text-primary font-semibold">Nhà tuyển dụng</span> hiểu rõ về bạn, hãy <span className="text-green-500 font-semibold">Cập nhật thông tin</span>.</p>
-    </div>
-  );
+      )
+  };
   
   const MediaCarousel = ({ items, title }: { items: MediaItem[], title: string }) => (
     <Card>
@@ -754,7 +764,7 @@ export default function CandidateProfilePage() {
                  <EditDialog
                     title="Hoàn thiện hồ sơ"
                     onSave={() => { /* No-op, saves happen in sub-dialogs */ }}
-                    content={mainEditDialogContent}
+                    content={<MainEditDialogContent />}
                     description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."
                  >
                     <Button className="md:ml-auto mt-4 md:mt-0" variant="outline"><Edit /> Sửa hồ sơ</Button>

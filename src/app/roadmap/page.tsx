@@ -15,7 +15,7 @@ const programTypes = [
   {
     icon: HardHat,
     title: 'Thực tập sinh kỹ năng',
-    description: 'Đây là hình thức phổ biến nhất, không yêu cầu bằng cấp và không cần thi tuyển tay nghề, phù hợp với lao động phổ thông muốn tích lũy kinh nghiệm và tài chính tại Nhật.',
+    description: 'Đây là hình thức phổ biến nhất với thời hạn 3-5 năm, không yêu cầu bằng cấp, không cần thi tuyển tay nghề và có thể nâng cấp lên visa Kỹ năng đặc định sau khi hoàn thành.',
     color: 'orange'
   },
   {

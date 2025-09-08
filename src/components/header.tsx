@@ -157,7 +157,7 @@ export function Header() {
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          {mainNavLinks.map((link) => (
+          {mainNavLinks.filter(link => link.href !== '/jobs').map((link) => (
              <NavLink 
                 key={link.href} 
                 href={link.href}
@@ -168,6 +168,9 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden md:flex items-center gap-2">
+            <Button asChild variant="outline">
+              <Link href="/jobs">Trang việc làm</Link>
+            </Button>
             {isLoggedIn ? <LoggedInMenu /> : <LoggedOutMenu />}
         </div>
         <div className="md:hidden">

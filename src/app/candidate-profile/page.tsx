@@ -69,8 +69,8 @@ const emptyCandidate: EnrichedCandidateProfile = {
     },
     aspirations: {
         desiredLocation: 'Osaka',
-        desiredSalary: '220,000 yên',
-        desiredNetSalary: '180,000 yên',
+        desiredSalary: '220000',
+        desiredNetSalary: '180000',
         financialAbility: 'Không yêu cầu',
         interviewLocation: 'Thành phố Hồ Chí Minh',
         specialAspirations: 'Mong muốn có nhiều cơ hội làm thêm giờ và được hỗ trợ đào tạo chuyên sâu về kỹ năng quản lý.',
@@ -220,6 +220,14 @@ const locations = {
         "Okinawa": ["Okinawa"]
     }
 };
+
+const formatYen = (value?: string) => {
+    if (!value) return 'Chưa cập nhật';
+    const numericValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
+    if (isNaN(numericValue)) return value;
+    return `${numericValue.toLocaleString('en-US')} yên`;
+};
+
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
@@ -922,8 +930,8 @@ export default function CandidateProfilePage() {
                    <CardContent className="space-y-3 text-sm">
                         <p><strong>Ngành nghề:</strong> {candidate.desiredIndustry}</p>
                         <p><strong>Địa điểm:</strong> {candidate.aspirations?.desiredLocation}</p>
-                        <p><strong>Lương cơ bản:</strong> {candidate.aspirations?.desiredSalary}</p>
-                        <p><strong>Thực lĩnh:</strong> {candidate.aspirations?.desiredNetSalary}</p>
+                        <p><strong>Lương cơ bản:</strong> {formatYen(candidate.aspirations?.desiredSalary)}</p>
+                        <p><strong>Thực lĩnh:</strong> {formatYen(candidate.aspirations?.desiredNetSalary)}</p>
                         <p><strong>Khả năng tài chính:</strong> {candidate.aspirations?.financialAbility}</p>
                         <p><strong>Nơi phỏng vấn:</strong> {candidate.aspirations?.interviewLocation}</p>
                         <p><strong>Yêu cầu khác:</strong> {candidate.aspirations?.specialAspirations}</p>

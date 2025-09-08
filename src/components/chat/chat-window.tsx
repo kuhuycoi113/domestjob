@@ -13,7 +13,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { VideoCallDialog } from '../video-call-dialog';
 import { VoiceCallDialog } from '../voice-call-dialog';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 
 interface ChatWindowProps {
@@ -30,6 +30,7 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
   
   const displayContact = assignedConsultant || conversation.participants.find(p => p.id !== currentUser.id) || helloJobBot;
 
@@ -45,20 +46,20 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
     setNewMessage('');
   };
 
-  const handleVideoCallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleVideoCallClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
-        closeChat();
+        router.push(`/video-call?redirect=${encodeURIComponent(pathname)}`);
     } else {
       e.preventDefault();
       setIsVideoCallDialogOpen(true);
     }
   };
 
-  const handleVoiceCallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleVoiceCallClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
-        closeChat();
+        router.push(`/voice-call?redirect=${encodeURIComponent(pathname)}`);
     } else {
       e.preventDefault();
       setIsVoiceCallDialogOpen(true);
@@ -157,16 +158,12 @@ export function ChatWindow({ conversation }: ChatWindowProps) {
             <p className="text-xs text-primary-foreground/80 font-semibold">Đang hoạt động</p>
           </div>
           <div className="ml-auto flex items-center gap-1">
-              <Link href={`/voice-call?redirect=${encodeURIComponent(pathname)}`} onClick={handleVoiceCallClick}>
-                 <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
-                    <div><Phone /></div>
-                 </Button>
-              </Link>
-              <Link href={`/video-call?redirect=${encodeURIComponent(pathname)}`} onClick={handleVideoCallClick}>
-                <Button asChild variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
-                   <div><Video /></div>
-                </Button>
-              </Link>
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={handleVoiceCallClick}>
+                <Phone />
+              </Button>
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={handleVideoCallClick}>
+                <Video />
+              </Button>
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={closeChat}><X /></Button>
           </div>
         </header>

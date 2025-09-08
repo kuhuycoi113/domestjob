@@ -21,7 +21,7 @@ const programTypes = [
   {
     icon: UserCheck,
     title: 'Kỹ năng đặc định (Tokutei)',
-    description: 'Dành cho lao động có tay nghề, cho phép làm việc lâu hơn tại Nhật và hưởng lương cao hơn. Người đi mới hoặc chuyển trái ngành cần thi chứng chỉ tiếng Nhật và kỳ thi kỹ năng tay nghề, sau giai đoạn 1 có thể nâng cấp lên giai đoạn 2 để định cư tại Nhật.',
+    description: 'Dành cho lao động có tay nghề, cho phép làm việc lâu hơn tại Nhật và hưởng <i><b>lương cao hơn</b></i>. Người đi mới hoặc chuyển trái ngành cần <i><b>thi chứng chỉ</b></i> tiếng Nhật và kỳ thi kỹ năng tay nghề, sau giai đoạn 1 có thể nâng cấp lên giai đoạn 2 để <i><b>định cư</b></i> tại Nhật.',
      color: 'dark-blue'
   },
   {

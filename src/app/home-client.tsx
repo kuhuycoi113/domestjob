@@ -91,7 +91,7 @@ const locations = {
         "Hokkaido": ["Hokkaido"],
         "Tohoku": ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"],
         "Kanto": ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"],
-        "Chubu": [],
+        "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
         "Kansai": [],
         "Chugoku": [],
         "Shikoku": [],

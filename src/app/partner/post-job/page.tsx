@@ -355,6 +355,24 @@ export default function PartnerPostJobPage() {
     return "Nhập thực lĩnh (ước tính)";
   })();
 
+  const financialAbilityPlaceholder = (() => {
+      switch (jobData.visaDetail) {
+          case 'Thực tập sinh 3 năm':
+              return '0 đến 4000$';
+          case 'Thực tập sinh 1 năm':
+          case 'Thực tập sinh 3 Go':
+          case 'Đặc định đầu Việt':
+          case 'Đặc định đi mới':
+          case 'Kỹ sư, tri thức đầu Việt':
+              return '0 đến 2000$';
+          case 'Kỹ năng đặc định đầu Nhật':
+          case 'Kỹ sư, tri thức đầu Nhật':
+              return '0';
+          default:
+              return 'Nhập khả năng tài chính';
+      }
+  })();
+
 
   return <div className="container mx-auto px-4 md:px-6 py-8">
     <div className="max-w-4xl mx-auto">
@@ -533,7 +551,7 @@ export default function PartnerPostJobPage() {
                     {visibleFields.has('financialAbility') && (
                         <div className="space-y-2">
                             <Label htmlFor="financial-ability">Khả năng tài chính</Label>
-                            <Input id="financial-ability" placeholder="VD: 90 triệu" value={jobData.financialAbility} onChange={(e) => handleInputChange('financialAbility', e.target.value)} />
+                            <Input id="financial-ability" placeholder={financialAbilityPlaceholder} value={jobData.financialAbility} onChange={(e) => handleInputChange('financialAbility', e.target.value)} />
                         </div>
                     )}
                    </div>

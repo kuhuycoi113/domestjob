@@ -330,29 +330,19 @@ export default function PartnerPostJobPage() {
   const availableConditions = currentVisaCategory ? conditionsByVisaType[currentVisaCategory] : [];
 
   const basicSalaryPlaceholder = (() => {
-    if (jobData.visaDetail?.includes('Thực tập sinh')) {
-      return "120,000 - 500,000 yên/tháng";
-    }
-    if (jobData.visaDetail?.includes('Đặc định')) {
-      return "150,000 - 1,500,000 yên/tháng";
-    }
-    if (jobData.visaDetail?.includes('Kỹ sư, tri thức')) {
-      return "160,000 - 10,000,000 yên/tháng";
-    }
+    const visaDetail = jobData.visaDetail;
+    if (visaDetail?.includes('Thực tập sinh')) return "120,000 - 500,000 yên/tháng";
+    if (visaDetail?.includes('Đặc định')) return "150,000 - 1,500,000 yên/tháng";
+    if (visaDetail?.includes('Kỹ sư, tri thức')) return "160,000 - 10,000,000 yên/tháng";
     return "Nhập mức lương cơ bản";
   })();
 
   const netSalaryPlaceholder = (() => {
-    if (jobData.visaDetail?.includes('Thực tập sinh')) {
-      return "100,000 - 400,000 yên/tháng";
-    }
-    if (jobData.visaDetail?.includes('Đặc định')) {
-      return "120,000 - 1,300,000 yên/tháng";
-    }
-    if (jobData.visaDetail?.includes('Kỹ sư, tri thức')) {
-      return "120,000 - 9,000,000 yên/tháng";
-    }
-    return "Nhập thực lĩnh (ước tính)";
+      const visaDetail = jobData.visaDetail;
+      if (visaDetail?.includes('Thực tập sinh')) return "100,000 - 400,000 yên/tháng";
+      if (visaDetail?.includes('Đặc định')) return "120,000 - 1,300,000 yên/tháng";
+      if (visaDetail?.includes('Kỹ sư, tri thức')) return "120,000 - 9,000,000 yên/tháng";
+      return "Nhập thực lĩnh (ước tính)";
   })();
 
   const financialAbilityPlaceholder = (() => {
@@ -396,7 +386,7 @@ export default function PartnerPostJobPage() {
             <TabsContent value="ai">
               <div className="text-center p-6 border rounded-lg border-dashed">
                 <h3 className="text-xl font-bold font-headline mb-2">Tải lên tin tuyển dụng có sẵn</h3>
-                <p className="text-muted-foreground mb-6">Hệ thống sẽ tự động phân tích và điền thông tin vào biểu mẫu giúp bạn.</p>
+                <p className="text-muted-foreground mb-6">Hệ thống sẽ tự động phân tích và điền thông tin giúp bạn.</p>
                 <div className="relative border-2 border-dashed border-border rounded-lg p-10 flex flex-col items-center justify-center hover:border-primary transition-colors">
                   <Upload className="h-12 w-12 text-muted-foreground mb-4" />
                   <p className="mb-2 text-foreground">Kéo thả tệp hoặc <span className="font-bold text-primary">chọn tệp</span></p>
@@ -469,8 +459,22 @@ export default function PartnerPostJobPage() {
 
                     {visibleFields.has('interviewLocation') && (
                       <div className="space-y-2">
-                        <Label htmlFor="interview-location">Phỏng vấn, tuyển tại</Label>
-                        <Input id="interview-location" placeholder="VD: Hà Nội" value={jobData.interviewLocation} onChange={(e) => handleInputChange('interviewLocation', e.target.value)} />
+                          <Label htmlFor="interview-location">Phỏng vấn, tuyển tại</Label>
+                          <Select value={jobData.interviewLocation} onValueChange={(value) => handleInputChange('interviewLocation', value)}>
+                              <SelectTrigger id="interview-location">
+                                  <SelectValue placeholder="Chọn địa điểm phỏng vấn" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                  <SelectGroup>
+                                      <SelectLabel>Việt Nam</SelectLabel>
+                                      {locations["Việt Nam"].map(province => <SelectItem key={province} value={province}>{province}</SelectItem>)}
+                                  </SelectGroup>
+                                  <SelectGroup>
+                                      <SelectLabel>Nhật Bản</SelectLabel>
+                                      {Object.values(locations["Nhật Bản"]).flat().map(prefecture => <SelectItem key={prefecture} value={prefecture}>{prefecture}</SelectItem>)}
+                                  </SelectGroup>
+                              </SelectContent>
+                          </Select>
                       </div>
                     )}
                      <div className="space-y-2">
@@ -851,3 +855,6 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
+
+
+    

@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone, FilePen } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone, FilePen, Globe, ChevronDown, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -19,6 +19,12 @@ import {
     DialogTrigger,
     DialogClose,
 } from "@/components/ui/dialog";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from '@/components/ui/textarea';
@@ -29,6 +35,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from '@/components/ui/select';
+import { translateProfile, type TranslateProfileInput } from '@/ai/flows/translate-profile-flow';
+import { JpFlagIcon, EnFlagIcon, VnFlagIcon } from '@/components/custom-icons';
+
 
 type MediaItem = {
   src: string;
@@ -239,8 +248,12 @@ const visaTypes = Object.keys(visaDetailsByVisaType);
 
 export default function CandidateProfilePage() {
   const [candidate, setCandidate] = useState<EnrichedCandidateProfile | null>(null);
+  const [originalCandidate, setOriginalCandidate] = useState<EnrichedCandidateProfile | null>(null);
   const [newSkill, setNewSkill] = useState('');
   const [newInterest, setNewInterest] = useState('');
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [currentLang, setCurrentLang] = useState('vi');
+
 
   useEffect(() => {
     const storedProfile = localStorage.getItem('generatedCandidateProfile');
@@ -284,7 +297,14 @@ export default function CandidateProfilePage() {
         };
     }
     setCandidate(profileToLoad);
+    setOriginalCandidate(JSON.parse(JSON.stringify(profileToLoad))); // Deep copy
   }, []);
+
+  const handleSave = (updatedCandidate: EnrichedCandidateProfile) => {
+    setCandidate(updatedCandidate);
+    setOriginalCandidate(JSON.parse(JSON.stringify(updatedCandidate))); // Update original state on save
+    setCurrentLang('vi'); // Revert to Vietnamese on save
+  };
 
   useEffect(() => {
     if (candidate) {
@@ -319,8 +339,52 @@ export default function CandidateProfilePage() {
       );
   }
 
-  const handleSave = (updatedCandidate: EnrichedCandidateProfile) => {
-    setCandidate(updatedCandidate);
+  const handleLanguageChange = async (lang: string) => {
+    if (lang === currentLang || !originalCandidate) return;
+
+    setCurrentLang(lang);
+
+    if (lang === 'vi') {
+        setCandidate(originalCandidate);
+        return;
+    }
+
+    setIsTranslating(true);
+    try {
+        const input: TranslateProfileInput = {
+            profile: originalCandidate,
+            targetLanguage: lang === 'ja' ? 'Japanese' : 'English',
+        };
+        const translatedProfile = await translateProfile(input);
+        
+        // Combine translated text fields with non-translated fields (like IDs, numbers, media)
+        setCandidate({
+            ...originalCandidate, // Start with original to keep structure and non-text data
+            ...translatedProfile, // Override with translated text fields
+            personalInfo: {
+                ...originalCandidate.personalInfo,
+                ...translatedProfile.personalInfo,
+            },
+            aspirations: originalCandidate.aspirations ? {
+                ...originalCandidate.aspirations,
+                ...translatedProfile.aspirations,
+            } : undefined,
+            education: originalCandidate.education.map((edu, index) => ({
+                ...edu,
+                ...translatedProfile.education[index],
+            })),
+            experience: originalCandidate.experience.map((exp, index) => ({
+                ...exp,
+                ...translatedProfile.experience[index],
+            })),
+        });
+
+    } catch (error) {
+        console.error("Translation failed:", error);
+        // Optionally, show a toast message to the user
+    } finally {
+        setIsTranslating(false);
+    }
   };
   
   const handleMediaChange = (type: 'avatar' | 'image', e: React.ChangeEvent<HTMLInputElement>, index?: number) => {
@@ -816,15 +880,34 @@ export default function CandidateProfilePage() {
                     <MapPin className="h-4 w-4" /> {candidate.location}
                   </p>
                 </div>
-                 <EditDialog
-                    title="Hoàn thiện hồ sơ"
-                    onSave={handleSave}
-                    renderContent={MainEditDialogContent}
-                    description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."
-                    candidate={candidate}
-                 >
-                    <Button className="md:ml-auto mt-4 md:mt-0" variant="outline"><Edit /> Sửa hồ sơ</Button>
-                 </EditDialog>
+                 <div className="md:ml-auto mt-4 md:mt-0 flex items-center gap-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" disabled={isTranslating}>
+                          {isTranslating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Globe className="mr-2 h-4 w-4"/>}
+                          {currentLang === 'vi' && 'Tiếng Việt'}
+                          {currentLang === 'ja' && '日本語'}
+                          {currentLang === 'en' && 'English'}
+                          <ChevronDown className="ml-2 h-4 w-4"/>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onSelect={() => handleLanguageChange('vi')}><VnFlagIcon className="w-5 h-5 mr-2"/>Tiếng Việt</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => handleLanguageChange('ja')}><JpFlagIcon className="w-5 h-5 mr-2"/>日本語</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => handleLanguageChange('en')}><EnFlagIcon className="w-5 h-5 mr-2"/>English</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                     <EditDialog
+                        title="Hoàn thiện hồ sơ"
+                        onSave={handleSave}
+                        renderContent={MainEditDialogContent}
+                        description="Chọn một mục dưới đây để cập nhật hoặc hoàn thiện thông tin hồ sơ của bạn."
+                        candidate={originalCandidate!} // Always edit the original version
+                     >
+                        <Button variant="outline"><Edit /> Sửa hồ sơ</Button>
+                     </EditDialog>
+                 </div>
               </div>
             </CardHeader>
             <CardContent className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -838,7 +921,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Giới thiệu bản thân"
                         onSave={handleSave}
                         renderContent={renderAboutEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                         description="Viết một đoạn giới thiệu ngắn về bản thân, kỹ năng và mục tiêu nghề nghiệp của bạn."
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
@@ -850,7 +933,7 @@ export default function CandidateProfilePage() {
                     ) : (
                       <div className="text-muted-foreground">
                         <span>Chưa có thông tin. </span>
-                        <EditDialog title="Chỉnh sửa Giới thiệu bản thân" onSave={handleSave} renderContent={renderAboutEdit} candidate={candidate}>
+                        <EditDialog title="Chỉnh sửa Giới thiệu bản thân" onSave={handleSave} renderContent={renderAboutEdit} candidate={originalCandidate!}>
                             <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                         </EditDialog>
                       </div>
@@ -870,7 +953,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Kinh nghiệm làm việc"
                         onSave={handleSave}
                         renderContent={renderExperienceEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                      </EditDialog>
@@ -886,7 +969,7 @@ export default function CandidateProfilePage() {
                     )) : (
                         <div className="text-muted-foreground">
                            <span>Chưa có thông tin. </span>
-                            <EditDialog title="Chỉnh sửa Kinh nghiệm làm việc" onSave={handleSave} renderContent={renderExperienceEdit} candidate={candidate}>
+                            <EditDialog title="Chỉnh sửa Kinh nghiệm làm việc" onSave={handleSave} renderContent={renderExperienceEdit} candidate={originalCandidate!}>
                                <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>
@@ -901,7 +984,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Học vấn"
                         onSave={handleSave}
                         renderContent={renderEducationEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -916,7 +999,7 @@ export default function CandidateProfilePage() {
                      )) : (
                         <div className="text-muted-foreground">
                             <span>Chưa có thông tin. </span>
-                            <EditDialog title="Chỉnh sửa Học vấn" onSave={handleSave} renderContent={renderEducationEdit} candidate={candidate}>
+                            <EditDialog title="Chỉnh sửa Học vấn" onSave={handleSave} renderContent={renderEducationEdit} candidate={originalCandidate!}>
                                 <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>
@@ -930,7 +1013,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Ghi chú"
                         onSave={handleSave}
                         renderContent={renderNotesEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                         description="Thêm bất kỳ ghi chú hoặc thông tin bổ sung nào về nguyện vọng, hoàn cảnh của bạn."
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
@@ -942,7 +1025,7 @@ export default function CandidateProfilePage() {
                     ) : (
                       <div className="text-muted-foreground">
                         <span>Chưa có ghi chú. </span>
-                        <EditDialog title="Chỉnh sửa Ghi chú" onSave={handleSave} renderContent={renderNotesEdit} candidate={candidate}>
+                        <EditDialog title="Chỉnh sửa Ghi chú" onSave={handleSave} renderContent={renderNotesEdit} candidate={originalCandidate!}>
                             <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                         </EditDialog>
                       </div>
@@ -960,7 +1043,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Thông tin cá nhân"
                         onSave={handleSave}
                         renderContent={renderLevel1Edit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -983,7 +1066,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Nguyện vọng"
                         onSave={handleSave}
                         renderContent={renderAspirationsEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -1009,7 +1092,7 @@ export default function CandidateProfilePage() {
                         description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn."
                         onSave={handleSave}
                         renderContent={renderSkillsInterestsEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -1020,7 +1103,7 @@ export default function CandidateProfilePage() {
                         {candidate.skills.length > 0 ? candidate.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>) : 
                         <div className="text-muted-foreground text-sm">
                             <span>Chưa có kỹ năng. </span>
-                            <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} renderContent={renderSkillsInterestsEdit} candidate={candidate}>
+                            <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} renderContent={renderSkillsInterestsEdit} candidate={originalCandidate!}>
                                <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>}
@@ -1030,7 +1113,7 @@ export default function CandidateProfilePage() {
                         {candidate.interests.length > 0 ? candidate.interests.map(interest => <Badge key={interest} className="bg-accent-blue text-white">{interest}</Badge>) : 
                         <div className="text-muted-foreground text-sm">
                             <span>Chưa có lĩnh vực quan tâm. </span>
-                             <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} renderContent={renderSkillsInterestsEdit} candidate={candidate}>
+                             <EditDialog title="Chỉnh sửa Kỹ năng & Lĩnh vực" description="Chọn các mục có sẵn hoặc thêm mới để làm nổi bật hồ sơ của bạn." onSave={handleSave} renderContent={renderSkillsInterestsEdit} candidate={originalCandidate!}>
                                 <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                             </EditDialog>
                         </div>}
@@ -1045,7 +1128,7 @@ export default function CandidateProfilePage() {
                         title="Chỉnh sửa Chứng chỉ & Giải thưởng"
                         onSave={handleSave}
                         renderContent={renderCertificationsEdit}
-                        candidate={candidate}
+                        candidate={originalCandidate!}
                     >
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
@@ -1056,7 +1139,7 @@ export default function CandidateProfilePage() {
                      )) : 
                      <div className="text-muted-foreground text-sm">
                         <span>Chưa có chứng chỉ. </span>
-                        <EditDialog title="Chỉnh sửa Chứng chỉ & Giải thưởng" onSave={handleSave} renderContent={renderCertificationsEdit} candidate={candidate}>
+                        <EditDialog title="Chỉnh sửa Chứng chỉ & Giải thưởng" onSave={handleSave} renderContent={renderCertificationsEdit} candidate={originalCandidate!}>
                             <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
                         </EditDialog>
                     </div>}

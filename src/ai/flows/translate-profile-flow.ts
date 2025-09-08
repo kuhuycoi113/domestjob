@@ -21,6 +21,9 @@ const TranslatableCandidateProfileSchema = CandidateProfileSchema.partial().pick
   about: true,
   desiredIndustry: true,
   notes: true,
+  skills: true,
+  interests: true,
+  certifications: true,
 }).extend({
     education: z.array(z.object({
         school: z.string(),
@@ -43,9 +46,6 @@ const TranslatableCandidateProfileSchema = CandidateProfileSchema.partial().pick
         desiredVisaDetail: z.string().optional(),
         specialAspirations: z.string().optional(),
     }).optional(),
-    interests: z.array(z.string()).optional(),
-    skills: z.array(z.string()).optional(),
-    certifications: z.array(z.string()).optional(),
 });
 
 export async function translateProfile(

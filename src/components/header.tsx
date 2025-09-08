@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Briefcase, Menu, X, Building, PlusCircle, User, LogOut, Shield, FileText, Gift, MessageSquareWarning, Settings, LifeBuoy, LayoutGrid, Sparkles, BookOpen, Compass, Home, Info, Handshake, ChevronDown, Gem, UserPlus, MessageSquare, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetTrigger } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -40,6 +40,12 @@ export function Header() {
   const pathname = usePathname();
   const { openChat } = useChat();
   const { role, setRole } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const isLoggedIn = role !== 'guest';
 
 
@@ -171,7 +177,7 @@ export function Header() {
             <Button asChild variant="outline">
               <Link href="/jobs">Trang việc làm</Link>
             </Button>
-            {isLoggedIn ? <LoggedInMenu /> : <LoggedOutMenu />}
+            {isClient && (isLoggedIn ? <LoggedInMenu /> : <LoggedOutMenu />)}
         </div>
         <div className="md:hidden">
             <Button variant="default" size="icon" onClick={() => openChat()}>

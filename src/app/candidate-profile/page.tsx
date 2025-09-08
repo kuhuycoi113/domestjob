@@ -358,26 +358,29 @@ export default function CandidateProfilePage() {
         };
         const translatedProfile = await translateProfile(input);
         
-        // Combine translated text fields with non-translated fields (like IDs, numbers, media)
-        setCandidate({
-            ...originalCandidate, // Start with original to keep structure and non-text data
-            ...translatedProfile, // Override with translated text fields
-            personalInfo: {
-                ...originalCandidate.personalInfo,
-                ...translatedProfile.personalInfo,
-            },
-            aspirations: originalCandidate.aspirations ? {
-                ...originalCandidate.aspirations,
-                ...translatedProfile.aspirations,
-            } : undefined,
-            education: originalCandidate.education.map((edu, index) => ({
-                ...edu,
-                ...translatedProfile.education[index],
-            })),
-            experience: originalCandidate.experience.map((exp, index) => ({
-                ...exp,
-                ...translatedProfile.experience[index],
-            })),
+        setCandidate(prev => {
+            if (!prev) return null;
+            return {
+                ...prev, // Start with previous state to keep all fields
+                ...originalCandidate, // Re-apply original to keep non-translatable data
+                ...translatedProfile, // Override with translated text fields
+                personalInfo: {
+                    ...originalCandidate.personalInfo,
+                    ...(translatedProfile.personalInfo || {}),
+                },
+                aspirations: originalCandidate.aspirations ? {
+                    ...originalCandidate.aspirations,
+                    ...(translatedProfile.aspirations || {}),
+                } : undefined,
+                education: originalCandidate.education.map((edu, index) => ({
+                    ...edu,
+                    ...(translatedProfile.education?.[index] || {}),
+                })),
+                experience: originalCandidate.experience.map((exp, index) => ({
+                    ...exp,
+                    ...(translatedProfile.experience?.[index] || {}),
+                })),
+            }
         });
 
     } catch (error) {

@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -185,6 +185,9 @@ const EditDialog = ({
           {renderContent(tempCandidate, handleTempChange)}
         </div>
         <DialogFooter>
+           <DialogClose asChild>
+                <Button variant="outline">Hủy</Button>
+            </DialogClose>
           <Button type="submit" onClick={handleSave} className="bg-primary text-white">
             Lưu thay đổi
           </Button>
@@ -507,6 +510,58 @@ export default function CandidateProfilePage() {
     </div>
   );
 
+  const renderAspirationsEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+            <Label>Địa điểm mong muốn</Label>
+            <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleTempChange('aspirations', 'desiredLocation', value)}>
+                <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+                <SelectContent>
+                <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
+                {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
+                    <SelectGroup key={region}>
+                    <SelectLabel>{region}</SelectLabel>
+                    {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                    </SelectGroup>
+                ))}
+                </SelectContent>
+            </Select>
+        </div>
+        <div className="space-y-2">
+          <Label>Lương cơ bản mong muốn/tháng</Label>
+          <Input value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleTempChange('aspirations', 'desiredSalary', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Thực lĩnh mong muốn</Label>
+          <Input value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleTempChange('aspirations', 'desiredNetSalary', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Khả năng tài chính</Label>
+          <Input value={tempCandidate.aspirations?.financialAbility} onChange={e => handleTempChange('aspirations', 'financialAbility', e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Tìm việc, phỏng vấn, tuyển tại</Label>
+          <Select value={tempCandidate.aspirations?.interviewLocation || ''} onValueChange={value => handleTempChange('aspirations', 'interviewLocation', value)}>
+            <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Việt Nam</SelectLabel>
+                {locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Nhật Bản</SelectLabel>
+                {Object.values(locations['Nhật Bản']).flat().map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+         <div className="md:col-span-2 space-y-2">
+          <Label>Nguyện vọng đặc biệt</Label>
+          <Textarea value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleTempChange('aspirations', 'specialAspirations', e.target.value)} />
+        </div>
+    </div>
+  );
+
   const renderLevel1Edit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -525,21 +580,6 @@ export default function CandidateProfilePage() {
         <div className="space-y-2">
           <Label>Ngành nghề mong muốn</Label>
           <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', e.target.value)} />
-        </div>
-        <div className="space-y-2">
-          <Label>Địa điểm mong muốn</Label>
-          <Select value={tempCandidate.aspirations?.desiredLocation || ''} onValueChange={value => handleTempChange('aspirations', 'desiredLocation', value)}>
-            <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tất cả Nhật Bản</SelectItem>
-              {Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (
-                <SelectGroup key={region}>
-                  <SelectLabel>{region}</SelectLabel>
-                  {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                </SelectGroup>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
         <div className="space-y-2">
           <Label>Chiều cao (cm)</Label>
@@ -571,38 +611,6 @@ export default function CandidateProfilePage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-2">
-          <Label>Lương cơ bản mong muốn/tháng</Label>
-          <Input value={tempCandidate.aspirations?.desiredSalary} onChange={e => handleTempChange('aspirations', 'desiredSalary', e.target.value)} />
-        </div>
-        <div className="space-y-2">
-          <Label>Thực lĩnh mong muốn</Label>
-          <Input value={tempCandidate.aspirations?.desiredNetSalary} onChange={e => handleTempChange('aspirations', 'desiredNetSalary', e.target.value)} />
-        </div>
-        <div className="space-y-2">
-          <Label>Khả năng tài chính</Label>
-          <Input value={tempCandidate.aspirations?.financialAbility} onChange={e => handleTempChange('aspirations', 'financialAbility', e.target.value)} />
-        </div>
-        <div className="space-y-2">
-          <Label>Tìm việc, phỏng vấn, tuyển tại</Label>
-          <Select value={tempCandidate.aspirations?.interviewLocation || ''} onValueChange={value => handleTempChange('aspirations', 'interviewLocation', value)}>
-            <SelectTrigger><SelectValue placeholder="Chọn địa điểm" /></SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Việt Nam</SelectLabel>
-                {locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}
-              </SelectGroup>
-              <SelectGroup>
-                <SelectLabel>Nhật Bản</SelectLabel>
-                {Object.values(locations['Nhật Bản']).flat().map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="md:col-span-2 space-y-2">
-          <Label>Nguyện vọng đặc biệt</Label>
-          <Textarea value={tempCandidate.aspirations?.specialAspirations} onChange={e => handleTempChange('aspirations', 'specialAspirations', e.target.value)} />
-        </div>
       </div>
     </div>
   );
@@ -615,13 +623,13 @@ export default function CandidateProfilePage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                  <EditDialog
-                    title="Chỉnh sửa Thông tin Mức 1"
+                    title="Chỉnh sửa Thông tin Cá nhân"
                     onSave={handleSave}
                     renderContent={renderLevel1Edit}
                     candidate={candidate!}
                 >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-orange">
-                        <h4 className="font-bold text-accent-orange">Mức 1</h4>
+                        <h4 className="font-bold text-accent-orange">Cá nhân</h4>
                         <User className="h-12 w-12 text-gray-300 mx-auto my-2" />
                         <p className="text-sm text-muted-foreground">(Thông tin cơ bản)</p>
                     </Card>
@@ -641,28 +649,22 @@ export default function CandidateProfilePage() {
                     candidate={candidate!}
                 >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-green">
-                        <h4 className="font-bold text-accent-green">Mức 2</h4>
+                        <h4 className="font-bold text-accent-green">Sự nghiệp</h4>
                         <Briefcase className="h-12 w-12 text-gray-300 mx-auto my-2" />
-                        <p className="text-sm text-muted-foreground">(Thông tin đầy đủ)</p>
+                        <p className="text-sm text-muted-foreground">(Kinh nghiệm, học vấn)</p>
                     </Card>
                 </EditDialog>
                 
                  <EditDialog
-                    title="Chỉnh sửa Thông tin liên hệ"
+                    title="Chỉnh sửa Nguyện vọng"
                     onSave={handleSave}
-                    renderContent={() => <div>Coming soon...</div>}
+                    renderContent={renderAspirationsEdit}
                     candidate={candidate!}
                 >
                     <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-shadow border-2 border-accent-blue">
-                        <h4 className="font-bold text-accent-blue">Mức 3</h4>
-                        <Contact className="h-12 w-12 text-gray-300 mx-auto my-2" />
-                        <div className="flex justify-center items-center gap-2 mt-1">
-                            <Facebook className="h-5 w-5 text-blue-600" />
-                            <MessageSquare className="h-5 w-5 text-blue-500" />
-                            <ZaloIcon className="h-5 w-5" />
-                            <Phone className="h-5 w-5 text-green-500" />
-                        </div>
-                        <p className="text-sm text-muted-foreground">(Thông tin liên hệ)</p>
+                        <h4 className="font-bold text-accent-blue">Nguyện vọng</h4>
+                         <Target className="h-12 w-12 text-gray-300 mx-auto my-2" />
+                        <p className="text-sm text-muted-foreground">(Lương, địa điểm...)</p>
                     </Card>
                 </EditDialog>
             </div>
@@ -895,11 +897,36 @@ export default function CandidateProfilePage() {
                     </EditDialog>
                   </CardHeader>
                   <CardContent className="space-y-3 text-sm">
-                    <p className="flex items-start gap-3"><strong>Ngày sinh:</strong> {candidate.personalInfo.dateOfBirth}</p>
-                    <p className="flex items-start gap-3"><strong>Giới tính:</strong> {candidate.personalInfo.gender}</p>
-                    <p className="flex items-start gap-3"><strong>Chiều cao:</strong> {candidate.personalInfo.height}</p>
-                    <p className="flex items-start gap-3"><strong>Cân nặng:</strong> {candidate.personalInfo.weight}</p>
-                    <p className="flex items-start gap-3"><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</p>
+                    <p><strong>Ngày sinh:</strong> {candidate.personalInfo.dateOfBirth}</p>
+                    <p><strong>Giới tính:</strong> {candidate.personalInfo.gender}</p>
+                    <p><strong>Chiều cao:</strong> {candidate.personalInfo.height} cm</p>
+                    <p><strong>Cân nặng:</strong> {candidate.personalInfo.weight} kg</p>
+                    <p><strong>Hình xăm:</strong> {candidate.personalInfo.tattooStatus}</p>
+                    <p><strong>Viêm gan B:</strong> {candidate.personalInfo.hepatitisBStatus}</p>
+                    <p><strong>Ngôn ngữ:</strong> {candidate.personalInfo.language}</p>
+                  </CardContent>
+                </Card>
+
+                 <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <CardTitle className="font-headline text-xl flex items-center"><Target className="mr-3 text-primary"/> Nguyện vọng</CardTitle>
+                     <EditDialog
+                        title="Chỉnh sửa Nguyện vọng"
+                        onSave={handleSave}
+                        renderContent={renderAspirationsEdit}
+                        candidate={candidate}
+                    >
+                      <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
+                    </EditDialog>
+                  </CardHeader>
+                   <CardContent className="space-y-3 text-sm">
+                        <p><strong>Ngành nghề:</strong> {candidate.desiredIndustry}</p>
+                        <p><strong>Địa điểm:</strong> {candidate.aspirations?.desiredLocation}</p>
+                        <p><strong>Lương cơ bản:</strong> {candidate.aspirations?.desiredSalary}</p>
+                        <p><strong>Thực lĩnh:</strong> {candidate.aspirations?.desiredNetSalary}</p>
+                        <p><strong>Khả năng tài chính:</strong> {candidate.aspirations?.financialAbility}</p>
+                        <p><strong>Nơi phỏng vấn:</strong> {candidate.aspirations?.interviewLocation}</p>
+                        <p><strong>Yêu cầu khác:</strong> {candidate.aspirations?.specialAspirations}</p>
                   </CardContent>
                 </Card>
 

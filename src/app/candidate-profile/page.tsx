@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone } from 'lucide-react';
+import { Briefcase, Building, Cake, Dna, Edit, GraduationCap, MapPin, Phone, School, User, Award, Languages, Star, FileDown, Video, Image as ImageIcon, PlusCircle, Trash2, RefreshCw, X, Camera, MessageSquare, Facebook, Contact, UserCog, Trophy, PlayCircle, LogOut, Wallet, Target, Milestone, FilePen } from 'lucide-react';
 import Image from 'next/image';
 import {
     Dialog,
@@ -77,7 +77,7 @@ const emptyCandidate: EnrichedCandidateProfile = {
         interviewLocation: 'Thành phố Hồ Chí Minh',
         specialAspirations: 'Mong muốn có nhiều cơ hội làm thêm giờ và được hỗ trợ đào tạo chuyên sâu về kỹ năng quản lý.',
     },
-    notes: '',
+    notes: 'Đã có kinh nghiệm phỏng vấn với công ty Nhật 2 lần, mong muốn tìm đơn hàng bay nhanh trong vòng 3 tháng tới. Có thể đóng phí ngay.',
     interests: ['Cơ khí', 'Tự động hóa', 'Sản xuất'],
     skills: ['Vận hành máy CNC', 'AutoCAD', 'SolidWorks', 'Làm việc nhóm', 'Giải quyết vấn đề'],
     certifications: ['Chứng chỉ JLPT N3', 'Chứng chỉ An toàn lao động'],
@@ -165,9 +165,9 @@ const EditDialog = ({
               : currentValues.filter((item: string) => item !== value);
       }
       else {
-        const [value] = args;
+        const [field, value] = args;
         // @ts-ignore
-        newCandidate[section] = value;
+        newCandidate[field] = value;
       }
 
       return newCandidate;
@@ -397,8 +397,17 @@ export default function CandidateProfilePage() {
   const renderAboutEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
     <Textarea
       value={tempCandidate.about}
-      onChange={e => handleTempChange('about', e.target.value)}
+      onChange={e => handleTempChange('about', null, e.target.value)}
       rows={6}
+    />
+  );
+
+  const renderNotesEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
+    <Textarea
+      value={tempCandidate.notes}
+      onChange={e => handleTempChange('notes', null, e.target.value)}
+      rows={4}
+      placeholder="Ghi chú về nguyện vọng, khả năng tài chính, thời gian có thể đi..."
     />
   );
 
@@ -601,7 +610,7 @@ export default function CandidateProfilePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Họ và tên</Label>
-          <Input value={tempCandidate.name} onChange={e => handleTempChange('name', e.target.value)} />
+          <Input value={tempCandidate.name} onChange={e => handleTempChange('name', null, e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label>Số điện thoại</Label>
@@ -613,7 +622,7 @@ export default function CandidateProfilePage() {
         </div>
         <div className="space-y-2">
           <Label>Ngành nghề mong muốn</Label>
-          <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', e.target.value)} />
+          <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', null, e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label>Chiều cao (cm)</Label>
@@ -912,6 +921,32 @@ export default function CandidateProfilePage() {
                             </EditDialog>
                         </div>
                      )}
+                  </CardContent>
+                </Card>
+                 <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <CardTitle className="font-headline text-xl flex items-center"><FilePen className="mr-3 text-primary"/> Ghi chú</CardTitle>
+                     <EditDialog
+                        title="Chỉnh sửa Ghi chú"
+                        onSave={handleSave}
+                        renderContent={renderNotesEdit}
+                        candidate={candidate}
+                        description="Thêm bất kỳ ghi chú hoặc thông tin bổ sung nào về nguyện vọng, hoàn cảnh của bạn."
+                    >
+                      <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
+                    </EditDialog>
+                  </CardHeader>
+                  <CardContent>
+                    {candidate.notes ? (
+                      <p className="text-muted-foreground whitespace-pre-line">{candidate.notes}</p>
+                    ) : (
+                      <div className="text-muted-foreground">
+                        <span>Chưa có ghi chú. </span>
+                        <EditDialog title="Chỉnh sửa Ghi chú" onSave={handleSave} renderContent={renderNotesEdit} candidate={candidate}>
+                            <button className="text-primary hover:underline">Nhấn vào đây để cập nhật</button>
+                        </EditDialog>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </div>

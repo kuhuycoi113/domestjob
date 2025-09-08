@@ -375,10 +375,9 @@ export default function CandidateProfilePage() {
                 { label: '2. Số điện thoại', value: tempCandidate.personalInfo.phone, field: 'phone', type: 'personalInfo' },
                 { label: '3. Ngày sinh', value: tempCandidate.personalInfo.dateOfBirth, field: 'dateOfBirth', type: 'personalInfo' },
                 { label: '4. Ngành nghề mong muốn', value: tempCandidate.desiredIndustry, field: 'desiredIndustry', type: 'simple' },
-                // { label: '5. Địa điểm mong muốn', value: tempCandidate.aspirations?.desiredLocation, field: 'desiredLocation', type: 'aspirations' },
                 { label: '6. Chiều cao (cm)', value: tempCandidate.personalInfo.height, field: 'height', type: 'personalInfo' },
                 { label: '7. Cân nặng (kg)', value: tempCandidate.personalInfo.weight, field: 'weight', type: 'personalInfo' },
-                { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ', 'Xăm lớn'] },
+                { label: '8. Hình xăm', value: tempCandidate.personalInfo.tattooStatus, field: 'tattooStatus', type: 'personalInfo', options: ['Không có', 'Xăm nhỏ (kín)', 'Xăm to (lộ)'] },
                 { label: '9. Viêm gan B', value: tempCandidate.personalInfo.hepatitisBStatus, field: 'hepatitisBStatus', type: 'personalInfo', options: ["Không viêm gan B", "Viêm gan B thể tĩnh", "Viêm gan B thể động"] },
                 { label: '10. Lương cơ bản mong muốn', value: tempCandidate.aspirations?.desiredSalary, field: 'desiredSalary', type: 'aspirations' },
                 { label: '11. Thực lĩnh mong muốn', value: tempCandidate.aspirations?.desiredNetSalary, field: 'desiredNetSalary', type: 'aspirations' },
@@ -843,12 +842,12 @@ export default function CandidateProfilePage() {
                       <Button variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                     </EditDialog>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    <p className="flex items-start gap-3"><Cake className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Năm sinh:</strong> {candidate.personalInfo.birthYear}</span></p>
-                    <p className="flex items-start gap-3"><Dna className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Giới tính:</strong> {candidate.personalInfo.gender}</span></p>
-                    <p className="flex items-start gap-3"><Phone className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>SĐT:</strong> {candidate.personalInfo.phone}</span></p>
-                    <p className="flex items-start gap-3"><Languages className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Ngoại ngữ:</strong> {candidate.personalInfo.language}</span></p>
-                    <p className="flex items-start gap-3"><Building className="h-4 w-4 mt-1 text-muted-foreground"/> <span><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</span></p>
+                  <CardContent className="space-y-3 text-sm">
+                    <p className="flex items-start gap-3"><strong>Ngày sinh:</strong> {candidate.personalInfo.dateOfBirth}</p>
+                    <p className="flex items-start gap-3"><strong>Giới tính:</strong> {candidate.personalInfo.gender}</p>
+                    <p className="flex items-start gap-3"><strong>Chiều cao:</strong> {candidate.personalInfo.height}</p>
+                    <p className="flex items-start gap-3"><strong>Cân nặng:</strong> {candidate.personalInfo.weight}</p>
+                    <p className="flex items-start gap-3"><strong>Ngành mong muốn:</strong> {candidate.desiredIndustry}</p>
                   </CardContent>
                 </Card>
 

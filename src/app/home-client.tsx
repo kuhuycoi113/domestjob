@@ -100,296 +100,7 @@ const locations = {
     }
 };
 
-
-export default function HomeClient() {
-  const [selectedJobType, setSelectedJobType] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('');
-  const [availableIndustries, setAvailableIndustries] = useState<Industry[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [comboboxOpen, setComboboxOpen] = useState(false);
-  
-  const finalSearchTerm = selectedIndustry || searchQuery;
-
-  useEffect(() => {
-    let industries: Industry[] = [];
-    if (!selectedJobType) {
-        // Collect all industries from all types and remove duplicates
-        const allIndustries = Object.values(industriesByJobType).flat();
-        const uniqueIndustries = Array.from(new Map(allIndustries.map(item => [item['slug'], item])).values());
-        industries = uniqueIndustries;
-    } else {
-        let jobTypeKey: keyof typeof industriesByJobType | 'Default' = 'Default';
-        if (selectedJobType.includes('Thực tập sinh')) jobTypeKey = 'Thực tập sinh kỹ năng';
-        else if (selectedJobType.includes('Đặc định')) jobTypeKey = 'Kỹ năng đặc định';
-        else if (selectedJobType.includes('Kỹ sư, tri thức')) jobTypeKey = 'Kỹ sư, tri thức';
-        industries = industriesByJobType[jobTypeKey];
-    }
-    
-    setAvailableIndustries(industries);
-    setSelectedIndustry('');
-    setSearchQuery('');
-  }, [selectedJobType]);
-
-  const handleSearchClick = () => {
-    setIsSearching(true);
-  };
-  
-  const handleBackToSearch = () => {
-      setIsSearching(false);
-  }
-
-  const CompactSearchForm = () => (
-     <div className="bg-primary p-2 md:hidden sticky top-16 z-40 shadow-lg">
-        <Button 
-            variant="outline" 
-            className="w-full justify-start text-left h-auto py-2 px-3 bg-background text-foreground hover:bg-background/90"
-            onClick={handleBackToSearch}
-        >
-            <ChevronLeft className="mr-2 text-muted-foreground"/>
-            <div className="flex-grow overflow-hidden">
-                <p className="font-bold text-base truncate">{selectedJobType || 'Tất cả loại hình'} - {finalSearchTerm || 'Tất cả ngành nghề'}</p>
-                <p className="text-sm text-muted-foreground truncate">{selectedLocation || 'Tất cả địa điểm'}</p>
-            </div>
-        </Button>
-    </div>
-  );
-
-  const FilterSidebar = () => {
-    const specialConditions = [
-        'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Không yêu cầu kinh nghiệm', 'Việc nhẹ', 'Việc nặng', 'Nghỉ T7, CN', 'Nhận visa katsudo'
-    ];
-    const languageLevels = ['N1', 'N2', 'N3', 'N4', 'N5', 'Không yêu cầu'];
-    const educationLevels = ["Tốt nghiệp THPT", "Trung cấp", "Cao đẳng", "Đại học", "Senmon", "Không yêu cầu"];
-    const experienceYears = ["Không yêu cầu", "Dưới 1 năm", "1-2 năm", "3-5 năm", "Trên 5 năm"];
-
-    return (
-        <div className="md:col-span-1 lg:col-span-1">
-            <Card>
-                <CardHeader>
-                    <CardTitle className="text-xl flex items-center gap-2"><SlidersHorizontal/> Bộ lọc tìm kiếm</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'location', 'requirements', 'specialConditions']} className="w-full">
-                        
-                        <AccordionItem value="salary">
-                            <AccordionTrigger className="text-base font-semibold">
-                                <span className="flex items-center gap-2"><DollarSign className="h-5 w-5"/>Mức lương (JPY/tháng)</span>
-                            </AccordionTrigger>
-                            <AccordionContent className="pt-4">
-                                <Slider defaultValue={[160000, 300000]} max={500000} step={10000} />
-                                <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                                    <span>16万</span>
-                                    <span>50万</span>
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-                        
-                        <AccordionItem value="jobType">
-                            <AccordionTrigger className="text-base font-semibold">
-                                 <span className="flex items-center gap-2"><Briefcase className="h-5 w-5"/>Loại hình công việc</span>
-                            </AccordionTrigger>
-                            <AccordionContent className="space-y-2 pt-4">
-                                {japanJobTypes.map(item => (
-                                    <div key={item} className="flex items-center space-x-2">
-                                        <Checkbox id={`type-${item}`} />
-                                        <Label htmlFor={`type-${item}`} className="font-normal cursor-pointer">{item}</Label>
-                                    </div>
-                                ))}
-                            </AccordionContent>
-                        </AccordionItem>
-
-                         <AccordionItem value="location">
-                            <AccordionTrigger className="text-base font-semibold">
-                                <span className="flex items-center gap-2"><MapPin className="h-5 w-5"/>Địa điểm</span>
-                            </AccordionTrigger>
-                            <AccordionContent className="space-y-4 pt-4">
-                                <div className="space-y-2">
-                                    <Label>Nơi làm việc (Nhật Bản)</Label>
-                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Nhật Bản</SelectItem>{Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (<SelectGroup key={region}><SelectLabel>{region}</SelectLabel>{(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Nơi phỏng vấn (Việt Nam)</Label>
-                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Việt Nam</SelectItem>{locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent></Select>
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-
-                         <AccordionItem value="requirements">
-                            <AccordionTrigger className="text-base font-semibold">
-                                <span className="flex items-center gap-2"><UserSearch className="h-5 w-5"/>Yêu cầu ứng viên</span>
-                            </AccordionTrigger>
-                            <AccordionContent className="space-y-4 pt-4">
-                                <div>
-                                    <Label className="font-semibold">Giới tính</Label>
-                                    <div className="flex items-center space-x-4 pt-2">
-                                         {['Nam', 'Nữ', 'Cả hai'].map(item => (
-                                            <div key={item} className="flex items-center space-x-2">
-                                                <Checkbox id={`gender-${item}`} />
-                                                <Label htmlFor={`gender-${item}`} className="font-normal cursor-pointer">{item}</Label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div>
-                                    <Label className="font-semibold">Trình độ tiếng Nhật</Label>
-                                    <div className="grid grid-cols-3 gap-2 pt-2">
-                                        {languageLevels.map(item => (
-                                            <div key={item} className="flex items-center space-x-2">
-                                                <Checkbox id={`lang-${item}`} />
-                                                <Label htmlFor={`lang-${item}`} className="font-normal cursor-pointer text-xs">{item}</Label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                 <div>
-                                    <Label className="font-semibold">Học vấn</Label>
-                                    <div className="grid grid-cols-2 gap-2 pt-2">
-                                        {educationLevels.map(item => (
-                                            <div key={item} className="flex items-center space-x-2">
-                                                <Checkbox id={`edu-${item}`} />
-                                                <Label htmlFor={`edu-${item}`} className="font-normal cursor-pointer text-sm">{item}</Label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div>
-                                    <Label className="font-semibold">Kinh nghiệm</Label>
-                                     <Select>
-                                        <SelectTrigger className="mt-2"><SelectValue placeholder="Chọn số năm kinh nghiệm" /></SelectTrigger>
-                                        <SelectContent>
-                                            {experienceYears.map(item => <SelectItem key={item} value={item}>{item}</SelectItem>)}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div>
-                                    <Label className="font-semibold">Yêu cầu khác</Label>
-                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2">
-                                        <div className="flex items-center space-x-2">
-                                            <Checkbox id="cond-tattoo" />
-                                            <Label htmlFor="cond-tattoo" className="font-normal cursor-pointer text-sm flex items-center gap-1.5"><Star className="h-4 w-4 text-yellow-500" />Không xăm</Label>
-                                        </div>
-                                         <div className="flex items-center space-x-2">
-                                            <Checkbox id="cond-hepatitis" />
-                                            <Label htmlFor="cond-hepatitis" className="font-normal cursor-pointer text-sm flex items-center gap-1.5"><Dna className="h-4 w-4 text-red-500"/>Không VGB</Label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-
-                        <AccordionItem value="specialConditions" className="border-b-0">
-                            <AccordionTrigger className="text-base font-semibold">
-                               <span className="flex items-center gap-2"><Check className="h-5 w-5"/>Điều kiện đặc biệt</span>
-                            </AccordionTrigger>
-                            <AccordionContent className="space-y-2 pt-4">
-                                {specialConditions.map(item => (
-                                    <div key={item} className="flex items-center space-x-2">
-                                        <Checkbox id={`cond-${item}`} />
-                                        <Label htmlFor={`cond-${item}`} className="font-normal cursor-pointer">{item}</Label>
-                                    </div>
-                                ))}
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                     <Button className="w-full bg-primary text-white mt-6">Áp dụng bộ lọc</Button>
-                </CardContent>
-            </Card>
-        </div>
-    );
-  };
-
-  const SearchResults = () => {
-    const [visibleJobsCount, setVisibleJobsCount] = useState(24);
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const observer = useRef<IntersectionObserver | null>(null);
-
-    const loadMoreJobs = useCallback(() => {
-        setIsLoadingMore(true);
-        setTimeout(() => {
-            setVisibleJobsCount(prevCount => Math.min(prevCount + 24, jobData.length));
-            setIsLoadingMore(false);
-        }, 1000); // Simulate network delay
-    }, []);
-
-    const lastJobElementRef = useCallback((node: HTMLDivElement) => {
-        if (isLoadingMore) return;
-        if (observer.current) observer.current.disconnect();
-
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && visibleJobsCount < jobData.length) {
-                loadMoreJobs();
-            }
-        });
-
-        if (node) observer.current.observe(node);
-    }, [isLoadingMore, loadMoreJobs, visibleJobsCount]);
-      
-    return (
-     <div className="w-full bg-secondary">
-        <div className="container mx-auto px-4 md:px-6 py-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8">
-                <div className="hidden md:block">
-                  <FilterSidebar />
-                </div>
-
-                <div className="md:col-span-3 lg:col-span-3">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold">Kết quả ({jobData.length})</h2>
-                        <Sheet>
-                          <SheetTrigger asChild>
-                             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:hidden">
-                                <ListFilter className="w-4 h-4" />
-                                Lọc
-                            </Button>
-                          </SheetTrigger>
-                          <SheetContent>
-                            <SheetHeader>
-                              <SheetTitle>Bộ lọc tìm kiếm</SheetTitle>
-                              <SheetDescription>
-                                Tinh chỉnh kết quả tìm kiếm của bạn.
-                              </SheetDescription>
-                            </SheetHeader>
-                            <div className="py-4 h-[calc(100vh-8rem)] overflow-y-auto">
-                              <FilterSidebar />
-                            </div>
-                          </SheetContent>
-                        </Sheet>
-                        
-                         <Select>
-                            <SelectTrigger className="w-[180px] hidden md:flex">
-                                <SelectValue placeholder="Sắp xếp theo" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="newest">Mới nhất</SelectItem>
-                                <SelectItem value="salary_desc">Lương cao đến thấp</SelectItem>
-                                <SelectItem value="salary_asc">Lương thấp đến cao</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="grid grid-cols-1 gap-4">
-                      {jobData.slice(0, visibleJobsCount).map((job, index) => {
-                          if (index === visibleJobsCount - 1) {
-                              return <div ref={lastJobElementRef} key={job.id}><JobCard job={job} /></div>
-                          }
-                          return <JobCard key={job.id} job={job} />
-                      })}
-                    </div>
-                    {isLoadingMore && (
-                        <div className="flex justify-center items-center p-4">
-                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
-     </div>
-    )
-  };
-
-
-  const MainContent = () => (
+const MainContent = () => (
     <>
       {/* Why Choose Us for Candidates */}
       <section className="w-full pt-20 md:pt-28 bg-background">
@@ -575,7 +286,42 @@ export default function HomeClient() {
     </>
   );
 
-  const SearchModule = () => (
+  type SearchModuleProps = {
+      onSearch: () => void;
+  }
+  
+const SearchModule = ({ onSearch }: SearchModuleProps) => {
+  const [selectedJobType, setSelectedJobType] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [availableIndustries, setAvailableIndustries] = useState<Industry[]>([]);
+  const [comboboxOpen, setComboboxOpen] = useState(false);
+  
+  const finalSearchTerm = selectedIndustry || searchQuery;
+
+  useEffect(() => {
+    let industries: Industry[] = [];
+    if (!selectedJobType) {
+        // Collect all industries from all types and remove duplicates
+        const allIndustries = Object.values(industriesByJobType).flat();
+        const uniqueIndustries = Array.from(new Map(allIndustries.map(item => [item['slug'], item])).values());
+        industries = uniqueIndustries;
+    } else {
+        let jobTypeKey: keyof typeof industriesByJobType | 'Default' = 'Default';
+        if (selectedJobType.includes('Thực tập sinh')) jobTypeKey = 'Thực tập sinh kỹ năng';
+        else if (selectedJobType.includes('Đặc định')) jobTypeKey = 'Kỹ năng đặc định';
+        else if (selectedJobType.includes('Kỹ sư, tri thức')) jobTypeKey = 'Kỹ sư, tri thức';
+        industries = industriesByJobType[jobTypeKey];
+    }
+    
+    setAvailableIndustries(industries);
+    setSelectedIndustry('');
+    setSearchQuery('');
+  }, [selectedJobType]);
+
+
+  return (
     <section className="w-full bg-gradient-to-r from-blue-600 to-sky-500 text-white pt-20 md:pt-28 pb-10">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -665,7 +411,7 @@ export default function HomeClient() {
                         </Select>
                     </div>
                     <div className="md:col-span-2">
-                        <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white text-lg" onClick={handleSearchClick}>
+                        <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white text-lg" onClick={onSearch}>
                             <Search className="mr-2 h-5 w-5" /> Tìm kiếm
                         </Button>
                     </div>
@@ -675,26 +421,273 @@ export default function HomeClient() {
         </div>
     </section>
   );
+}
+
+const CompactSearchForm = ({ onBack, searchTerm }: { onBack: () => void, searchTerm: string }) => (
+     <div className="bg-primary p-2 md:hidden sticky top-16 z-40 shadow-lg">
+        <Button 
+            variant="outline" 
+            className="w-full justify-start text-left h-auto py-2 px-3 bg-background text-foreground hover:bg-background/90"
+            onClick={onBack}
+        >
+            <ChevronLeft className="mr-2 text-muted-foreground"/>
+            <div className="flex-grow overflow-hidden">
+                <p className="font-bold text-base truncate">{searchTerm || 'Tất cả việc làm'}</p>
+                <p className="text-sm text-muted-foreground truncate">Chỉnh sửa tìm kiếm của bạn</p>
+            </div>
+        </Button>
+    </div>
+);
+
+
+type SearchResultsProps = {
+    onBack: () => void;
+}
+
+const SearchResults = ({ onBack }: SearchResultsProps) => {
+    const [visibleJobsCount, setVisibleJobsCount] = useState(24);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const observer = useRef<IntersectionObserver | null>(null);
+
+    const loadMoreJobs = useCallback(() => {
+        setIsLoadingMore(true);
+        setTimeout(() => {
+            setVisibleJobsCount(prevCount => Math.min(prevCount + 24, jobData.length));
+            setIsLoadingMore(false);
+        }, 1000); // Simulate network delay
+    }, []);
+
+    const lastJobElementRef = useCallback((node: HTMLDivElement) => {
+        if (isLoadingMore) return;
+        if (observer.current) observer.current.disconnect();
+
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && visibleJobsCount < jobData.length) {
+                loadMoreJobs();
+            }
+        });
+
+        if (node) observer.current.observe(node);
+    }, [isLoadingMore, loadMoreJobs, visibleJobsCount]);
+      
+    return (
+     <div className="w-full bg-secondary">
+        <CompactSearchForm onBack={onBack} searchTerm="Kết quả tìm kiếm" />
+        <div className="container mx-auto px-4 md:px-6 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8">
+                <div className="hidden md:block">
+                  <FilterSidebar />
+                </div>
+
+                <div className="md:col-span-3 lg:col-span-3">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-bold">Kết quả ({jobData.length})</h2>
+                        <Sheet>
+                          <SheetTrigger asChild>
+                             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:hidden">
+                                <ListFilter className="w-4 h-4" />
+                                Lọc
+                            </Button>
+                          </SheetTrigger>
+                          <SheetContent>
+                            <SheetHeader>
+                              <SheetTitle>Bộ lọc tìm kiếm</SheetTitle>
+                              <SheetDescription>
+                                Tinh chỉnh kết quả tìm kiếm của bạn.
+                              </SheetDescription>
+                            </SheetHeader>
+                            <div className="py-4 h-[calc(100vh-8rem)] overflow-y-auto">
+                              <FilterSidebar />
+                            </div>
+                          </SheetContent>
+                        </Sheet>
+                        
+                         <Select>
+                            <SelectTrigger className="w-[180px] hidden md:flex">
+                                <SelectValue placeholder="Sắp xếp theo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="newest">Mới nhất</SelectItem>
+                                <SelectItem value="salary_desc">Lương cao đến thấp</SelectItem>
+                                <SelectItem value="salary_asc">Lương thấp đến cao</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4">
+                      {jobData.slice(0, visibleJobsCount).map((job, index) => {
+                          if (index === visibleJobsCount - 1) {
+                              return <div ref={lastJobElementRef} key={job.id}><JobCard job={job} /></div>
+                          }
+                          return <JobCard key={job.id} job={job} />
+                      })}
+                    </div>
+                    {isLoadingMore && (
+                        <div className="flex justify-center items-center p-4">
+                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+     </div>
+    )
+  };
+
+const FilterSidebar = () => {
+    const specialConditions = [
+        'Hỗ trợ Ginou 2', 'Hỗ trợ chỗ ở', 'Cặp đôi', 'Lương tốt', 'Tăng ca', 'Có thưởng', 'Nợ phí', 'Bay nhanh', 'Yêu cầu bằng lái', 'Nhận tuổi cao', 'Không yêu cầu kinh nghiệm', 'Việc nhẹ', 'Việc nặng', 'Nghỉ T7, CN', 'Nhận visa katsudo'
+    ];
+    const languageLevels = ['N1', 'N2', 'N3', 'N4', 'N5', 'Không yêu cầu'];
+    const educationLevels = ["Tốt nghiệp THPT", "Trung cấp", "Cao đẳng", "Đại học", "Senmon", "Không yêu cầu"];
+    const experienceYears = ["Không yêu cầu", "Dưới 1 năm", "1-2 năm", "3-5 năm", "Trên 5 năm"];
+
+    return (
+        <div className="md:col-span-1 lg:col-span-1">
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-xl flex items-center gap-2"><SlidersHorizontal/> Bộ lọc tìm kiếm</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Accordion type="multiple" defaultValue={['salary', 'jobType', 'location', 'requirements', 'specialConditions']} className="w-full">
+                        
+                        <AccordionItem value="salary">
+                            <AccordionTrigger className="text-base font-semibold">
+                                <span className="flex items-center gap-2"><DollarSign className="h-5 w-5"/>Mức lương (JPY/tháng)</span>
+                            </AccordionTrigger>
+                            <AccordionContent className="pt-4">
+                                <Slider defaultValue={[160000, 300000]} max={500000} step={10000} />
+                                <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                                    <span>16万</span>
+                                    <span>50万</span>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                        
+                        <AccordionItem value="jobType">
+                            <AccordionTrigger className="text-base font-semibold">
+                                 <span className="flex items-center gap-2"><Briefcase className="h-5 w-5"/>Loại hình công việc</span>
+                            </AccordionTrigger>
+                            <AccordionContent className="space-y-2 pt-4">
+                                {japanJobTypes.map(item => (
+                                    <div key={item} className="flex items-center space-x-2">
+                                        <Checkbox id={`type-${item}`} />
+                                        <Label htmlFor={`type-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                    </div>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+
+                         <AccordionItem value="location">
+                            <AccordionTrigger className="text-base font-semibold">
+                                <span className="flex items-center gap-2"><MapPin className="h-5 w-5"/>Địa điểm</span>
+                            </AccordionTrigger>
+                            <AccordionContent className="space-y-4 pt-4">
+                                <div className="space-y-2">
+                                    <Label>Nơi làm việc (Nhật Bản)</Label>
+                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Nhật Bản</SelectItem>{Object.entries(locations['Nhật Bản']).map(([region, prefectures]) => (<SelectGroup key={region}><SelectLabel>{region}</SelectLabel>{(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Nơi phỏng vấn (Việt Nam)</Label>
+                                    <Select><SelectTrigger><SelectValue placeholder="Chọn tỉnh/thành phố"/></SelectTrigger><SelectContent><SelectItem value="all">Tất cả Việt Nam</SelectItem>{locations['Việt Nam'].map(l=><SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent></Select>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                         <AccordionItem value="requirements">
+                            <AccordionTrigger className="text-base font-semibold">
+                                <span className="flex items-center gap-2"><UserSearch className="h-5 w-5"/>Yêu cầu ứng viên</span>
+                            </AccordionTrigger>
+                            <AccordionContent className="space-y-4 pt-4">
+                                <div>
+                                    <Label className="font-semibold">Giới tính</Label>
+                                    <div className="flex items-center space-x-4 pt-2">
+                                         {['Nam', 'Nữ', 'Cả hai'].map(item => (
+                                            <div key={item} className="flex items-center space-x-2">
+                                                <Checkbox id={`gender-${item}`} />
+                                                <Label htmlFor={`gender-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <Label className="font-semibold">Trình độ tiếng Nhật</Label>
+                                    <div className="grid grid-cols-3 gap-2 pt-2">
+                                        {languageLevels.map(item => (
+                                            <div key={item} className="flex items-center space-x-2">
+                                                <Checkbox id={`lang-${item}`} />
+                                                <Label htmlFor={`lang-${item}`} className="font-normal cursor-pointer text-xs">{item}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                 <div>
+                                    <Label className="font-semibold">Học vấn</Label>
+                                    <div className="grid grid-cols-2 gap-2 pt-2">
+                                        {educationLevels.map(item => (
+                                            <div key={item} className="flex items-center space-x-2">
+                                                <Checkbox id={`edu-${item}`} />
+                                                <Label htmlFor={`edu-${item}`} className="font-normal cursor-pointer text-sm">{item}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <Label className="font-semibold">Kinh nghiệm</Label>
+                                     <Select>
+                                        <SelectTrigger className="mt-2"><SelectValue placeholder="Chọn số năm kinh nghiệm" /></SelectTrigger>
+                                        <SelectContent>
+                                            {experienceYears.map(item => <SelectItem key={item} value={item}>{item}</SelectItem>)}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div>
+                                    <Label className="font-semibold">Yêu cầu khác</Label>
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2">
+                                        <div className="flex items-center space-x-2">
+                                            <Checkbox id="cond-tattoo" />
+                                            <Label htmlFor="cond-tattoo" className="font-normal cursor-pointer text-sm flex items-center gap-1.5"><Star className="h-4 w-4 text-yellow-500" />Không xăm</Label>
+                                        </div>
+                                         <div className="flex items-center space-x-2">
+                                            <Checkbox id="cond-hepatitis" />
+                                            <Label htmlFor="cond-hepatitis" className="font-normal cursor-pointer text-sm flex items-center gap-1.5"><Dna className="h-4 w-4 text-red-500"/>Không VGB</Label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="specialConditions" className="border-b-0">
+                            <AccordionTrigger className="text-base font-semibold">
+                               <span className="flex items-center gap-2"><Check className="h-5 w-5"/>Điều kiện đặc biệt</span>
+                            </AccordionTrigger>
+                            <AccordionContent className="space-y-2 pt-4">
+                                {specialConditions.map(item => (
+                                    <div key={item} className="flex items-center space-x-2">
+                                        <Checkbox id={`cond-${item}`} />
+                                        <Label htmlFor={`cond-${item}`} className="font-normal cursor-pointer">{item}</Label>
+                                    </div>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                     <Button className="w-full bg-primary text-white mt-6">Áp dụng bộ lọc</Button>
+                </CardContent>
+            </Card>
+        </div>
+    );
+};
+
+export default function HomeClient() {
+  const [isSearching, setIsSearching] = useState(false);
 
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="w-full">
-        {isSearching ? (
-          <>
-            <div className="md:hidden">
-              <CompactSearchForm />
-            </div>
-            <div className="hidden md:block">
-              <SearchModule />
-            </div>
-          </>
-        ) : (
-          <SearchModule />
-        )}
+        {!isSearching && <SearchModule onSearch={() => setIsSearching(true)} />}
       </div>
       
       <div className="w-full flex-grow">
-        {isSearching ? <SearchResults /> : <MainContent />}
+        {isSearching ? <SearchResults onBack={() => setIsSearching(false)} /> : <MainContent />}
       </div>
     </div>
   );

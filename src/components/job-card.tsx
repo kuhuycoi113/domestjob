@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import Image from 'next/image';
@@ -69,7 +68,18 @@ export const JobCard = ({ job, showRecruiterName = true, variant = 'default' }: 
                 <h3 className="font-bold text-base mb-2 group-hover:text-primary cursor-pointer leading-tight line-clamp-2">{job.title}</h3>
             </Link>
              <div className="flex flex-wrap items-center gap-2 mb-2">
-              {job.visaDetail && <Badge variant="outline" className="text-xs">{job.visaDetail}</Badge>}
+              {job.visaDetail && (
+                <Badge
+                    variant="outline"
+                    className={cn("text-xs", {
+                        "border-accent-green text-accent-green": job.visaType?.includes("Thực tập sinh"),
+                        "border-accent-blue text-accent-blue": job.visaType?.includes("Kỹ năng đặc định"),
+                        "border-accent-orange text-accent-orange": job.visaType?.includes("Kỹ sư, tri thức"),
+                    })}
+                >
+                    {job.visaDetail}
+                </Badge>
+              )}
               {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 border-green-200">Thực lĩnh: {formatCurrency(job.salary.actual)}</Badge>}
               <Badge variant="secondary" className="text-xs">Cơ bản: {formatCurrency(job.salary.basic)}</Badge>
             </div>
@@ -130,7 +140,18 @@ export const JobCard = ({ job, showRecruiterName = true, variant = 'default' }: 
                  <h3 className="font-bold text-sm mb-2 group-hover:text-primary cursor-pointer leading-tight line-clamp-3">{job.title}</h3>
             </Link>
             <div className="flex flex-wrap gap-1 mb-2">
-                {job.visaDetail && <Badge variant="outline" className="text-xs">{job.visaDetail}</Badge>}
+                {job.visaDetail && (
+                  <Badge
+                      variant="outline"
+                      className={cn("text-xs", {
+                          "border-accent-green text-accent-green": job.visaType?.includes("Thực tập sinh"),
+                          "border-accent-blue text-accent-blue": job.visaType?.includes("Kỹ năng đặc định"),
+                          "border-accent-orange text-accent-orange": job.visaType?.includes("Kỹ sư, tri thức"),
+                      })}
+                  >
+                      {job.visaDetail}
+                  </Badge>
+                )}
                 {job.salary.actual && <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">Thực lĩnh: {formatCurrency(job.salary.actual)}</Badge>}
                 <Badge variant="secondary" className="text-xs">Cơ bản: {formatCurrency(job.salary.basic)}</Badge>
             </div>

@@ -608,6 +608,10 @@ export default function CandidateProfilePage() {
   const renderAspirationsEdit = (tempCandidate: EnrichedCandidateProfile, handleTempChange: Function) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
+          <Label>Ngành nghề mong muốn</Label>
+          <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', null, e.target.value)} />
+        </div>
+        <div className="space-y-2">
           <Label>Loại visa mong muốn</Label>
           <Select value={tempCandidate.aspirations?.desiredVisaType || ''} onValueChange={value => { handleTempChange('aspirations', 'desiredVisaType', value); handleTempChange('aspirations', 'desiredVisaDetail', ''); }}>
             <SelectTrigger><SelectValue placeholder="Chọn loại visa" /></SelectTrigger>
@@ -689,10 +693,6 @@ export default function CandidateProfilePage() {
         <div className="space-y-2">
           <Label>Ngày sinh</Label>
           <Input type="date" value={tempCandidate.personalInfo.dateOfBirth?.split('T')[0]} onChange={e => handleTempChange('personalInfo', 'dateOfBirth', e.target.value)} />
-        </div>
-        <div className="space-y-2">
-          <Label>Ngành nghề mong muốn</Label>
-          <Input value={tempCandidate.desiredIndustry} onChange={e => handleTempChange('desiredIndustry', null, e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label>Chiều cao (cm)</Label>
@@ -1078,9 +1078,9 @@ export default function CandidateProfilePage() {
                     </EditDialog>
                   </CardHeader>
                    <CardContent className="space-y-3 text-sm">
+                        <p><strong>Ngành nghề:</strong> {candidate.desiredIndustry}</p>
                         <p><strong>Loại Visa:</strong> {candidate.aspirations?.desiredVisaType}</p>
                         <p><strong>Chi tiết Visa:</strong> {candidate.aspirations?.desiredVisaDetail}</p>
-                        <p><strong>Ngành nghề:</strong> {candidate.desiredIndustry}</p>
                         <p><strong>Địa điểm:</strong> {candidate.aspirations?.desiredLocation}</p>
                         <p><strong>Lương cơ bản:</strong> {formatYen(candidate.aspirations?.desiredSalary)}</p>
                         <p><strong>Thực lĩnh:</strong> {formatYen(candidate.aspirations?.desiredNetSalary)}</p>

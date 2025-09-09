@@ -294,7 +294,12 @@ export default function PartnerPostJobPage() {
 
   const visaTypes = Object.keys(visaDetailsByVisaType);
   const japaneseLevels = ["JLPT N5", "JLPT N4", "JLPT N3", "JLPT N2", "JLPT N1", "Kaiwa N5", "Kaiwa N4", "Kaiwa N3", "Kaiwa N2", "Kaiwa N1", "Trình độ tương đương N5", "Trình độ tương đương N4", "Trình độ tương đương N3", "Trình độ tương đương N2", "Trình độ tương đương N1"];
-  const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
+  const englishLevels = [
+    "TOEIC 900", "TOEIC 800", "TOEIC 700", "TOEIC 600", "TOEIC 500", "TOEIC 400",
+    "IELTS 9.0", "IELTS 8.0", "IELTS 7.0", "IELTS 6.0", "IELTS 5.0", "IELTS 4.0",
+    "Giao tiếp IELTS 9.0", "Giao tiếp IELTS 8.0", "Giao tiếp IELTS 7.0", "Giao tiếp IELTS 6.0", "Giao tiếp IELTS 5.0", "Giao tiếp IELTS 4.0",
+    "Trình độ tương đương 9.0", "Trình độ tương đương 8.0", "Trình độ tương đương 7.0", "Trình độ tương đương 6.0", "Trình độ tương đương 5.0", "Trình độ tương đương 4.0"
+  ];
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
   const experienceYears = ["trên 0,5 năm", "trên 1 năm", "trên 1,5 năm", "trên 2 năm", "trên 2,5 năm", "trên 3 năm", "trên 3,5 năm", "trên 4 năm", "trên 4,5 năm", "Nhận cả kinh nghiệm ngành khác"];
   const ginouExpiryOptions = ["trên 4,5 năm", "trên 4 năm", "trên 3,5 năm", "trên 3 năm", "trên 2,5 năm", "trên 2 năm", "trên 1,5 năm", "trên 1 năm", "trên 0,5 năm"];

@@ -122,7 +122,7 @@ export default function RoadmapPage() {
       <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-accent">
-            Lộ trình phát triển sự nghiệp (SWR)
+            Những con đường cho bạn lựa chọn tại Nhật Bản
           </h1>
           <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
             Chúng tôi cam kết đồng hành cùng bạn trên con đường phát triển sự nghiệp bền vững, từ bước đầu tiên đến khi trở thành chuyên gia tay nghề cao.

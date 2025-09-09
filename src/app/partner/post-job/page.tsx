@@ -300,7 +300,7 @@ export default function PartnerPostJobPage() {
     "Giao tiếp IELTS 9.0", "Giao tiếp IELTS 8.0", "Giao tiếp IELTS 7.0", "Giao tiếp IELTS 6.0", "Giao tiếp IELTS 5.0", "Giao tiếp IELTS 4.0",
     "Trình độ tương đương 9.0", "Trình độ tương đương 8.0", "Trình độ tương đương 7.0", "Trình độ tương đương 6.0", "Trình độ tương đương 5.0", "Trình độ tương đương 4.0"
   ];
-  const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
+  const educationLevels = ["Tốt nghiệp THPT", "Tốt nghiệp Trung cấp", "Tốt nghiệp Cao đẳng", "Tốt nghiệp Đại học", "Tốt nghiệp Thạc sĩ", "Tốt nghiệp Tiến sĩ", "Tốt nghiệp Senmon", "Tốt nghiệp Tanki-dai"];
   const experienceYears = ["trên 0,5 năm", "trên 1 năm", "trên 1,5 năm", "trên 2 năm", "trên 2,5 năm", "trên 3 năm", "trên 3,5 năm", "trên 4 năm", "trên 4,5 năm", "Nhận cả kinh nghiệm ngành khác"];
   const ginouExpiryOptions = ["trên 4,5 năm", "trên 4 năm", "trên 3,5 năm", "trên 3 năm", "trên 2,5 năm", "trên 2 năm", "trên 1,5 năm", "trên 1 năm", "trên 0,5 năm"];
   const workShifts = [
@@ -381,6 +381,8 @@ export default function PartnerPostJobPage() {
       }
   })();
 
+  const allIndustries = Object.values(industriesByJobType).flat().filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i);
+
 
   return <div className="container mx-auto px-4 md:px-6 py-8">
     <div className="max-w-4xl mx-auto">
@@ -450,7 +452,7 @@ export default function PartnerPostJobPage() {
                        <Select value={jobData.industry} onValueChange={(value) => handleInputChange('industry', value)} required>
                         <SelectTrigger id="job-industry"><SelectValue placeholder="Chọn ngành nghề" /></SelectTrigger>
                         <SelectContent>
-                          {Object.values(industriesByJobType).flat().filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i).map(industry => (
+                          {allIndustries.map(industry => (
                             <SelectItem key={industry.slug} value={industry.name}>{industry.name}</SelectItem>
                           ))}
                         </SelectContent>
@@ -623,7 +625,7 @@ export default function PartnerPostJobPage() {
                            <Select value={jobData.experienceRequirement} onValueChange={(value) => handleInputChange('experienceRequirement', value)}>
                             <SelectTrigger id="experience-requirement"><SelectValue placeholder="Chọn ngành nghề yêu cầu kinh nghiệm" /></SelectTrigger>
                             <SelectContent>
-                              {Object.values(industriesByJobType).flat().filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i).map(industry => (
+                              {allIndustries.map(industry => (
                                 <SelectItem key={industry.slug} value={industry.name}>{industry.name}</SelectItem>
                               ))}
                             </SelectContent>

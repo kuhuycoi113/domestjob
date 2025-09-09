@@ -46,7 +46,7 @@ export function Header() {
     setIsClient(true);
   }, []);
 
-  const isLoggedIn = role !== 'guest';
+  const isLoggedIn = role === 'candidate';
 
 
   const NavLink = ({ href, label, className, icon: Icon, onClick }: { href: string; label: string, className?: string, icon?: React.ElementType, onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void }) => (
@@ -177,7 +177,7 @@ export function Header() {
             <Button asChild variant="outline">
               <Link href="/jobs">Trang việc làm</Link>
             </Button>
-            {isClient ? (isLoggedIn ? <LoggedInMenu /> : <LoggedOutMenu />) : null}
+            {isClient && (isLoggedIn ? <LoggedInMenu /> : <LoggedOutMenu />)}
         </div>
         <div className="md:hidden">
             <Button variant="default" size="icon" onClick={() => openChat()}>

@@ -148,6 +148,13 @@ export default function RoadmapPage() {
           })}
         </div>
 
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-headline font-bold text-accent">Lộ trình phát triển sự nghiệp (SWR)</h2>
+          <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
+            Chúng tôi cam kết đồng hành cùng bạn trên con đường phát triển sự nghiệp bền vững, từ bước đầu tiên đến khi trở thành chuyên gia tay nghề cao.
+          </p>
+        </div>
+
         <div className="relative max-w-6xl mx-auto">
           {/* Vertical line */}
           <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-1 bg-border rounded-full hidden md:block" />

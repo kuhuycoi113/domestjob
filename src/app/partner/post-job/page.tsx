@@ -55,19 +55,19 @@ type JobData = {
   hourlySalary: string;
   annualIncome: string;
   annualBonus: string;
-  financialAbility: string; // Thêm trường Khả năng tài chính
+  financialAbility: string;
 };
 
 // Maps visa detail to the fields that are NOT applicable based on the image
 const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
-  'Thực tập sinh 3 năm': [],
-  'Thực tập sinh 1 năm': [],
-  'Thực tập sinh 3 Go': ['tattooRequirement', 'hepatitisBRequirement', 'interviewLocation'],
-  'Đặc định đầu Việt': ['tattooRequirement', 'hepatitisBRequirement'],
-  'Đặc định đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'financialAbility', 'interviewLocation'],
-  'Đặc định đi mới': ['hepatitisBRequirement'],
-  'Kỹ sư, tri thức đầu Việt': ['hepatitisBRequirement'],
-  'Kỹ sư, tri thức đầu Nhật': ['tattooRequirement', 'hepatitisBRequirement', 'financialAbility', 'interviewLocation']
+  'Thực tập sinh 3 năm': ['languageRequirement', 'languageProficiency', 'companyArrivalTime', 'ginouExpiryRequirement', 'hourlySalary', 'annualIncome', 'annualBonus'],
+  'Thực tập sinh 1 năm': ['languageRequirement', 'languageProficiency', 'companyArrivalTime', 'ginouExpiryRequirement', 'hourlySalary', 'annualIncome', 'annualBonus'],
+  'Thực tập sinh 3 Go': ['educationRequirement', 'ginouExpiryRequirement'],
+  'Đặc định đầu Việt': ['educationRequirement', 'companyArrivalTime', 'ginouExpiryRequirement'],
+  'Đặc định đầu Nhật': ['educationRequirement', 'financialAbility'],
+  'Đặc định đi mới': ['educationRequirement', 'companyArrivalTime', 'ginouExpiryRequirement'],
+  'Kỹ sư, tri thức đầu Việt': ['companyArrivalTime', 'ginouExpiryRequirement'],
+  'Kỹ sư, tri thức đầu Nhật': ['financialAbility'],
 };
 
 const visaDetailsByVisaType: { [key: string]: string[] } = {

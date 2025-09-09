@@ -71,9 +71,9 @@ const hiddenFieldsByVisa: { [key: string]: (keyof JobData)[] } = {
 };
 
 const visaDetailsByVisaType: { [key: string]: string[] } = {
-    'Thực tập sinh kỹ năng': ['Thực tập sinh 3 năm', 'Thực tập sinh 1 năm', 'Thực tập sinh 3 Go'],
-    'Kỹ năng đặc định': ['Đặc định đầu Việt', 'Đặc định đầu Nhật', 'Đặc định đi mới'],
-    'Kỹ sư, tri thức': ['Kỹ sư, tri thức đầu Việt', 'Kỹ sư, tri thức đầu Nhật']
+  'Thực tập sinh kỹ năng': ['Thực tập sinh 3 năm', 'Thực tập sinh 1 năm', 'Thực tập sinh 3 Go'],
+  'Kỹ năng đặc định': ['Đặc định đầu Việt', 'Đặc định đầu Nhật', 'Đặc định đi mới'],
+  'Kỹ sư, tri thức': ['Kỹ sư, tri thức đầu Việt', 'Kỹ sư, tri thức đầu Nhật']
 };
 
 
@@ -117,29 +117,29 @@ const conditionsByVisaType: { [key: string]: string[] } = {
 };
 
 const otherSkills = [
-    "Cần bằng gia công kim loại", "Cần bằng hàn", "Cần bằng tiện, mài", "Cần bằng cắt",
-    "Cần bằng vận hành máy", "Cần lái được xe nâng", "Cần bằng cầu", "Cần làm được giàn giáo",
-    "Cần bằng thi công nội thất", "Cần lái được máy xúc, máy đào", "Cần bằng lái xe AT", "Cần bằng lái xe MT",
-    "Cần bằng lái xe buýt cỡ trung", "Cần bằng lái xe buýt cỡ lớn", "Cần bằng lái xe tải cỡ nhỏ", "Cần bằng lái xe tải cỡ trung",
-    "Cần bằng lái xe tải cỡ lớn", "Cần bằng vận hành máy NC", "Cần bằng vận hành máy CNC", "Dùng được thước đo",
-    "Đọc được bản vẽ kỹ thuật", "Thiết kế BIM xây dựng", "Quản lý thi công xây dựng", "Quản lý khối lượng xây dựng"
+  "Cần bằng gia công kim loại", "Cần bằng hàn", "Cần bằng tiện, mài", "Cần bằng cắt",
+  "Cần bằng vận hành máy", "Cần lái được xe nâng", "Cần bằng cầu", "Cần làm được giàn giáo",
+  "Cần bằng thi công nội thất", "Cần lái được máy xúc, máy đào", "Cần bằng lái xe AT", "Cần bằng lái xe MT",
+  "Cần bằng lái xe buýt cỡ trung", "Cần bằng lái xe buýt cỡ lớn", "Cần bằng lái xe tải cỡ nhỏ", "Cần bằng lái xe tải cỡ trung",
+  "Cần bằng lái xe tải cỡ lớn", "Cần bằng vận hành máy NC", "Cần bằng vận hành máy CNC", "Dùng được thước đo",
+  "Đọc được bản vẽ kỹ thuật", "Thiết kế BIM xây dựng", "Quản lý thi công xây dựng", "Quản lý khối lượng xây dựng"
 ];
 
 const locations = {
-    "Việt Nam": [
-        "An Giang", "Bắc Ninh", "Cao Bằng", "Cà Mau", "Cần Thơ", "Đà Nẵng", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Đắk Lắk", "Gia Lai", "Hà Nội", "Hà Tĩnh", "Hải Phòng", "Hưng Yên", "Thừa Thiên Huế", "Khánh Hòa", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Nghệ An", "Ninh Bình", "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh", "Thanh Hóa", "Thành phố Hồ Chí Minh", "Thái Nguyên", "Tuyên Quang", "Vĩnh Long"
-    ],
-    "Nhật Bản": {
-        "Hokkaido": ["Hokkaido"],
-        "Tohoku": ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"],
-        "Kanto": ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"],
-        "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
-        "Kansai": ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"],
-        "Chugoku": ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"],
-        "Shikoku": ["Tokushima", "Kagawa", "Ehime", "Kochi"],
-        "Kyushu": ["Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima"],
-        "Okinawa": ["Okinawa"]
-    }
+  "Việt Nam": [
+    "An Giang", "Bắc Ninh", "Cao Bằng", "Cà Mau", "Cần Thơ", "Đà Nẵng", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Đắk Lắk", "Gia Lai", "Hà Nội", "Hà Tĩnh", "Hải Phòng", "Hưng Yên", "Thừa Thiên Huế", "Khánh Hòa", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Nghệ An", "Ninh Bình", "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh", "Thanh Hóa", "Thành phố Hồ Chí Minh", "Thái Nguyên", "Tuyên Quang", "Vĩnh Long"
+  ],
+  "Nhật Bản": {
+    "Hokkaido": ["Hokkaido"],
+    "Tohoku": ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"],
+    "Kanto": ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"],
+    "Chubu": ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"],
+    "Kansai": ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"],
+    "Chugoku": ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"],
+    "Shikoku": ["Tokushima", "Kagawa", "Ehime", "Kochi"],
+    "Kyushu": ["Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima"],
+    "Okinawa": ["Okinawa"]
+  }
 };
 
 const getVisaCategory = (visaDetail: string): keyof typeof conditionsByVisaType | null => {
@@ -202,7 +202,7 @@ export default function PartnerPostJobPage() {
     const newData = { ...jobData, [field]: value };
 
     if (field === 'visaType') {
-        newData.visaDetail = ''; // Reset dependent dropdown
+      newData.visaDetail = ''; // Reset dependent dropdown
     }
 
     if (field === 'visaDetail') {
@@ -218,17 +218,17 @@ export default function PartnerPostJobPage() {
     if (field === 'languageRequirement') {
       newData.languageProficiency = '';
       if (value === 'Không yêu cầu tiếng') {
-          setVisibleFields(prev => {
-              const newSet = new Set(prev);
-              newSet.delete('languageProficiency');
-              return newSet;
-          });
+        setVisibleFields(prev => {
+          const newSet = new Set(prev);
+          newSet.delete('languageProficiency');
+          return newSet;
+        });
       } else {
-           setVisibleFields(prev => {
-              const newSet = new Set(prev);
-              newSet.add('languageProficiency');
-              return newSet;
-          });
+        setVisibleFields(prev => {
+          const newSet = new Set(prev);
+          newSet.add('languageProficiency');
+          return newSet;
+        });
       }
     }
 
@@ -264,13 +264,13 @@ export default function PartnerPostJobPage() {
         benefits: "- Mức lương cạnh tranh, thỏa thuận theo năng lực.\\n- Môi trường làm việc chuyên nghiệp, năng động.\\n- Được hưởng đầy đủ các chế độ phúc lợi theo quy định của pháp luật.",
         notes: "Ứng viên có thể phải làm việc theo ca. Chi tiết sẽ được trao đổi trong buổi phỏng vấn."
       };
-      
+
       const hidden = hiddenFieldsByVisa[mockData.visaDetail!] || [];
       const allFields = Object.keys(jobData) as (keyof JobData)[];
       setVisibleFields(new Set(allFields.filter(f => !hidden.includes(f))));
 
-      setJobData(prev => ({...prev, ...mockData}));
-      
+      setJobData(prev => ({ ...prev, ...mockData }));
+
       setActiveTab('manual');
       toast({
         title: "Phân tích thành công!",
@@ -334,10 +334,10 @@ export default function PartnerPostJobPage() {
     const months = [];
     const today = new Date();
     for (let i = 1; i <= 12; i++) { // next 12 months
-        const futureDate = new Date(today.getFullYear(), today.getMonth() + i, 1);
-        const month = futureDate.getMonth() + 1;
-        const year = futureDate.getFullYear();
-        months.push(`Tháng ${month}/${year}`);
+      const futureDate = new Date(today.getFullYear(), today.getMonth() + i, 1);
+      const month = futureDate.getMonth() + 1;
+      const year = futureDate.getFullYear();
+      months.push(`Tháng ${month}/${year}`);
     }
     return months;
   };
@@ -356,35 +356,35 @@ export default function PartnerPostJobPage() {
   })();
 
   const netSalaryPlaceholder = (() => {
-      const visaDetail = jobData.visaDetail;
-      if (visaDetail?.includes('Thực tập sinh')) return "100,000 - 400,000 yên/tháng";
-      if (visaDetail?.includes('Đặc định')) return "120,000 - 1,300,000 yên/tháng";
-      if (visaDetail?.includes('Kỹ sư, tri thức')) return "120,000 - 9,000,000 yên/tháng";
-      return "Nhập thực lĩnh (ước tính)";
+    const visaDetail = jobData.visaDetail;
+    if (visaDetail?.includes('Thực tập sinh')) return "100,000 - 400,000 yên/tháng";
+    if (visaDetail?.includes('Đặc định')) return "120,000 - 1,300,000 yên/tháng";
+    if (visaDetail?.includes('Kỹ sư, tri thức')) return "120,000 - 9,000,000 yên/tháng";
+    return "Nhập thực lĩnh (ước tính)";
   })();
 
   const financialAbilityPlaceholder = (() => {
-      switch (jobData.visaDetail) {
-          case 'Thực tập sinh 3 năm':
-              return '0 đến 4000$';
-          case 'Thực tập sinh 1 năm':
-          case 'Thực tập sinh 3 Go':
-          case 'Đặc định đầu Việt':
-          case 'Đặc định đi mới':
-          case 'Kỹ sư, tri thức đầu Việt':
-              return '0 đến 2000$';
-          case 'Kỹ năng đặc định đầu Nhật':
-          case 'Kỹ sư, tri thức đầu Nhật':
-              return '0';
-          default:
-              return 'Nhập khả năng tài chính';
-      }
+    switch (jobData.visaDetail) {
+      case 'Thực tập sinh 3 năm':
+        return '0 đến 4000$';
+      case 'Thực tập sinh 1 năm':
+      case 'Thực tập sinh 3 Go':
+      case 'Đặc định đầu Việt':
+      case 'Đặc định đi mới':
+      case 'Kỹ sư, tri thức đầu Việt':
+        return '0 đến 2000$';
+      case 'Kỹ năng đặc định đầu Nhật':
+      case 'Kỹ sư, tri thức đầu Nhật':
+        return '0';
+      default:
+        return 'Nhập khả năng tài chính';
+    }
   })();
 
-  const allIndustries = Object.values(industriesByJobType).flat().filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i);
+  const allIndustries = Object.values(industriesByJobType).flat().filter((v, i, a) => a.findIndex(t => (t.name === v.name)) === i);
 
 
-  return <div className="container mx-auto px-4 md:px-6 py-8">
+  return (<div className="container mx-auto px-4 md:px-6 py-8">
     <div className="max-w-4xl mx-auto">
       <Card className="shadow-xl">
         <CardHeader className="text-center">
@@ -426,15 +426,15 @@ export default function PartnerPostJobPage() {
                       <Label htmlFor="job-title">Chức danh</Label>
                       <Input id="job-title" placeholder="VD: Kỹ sư vận hành máy CNC" value={jobData.title} onChange={(e) => handleInputChange('title', e.target.value)} required />
                     </div>
-                    
+
                     <div className="space-y-2">
-                        <Label htmlFor="visa-type">Loại visa</Label>
-                        <Select value={jobData.visaType} onValueChange={(value) => handleInputChange('visaType', value)} required>
-                            <SelectTrigger id="visa-type"><SelectValue placeholder="Chọn loại visa" /></SelectTrigger>
-                            <SelectContent>
-                            {visaTypes.map(vt => <SelectItem key={vt} value={vt}>{vt}</SelectItem>)}
-                            </SelectContent>
-                        </Select>
+                      <Label htmlFor="visa-type">Loại visa</Label>
+                      <Select value={jobData.visaType} onValueChange={(value) => handleInputChange('visaType', value)} required>
+                        <SelectTrigger id="visa-type"><SelectValue placeholder="Chọn loại visa" /></SelectTrigger>
+                        <SelectContent>
+                          {visaTypes.map(vt => <SelectItem key={vt} value={vt}>{vt}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -449,7 +449,7 @@ export default function PartnerPostJobPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="job-industry">Ngành nghề</Label>
-                       <Select value={jobData.industry} onValueChange={(value) => handleInputChange('industry', value)} required>
+                      <Select value={jobData.industry} onValueChange={(value) => handleInputChange('industry', value)} required>
                         <SelectTrigger id="job-industry"><SelectValue placeholder="Chọn ngành nghề" /></SelectTrigger>
                         <SelectContent>
                           {allIndustries.map(industry => (
@@ -460,44 +460,44 @@ export default function PartnerPostJobPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="job-location">Địa điểm làm việc</Label>
-                        <Select value={jobData.workLocation} onValueChange={(value) => handleInputChange('workLocation', value)}>
-                            <SelectTrigger id="job-location">
-                                <SelectValue placeholder="Chọn địa điểm làm việc" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {Object.entries(locations["Nhật Bản"]).map(([region, prefectures]) => (
-                                    <SelectGroup key={region}>
-                                        <SelectLabel>{region}</SelectLabel>
-                                        {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                                    </SelectGroup>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                      <Label htmlFor="job-location">Địa điểm làm việc</Label>
+                      <Select value={jobData.workLocation} onValueChange={(value) => handleInputChange('workLocation', value)}>
+                        <SelectTrigger id="job-location">
+                          <SelectValue placeholder="Chọn địa điểm làm việc" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(locations["Nhật Bản"]).map(([region, prefectures]) => (
+                            <SelectGroup key={region}>
+                              <SelectLabel>{region}</SelectLabel>
+                              {(prefectures as string[]).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                            </SelectGroup>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
 
                     {visibleFields.has('interviewLocation') && (
                       <div className="space-y-2">
-                          <Label htmlFor="interview-location">Phỏng vấn, tuyển tại</Label>
-                          <Select value={jobData.interviewLocation} onValueChange={(value) => handleInputChange('interviewLocation', value)}>
-                              <SelectTrigger id="interview-location">
-                                  <SelectValue placeholder="Chọn địa điểm phỏng vấn" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                  <SelectGroup>
-                                      <SelectLabel>Việt Nam</SelectLabel>
-                                      {locations["Việt Nam"].map(province => <SelectItem key={province} value={province}>{province}</SelectItem>)}
-                                  </SelectGroup>
-                                  <SelectGroup>
-                                      <SelectLabel>Nhật Bản</SelectLabel>
-                                      {Object.values(locations["Nhật Bản"]).flat().map(prefecture => <SelectItem key={prefecture} value={prefecture}>{prefecture}</SelectItem>)}
-                                  </SelectGroup>
-                              </SelectContent>
-                          </Select>
+                        <Label htmlFor="interview-location">Phỏng vấn, tuyển tại</Label>
+                        <Select value={jobData.interviewLocation} onValueChange={(value) => handleInputChange('interviewLocation', value)}>
+                          <SelectTrigger id="interview-location">
+                            <SelectValue placeholder="Chọn địa điểm phỏng vấn" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Việt Nam</SelectLabel>
+                              {locations["Việt Nam"].map(province => <SelectItem key={province} value={province}>{province}</SelectItem>)}
+                            </SelectGroup>
+                            <SelectGroup>
+                              <SelectLabel>Nhật Bản</SelectLabel>
+                              {Object.values(locations["Nhật Bản"]).flat().map(prefecture => <SelectItem key={prefecture} value={prefecture}>{prefecture}</SelectItem>)}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                       </div>
                     )}
-                     <div className="space-y-2">
+                    <div className="space-y-2">
                       <Label htmlFor="interview-date">Ngày phỏng vấn</Label>
                       <Input
                         id="interview-date"
@@ -508,84 +508,84 @@ export default function PartnerPostJobPage() {
                         max={getMaxInterviewDate()}
                       />
                     </div>
-                     {visibleFields.has('interviewRounds') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="interview-rounds">Số vòng phỏng vấn</Label>
-                          <Select value={jobData.interviewRounds} onValueChange={(value) => handleInputChange('interviewRounds', value)}>
-                                <SelectTrigger id="interview-rounds">
-                                    <SelectValue placeholder="Chọn số vòng phỏng vấn" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {interviewRoundsOptions.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                     )}
-                      {visibleFields.has('interviewFormat') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="interview-format">Hình thức phỏng vấn</Label>
-                          <Select value={jobData.interviewFormat} onValueChange={(value) => handleInputChange('interviewFormat', value)}>
-                                <SelectTrigger id="interview-format">
-                                    <SelectValue placeholder="Chọn hình thức phỏng vấn" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {interviewFormats.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                     )}
+                    {visibleFields.has('interviewRounds') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="interview-rounds">Số vòng phỏng vấn</Label>
+                        <Select value={jobData.interviewRounds} onValueChange={(value) => handleInputChange('interviewRounds', value)}>
+                          <SelectTrigger id="interview-rounds">
+                            <SelectValue placeholder="Chọn số vòng phỏng vấn" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {interviewRoundsOptions.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('interviewFormat') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="interview-format">Hình thức phỏng vấn</Label>
+                        <Select value={jobData.interviewFormat} onValueChange={(value) => handleInputChange('interviewFormat', value)}>
+                          <SelectTrigger id="interview-format">
+                            <SelectValue placeholder="Chọn hình thức phỏng vấn" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {interviewFormats.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
                   </div>
                 </div>
-                 {/* Salary Information */}
+                {/* Salary Information */}
                 <div className="space-y-4 p-6 border rounded-lg">
                   <h3 className="text-xl font-bold font-headline">Lương và Phí</h3>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                        <Label htmlFor="basic-salary">Lương cơ bản</Label>
-                        <Input id="basic-salary" placeholder={basicSalaryPlaceholder} value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required />
+                      <Label htmlFor="basic-salary">Lương cơ bản</Label>
+                      <Input id="basic-salary" placeholder={basicSalaryPlaceholder} value={jobData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} required />
                     </div>
-                     <div className="space-y-2">
-                        <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
-                        <Input id="net-salary" placeholder={netSalaryPlaceholder} value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
+                    <div className="space-y-2">
+                      <Label htmlFor="net-salary">Thực lĩnh (ước tính)</Label>
+                      <Input id="net-salary" placeholder={netSalaryPlaceholder} value={jobData.netSalary} onChange={(e) => handleInputChange('netSalary', e.target.value)} />
                     </div>
                     {visibleFields.has('hourlySalary') && (
-                        <div className="space-y-2">
-                            <Label htmlFor="hourly-salary">Lương cơ bản (giờ)</Label>
-                            <Input id="hourly-salary" placeholder="VD: 1000 yên/giờ" value={jobData.hourlySalary} onChange={(e) => handleInputChange('hourlySalary', e.target.value)} />
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="hourly-salary">Lương cơ bản (giờ)</Label>
+                        <Input id="hourly-salary" placeholder="VD: 1000 yên/giờ" value={jobData.hourlySalary} onChange={(e) => handleInputChange('hourlySalary', e.target.value)} />
+                      </div>
                     )}
                     {visibleFields.has('annualIncome') && (
-                        <div className="space-y-2">
-                            <Label htmlFor="annual-income">Thu nhập (năm)</Label>
-                            <Input id="annual-income" placeholder="VD: 300 vạn yên" value={jobData.annualIncome} onChange={(e) => handleInputChange('annualIncome', e.target.value)} />
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="annual-income">Thu nhập (năm)</Label>
+                        <Input id="annual-income" placeholder="VD: 300 vạn yên" value={jobData.annualIncome} onChange={(e) => handleInputChange('annualIncome', e.target.value)} />
+                      </div>
                     )}
                     {visibleFields.has('annualBonus') && (
-                        <div className="space-y-2">
-                            <Label htmlFor="annual-bonus">Thưởng (năm)</Label>
-                            <Input id="annual-bonus" placeholder="VD: 2 lần/năm" value={jobData.annualBonus} onChange={(e) => handleInputChange('annualBonus', e.target.value)} />
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="annual-bonus">Thưởng (năm)</Label>
+                        <Input id="annual-bonus" placeholder="VD: 2 lần/năm" value={jobData.annualBonus} onChange={(e) => handleInputChange('annualBonus', e.target.value)} />
+                      </div>
                     )}
                     {visibleFields.has('netFee') && (
-                        <div className="space-y-2">
+                      <div className="space-y-2">
                         <Label htmlFor="net-fee">Mức phí (nếu có)</Label>
                         <Input id="net-fee" placeholder="VD: 100tr hoặc 4000$" value={jobData.netFee} onChange={(e) => handleInputChange('netFee', e.target.value)} />
-                        </div>
+                      </div>
                     )}
                     {visibleFields.has('financialAbility') && (
-                        <div className="space-y-2">
-                            <Label htmlFor="financial-ability">Khả năng tài chính</Label>
-                            <Input id="financial-ability" placeholder={financialAbilityPlaceholder} value={jobData.financialAbility} onChange={(e) => handleInputChange('financialAbility', e.target.value)} />
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="financial-ability">Khả năng tài chính</Label>
+                        <Input id="financial-ability" placeholder={financialAbilityPlaceholder} value={jobData.financialAbility} onChange={(e) => handleInputChange('financialAbility', e.target.value)} />
+                      </div>
                     )}
-                   </div>
+                  </div>
                 </div>
 
                 {/* Candidate Requirements */}
                 <div className="space-y-4 p-6 border rounded-lg">
                   <h3 className="text-xl font-bold font-headline">Yêu cầu ứng viên</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div className="space-y-2">
+                    <div className="space-y-2">
                       <Label htmlFor="gender">Giới tính</Label>
                       <Select value={jobData.gender} onValueChange={(value) => handleInputChange('gender', value)}>
                         <SelectTrigger id="gender"><SelectValue placeholder="Chọn yêu cầu giới tính" /></SelectTrigger>
@@ -606,115 +606,115 @@ export default function PartnerPostJobPage() {
                       <Label htmlFor="age-requirement">Yêu cầu độ tuổi</Label>
                       <Input id="age-requirement" placeholder="18-69" value={jobData.ageRequirement} onChange={(e) => handleInputChange('ageRequirement', e.target.value)} />
                     </div>
-                     {visibleFields.has('educationRequirement') && (
-                        <div className="space-y-2">
-                            <Label htmlFor="education-requirement">Yêu cầu học vấn</Label>
-                            <Select value={jobData.educationRequirement} onValueChange={(value) => handleInputChange('educationRequirement', value)}>
-                                <SelectTrigger id="education-requirement">
-                                    <SelectValue placeholder="Chọn yêu cầu học vấn" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {educationLevels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                     )}
-                      {visibleFields.has('experienceRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="experience-requirement">Yêu cầu kinh nghiệm</Label>
-                           <Select value={jobData.experienceRequirement} onValueChange={(value) => handleInputChange('experienceRequirement', value)}>
-                            <SelectTrigger id="experience-requirement"><SelectValue placeholder="Chọn ngành nghề yêu cầu kinh nghiệm" /></SelectTrigger>
-                            <SelectContent>
-                              {allIndustries.map(industry => (
-                                <SelectItem key={industry.slug} value={industry.name}>{industry.name}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                     )}
-                     {visibleFields.has('yearsOfExperience') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="years-experience">Yêu cầu số năm kinh nghiệm</Label>
-                          <Select value={jobData.yearsOfExperience} onValueChange={(value) => handleInputChange('yearsOfExperience', value)}>
-                            <SelectTrigger id="years-experience"><SelectValue placeholder="Chọn số năm kinh nghiệm" /></SelectTrigger>
-                            <SelectContent>
-                                {experienceYears.map(year => <SelectItem key={year} value={year}>{year}</SelectItem>)}
-                            </SelectContent>
-                           </Select>
-                        </div>
-                     )}
-                      {visibleFields.has('heightRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="height-requirement">Yêu cầu chiều cao (cm)</Label>
-                          <Input id="height-requirement" placeholder="140 - 205" value={jobData.heightRequirement} onChange={(e) => handleInputChange('heightRequirement', e.target.value)} />
-                        </div>
-                     )}
-                      {visibleFields.has('weightRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="weight-requirement">Yêu cầu cân nặng (kg)</Label>
-                          <Input id="weight-requirement" placeholder="40 - 105" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
-                        </div>
-                     )}
-                      {visibleFields.has('dominantHand') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="dominant-hand">Tay thuận</Label>
-                          <Select value={jobData.dominantHand} onValueChange={(value) => handleInputChange('dominantHand', value)}>
-                            <SelectTrigger id="dominant-hand">
-                                <SelectValue placeholder="Chọn tay thuận" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="Tay phải">Tay phải</SelectItem>
-                                <SelectItem value="Tay trái">Tay trái</SelectItem>
-                                <SelectItem value="Cả hai tay">Cả hai tay</SelectItem>
-                            </SelectContent>
-                           </Select>
-                        </div>
-                     )}
-                     {visibleFields.has('visionRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="vision-requirement">Yêu cầu thị lực</Label>
-                          <Select value={jobData.visionRequirement} onValueChange={(value) => handleInputChange('visionRequirement', value)}>
-                                <SelectTrigger id="vision-requirement">
-                                    <SelectValue placeholder="Chọn yêu cầu về thị lực" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {visionRequirements.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                     )}
-                     {visibleFields.has('tattooRequirement') && (
-                        <div className="space-y-2">
-                            <Label htmlFor="tattoo-requirement">Hình xăm</Label>
-                            <Select value={jobData.tattooRequirement} onValueChange={(value) => handleInputChange('tattooRequirement', value)}>
-                                <SelectTrigger id="tattoo-requirement">
-                                    <SelectValue placeholder="Chọn yêu cầu về hình xăm" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Không nhận hình xăm">Không nhận hình xăm</SelectItem>
-                                    <SelectItem value="Nhận xăm nhỏ (kín)">Nhận xăm nhỏ (kín)</SelectItem>
-                                    <SelectItem value="Nhận cả xăm to (lộ)">Nhận cả xăm to (lộ)</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                     )}
-                      {visibleFields.has('hepatitisBRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="hepatitis-b-requirement">Viêm gan B</Label>
-                           <Select value={jobData.hepatitisBRequirement} onValueChange={(value) => handleInputChange('hepatitisBRequirement', value)}>
-                                <SelectTrigger id="hepatitis-b-requirement">
-                                    <SelectValue placeholder="Chọn yêu cầu về viêm gan B" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Không nhận viêm gan B">Không nhận viêm gan B</SelectItem>
-                                    <SelectItem value="Nhận viêm gan B (thể tĩnh)">Nhận viêm gan B (thể tĩnh)</SelectItem>
-                                    <SelectItem value="Nhận viêm gan B (thể động)">Nhận viêm gan B (thể động)</SelectItem>
-                                    <SelectItem value="Không yêu cầu">Không yêu cầu</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                     )}
-                     {visibleFields.has('languageRequirement') && (
+                    {visibleFields.has('educationRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="education-requirement">Yêu cầu học vấn</Label>
+                        <Select value={jobData.educationRequirement} onValueChange={(value) => handleInputChange('educationRequirement', value)}>
+                          <SelectTrigger id="education-requirement">
+                            <SelectValue placeholder="Chọn yêu cầu học vấn" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {educationLevels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('experienceRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="experience-requirement">Yêu cầu kinh nghiệm</Label>
+                        <Select value={jobData.experienceRequirement} onValueChange={(value) => handleInputChange('experienceRequirement', value)}>
+                          <SelectTrigger id="experience-requirement"><SelectValue placeholder="Chọn ngành nghề yêu cầu kinh nghiệm" /></SelectTrigger>
+                          <SelectContent>
+                            {allIndustries.map(industry => (
+                              <SelectItem key={industry.slug} value={industry.name}>{industry.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('yearsOfExperience') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="years-experience">Yêu cầu số năm kinh nghiệm</Label>
+                        <Select value={jobData.yearsOfExperience} onValueChange={(value) => handleInputChange('yearsOfExperience', value)}>
+                          <SelectTrigger id="years-experience"><SelectValue placeholder="Chọn số năm kinh nghiệm" /></SelectTrigger>
+                          <SelectContent>
+                            {experienceYears.map(year => <SelectItem key={year} value={year}>{year}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('heightRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="height-requirement">Yêu cầu chiều cao (cm)</Label>
+                        <Input id="height-requirement" placeholder="140 - 205" value={jobData.heightRequirement} onChange={(e) => handleInputChange('heightRequirement', e.target.value)} />
+                      </div>
+                    )}
+                    {visibleFields.has('weightRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="weight-requirement">Yêu cầu cân nặng (kg)</Label>
+                        <Input id="weight-requirement" placeholder="40 - 105" value={jobData.weightRequirement} onChange={(e) => handleInputChange('weightRequirement', e.target.value)} />
+                      </div>
+                    )}
+                    {visibleFields.has('dominantHand') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="dominant-hand">Tay thuận</Label>
+                        <Select value={jobData.dominantHand} onValueChange={(value) => handleInputChange('dominantHand', value)}>
+                          <SelectTrigger id="dominant-hand">
+                            <SelectValue placeholder="Chọn tay thuận" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Tay phải">Tay phải</SelectItem>
+                            <SelectItem value="Tay trái">Tay trái</SelectItem>
+                            <SelectItem value="Cả hai tay">Cả hai tay</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('visionRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="vision-requirement">Yêu cầu thị lực</Label>
+                        <Select value={jobData.visionRequirement} onValueChange={(value) => handleInputChange('visionRequirement', value)}>
+                          <SelectTrigger id="vision-requirement">
+                            <SelectValue placeholder="Chọn yêu cầu về thị lực" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {visionRequirements.map(req => <SelectItem key={req} value={req}>{req}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('tattooRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="tattoo-requirement">Hình xăm</Label>
+                        <Select value={jobData.tattooRequirement} onValueChange={(value) => handleInputChange('tattooRequirement', value)}>
+                          <SelectTrigger id="tattoo-requirement">
+                            <SelectValue placeholder="Chọn yêu cầu về hình xăm" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Không nhận hình xăm">Không nhận hình xăm</SelectItem>
+                            <SelectItem value="Nhận xăm nhỏ (kín)">Nhận xăm nhỏ (kín)</SelectItem>
+                            <SelectItem value="Nhận cả xăm to (lộ)">Nhận cả xăm to (lộ)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('hepatitisBRequirement') && (
+                      <div className="space-y-2">
+                        <Label htmlFor="hepatitis-b-requirement">Viêm gan B</Label>
+                        <Select value={jobData.hepatitisBRequirement} onValueChange={(value) => handleInputChange('hepatitisBRequirement', value)}>
+                          <SelectTrigger id="hepatitis-b-requirement">
+                            <SelectValue placeholder="Chọn yêu cầu về viêm gan B" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Không nhận viêm gan B">Không nhận viêm gan B</SelectItem>
+                            <SelectItem value="Nhận viêm gan B (thể tĩnh)">Nhận viêm gan B (thể tĩnh)</SelectItem>
+                            <SelectItem value="Nhận viêm gan B (thể động)">Nhận viêm gan B (thể động)</SelectItem>
+                            <SelectItem value="Không yêu cầu">Không yêu cầu</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                    {visibleFields.has('languageRequirement') && (
                       <div className="space-y-2">
                         <Label htmlFor="language-requirement">Yêu cầu ngoại ngữ</Label>
                         <Select value={jobData.languageRequirement} onValueChange={(value) => handleInputChange('languageRequirement', value)}>
@@ -757,15 +757,15 @@ export default function PartnerPostJobPage() {
                       </div>
                     )}
                     {visibleFields.has('ginouExpiryRequirement') && (
-                        <div className="space-y-2">
-                          <Label htmlFor="ginou-expiry">Yêu cầu hạn Ginou còn</Label>
-                          <Select value={jobData.ginouExpiryRequirement} onValueChange={(value) => handleInputChange('ginouExpiryRequirement', value)}>
-                            <SelectTrigger id="ginou-expiry"><SelectValue placeholder="Chọn yêu cầu hạn Ginou" /></SelectTrigger>
-                            <SelectContent>
-                                {ginouExpiryOptions.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
-                            </SelectContent>
-                           </Select>
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="ginou-expiry">Yêu cầu hạn Ginou còn</Label>
+                        <Select value={jobData.ginouExpiryRequirement} onValueChange={(value) => handleInputChange('ginouExpiryRequirement', value)}>
+                          <SelectTrigger id="ginou-expiry"><SelectValue placeholder="Chọn yêu cầu hạn Ginou" /></SelectTrigger>
+                          <SelectContent>
+                            {ginouExpiryOptions.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     )}
                     {visibleFields.has('companyArrivalTime') && (
                       <div className="space-y-2">
@@ -780,7 +780,7 @@ export default function PartnerPostJobPage() {
                         </Select>
                       </div>
                     )}
-                     {visibleFields.has('workShift') && (
+                    {visibleFields.has('workShift') && (
                       <div className="space-y-2">
                         <Label htmlFor="work-shift">Ca làm việc</Label>
                         <Select value={jobData.workShift} onValueChange={(value) => handleInputChange('workShift', value)}>
@@ -795,22 +795,22 @@ export default function PartnerPostJobPage() {
                     )}
                   </div>
                   {visibleFields.has('otherSkillRequirement') && (
-                        <div className="space-y-4 pt-4">
-                            <Label className="font-semibold">Yêu cầu kỹ năng khác</Label>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {otherSkills.map(skill => (
-                                    <div key={skill} className="flex items-center space-x-2">
-                                        <Checkbox 
-                                            id={`skill-${skill}`} 
-                                            onCheckedChange={() => handleCheckboxChange('otherSkillRequirement', skill)} 
-                                            checked={jobData.otherSkillRequirement?.includes(skill)}
-                                        />
-                                        <Label htmlFor={`skill-${skill}`} className="font-normal text-sm cursor-pointer">{skill}</Label>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    <div className="space-y-4 pt-4">
+                      <Label className="font-semibold">Yêu cầu kỹ năng khác</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {otherSkills.map(skill => (
+                          <div key={skill} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`skill-${skill}`}
+                              onCheckedChange={() => handleCheckboxChange('otherSkillRequirement', skill)}
+                              checked={jobData.otherSkillRequirement?.includes(skill)}
+                            />
+                            <Label htmlFor={`skill-${skill}`} className="font-normal text-sm cursor-pointer">{skill}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Special Conditions */}
@@ -873,4 +873,5 @@ export default function PartnerPostJobPage() {
         </CardContent>
       </Card>
     </div>
-  </div>
+  </div>)
+}

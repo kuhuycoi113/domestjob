@@ -214,9 +214,22 @@ export default function PartnerPostJobPage() {
       newData.specialConditions = [];
     }
 
-    // Reset proficiency when language changes
+    // Reset proficiency when language changes, or hide it if not required
     if (field === 'languageRequirement') {
       newData.languageProficiency = '';
+      if (value === 'Không yêu cầu tiếng') {
+          setVisibleFields(prev => {
+              const newSet = new Set(prev);
+              newSet.delete('languageProficiency');
+              return newSet;
+          });
+      } else {
+           setVisibleFields(prev => {
+              const newSet = new Set(prev);
+              newSet.add('languageProficiency');
+              return newSet;
+          });
+      }
     }
 
     setJobData(newData);
@@ -709,7 +722,6 @@ export default function PartnerPostJobPage() {
                         </Select>
                       </div>
                     )}
-
                     {visibleFields.has('languageProficiency') && jobData.languageRequirement === 'Tiếng Nhật' && (
                       <div className="space-y-2">
                         <Label htmlFor="language-proficiency-jp">Trình độ tiếng Nhật</Label>
@@ -855,3 +867,5 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
+
+    

@@ -293,7 +293,7 @@ export default function PartnerPostJobPage() {
   }
 
   const visaTypes = Object.keys(visaDetailsByVisaType);
-  const japaneseLevels = ["N1", "N2", "N3", "N4", "N5", "N5 trở lên", "Không yêu cầu"];
+  const japaneseLevels = ["JLPT N5", "JLPT N4", "JLPT N3", "JLPT N2", "JLPT N1", "Kaiwa N5", "Kaiwa N4", "Kaiwa N3", "Kaiwa N2", "Kaiwa N1", "Trình độ tương đương N5", "Trình độ tương đương N4", "Trình độ tương đương N3", "Trình độ tương đương N2", "Trình độ tương đương N1"];
   const englishLevels = ["Giao tiếp cơ bản", "Giao tiếp tốt", "Thành thạo", "Không yêu cầu"];
   const educationLevels = ["Trung học cơ sở", "Phổ thông trung học", "Trung cấp", "Cao đẳng", "Đại học", "Cao học", "Tiến sĩ", "Senmon", "Tanki-dai", "Daigaku", "Daigaku-in", "Hakashi"];
   const experienceYears = ["trên 0,5 năm", "trên 1 năm", "trên 1,5 năm", "trên 2 năm", "trên 2,5 năm", "trên 3 năm", "trên 3,5 năm", "trên 4 năm", "trên 4,5 năm", "Nhận cả kinh nghiệm ngành khác"];
@@ -867,5 +867,3 @@ export default function PartnerPostJobPage() {
       </Card>
     </div>
   </div>
-
-    
